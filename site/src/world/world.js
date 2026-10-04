@@ -723,26 +723,10 @@ export async function createWorld(canvas) {
   }
   renderer.setAnimationLoop(frame)
 
-  // Where each active gathering sits on screen, for the room labels.
-  function labels() {
-    const out = []
-    for (const g of gatherings) {
-      if (g.leaving) continue
-      g.group.getWorldPosition(tmp)
-      tmp.y += 0.9
-      const dist = tmp.distanceTo(camera.position)
-      const near = Math.abs(tmp.y - target.y)
-      tmp.project(camera)
-      if (tmp.z > 1) continue
-      out.push({ id: g.roomId, room: g.room.name, use: g.use, x: (tmp.x * 0.5 + 0.5) * width, y: (-tmp.y * 0.5 + 0.5) * height, near, dist })
-    }
-    return out
-  }
   const skyHex = () => '#' + scene.background.getHexString()
 
   return {
     state,
-    labels,
     skyHex,
     setReducedMotion: (v) => (still = v),
   }

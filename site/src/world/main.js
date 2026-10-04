@@ -95,48 +95,6 @@ async function start() {
     world.state.my = (e.clientY / innerHeight) * 2 - 1
   })
 
-  // ---------- room labels: "Courtyard → Pitch circle" ----------
-  const tagLayer = $('.tags')
-  const tags = new Map()
-  const SCRAMBLE = 'abcdefghijklmnopqrstuvwxyz'
-  function scramble(el, text) {
-    let frame = 0
-    const run = () => {
-      frame++
-      el.textContent = text.split('').map((ch, i) => (ch === ' ' || i < frame * 1.5 ? ch : SCRAMBLE[(Math.random() * 26) | 0])).join('')
-      if (frame * 1.5 < text.length) requestAnimationFrame(run)
-    }
-    reduced.matches ? (el.textContent = text) : run()
-  }
-  function drawTags(open) {
-    const seen = new Set()
-    const list = world.labels().filter((l) => open > 0.6 && l.near < 1.6).sort((a, b) => a.y - b.y)
-    for (const l of list) {
-      seen.add(l.id)
-      let t = tags.get(l.id)
-      if (!t) {
-        t = document.createElement('div')
-        t.className = 'tag'
-        t.innerHTML = '<i></i><span class="tag-room"></span><span class="tag-use"></span>'
-        t.querySelector('.tag-room').textContent = l.room
-        tagLayer.append(t)
-        tags.set(l.id, t)
-        requestAnimationFrame(() => t.classList.add('on'))
-      }
-      if (t.dataset.use !== l.use) {
-        t.dataset.use = l.use
-        scramble(t.querySelector('.tag-use'), l.use)
-      }
-      t.style.transform = `translate3d(${l.x.toFixed(1)}px, ${l.y.toFixed(1)}px, 0)`
-    }
-    for (const [id, t] of tags) {
-      if (seen.has(id)) continue
-      tags.delete(id)
-      t.classList.remove('on')
-      setTimeout(() => t.remove(), 500)
-    }
-  }
-
   // ---------- the loop ----------
   let last = performance.now()
   let current = -1
@@ -159,13 +117,12 @@ async function start() {
       chapters.forEach((c, i) => c.classList.toggle('on', i === idx))
       current = idx
     }
-    document.body.classList.toggle('picking', p > 0.12 && p < 0.9)
     const night = world.state.night > 0.5
     if (night !== wasNight) {
       document.body.classList.toggle('night', night)
       wasNight = night
     }
-    drawTags(world.state.open)
+    document.body.classList.toggle('picking', p > 0.12 && p < 0.9)
     document.body.style.setProperty('--sky', world.skyHex())
     requestAnimationFrame(loop)
   }

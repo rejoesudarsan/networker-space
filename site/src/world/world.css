@@ -131,20 +131,6 @@ body.night .who-options button[aria-pressed='true'] { color: var(--granite) }
 .rail button { font: 500 0.68rem var(--mono); color: var(--fg-soft); padding: 0.1rem 0.2rem; transition: color 0.3s var(--ease) }
 .rail button:hover { color: var(--fg) }
 
-/* ---------- room labels in the world ---------- */
-.tags { position: fixed; inset: 0; z-index: 3; pointer-events: none }
-.tag {
-  position: absolute; left: 0; top: 0; display: grid; gap: 0.1rem; padding-left: 1.6rem;
-  opacity: 0; transition: opacity 0.5s var(--ease);
-  font-family: var(--mono); white-space: nowrap; will-change: transform;
-}
-.tag.on { opacity: 1 }
-.tag i { position: absolute; left: -3px; top: 0.7rem; width: 6px; height: 6px; border-radius: 50%; background: var(--terracotta); box-shadow: 0 0 0 3px color-mix(in srgb, var(--terracotta) 25%, transparent) }
-.tag i::after { content: ''; position: absolute; left: 6px; top: 2.5px; width: 1.1rem; height: 1px; background: var(--fg) }
-.tag-room { font-size: 0.66rem; color: var(--fg-soft) }
-.tag-use { font-size: 0.8rem; font-weight: 500; color: var(--fg) }
-.tag-use::before { content: '→ '; color: var(--terracotta) }
-
 /* ---------- arrival ---------- */
 .veil {
   position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; background: var(--plaster);
@@ -164,13 +150,13 @@ body.flat .chapter { position: static; opacity: 1; filter: none; transform: none
 @media (max-width: 760px) {
   .links a:not(.call) { display: none }
   .rail { display: none }
+  .clock { top: 5.6rem; bottom: auto }
+  .clock-now { display: none }
   .who { left: var(--gutter); right: var(--gutter); top: auto; transform: translateY(12px); bottom: var(--gutter); flex-direction: column; align-items: flex-start; gap: 0.4rem }
   body.picking .story { bottom: 7.2rem }
   body.picking .who { transform: none }
   .who-options { overflow-x: auto; max-width: 100%; scrollbar-width: none }
   .who-options button { white-space: nowrap }
-  .clock { top: 5.6rem; bottom: auto }
-  .clock-now { display: none }
 }
 @media (prefers-reduced-motion: reduce) {
   .grain, .chapter .hint::before, .veil span { animation: none }

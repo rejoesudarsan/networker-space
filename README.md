@@ -50,7 +50,7 @@ npm run house    # rebuild public/models/ from plans/plans-AS-BUILT.dwg (needs l
 | `src/world/details.js` | Floor-attached architectural detail, basement access, planting, and neighbourhood detail |
 | `src/world/windows.js` | Window frames and glazing placed from the CAD sill geometry, lowering with the cutaway walls |
 | `src/world/traffic.js` | Moving autos and scooters with rolling wheels |
-| `src/world/main.js` | Scroll, labels and clock. `BOOKING_URL` sets every "Book a call" button |
+| `src/world/main.js` | Scroll and clock. `BOOKING_URL` sets every "Book a call" button |
 | `index.html` | The chapter copy |
 
 The previous five-page site (home, house walk, memberships, evenings, join) is kept in `archive/site-pages-2026-10-04/`.
