@@ -1,0 +1,357 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-04T03:14:43.218179+00:00",
+  "title": "Design System: Networker Space",
+  "extensions": {
+    "colorMeta": {
+      "marigold": {
+        "role": "secondary",
+        "displayName": "Marigold",
+        "canonical": "#eba21c",
+        "tonalRamp": [
+          "#463006",
+          "#7c540b",
+          "#b17810",
+          "#e79d14",
+          "#efb447",
+          "#f3ca7c",
+          "#f8dfb2",
+          "#fdf5e8"
+        ]
+      },
+      "sindoor": {
+        "role": "primary",
+        "displayName": "Sindoor",
+        "canonical": "#c2361e",
+        "tonalRamp": [
+          "#42120a",
+          "#752012",
+          "#a72f1a",
+          "#da3d22",
+          "#e46751",
+          "#ec9384",
+          "#f4bfb6",
+          "#fcece9"
+        ]
+      },
+      "peacock": {
+        "role": "secondary",
+        "displayName": "Peacock",
+        "canonical": "#0b5e57",
+        "tonalRamp": [
+          "#08443f",
+          "#0e7970",
+          "#14ada0",
+          "#1ae1d0",
+          "#4ceadd",
+          "#80f0e7",
+          "#b4f6f1",
+          "#e8fcfb"
+        ]
+      },
+      "indigo": {
+        "role": "tertiary",
+        "displayName": "Indigo",
+        "canonical": "#24306e",
+        "tonalRamp": [
+          "#13193a",
+          "#212c66",
+          "#303f91",
+          "#3e53bd",
+          "#6879ce",
+          "#94a0dc",
+          "#c0c7ea",
+          "#eceef9"
+        ]
+      },
+      "night": {
+        "role": "tertiary",
+        "displayName": "Night",
+        "canonical": "#0e1330",
+        "tonalRamp": [
+          "#11173b",
+          "#1e2968",
+          "#2c3b95",
+          "#394dc3",
+          "#6474d2",
+          "#919cdf",
+          "#bec5ec",
+          "#ebedf9"
+        ]
+      },
+      "enamel": {
+        "role": "neutral",
+        "displayName": "Enamel",
+        "canonical": "#f4eee1",
+        "tonalRamp": [
+          "#382d15",
+          "#634f24",
+          "#8d7134",
+          "#b89343",
+          "#c9ac6c",
+          "#d9c497",
+          "#e9dcc2",
+          "#f8f4ec"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#16130f",
+        "tonalRamp": [
+          "#2d271f",
+          "#504537",
+          "#73634e",
+          "#958166",
+          "#ae9e88",
+          "#c5baab",
+          "#ddd6cd",
+          "#f5f3f0"
+        ]
+      },
+      "rani-pink": {
+        "role": "tertiary",
+        "displayName": "Rani Pink",
+        "canonical": "#d2487a",
+        "tonalRamp": [
+          "#3d0f20",
+          "#6c1b38",
+          "#9b2650",
+          "#ca3269",
+          "#d75e8a",
+          "#e38dac",
+          "#eebcce",
+          "#faebf0"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero board name and page h1s, with the hard ink drop."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section heads on full-bleed paint grounds."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Board names: tiers, room stops, programme slots, floor rows, time numerals."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Condensed line under a board name, max 24ch."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Reading copy, 34 to 52ch."
+      },
+      "button": {
+        "displayName": "Button",
+        "purpose": "Bungee lettering on pill buttons."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Uppercase data labels naming a place or state; beside or under their subject."
+      },
+      "kannada": {
+        "displayName": "Kannada",
+        "purpose": "Bilingual sub-line under names; never uppercased or tracked."
+      }
+    },
+    "shadows": [
+      {
+        "name": "lift",
+        "value": "0 18px 30px -16px rgb(22 19 15 / 0.55), 0 4px 8px -4px rgb(22 19 15 / 0.35)",
+        "purpose": "Ambient lift under every board, floor row and the nav mark."
+      },
+      {
+        "name": "pinstripe",
+        "value": "inset 0 0 0 7px var(--paint), inset 0 0 0 9px var(--stripe)",
+        "purpose": "Painted inner line on boards."
+      },
+      {
+        "name": "plinth",
+        "value": "0 6px 0 -1px #16130f, 0 12px 18px -10px rgb(22 19 15 / 0.6)",
+        "purpose": "Button at rest; 8px on hover, 2px on press."
+      },
+      {
+        "name": "sign-drop",
+        "value": "text-shadow: 0.045em 0.045em 0 #16130f",
+        "purpose": "Display lettering on coloured grounds."
+      },
+      {
+        "name": "focus",
+        "value": "outline: 3px solid #16130f; outline-offset: 3px; box-shadow: 0 0 0 6px #f4eee1",
+        "purpose": "Global focus-visible ring."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "All UI transitions: button press, stop cards, canvas fade-in."
+      },
+      {
+        "name": "press",
+        "value": "0.25s",
+        "purpose": "Button rise and press."
+      },
+      {
+        "name": "stop-enter",
+        "value": "opacity 0.5s, transform 0.7s from translateY(1.5rem) rotate(-1deg)",
+        "purpose": "Room stop card arriving on the house walk."
+      },
+      {
+        "name": "camera-follow",
+        "value": "lerp 0.1 per frame, cubic in-out between shots",
+        "purpose": "3D camera easing from hero to room to stacked house."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "menu",
+        "value": "760px"
+      },
+      {
+        "name": "stack-halves",
+        "value": "900px"
+      },
+      {
+        "name": "stack-tiers",
+        "value": "1000px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Sindoor pill on an ink plinth; every Book a call.",
+      "html": "<a class=\"ds-btn ds-btn-red\" href=\"#\">Book a call</a>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:.7em 1.3em .6em;font-family:Bungee,sans-serif;font-size:.95rem;letter-spacing:.02em;line-height:1;text-decoration:none;color:var(--c,#f4eee1);background:var(--b,#16130f);border:3px solid #16130f;border-radius:999px;box-shadow:0 6px 0 -1px #16130f,0 12px 18px -10px rgb(22 19 15/.6);transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s cubic-bezier(.16,1,.3,1)}.ds-btn:hover{transform:translateY(-2px);box-shadow:0 8px 0 -1px #16130f,0 16px 22px -10px rgb(22 19 15/.6)}.ds-btn:active{transform:translateY(4px);box-shadow:0 2px 0 -1px #16130f,0 4px 8px -4px rgb(22 19 15/.5)}.ds-btn:focus-visible{outline:3px solid #16130f;outline-offset:3px;box-shadow:0 0 0 6px #f4eee1}.ds-btn-red{--b:#c2361e;--c:#f4eee1}"
+    },
+    {
+      "name": "Ink Button",
+      "kind": "button",
+      "refersTo": "button-ink",
+      "description": "Secondary action on enamel and marigold boards.",
+      "html": "<a class=\"ds-btn ds-btn-ink\" href=\"#\">Walk the house</a>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:.7em 1.3em .6em;font-family:Bungee,sans-serif;font-size:.95rem;letter-spacing:.02em;line-height:1;text-decoration:none;color:var(--c,#f4eee1);background:var(--b,#16130f);border:3px solid #16130f;border-radius:999px;box-shadow:0 6px 0 -1px #16130f,0 12px 18px -10px rgb(22 19 15/.6);transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s cubic-bezier(.16,1,.3,1)}.ds-btn:hover{transform:translateY(-2px);box-shadow:0 8px 0 -1px #16130f,0 16px 22px -10px rgb(22 19 15/.6)}.ds-btn:active{transform:translateY(4px);box-shadow:0 2px 0 -1px #16130f,0 4px 8px -4px rgb(22 19 15/.5)}.ds-btn:focus-visible{outline:3px solid #16130f;outline-offset:3px;box-shadow:0 0 0 6px #f4eee1}.ds-btn-ink{--b:#16130f;--c:#f4eee1}"
+    },
+    {
+      "name": "Marigold Button",
+      "kind": "button",
+      "refersTo": "button-marigold",
+      "description": "Action on peacock, indigo and night grounds.",
+      "html": "<a class=\"ds-btn ds-btn-yellow\" href=\"#\">Compare memberships</a>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:.7em 1.3em .6em;font-family:Bungee,sans-serif;font-size:.95rem;letter-spacing:.02em;line-height:1;text-decoration:none;color:var(--c,#f4eee1);background:var(--b,#16130f);border:3px solid #16130f;border-radius:999px;box-shadow:0 6px 0 -1px #16130f,0 12px 18px -10px rgb(22 19 15/.6);transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s cubic-bezier(.16,1,.3,1)}.ds-btn:hover{transform:translateY(-2px);box-shadow:0 8px 0 -1px #16130f,0 16px 22px -10px rgb(22 19 15/.6)}.ds-btn:active{transform:translateY(4px);box-shadow:0 2px 0 -1px #16130f,0 4px 8px -4px rgb(22 19 15/.5)}.ds-btn:focus-visible{outline:3px solid #16130f;outline-offset:3px;box-shadow:0 0 0 6px #f4eee1}.ds-btn-yellow{--b:#eba21c;--c:#16130f}"
+    },
+    {
+      "name": "Plain Button",
+      "kind": "button",
+      "refersTo": "button-plain",
+      "description": "Enamel pill beside a primary or on a sindoor band.",
+      "html": "<a class=\"ds-btn ds-btn-plain\" href=\"#\">Walk the house</a>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:.7em 1.3em .6em;font-family:Bungee,sans-serif;font-size:.95rem;letter-spacing:.02em;line-height:1;text-decoration:none;color:var(--c,#f4eee1);background:var(--b,#16130f);border:3px solid #16130f;border-radius:999px;box-shadow:0 6px 0 -1px #16130f,0 12px 18px -10px rgb(22 19 15/.6);transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s cubic-bezier(.16,1,.3,1)}.ds-btn:hover{transform:translateY(-2px);box-shadow:0 8px 0 -1px #16130f,0 16px 22px -10px rgb(22 19 15/.6)}.ds-btn:active{transform:translateY(4px);box-shadow:0 2px 0 -1px #16130f,0 4px 8px -4px rgb(22 19 15/.5)}.ds-btn:focus-visible{outline:3px solid #16130f;outline-offset:3px;box-shadow:0 0 0 6px #f4eee1}.ds-btn-plain{--b:#f4eee1;--c:#16130f}"
+    },
+    {
+      "name": "Tier Chips",
+      "kind": "chip",
+      "refersTo": "chip-walk-in",
+      "description": "Tier stamps painted in each tier's board colour.",
+      "html": "<span class=\"ds-chip ds-chip-w\">Walk-In</span> <span class=\"ds-chip ds-chip-r\">Regular</span> <span class=\"ds-chip ds-chip-h\">House</span>",
+      "css": ".ds-chip{display:inline-block;font-family:Bungee,sans-serif;font-size:.78rem;line-height:1;padding:.35rem .6rem .25rem;border-radius:6px;border:2px solid #16130f}.ds-chip-w{background:#f4eee1;color:#16130f}.ds-chip-r{background:#eba21c;color:#16130f}.ds-chip-h{background:#24306e;color:#f4eee1}"
+    },
+    {
+      "name": "Enamel Board",
+      "kind": "card",
+      "refersTo": "board",
+      "description": "Signature container: flat paint, keyline, pinstripe, lift.",
+      "html": "<div class=\"ds-board ds-board-enamel\"><h3>Walk-In</h3><p>For people who want a seat at the table.</p></div>",
+      "css": ".ds-board{background:var(--paint);color:var(--ink);border:3px solid #16130f;border-radius:10px;padding:1.6rem;max-width:22rem;font-family:'Anek Latin Variable',system-ui,sans-serif;box-shadow:inset 0 0 0 7px var(--paint),inset 0 0 0 9px var(--stripe),0 18px 30px -16px rgb(22 19 15/.55),0 4px 8px -4px rgb(22 19 15/.35)}.ds-board h3{margin:0;font-family:Bungee,sans-serif;font-weight:400;font-size:2.4rem;line-height:.95;color:var(--name);text-shadow:.045em .045em 0 #16130f}.ds-board .kn{margin:.4rem 0 0;font-weight:700;font-size:1.2rem}.ds-board p{margin:.6rem 0 0;font-weight:600;font-size:1.05rem;line-height:1.3}.ds-board-enamel{--paint:#f4eee1;--ink:#16130f;--stripe:#0b5e57;--name:#0b5e57}"
+    },
+    {
+      "name": "Indigo Board",
+      "kind": "card",
+      "refersTo": "board-indigo",
+      "description": "Night board: indigo paint, enamel text, marigold stripe.",
+      "html": "<div class=\"ds-board ds-board-indigo\"><h3>House</h3><p>For teams who want the house to be their base.</p></div>",
+      "css": ".ds-board{background:var(--paint);color:var(--ink);border:3px solid #16130f;border-radius:10px;padding:1.6rem;max-width:22rem;font-family:'Anek Latin Variable',system-ui,sans-serif;box-shadow:inset 0 0 0 7px var(--paint),inset 0 0 0 9px var(--stripe),0 18px 30px -16px rgb(22 19 15/.55),0 4px 8px -4px rgb(22 19 15/.35)}.ds-board h3{margin:0;font-family:Bungee,sans-serif;font-weight:400;font-size:2.4rem;line-height:.95;color:var(--name);text-shadow:.045em .045em 0 #16130f}.ds-board .kn{margin:.4rem 0 0;font-weight:700;font-size:1.2rem}.ds-board p{margin:.6rem 0 0;font-weight:600;font-size:1.05rem;line-height:1.3}.ds-board-indigo{--paint:#24306e;--ink:#f4eee1;--stripe:#eba21c;--name:#eba21c}"
+    },
+    {
+      "name": "Hours Strip",
+      "kind": "custom",
+      "description": "Day and night paired fields split by an ink rule.",
+      "html": "<div class=\"ds-hours\"><div class=\"ds-day\"><b>Café</b><span>8 am – 6 pm</span></div><div class=\"ds-night\"><b>Club</b><span>6 pm – 11 pm</span></div></div>",
+      "css": ".ds-hours{display:grid;grid-template-columns:1fr 1fr;max-width:24rem;border:3px solid #16130f;border-radius:8px;overflow:hidden;font-family:'Anek Latin Variable',sans-serif}.ds-hours>div{display:grid;padding:.75rem .95rem .7rem;line-height:1.15}.ds-hours b{font-family:Bungee,sans-serif;font-weight:400;font-size:1.25rem}.ds-hours span{font-weight:700;font-variant-numeric:tabular-nums}.ds-day{background:#eba21c;color:#16130f}.ds-night{background:#24306e;color:#f4eee1;border-left:3px solid #16130f}"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Sindoor nav mark, ink pill rail, primary button.",
+      "html": "<header class=\"ds-nav\"><a class=\"ds-mark\" href=\"#\"><span>Networker</span><span>Space</span></a><nav><a href=\"#\">The house</a><a href=\"#\" aria-current=\"page\">Memberships</a><a href=\"#\">Evenings</a></nav></header>",
+      "css": ".ds-nav{display:flex;align-items:center;gap:1.5rem;padding:.9rem 1.5rem;background:#eba21c}.ds-mark{display:grid;font-family:Bungee,sans-serif;font-size:.82rem;line-height:1;text-decoration:none;color:#f4eee1;background:#c2361e;padding:.55rem .7rem .45rem;border:3px solid #16130f;border-radius:8px;box-shadow:inset 0 0 0 3px #c2361e,inset 0 0 0 4.5px #f4eee1}.ds-nav nav{display:flex;gap:.3rem;margin-left:auto;background:rgb(22 19 15/.88);padding:.3rem;border-radius:999px}.ds-nav nav a{color:#f4eee1;text-decoration:none;font-family:'Anek Latin Variable',sans-serif;font-weight:600;font-stretch:112%;font-size:.95rem;padding:.45rem .95rem;border-radius:999px;transition:background .2s,color .2s}.ds-nav nav a:hover{background:#eba21c;color:#16130f}.ds-nav nav a[aria-current=page]{background:#f4eee1;color:#16130f}.ds-nav a:focus-visible{outline:3px solid #16130f;outline-offset:3px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Painted Street",
+    "overview": "**Creative North Star: \"The Painted Street\"**\n\nThe house is a Bengaluru street of hand-painted enamel shop boards. Every surface is a board: a flat field of paint, a hard ink keyline, a thin pinstripe painted just inside the edge, Bungee lettering with a hard ink drop, and a Kannada sub-line the way real shop boards carry one. Grounds are whole fields of a single paint (marigold street, peacock memberships, sindoor call-to-action, night evenings), separated by 3px ink rules rather than by gaps or fades.\n\nThe 3D house follows the same paint. Its four floor plates are one connected strip joined by enamel stairs, each slab a flat colour per face direction with ink edges, never lit or shaded. The camera walks room by room; a rani-pink dashed route, room outline and flag marker say \"you are here\". At the end the plates lift into the stacked house. Density is generous and loud: big type, few words per board, every path ending at \"Book a call\".\n\nRejected by the world itself: dark-glass \"immersive WebGL\", gradients, glass, soft shading on the model, and the generic pricing grid.",
+    "keyCharacteristics": [
+      "Flat paint fields with 3px ink keylines and an inset painted pinstripe.",
+      "Bungee display lettering with a hard 0.045em ink drop; Anek Latin for reading.",
+      "Bilingual: Kannada sub-lines under names and floor labels, never uppercased.",
+      "Day is marigold, night is indigo and night-blue; the hours strip pairs them.",
+      "Rani pink is reserved for \"you are here\".",
+      "An unshaded, ink-edged 3D model of the real house plans."
+    ],
+    "rules": [
+      {
+        "name": "The Flat Paint Rule",
+        "body": "Every painted surface is one flat, opaque paint: no gradient fills, no glass, no backdrop blur. The 3D model takes one tone per face direction and is never lit. The only soft tones are the ambient lift under boards and the ink ground pool under the 3D plates.",
+        "section": "colors"
+      },
+      {
+        "name": "The Day and Night Rule",
+        "body": "Marigold means day (8:00 to 18:00), indigo and night mean club hours (18:00 to 23:00). Where the rhythm is featured (the hero hours strip, the day/night band), the two sit side by side as paired fields split by an ink rule.",
+        "section": "colors"
+      },
+      {
+        "name": "The You Are Here Rule",
+        "body": "Rani pink marks the visitor's position in the house and nothing else.",
+        "section": "colors"
+      },
+      {
+        "name": "The Sign Drop Rule",
+        "body": "Display and headline lettering on a coloured ground carries a hard ink drop (`text-shadow: 0.045em 0.045em 0 ink`), the painted shadow of shop lettering. Body type never does.",
+        "section": "typography"
+      },
+      {
+        "name": "The Bilingual Board Rule",
+        "body": "Names of the house, its floors and its sections carry a Kannada line set directly beneath in Anek Kannada, never uppercased or tracked.",
+        "section": "typography"
+      },
+      {
+        "name": "The Keyline First Rule",
+        "body": "Edges are drawn, not shaded: a 3px ink border on boards, buttons, plates and band joins (2px on chips and swatches). Shadow adds weight under a keyline; it never replaces one.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do give every painted surface a 3px ink keyline and, on boards, the inset pinstripe.",
+      "Do set board names in Bungee 400 with the hard ink drop on coloured grounds, and a Kannada line beneath.",
+      "Do pair marigold with indigo whenever day and night hours appear together.",
+      "Do paint the 3D model one flat tone per face with ink edges, using the floor paints from content.",
+      "Do end each band and page at a sindoor \"Book a call\"."
+    ],
+    "donts": [
+      "Don't use gradient fills, glass, backdrop blur or lit, shaded materials on painted surfaces or the model.",
+      "Don't use rani pink for anything other than the visitor's position in the house.",
+      "Don't uppercase or track Kannada text.",
+      "Don't set a small uppercase label above a heading; labels name places and sit beside or under their subject.",
+      "Don't use a Bungee weight other than 400 or a display face for reading copy."
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Networker Space · A private club for startup people, HSR Layout</title>
+    <meta name="description" content="A café by day and a club by night for people building startups, in a four-floor house in HSR Layout." />
+    <meta name="theme-color" content="#eba21c" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body class="page-home">
+    <!-- @nav -->
+    <canvas id="scene" aria-hidden="true"></canvas>
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="board board--hero">
+          <h1 id="hero-title" class="hero__name"><span>Networker</span> <span>Space</span></h1>
+          <p class="hero__kn" lang="kn" data-slot="nameKn"></p>
+          <p class="hero__tag" data-slot="tagline"></p>
+          <div class="hours" role="list">
+            <div class="hours__cell hours__cell--day" role="listitem" data-hours="day"></div>
+            <div class="hours__cell hours__cell--night" role="listitem" data-hours="night"></div>
+          </div>
+          <div class="hero__actions">
+            <a class="btn btn--red btn--big" data-book href="/join/#book">Book a call</a>
+            <a class="btn btn--plain" href="/house/">Walk the house</a>
+          </div>
+        </div>
+        <p class="hero__where" data-slot="location"></p>
+      </section>
+
+      <section class="rhythm" aria-label="Day and night">
+        <div class="rhythm__half rhythm__half--day" data-rhythm="day"></div>
+        <div class="rhythm__half rhythm__half--night" data-rhythm="night"></div>
+      </section>
+
+      <section class="house-teaser" aria-labelledby="floors-title">
+        <div class="house-teaser__head">
+          <h2 id="floors-title">Four floors, twelve rooms</h2>
+          <p>A whole house, from the quiet floor below the street to the terrace on the roof.</p>
+          <a class="btn btn--ink btn--big" href="/house/">Walk the house</a>
+        </div>
+        <ol class="floors"></ol>
+      </section>
+
+      <section class="tiers" aria-labelledby="tiers-title">
+        <header class="section-head">
+          <h2 id="tiers-title">Three ways in</h2>
+          <p class="section-head__kn" lang="kn">ಸದಸ್ಯತ್ವ</p>
+          <p>From a seat at the café to a base for your whole team.</p>
+        </header>
+        <div class="tiers__row"></div>
+        <p class="tiers__more"><a class="btn btn--yellow" href="/memberships/">Compare memberships</a></p>
+      </section>
+
+      <section class="cta-band" aria-labelledby="cta-title">
+        <h2 id="cta-title">Come and see it.</h2>
+        <p>Twenty minutes on a call, then a coffee at the house.</p>
+        <a class="btn btn--plain btn--big" data-book href="/join/#book">Book a call</a>
+      </section>
+    </main>
+    <!-- @footer -->
+    <script type="module" src="/src/pages/home.js"></script>
+  </body>
+</html>

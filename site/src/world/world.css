@@ -1,0 +1,177 @@
+/* Space: the house world. Colours are the house's own materials:
+   lime plaster, granite ink, teak, terracotta. */
+:root {
+  --plaster: #ecebe4;
+  --granite: #1d1d1c;
+  --teak: #7a3f1f;
+  --terracotta: #b5562f;
+  --kota: #b9a68a;
+  --fg: var(--granite);
+  --fg-soft: rgb(29 29 28 / 0.68);
+  --line: rgb(29 29 28 / 0.28);
+  --serif: 'Newsreader Variable', Georgia, serif;
+  --sans: 'Schibsted Grotesk Variable', system-ui, sans-serif;
+  --mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --gutter: clamp(1.25rem, 3vw, 2.5rem);
+}
+body.night {
+  --fg: var(--plaster);
+  --fg-soft: rgb(236 235 228 / 0.7);
+  --line: rgb(236 235 228 / 0.3);
+}
+
+* { box-sizing: border-box; margin: 0 }
+html, body { height: 100%; overflow: hidden; overscroll-behavior: none }
+body {
+  background: var(--plaster);
+  color: var(--fg);
+  font: 400 1rem/1.5 var(--sans);
+  -webkit-font-smoothing: antialiased;
+  transition: color 1.2s var(--ease);
+}
+::selection { background: var(--terracotta); color: var(--plaster) }
+a { color: inherit; text-decoration: none }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer }
+:focus-visible { outline: 1.5px solid var(--terracotta); outline-offset: 4px; border-radius: 2px }
+
+.stage { position: fixed; inset: 0; width: 100%; height: 100%; display: block }
+/* The sky's own colour rises behind the story so it stays readable over the world. */
+.story::before {
+  content: ''; position: absolute; z-index: -1; left: calc(-1 * var(--gutter) - 10vw); bottom: calc(-1 * var(--gutter) - 6rem);
+  width: min(64rem, 120vw); height: 40rem; pointer-events: none;
+  background: radial-gradient(ellipse at 22% 72%, var(--sky, #ecebe4) 22%, color-mix(in srgb, var(--sky, #ecebe4) 55%, transparent) 46%, transparent 72%);
+}
+/* A whisper of grain over the render, like film. */
+.grain {
+  position: fixed; inset: -50%; pointer-events: none; opacity: 0.06; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 1.2s steps(6) infinite;
+}
+@keyframes grain { to { transform: translate(-8%, 5%) } }
+
+/* ---------- header ---------- */
+.bar {
+  position: fixed; inset: 0 0 auto; z-index: 5;
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: var(--gutter);
+}
+.mark { display: grid; gap: 0.15rem }
+.mark-name { font: 400 2rem/0.9 var(--serif); font-variation-settings: 'opsz' 72; letter-spacing: -0.03em }
+.mark-place { font: 500 0.72rem/1.2 var(--mono); letter-spacing: 0.02em; color: var(--fg-soft) }
+.links { display: flex; align-items: center; gap: 0.35rem; font-size: 0.9rem; font-weight: 500 }
+.links a { padding: 0.55rem 0.8rem; border-radius: 999px; transition: background 0.3s var(--ease) }
+.links a:hover { background: color-mix(in srgb, var(--fg) 8%, transparent) }
+.links .call { background: var(--fg); color: var(--plaster); padding-inline: 1.05rem; margin-left: 0.35rem }
+body.night .links .call { color: var(--granite) }
+.links .call:hover { background: var(--terracotta); color: var(--plaster) }
+
+/* ---------- the story ---------- */
+.story { isolation: isolate; position: fixed; left: var(--gutter); bottom: calc(var(--gutter) + 0.5rem); z-index: 4; width: min(31rem, calc(100vw - 2 * var(--gutter))); pointer-events: none }
+.chapter {
+  position: absolute; left: 0; bottom: 0; width: 100%;
+  opacity: 0; filter: blur(10px); transform: translateY(14px);
+  transition: opacity 0.7s var(--ease), filter 0.9s var(--ease), transform 0.9s var(--ease);
+}
+.chapter.on { opacity: 1; filter: blur(0); transform: none; pointer-events: auto }
+.chapter h1, .chapter h2 {
+  font-family: var(--serif); font-weight: 380; font-variation-settings: 'opsz' 72;
+  letter-spacing: -0.03em; line-height: 0.98; text-wrap: balance;
+}
+.chapter h1 { font-size: clamp(2.6rem, 1.6rem + 3.6vw, 5.2rem); max-width: 11ch }
+.chapter h2 { font-size: clamp(2rem, 1.4rem + 2.2vw, 3.5rem); max-width: 13ch }
+.chapter p { margin-top: 1rem; max-width: 40ch; color: var(--fg-soft); font-size: 1.02rem }
+.chapter .hint { margin-top: 1.8rem; display: flex; align-items: center; gap: 0.6rem; font: 500 0.75rem var(--mono); color: var(--fg) }
+.chapter .hint::before { content: ''; width: 1px; height: 2.2rem; background: currentColor; transform-origin: top; animation: hint 2.2s var(--ease) infinite }
+@keyframes hint { 0% { transform: scaleY(0) } 50% { transform: scaleY(1) } 100% { transform: scaleY(1); opacity: 0 } }
+.actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.6rem }
+.btn {
+  display: inline-flex; align-items: center; min-height: 48px; padding: 0 1.3rem; border-radius: 999px;
+  border: 1px solid var(--line); font-weight: 500; transition: background 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+.btn:hover { border-color: var(--fg) }
+.btn.solid { background: var(--terracotta); border-color: var(--terracotta); color: var(--plaster) }
+.btn.solid:hover { background: var(--teak); border-color: var(--teak) }
+
+/* ---------- who's inside ---------- */
+.who {
+  position: fixed; left: calc(var(--gutter) + 34rem); bottom: calc(var(--gutter) + 0.4rem); z-index: 6;
+  display: flex; align-items: center; gap: 0.8rem;
+  transform: translateY(10px); opacity: 0; pointer-events: none;
+  transition: opacity 0.6s var(--ease), transform 0.8s var(--ease);
+}
+body.picking .who { opacity: 1; transform: none; pointer-events: auto }
+@media (max-width: 1240px) and (min-width: 761px) {
+  .who { left: var(--gutter); bottom: auto; top: 6.2rem }
+}
+.who-label { font: 500 0.72rem var(--mono); color: var(--fg-soft); white-space: nowrap }
+.who-options { display: flex; gap: 0.2rem; padding: 0.25rem; border-radius: 999px; border: 1px solid var(--line); background: color-mix(in srgb, var(--plaster) 55%, transparent) }
+body.night .who-options { background: rgb(18 20 25 / 0.45) }
+.who-options button { padding: 0.45rem 0.8rem; border-radius: 999px; font-size: 0.84rem; font-weight: 500; color: var(--fg-soft); transition: background 0.3s var(--ease), color 0.3s var(--ease) }
+.who-options button:hover { color: var(--fg) }
+.who-options button[aria-pressed='true'] { background: var(--fg); color: var(--plaster) }
+body.night .who-options button[aria-pressed='true'] { color: var(--granite) }
+
+/* ---------- clock and rail ---------- */
+.clock {
+  position: fixed; right: var(--gutter); bottom: calc(var(--gutter) + 0.4rem); z-index: 4;
+  display: grid; justify-items: end; gap: 0.2rem; font-family: var(--mono); font-variant-numeric: tabular-nums;
+}
+.clock-time { font-size: clamp(2rem, 1.4rem + 1.8vw, 3rem); font-weight: 300; letter-spacing: -0.04em; line-height: 1 }
+.clock-part { font-size: 0.75rem; font-weight: 500 }
+.clock-now { font-size: 0.7rem; color: var(--fg-soft); margin-top: 0.4rem }
+.clock-now b { font-weight: 500; color: var(--fg) }
+
+.rail {
+  position: fixed; right: var(--gutter); top: 50%; z-index: 4; transform: translateY(-50%);
+  display: grid; gap: 1.1rem; justify-items: end; padding-right: 0.9rem;
+}
+.rail::before { content: ''; position: absolute; right: 0; top: 0.4rem; bottom: 0.4rem; width: 1px; background: var(--line) }
+.rail-fill { position: absolute; right: 0; top: 0.4rem; bottom: 0.4rem; width: 1px; background: var(--fg); transform-origin: top; transform: scaleY(0) }
+.rail button { font: 500 0.68rem var(--mono); color: var(--fg-soft); padding: 0.1rem 0.2rem; transition: color 0.3s var(--ease) }
+.rail button:hover { color: var(--fg) }
+
+/* ---------- room labels in the world ---------- */
+.tags { position: fixed; inset: 0; z-index: 3; pointer-events: none }
+.tag {
+  position: absolute; left: 0; top: 0; display: grid; gap: 0.1rem; padding-left: 1.6rem;
+  opacity: 0; transition: opacity 0.5s var(--ease);
+  font-family: var(--mono); white-space: nowrap; will-change: transform;
+}
+.tag.on { opacity: 1 }
+.tag i { position: absolute; left: -3px; top: 0.7rem; width: 6px; height: 6px; border-radius: 50%; background: var(--terracotta); box-shadow: 0 0 0 3px color-mix(in srgb, var(--terracotta) 25%, transparent) }
+.tag i::after { content: ''; position: absolute; left: 6px; top: 2.5px; width: 1.1rem; height: 1px; background: var(--fg) }
+.tag-room { font-size: 0.66rem; color: var(--fg-soft) }
+.tag-use { font-size: 0.8rem; font-weight: 500; color: var(--fg) }
+.tag-use::before { content: '→ '; color: var(--terracotta) }
+
+/* ---------- arrival ---------- */
+.veil {
+  position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; background: var(--plaster);
+  transition: opacity 1.2s var(--ease) 0.2s, visibility 0s linear 1.4s;
+}
+.veil span { font: 400 2.4rem var(--serif); letter-spacing: -0.03em; animation: breathe 1.6s var(--ease) infinite alternate }
+@keyframes breathe { from { opacity: 0.35 } to { opacity: 1 } }
+body.ready .veil, body.flat .veil { opacity: 0; visibility: hidden }
+
+/* ---------- without WebGL: a plain page ---------- */
+body.flat { overflow: auto; height: auto }
+body.flat .stage, body.flat .who, body.flat .clock, body.flat .rail, body.flat .grain { display: none }
+body.flat .story { position: static; width: auto; padding: 8rem var(--gutter) 4rem; display: grid; gap: 3rem; max-width: 46rem }
+body.flat .story::before { content: ''; position: static; z-index: auto; width: auto; height: auto; display: block; aspect-ratio: 4 / 3; background: url(/world/courtyard.jpg) center / cover; border-radius: 4px }
+body.flat .chapter { position: static; opacity: 1; filter: none; transform: none }
+
+@media (max-width: 760px) {
+  .links a:not(.call) { display: none }
+  .rail { display: none }
+  .who { left: var(--gutter); right: var(--gutter); top: auto; transform: translateY(12px); bottom: var(--gutter); flex-direction: column; align-items: flex-start; gap: 0.4rem }
+  body.picking .story { bottom: 7.2rem }
+  body.picking .who { transform: none }
+  .who-options { overflow-x: auto; max-width: 100%; scrollbar-width: none }
+  .who-options button { white-space: nowrap }
+  .clock { top: 5.6rem; bottom: auto }
+  .clock-now { display: none }
+}
+@media (prefers-reduced-motion: reduce) {
+  .grain, .chapter .hint::before, .veil span { animation: none }
+}

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Walk the house · Networker Space</title>
+    <meta name="description" content="Walk the four floors of Networker Space room by room, from the 8 am café to the 11 pm terrace." />
+    <meta name="theme-color" content="#eba21c" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body class="page-house">
+    <!-- @nav -->
+    <canvas id="scene" aria-hidden="true"></canvas>
+    <main id="main">
+      <section class="hero hero--house" aria-labelledby="hero-title">
+        <div class="board board--hero">
+          <h1 id="hero-title" class="hero__name hero__name--sm">Walk the house</h1>
+          <p class="hero__tag">Twelve rooms on four floors, from the 8 am café to the 11 pm terrace.</p>
+          <p class="hero__hint">Scroll to walk in</p>
+        </div>
+      </section>
+
+      <section class="journey" aria-label="The house, room by room">
+        <div class="journey__sticky">
+          <div class="clock" aria-hidden="true">
+            <span class="clock__time">08:00</span>
+            <span class="clock__phase">Café hours</span>
+          </div>
+          <ol class="stops"></ol>
+          <div class="progress" aria-hidden="true"><span></span></div>
+        </div>
+      </section>
+
+      <section class="assemble" aria-labelledby="assemble-title">
+        <div class="assemble__sticky">
+          <div class="board board--blue assemble__board">
+            <h2 id="assemble-title">Four floors.<br />One house.</h2>
+            <ul class="legend"></ul>
+            <a class="btn btn--yellow" href="/memberships/">See the memberships</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-band" aria-labelledby="cta-title">
+        <h2 id="cta-title">Rather see it in person?</h2>
+        <p>Book a call and we will set up a walk-through during café hours.</p>
+        <a class="btn btn--plain btn--big" data-book href="/join/#book">Book a call</a>
+      </section>
+    </main>
+    <!-- @footer -->
+    <script type="module" src="/src/pages/house.js"></script>
+  </body>
+</html>

@@ -1,0 +1,257 @@
+{
+  "unit": 96,
+  "slab": 0.14583333333333334,
+  "wallHeight": 0.5625,
+  "floors": {
+    "basement": {
+      "width": 4.584,
+      "depth": 7.229,
+      "offset": [
+        0.416,
+        1.387
+      ],
+      "labels": [
+        {
+          "text": "OFFICE",
+          "x": 0.79,
+          "z": 0.61
+        },
+        {
+          "text": "PARKING",
+          "x": -0.89,
+          "z": -1.04
+        },
+        {
+          "text": "COURT 1",
+          "x": 0.81,
+          "z": -1.6
+        },
+        {
+          "text": "STORE ROOM/UPS",
+          "x": -0.41,
+          "z": 2.41
+        },
+        {
+          "text": "COURT 1",
+          "x": 0.94,
+          "z": 2.73
+        },
+        {
+          "text": "STUDIO/GALLERY",
+          "x": 0.97,
+          "z": -2.84
+        },
+        {
+          "text": "OPEN TO SKY COURT",
+          "x": 0.94,
+          "z": 2.63
+        }
+      ]
+    },
+    "ground": {
+      "width": 6.25,
+      "depth": 10,
+      "offset": [
+        0,
+        0
+      ],
+      "labels": [
+        {
+          "text": "BEDROOM 1",
+          "x": 1.16,
+          "z": -2.83
+        },
+        {
+          "text": "LIVING",
+          "x": 1.19,
+          "z": 2.02
+        },
+        {
+          "text": "FAMILY",
+          "x": -0.96,
+          "z": -1.63
+        },
+        {
+          "text": "KITCHEN1",
+          "x": -2.69,
+          "z": -3.56
+        },
+        {
+          "text": "LIVING",
+          "x": 1.19,
+          "z": 2.02
+        },
+        {
+          "text": "FAMILY",
+          "x": -0.96,
+          "z": -1.63
+        },
+        {
+          "text": "DOUBLE HEIGHT",
+          "x": 0.94,
+          "z": -0.19
+        },
+        {
+          "text": "DINING",
+          "x": -0.47,
+          "z": -3.07
+        },
+        {
+          "text": "FOYER",
+          "x": -0.16,
+          "z": 0.23
+        },
+        {
+          "text": "ENTRANCE",
+          "x": -1.16,
+          "z": 0.04
+        },
+        {
+          "text": "PUJA",
+          "x": -1.61,
+          "z": -2.55
+        },
+        {
+          "text": "BEDROOM 2",
+          "x": -1.25,
+          "z": 2.02
+        },
+        {
+          "text": "GARDEN",
+          "x": 0.4,
+          "z": 4.24
+        },
+        {
+          "text": "GARDEN",
+          "x": -2.15,
+          "z": 1.77
+        },
+        {
+          "text": "GARDEN",
+          "x": -2.6,
+          "z": -1.5
+        },
+        {
+          "text": "CARE TAKER",
+          "x": 1.84,
+          "z": -4.59
+        },
+        {
+          "text": "OFFICE TOILET",
+          "x": 1.86,
+          "z": 1.22
+        }
+      ]
+    },
+    "first": {
+      "width": 5.833,
+      "depth": 8.313,
+      "offset": [
+        -0.208,
+        -0.842
+      ],
+      "labels": [
+        {
+          "text": "STORE",
+          "x": -2.51,
+          "z": -3.75
+        },
+        {
+          "text": "TOILET",
+          "x": 0.18,
+          "z": 3.11
+        },
+        {
+          "text": "LIVING 2",
+          "x": 1.61,
+          "z": 3.19
+        },
+        {
+          "text": "DOUBLE HT",
+          "x": 1.68,
+          "z": 1.08
+        },
+        {
+          "text": "SERVANTS2",
+          "x": -2.68,
+          "z": -2.43
+        },
+        {
+          "text": "KITCHEN 2",
+          "x": -1.03,
+          "z": -2.17
+        },
+        {
+          "text": "FAMILY 2",
+          "x": 1.46,
+          "z": -2.13
+        },
+        {
+          "text": "DINING 2",
+          "x": -0.23,
+          "z": -0.62
+        },
+        {
+          "text": "UTILITY",
+          "x": 0.22,
+          "z": -2.43
+        },
+        {
+          "text": "FOYER 1",
+          "x": 0.2,
+          "z": 1.05
+        },
+        {
+          "text": "COURT",
+          "x": 1.67,
+          "z": 1.19
+        },
+        {
+          "text": "BEDROOM 3",
+          "x": -0.97,
+          "z": 3.24
+        },
+        {
+          "text": "ENTRANCE",
+          "x": -1.01,
+          "z": 0.93
+        },
+        {
+          "text": "LIBRARY",
+          "x": 0.2,
+          "z": -1.46
+        }
+      ]
+    },
+    "second": {
+      "width": 4.583,
+      "depth": 7.063,
+      "offset": [
+        0.417,
+        -0.217
+      ],
+      "labels": [
+        {
+          "text": "TERRACE",
+          "x": -1.69,
+          "z": -1.52
+        },
+        {
+          "text": "DRESS",
+          "x": 1.38,
+          "z": -3.2
+        },
+        {
+          "text": "BEDROOM 4",
+          "x": 0.04,
+          "z": -2.15
+        },
+        {
+          "text": "BEDROOM 3",
+          "x": 0.72,
+          "z": 2
+        }
+      ]
+    }
+  }
+}
