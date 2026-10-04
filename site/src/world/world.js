@@ -5,6 +5,10 @@ import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js'
 import { ROOMS, PROGRAM, partAt } from './program.js'
+import { createPerson as person, posePerson, poseFor, createFurnishings } from './characters.js'
+import { addWorldDetails } from './details.js'
+import { createVehicle, rollVehicle } from './traffic.js'
+import { addWindows } from './windows.js'
 
 // The house at the centre of a small, quiet world that lives through one day.
 // Progress (0 → 1) runs the day from dawn to late night: the house opens,
@@ -38,7 +42,7 @@ const LEVEL = { basement: -0.72, ground: 0.73, first: 2.18, second: 3.63 }
 // When the house opens, every floor lifts and parts; floors above the one in
 // view rise clear out of the frame so that floor is open to the sky.
 const ORDER = ['basement', 'ground', 'first', 'second']
-const PART = { basement: 1.0, ground: 1.9, first: 2.8, second: 3.7 }
+const PART = { basement: 0, ground: 1.9, first: 2.8, second: 3.7 }
 const CLEAR = 7
 
 const smooth = (a, b, x) => {
@@ -81,7 +85,7 @@ const GATE = [P(-2.75, 0, STREET_Z), P(-2.75, 0.73, 4.65, 'ground'), P(-2.6, 0.7
 const ROUTES = {
   in: () => [P(pick([-26, 26]), 0, STREET_Z + rand(-0.15, 0.15)), ...GATE, P(-1.05, 0.73, 0.15, 'ground')],
   up: () => [P(pick([-26, 26]), 0, STREET_Z + rand(-0.15, 0.15)), ...GATE, P(-1.9, 0.73, -0.45, 'ground'), P(-2.85, 2.18, -0.45, 'first'), P(-1.25, 2.18, 0.1, 'first')],
-  office: () => [P(pick([-26, 26]), 0, STREET_Z + rand(-0.15, 0.15)), P(1.85, 0, STREET_Z), P(1.85, 0, 5.05), P(1.85, -0.72, 4.0, 'basement'), P(1.45, -0.72, 3.4, 'basement')],
+  office: () => [P(pick([-26, 26]), 0, STREET_Z + rand(-0.15, 0.15)), P(2.92, 0, STREET_Z), P(2.92, 0, 4.71), P(2.62, 0, 4.71, 'basement'), P(1.66, -0.72, 4.71, 'basement'), P(1.5, -0.72, 4.15, 'basement'), P(1.45, -0.72, 3.45, 'basement')],
   pass: () => {
     const z = Math.random() < 0.7 ? STREET_Z + rand(-0.2, 0.25) : FAR_Z + rand(-0.15, 0.15)
     const dir = Math.random() < 0.5 ? 1 : -1
@@ -104,37 +108,33 @@ const RATES = (h) => ({
 })
 
 // ---------- people ----------
-const CLOTHES = ['#2f3a44', '#7a3f1f', '#b5562f', '#d9d3c7', '#3f5a2c', '#4a4d4f', '#e7dcc8', '#8c6e55', '#1d1d1c', '#6b7f8e', '#a34a3a', '#c9b48f']
-const SKIN = ['#8d5a3b', '#a8704a', '#6e4630', '#c08a62', '#7b4f35']
-const bodyGeo = new THREE.CapsuleGeometry(0.1, 0.3, 4, 10)
-bodyGeo.translate(0, 0.25, 0)
-const headGeo = new THREE.SphereGeometry(0.075, 14, 10)
-headGeo.translate(0, 0.6, 0)
 const matCache = new Map()
 const mat = (color, opts = {}) => {
   const key = color + JSON.stringify(opts)
   if (!matCache.has(key)) matCache.set(key, new THREE.MeshStandardMaterial({ color, roughness: 0.85, ...opts }))
   return matCache.get(key)
 }
-function person() {
-  const g = new THREE.Group()
-  const body = new THREE.Mesh(bodyGeo, mat(pick(CLOTHES)))
-  const head = new THREE.Mesh(headGeo, mat(pick(SKIN)))
-  body.castShadow = head.castShadow = true
-  g.add(body, head)
-  g.userData.body = body
-  return g
-}
-
 // ---------- trees ----------
-const leafGeo = new THREE.IcosahedronGeometry(1, 0)
+const leafGeo = new THREE.IcosahedronGeometry(1, 1)
 const flowerGeo = new THREE.IcosahedronGeometry(0.045, 0)
+const branchGeo = new THREE.CylinderGeometry(0.025, 0.05, 1, 6)
 function tree({ height = 2.4, spread = 1, flowers = 0, tone = C.foliage }) {
   const g = new THREE.Group()
   const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.05 * spread, 0.09 * spread, height * 0.6, 7), mat('#5a4636'))
   trunk.position.y = height * 0.3
   trunk.castShadow = true
   g.add(trunk)
+  for (let i = 0; i < 4; i++) {
+    const branch = new THREE.Mesh(branchGeo, mat('#5a4636'))
+    const angle = i * Math.PI / 2 + 0.3
+    const start = new THREE.Vector3(0, height * (0.36 + i * 0.035), 0)
+    const end = new THREE.Vector3(Math.cos(angle) * spread * 0.45, height * 0.72, Math.sin(angle) * spread * 0.45)
+    branch.position.copy(start).lerp(end, 0.5)
+    branch.scale.set(spread, start.distanceTo(end), spread)
+    branch.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), end.sub(start).normalize())
+    branch.castShadow = true
+    g.add(branch)
+  }
   const crown = new THREE.Group()
   crown.position.y = height * 0.62
   const blobs = 5 + Math.round(spread * 3)
@@ -149,13 +149,18 @@ function tree({ height = 2.4, spread = 1, flowers = 0, tone = C.foliage }) {
     m.receiveShadow = true
     crown.add(m)
   }
+  const blossoms = flowers ? new THREE.InstancedMesh(flowerGeo, mat(C.gulmohar, { flatShading: true }), flowers) : null
+  const flowerTransform = new THREE.Object3D()
   for (let i = 0; i < flowers; i++) {
-    const f = new THREE.Mesh(flowerGeo, mat(i % 4 ? C.gulmohar : '#f08a3c', { flatShading: true }))
     const a = rand(0, Math.PI * 2)
     const r = rand(0.15, 0.85) * spread
-    f.position.set(Math.cos(a) * r, rand(0.3, 0.75) * spread, Math.sin(a) * r)
-    crown.add(f)
+    flowerTransform.position.set(Math.cos(a) * r, rand(0.3, 0.75) * spread, Math.sin(a) * r)
+    flowerTransform.scale.setScalar(rand(0.7, 1.3))
+    flowerTransform.updateMatrix()
+    blossoms.setMatrixAt(i, flowerTransform.matrix)
+    blossoms.setColorAt(i, new THREE.Color(i % 4 ? C.gulmohar : '#f08a3c'))
   }
+  if (blossoms) crown.add(blossoms)
   g.add(crown)
   g.userData.crown = crown
   g.userData.phase = rand(0, 10)
@@ -164,8 +169,14 @@ function tree({ height = 2.4, spread = 1, flowers = 0, tone = C.foliage }) {
 
 // ---------- geometry helpers ----------
 function slabGeo(w, d, depth, holes = []) {
-  const s = new THREE.Shape([new THREE.Vector2(-w / 2, -d / 2), new THREE.Vector2(w / 2, -d / 2), new THREE.Vector2(w / 2, d / 2), new THREE.Vector2(-w / 2, d / 2)])
-  s.holes = holes.map(([x0, z0, x1, z1]) => new THREE.Path([new THREE.Vector2(x0, z0), new THREE.Vector2(x0, z1), new THREE.Vector2(x1, z1), new THREE.Vector2(x1, z0)]))
+  const outline = [[-w / 2, -d / 2], [w / 2, -d / 2], [w / 2, d / 2]]
+  // Entrances cut the perimeter; treating them as closed holes leaves a
+  // sliver across the mouth or produces overlapping extrusion triangles.
+  const mouths = holes.filter((h) => h[3] >= d / 2).sort((a, b) => b[2] - a[2])
+  for (const [x0, z0, x1] of mouths) outline.push([x1, d / 2], [x1, z0], [x0, z0], [x0, d / 2])
+  outline.push([-w / 2, d / 2])
+  const s = new THREE.Shape(outline.map(([x, z]) => new THREE.Vector2(x, z)))
+  s.holes = holes.filter((h) => h[3] < d / 2).map(([x0, z0, x1, z1]) => new THREE.Path([new THREE.Vector2(x0, z0), new THREE.Vector2(x0, z1), new THREE.Vector2(x1, z1), new THREE.Vector2(x1, z0)]))
   const g = new THREE.ExtrudeGeometry(s, { depth, bevelEnabled: false })
   g.rotateX(Math.PI / 2) // shape (x, z) → extrude downward
   return g
@@ -174,9 +185,10 @@ const boxGeos = new Map()
 function box(w, h, d, color, x = 0, y = 0, z = 0, o = {}) {
   const gk = `${w}|${h}|${d}`
   if (!boxGeos.has(gk)) boxGeos.set(gk, new THREE.BoxGeometry(w, h, d))
-  const m = new THREE.Mesh(boxGeos.get(gk), mat(color, o))
+  const { cast = true, ...materialOptions } = o
+  const m = new THREE.Mesh(boxGeos.get(gk), mat(color, materialOptions))
   m.position.set(x, y + h / 2, z)
-  m.castShadow = o.cast ?? true
+  m.castShadow = cast
   m.receiveShadow = true
   return m
 }
@@ -211,13 +223,25 @@ export async function createWorld(canvas) {
   sun.shadow.radius = 4
   scene.add(hemi, sun, sun.target)
 
+  const loader = new GLTFLoader()
+  const [house, ...gltfs] = await Promise.all([
+    fetch('/models/house.json').then((r) => r.json()),
+    ...Object.keys(LEVEL).map((id) => loader.loadAsync(`/models/${id}.glb`)),
+  ])
+
   // ---------- the ground: a plot of the street, with a pit where the house sits ----------
   const ground = new THREE.Group()
   scene.add(ground)
   {
+    const basementInfo = house.floors.basement
+    const bx0 = basementInfo.offset[0] - basementInfo.width / 2 - 0.025
+    const bx1 = basementInfo.offset[0] + basementInfo.width / 2 + 0.025
+    const bz0 = basementInfo.offset[1] - basementInfo.depth / 2 - 0.025
+    const bz1 = basementInfo.offset[1] + basementInfo.depth / 2 + 0.025
     const disk = new THREE.Shape()
     disk.absarc(0, 0, 60, 0, Math.PI * 2)
-    disk.holes.push(new THREE.Path([new THREE.Vector2(-3.125, -5), new THREE.Vector2(-3.125, 5), new THREE.Vector2(3.125, 5), new THREE.Vector2(3.125, -5)]))
+    // ShapeGeometry rotates -90° to face upward, so its 2D y is world -z.
+    disk.holes.push(new THREE.Path([new THREE.Vector2(bx0, -bz0), new THREE.Vector2(bx0, -bz1), new THREE.Vector2(bx1, -bz1), new THREE.Vector2(bx1, -bz0)]))
     const g = new THREE.ShapeGeometry(disk, 48)
     g.rotateX(-Math.PI / 2)
     const plane = new THREE.Mesh(g, mat('#d8d0c2'))
@@ -230,16 +254,19 @@ export async function createWorld(canvas) {
     ground.add(patch(-60, 9.25, 60, 9.55, C.earth, 0.004))
     // The pit's walls: a cut through red earth.
     const pit = (w, d, x, z) => {
-      const m = new THREE.Mesh(new THREE.BoxGeometry(w, 0.74, d), mat('#9a5a3c'))
-      m.position.set(x, -0.37, z)
+      const m = new THREE.Mesh(new THREE.BoxGeometry(w, 0.9, d), mat('#9a5a3c'))
+      m.position.set(x, -0.45, z)
       m.receiveShadow = true
       ground.add(m)
     }
-    pit(6.25, 0.05, 0, -5.02)
-    pit(6.25, 0.05, 0, 5.02)
-    pit(0.05, 10, -3.15, 0)
-    pit(0.05, 10, 3.15, 0)
-    const floor = patch(-3.125, -5, 3.125, 5, '#7d4a33', -0.74)
+    pit(bx1 - bx0, 0.05, (bx0 + bx1) / 2, bz0)
+    // Retaining edges follow the basement footprint, not the larger plot.
+    // At the front the garage ramp and office stair remain open.
+    pit(1.45, 0.05, 0.525, bz1)
+    pit(bx1 - 1.25, 0.05, (bx1 + 1.25) / 2, bz1)
+    pit(0.05, bz1 - bz0, bx0, (bz0 + bz1) / 2)
+    pit(0.05, bz1 - bz0, bx1, (bz0 + bz1) / 2)
+    const floor = patch(bx0, bz0, bx1, bz1, '#7d4a33', -0.88)
     ground.add(floor)
   }
 
@@ -256,11 +283,6 @@ export async function createWorld(canvas) {
   }
 
   // ---------- the house ----------
-  const loader = new GLTFLoader()
-  const [house, ...gltfs] = await Promise.all([
-    fetch('/models/house.json').then((r) => r.json()),
-    ...Object.keys(LEVEL).map((id) => loader.loadAsync(`/models/${id}.glb`)),
-  ])
   const SLAB = house.slab
   const wallMat = mat(C.plaster)
   const sillMat = mat(C.plasterShade)
@@ -294,6 +316,7 @@ export async function createWorld(canvas) {
       }
     })
     g.add(gltfs[i].scene)
+    walls.push(addWindows(g, gltfs[i].scene))
     floors[id] = g
     scene.add(g)
   })
@@ -302,13 +325,14 @@ export async function createWorld(canvas) {
   // sunken entry court; second over the first-floor courtyard.
   const slabs = {
     basement: [],
-    ground: [[0.56, -0.65, 1.99, 0.8], [1.25, 3.27, 2.39, 4.86]],
+    ground: [[0.56, -0.65, 1.99, 0.8], [1.25, 3.27, 3.12, 5.01], [-1.85, 3.2, -0.2, 5.01]],
     first: [],
     second: [[0.18, -0.49, 1.88, 1.06]],
   }
   for (const [id, holes] of Object.entries(slabs)) {
     const { width, depth } = house.floors[id]
     const m = new THREE.Mesh(slabGeo(width, depth, SLAB, holes), mat(C.terrazzo))
+    m.userData.voids = holes
     m.castShadow = m.receiveShadow = true
     floors[id].add(m)
   }
@@ -322,10 +346,11 @@ export async function createWorld(canvas) {
   G.add(patch(0.56, 0.2, 2.4, 3.2, '#8a5232'))         // Living 1: the teak floor
   // A skirt from the street up to the raised ground floor, and steps at the gate.
   const skirt = (w, d, x, z) => G.add(box(w, 0.6, d, C.plasterShade, x, -0.73, z))
-  skirt(6.25, 0.06, 0, 4.97)
+  skirt(1.275, 0.06, -2.4875, 4.97)
+  skirt(1.45, 0.06, 0.525, 4.97)
   skirt(6.25, 0.06, 0, -4.97)
   skirt(0.06, 10, -3.1, 0)
-  skirt(0.06, 10, 3.1, 0)
+  skirt(0.06, 9.45, 3.1, -0.275)
   for (let s = 0; s < 4; s++) G.add(box(0.8, 0.73 - s * 0.18, 0.22, C.kota, -2.75, -0.73, 5.05 + s * 0.2))
   // The outside stair to the first floor (#6), charcoal rail.
   for (let s = 0; s < 9; s++) G.add(box(0.12, 0.16 * (s + 1), 0.5, C.kota, -1.95 - s * 0.11, 0, -0.45))
@@ -368,13 +393,20 @@ export async function createWorld(canvas) {
   nest(F, 1.4, 1.9, 0.9)
   nest(F, 1.75, 1.6, 1.15, 0.1)
   nest(F, 1.55, 1.35, 0.7, 0.13)
+  for (const [x, y, z] of [[1.4, 1.9, 0.9], [1.75, 1.6, 1.15], [1.55, 1.35, 0.7]]) {
+    F.add(box(0.009, 2.6 - y, 0.009, '#514b3e', x, y, z, { cast: false }))
+  }
+  const festoonPoints = []
   for (let i = 0; i < 16; i++) {
     const z = -3.2 + i * 0.42
     const m = new THREE.Mesh(new THREE.SphereGeometry(0.03, 8, 6), new THREE.MeshStandardMaterial({ color: '#fff3dc', emissive: C.lamp, emissiveIntensity: 0 }))
     m.position.set(-2.15, 1.05 + Math.sin(i * 0.9) * 0.04, z)
+    festoonPoints.push(m.position.clone().add(new THREE.Vector3(0, 0.035, 0)))
     S.add(m)
     glow.push({ m, k: 6, evening: true })
   }
+  const festoon = new THREE.Line(new THREE.BufferGeometry().setFromPoints(festoonPoints), new THREE.LineBasicMaterial({ color: '#555245' }))
+  S.add(festoon)
   const streetLights = []
   for (const x of [-11, -3.6, 5.2, 13]) {
     ground.add(box(0.06, 2.6, 0.06, C.steel, x, 0, 6.3))
@@ -395,6 +427,8 @@ export async function createWorld(canvas) {
     return l
   })
 
+  addWorldDetails({ ground, floors, house })
+
   // ---------- people inside: the programme ----------
   // A gathering is furniture plus people, built for a room and a use. When the
   // hour or the crowd changes, the old gatherings fold away and new ones grow.
@@ -413,8 +447,6 @@ export async function createWorld(canvas) {
     row: (n) => ({ at: Array.from({ length: n }, (_, i) => ({ x: (i % 2) * 0.42 - 0.21, z: (Math.floor(i / 2) - (Math.ceil(n / 2) - 1) / 2) * 0.5, face: Math.PI / 2, stretch: true })) }),
     stage: (n) => ({ furniture: [[0.5, 0.08, 1.0, 0, -0.75]], at: Array.from({ length: n }, (_, i) => (i === 0 ? { x: 0, y: 0.08, z: -0.75, face: 0, perform: true } : { x: (((i - 1) % 4) - 1.5) * 0.3, z: Math.floor((i - 1) / 4) * 0.38 - 0.05, face: Math.PI, seated: true })) }),
   }
-  const furnitureMat = mat(C.teak)
-  const tableGeo = new THREE.CylinderGeometry(0.22, 0.22, 0.3, 20)
   let gatherings = []
   let programKey = ''
   function buildProgram(persona, part) {
@@ -427,25 +459,17 @@ export async function createWorld(canvas) {
       const lay = layouts[kind](n)
       const items = []
       const grow = (obj, delay, extra = {}) => items.push({ obj, delay: gi * 0.12 + delay, k: 0, ...extra })
-      if (lay.round) {
-        const t = new THREE.Mesh(tableGeo, furnitureMat)
-        t.position.y = 0.15
-        t.castShadow = t.receiveShadow = true
-        group.add(t)
-        grow(t, 0)
-      }
-      for (const [w, h, d, x = 0, z = 0] of lay.furniture || []) {
-        const b = box(w, h, d, C.teak, x, 0, z)
-        group.add(b)
-        grow(b, 0)
-      }
+      const furnishing = createFurnishings(kind, lay, use)
+      group.add(furnishing)
+      grow(furnishing, 0)
       lay.at.forEach((a, i) => {
         const p = person()
-        p.position.set(a.x, (a.y || 0) + (a.seated ? 0.06 : 0), a.z)
+        p.position.set(a.x, a.y || 0, a.z)
         p.rotation.y = a.face
-        if (a.seated) p.userData.body.scale.y = 0.72
+        const phase = rand(0, 10)
+        posePerson(p, poseFor(a, kind, use), 0, phase)
         group.add(p)
-        grow(p, 0.15 + i * 0.07, { person: true, a, baseY: p.position.y, phase: rand(0, 10) })
+        grow(p, 0.15 + i * 0.07, { person: true, a, baseY: p.position.y, phase })
       })
       for (const it of items) it.obj.scale.setScalar(0.001)
       gatherings.push({ room, roomId, use, kind, group, items, t: 0, leaving: false })
@@ -463,19 +487,11 @@ export async function createWorld(canvas) {
         it.obj.scale.setScalar(Math.max(0.001, it.k))
         if (!it.person || still) continue
         const p = it.obj
-        if (it.a.dance) {
-          p.position.y = it.baseY + Math.abs(Math.sin(t * 5 + it.phase)) * 0.07
-          p.rotation.y = it.a.face + Math.sin(t * 1.4 + it.phase) * 0.8
-        } else if (it.a.stretch) {
-          p.userData.body.scale.y = 0.75 + Math.abs(Math.sin(t * 0.9 + it.phase * 0.1)) * 0.25
-        } else if (it.a.perform) {
-          p.rotation.y = Math.sin(t * 0.8) * 0.6
-          p.position.y = it.baseY + Math.abs(Math.sin(t * 2.4)) * 0.02
-        } else if (it.a.sway && !it.a.seated) {
-          p.position.y = it.baseY + Math.abs(Math.sin(t * 3 + it.phase)) * 0.03
-        } else {
-          p.rotation.y = it.a.face + Math.sin(t * 0.7 + it.phase) * 0.18
-        }
+        posePerson(p, poseFor(it.a, g.kind, g.use), t, it.phase)
+        // The skeleton owns the gesture and foot contact; the root remains
+        // aligned with its chair, yoga mat, or microphone.
+        p.position.y = it.baseY
+        p.rotation.y = it.a.face
       }
       if (g.leaving && !alive) {
         g.group.removeFromParent()
@@ -502,19 +518,8 @@ export async function createWorld(canvas) {
   }
   const vehicles = []
   function vehicle() {
-    const g = new THREE.Group()
+    const g = createVehicle(Math.random() < 0.55, person, posePerson)
     const dir = Math.random() < 0.5 ? 1 : -1
-    if (Math.random() < 0.55) {
-      // An auto: green body, yellow hood.
-      g.add(box(0.9, 0.42, 0.5, '#2f6b3a', 0, 0.1, 0), box(0.62, 0.3, 0.52, '#e2b53a', -0.1, 0.52, 0))
-      g.add(box(0.08, 0.1, 0.5, C.granite, 0.42, 0.02, 0))
-    } else {
-      g.add(box(0.7, 0.22, 0.18, pick(['#2b2b2b', '#8a8f94', '#7d2a22']), 0, 0.12, 0))
-      const r = person()
-      r.position.set(-0.05, 0.12, 0)
-      r.userData.body.scale.y = 0.75
-      g.add(r)
-    }
     g.rotation.y = dir > 0 ? 0 : Math.PI
     g.position.set(-28 * dir, 0, dir > 0 ? 8.55 : 7.2)
     scene.add(g)
@@ -536,7 +541,7 @@ export async function createWorld(canvas) {
     [0, 30, 13, 25, -1.7, 1.2, 0.6, 3.5],
     [0.1, 28, 22, 26, -1.2, 1.6, 0.6, 3.5],
     [0.22, 24, 42, 18.5, -0.4, 0.2, 0.6, 1],
-    [0.38, -16, 44, 17, -0.2, 0.2, 0.2, 0],
+    [0.38, -28, 46, 15.5, 0.4, 0.2, 1.4, 0],
     [0.54, -34, 46, 17, 0.2, 0.2, 0.4, 2],
     [0.7, -58, 46, 17.5, -0.8, 0.2, 0.0, 3],
     [0.84, 32, 40, 21, -0.3, 0.2, 0.4, 1.9],
@@ -594,7 +599,7 @@ export async function createWorld(canvas) {
     scene.background.copy(sky.sky)
     scene.fog.color.copy(sky.sky)
     const cloud = Math.max(0, ...STOPS.map((b) => 1 - Math.abs(state.p - b) / 0.035))
-    const reach = camera.aspect < 0.8 ? 1.6 : camera.aspect < 1.2 ? 1.25 : 1
+    const reach = camera.aspect < 0.8 ? 2.05 : camera.aspect < 1.2 ? 1.25 : 1
     scene.fog.near = lerp(24, 4, cloud) * reach
     scene.fog.far = lerp(58, 17, cloud) * reach
     hemi.color.copy(sky.hemiSky)
@@ -639,7 +644,7 @@ export async function createWorld(canvas) {
     const [, sAz, sEl, sR, sx, sOff, sz] = shotNow
     const sy = focusY + sOff
     const k = still ? 1 : 1 - Math.pow(0.0015, dt)
-    const fit = camera.aspect < 0.8 ? 1.6 : camera.aspect < 1.2 ? 1.25 : 1
+    const fit = camera.aspect < 0.8 ? 2.05 : camera.aspect < 1.2 ? 1.25 : 1
     view.az = lerp(view.az, sAz + state.mx * 5, k)
     view.el = lerp(view.el, sEl + state.my * 3, k)
     view.r = lerp(view.r, sR * fit, k)
@@ -666,8 +671,8 @@ export async function createWorld(canvas) {
         else if (key === 'in') spawn(state.open > 0.2 ? ROUTES.in().slice(0, 2) : ROUTES.in())
         else if (key === 'out' && state.open < 0.2) spawn(END(reverse(ROUTES.in().slice(1))))
         else if (key === 'up' && state.open < 0.2) spawn(Math.random() < 0.5 ? ROUTES.up() : END(reverse(ROUTES.up().slice(1))))
-        else if (key === 'office') spawn(state.open > 0.2 ? ROUTES.office().slice(0, 3) : ROUTES.office())
-        else if (key === 'officeOut' && state.open < 0.2) spawn(END(reverse(ROUTES.office().slice(1))))
+        else if (key === 'office') spawn(ROUTES.office())
+        else if (key === 'officeOut') spawn(END(reverse(ROUTES.office().slice(1))))
         else if (key === 'vehicle' && vehicles.length < 6) vehicle()
       }
 
@@ -688,8 +693,8 @@ export async function createWorld(canvas) {
         const liftA = seg.a.tag ? lift[seg.a.tag] : 0
         const liftB = seg.b.tag ? lift[seg.b.tag] : 0
         tmp.y += lerp(liftA, liftB, u)
-        const stride = Math.abs(Math.sin(t * 7 * w.speed + w.phase))
-        w.p.position.set(tmp.x, tmp.y + stride * 0.025, tmp.z)
+        posePerson(w.p, 'walk', t * w.speed, w.phase)
+        w.p.position.copy(tmp)
         w.p.rotation.y = Math.atan2(seg.b.v.x - seg.a.v.x, seg.b.v.z - seg.a.v.z)
         w.p.rotation.z = Math.sin(t * 7 * w.speed + w.phase) * 0.04
         // Fade in at the start, out at a door.
@@ -701,6 +706,7 @@ export async function createWorld(canvas) {
       for (let i = vehicles.length - 1; i >= 0; i--) {
         const v = vehicles[i]
         v.g.position.x += v.dir * v.speed * dt
+        rollVehicle(v.g, v.speed * dt)
         if (Math.abs(v.g.position.x) > 30) {
           scene.remove(v.g)
           vehicles.splice(i, 1)

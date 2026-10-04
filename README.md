@@ -46,7 +46,13 @@ npm run house    # rebuild public/models/ from plans/plans-AS-BUILT.dwg (needs l
 |---|---|
 | `src/world/program.js` | Rooms, the people options, and what each room becomes by hour and by who's inside |
 | `src/world/world.js` | The 3D world: light through the day, floors, trees, people, the camera path |
+| `src/world/characters.js` | Articulated characters, activity poses, and gathering furniture |
+| `src/world/details.js` | Floor-attached architectural detail, basement access, planting, and neighbourhood detail |
+| `src/world/windows.js` | Window frames and glazing placed from the CAD sill geometry, lowering with the cutaway walls |
+| `src/world/traffic.js` | Moving autos and scooters with rolling wheels |
 | `src/world/main.js` | Scroll, labels and clock. `BOOKING_URL` sets every "Book a call" button |
 | `index.html` | The chapter copy |
 
 The previous five-page site (home, house walk, memberships, evenings, join) is kept in `archive/site-pages-2026-10-04/`.
+
+The garage ramp and office court have separate openings through the ground-floor slab and front base wall, following the supplied plan. Floor-local details travel with their floor in the cutaway. Furnishings, people, and neighbourhood dressing are illustrative; they are not a survey of the finished property.
