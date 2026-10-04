@@ -65,8 +65,10 @@ async function start() {
   })
 
   // ---------- virtual scroll: the page never moves, the day does ----------
-  let goal = 0
-  let p = 0
+  // A hash such as #t=0.54 opens the page at that point in the day.
+  const at = +(location.hash.match(/t=([\d.]+)/) || [])[1]
+  let goal = at >= 0 && at <= 1 ? at : 0
+  let p = goal
   const nudge = (d) => (goal = Math.min(1, Math.max(0, goal + d)))
   addEventListener('wheel', (e) => {
     e.preventDefault()

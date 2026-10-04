@@ -9,6 +9,7 @@ import { createPerson as person, posePerson, poseFor, createFurnishings } from '
 import { addWorldDetails } from './details.js'
 import { createVehicle, rollVehicle } from './traffic.js'
 import { addWindows } from './windows.js'
+import { createEnvironment } from './environment.js'
 
 // The house at the centre of a small, quiet world that lives through one day.
 // Progress (0 → 1) runs the day from dawn to late night: the house opens,
@@ -230,8 +231,10 @@ export async function createWorld(canvas) {
   ])
 
   // ---------- the ground: a plot of the street, with a pit where the house sits ----------
+  const street = new THREE.Group()
+  scene.add(street)
   const ground = new THREE.Group()
-  scene.add(ground)
+  street.add(ground)
   {
     const basementInfo = house.floors.basement
     const bx0 = basementInfo.offset[0] - basementInfo.width / 2 - 0.025
@@ -505,7 +508,7 @@ export async function createWorld(canvas) {
   const pool = []
   function spawn(points) {
     const p = pool.pop() || person()
-    if (!p.parent) scene.add(p)
+    if (!p.parent) street.add(p)
     p.visible = true
     const segs = []
     let total = 0
@@ -522,7 +525,7 @@ export async function createWorld(canvas) {
     const dir = Math.random() < 0.5 ? 1 : -1
     g.rotation.y = dir > 0 ? 0 : Math.PI
     g.position.set(-28 * dir, 0, dir > 0 ? 8.55 : 7.2)
-    scene.add(g)
+    street.add(g)
     vehicles.push({ g, dir, speed: rand(2.2, 3.4) })
   }
 
@@ -556,7 +559,16 @@ export async function createWorld(canvas) {
     return a.map((v, j) => lerp(v, b[j], k))
   }
   // Fog thickens between stops, the way the igloo scenes pass through cloud.
-  const STOPS = [0.3, 0.46, 0.62, 0.77]
+  // Inside each cloud the world changes: the street is left behind as the
+  // house breaks open, and every floor is seen in its own environment.
+  const STOPS = [0.145, 0.3, 0.46, 0.62, 0.77, 0.91]
+  const ENV_AT = [[0.145, 'cafe'], [0.3, 'studio'], [0.46, 'courtyard'], [0.62, 'terrace'], [0.77, 'night'], [0.91, null]]
+  const envAt = (p) => {
+    let e = null
+    for (const [at, id] of ENV_AT) if (p >= at) e = id
+    return e
+  }
+  const env = createEnvironment(scene)
 
   // ---------- state ----------
   const lift = { basement: 0, ground: 0, first: 0, second: 0 }
@@ -595,28 +607,35 @@ export async function createWorld(canvas) {
 
     // Light.
     const sky = skyAt(h)
-    state.night = sky.night
-    scene.background.copy(sky.sky)
-    scene.fog.color.copy(sky.sky)
     const cloud = Math.max(0, ...STOPS.map((b) => 1 - Math.abs(state.p - b) / 0.035))
+    // The changeover happens at the thickest point of the cloud, where
+    // nothing but the nearest floor can be seen.
+    if (cloud > 0.9 || (cloud < 0.05 && env.id !== envAt(state.p))) env.set(envAt(state.p))
+    const inside = env.cur.inside
+    street.visible = inside < 0.98
+    state.night = Math.max(sky.night, env.cur.dark)
+    scene.background.copy(env.cur.horizon)
+    scene.fog.color.copy(env.cur.horizon)
     const reach = camera.aspect < 0.8 ? 2.05 : camera.aspect < 1.2 ? 1.25 : 1
-    scene.fog.near = lerp(24, 4, cloud) * reach
-    scene.fog.far = lerp(58, 17, cloud) * reach
+    scene.fog.near = lerp(lerp(24, 20, inside), 4, cloud) * reach
+    scene.fog.far = lerp(lerp(58, 46, inside), 17, cloud) * reach
     hemi.color.copy(sky.hemiSky)
     hemi.groundColor.copy(sky.hemiGround)
-    hemi.intensity = sky.hemiI
+    hemi.intensity = sky.hemiI * env.cur.hemi
     sun.color.copy(sky.sun)
-    sun.intensity = sky.sunI
+    sun.intensity = sky.sunI * env.cur.sun
+    renderer.toneMappingExposure = env.cur.expo
     const day = Math.min(1, Math.max(0, (h - 5.6) / 13.4))
     const ang = day * Math.PI
     const sunPos = new THREE.Vector3(Math.cos(ang) * 22, Math.max(4, Math.sin(ang) * 24), -9)
     const moonPos = new THREE.Vector3(-10, 22, 8)
     sun.position.copy(sunPos.lerp(moonPos, smooth(18.6, 19.6, h)))
     const evening = smooth(17.6, 19.2, h)
-    roomLights.forEach((l) => (l.intensity = 5 * evening))
+    roomLights.forEach((l) => (l.intensity = 5 * evening + 4 * env.cur.lamps))
     streetLights.forEach((l) => (l.intensity = 7 * evening))
     for (const g of glow) g.m.material.emissiveIntensity = g.k * (g.evening ? smooth(18, 19.5, h) : evening)
-    bloom.strength = 0.42 * evening
+    bloom.strength = 0.42 * Math.max(evening, env.cur.stars, env.cur.lamps * 0.5)
+    env.update(dt, t, camera, sky.sky, sun.position, still)
 
     // The house opens after dawn and settles back together at night.
     state.open = smooth(0.07, 0.17, state.p) * (1 - smooth(0.87, 0.96, state.p))
@@ -708,7 +727,7 @@ export async function createWorld(canvas) {
         v.g.position.x += v.dir * v.speed * dt
         rollVehicle(v.g, v.speed * dt)
         if (Math.abs(v.g.position.x) > 30) {
-          scene.remove(v.g)
+          street.remove(v.g)
           vehicles.splice(i, 1)
         }
       }
