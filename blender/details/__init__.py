@@ -51,6 +51,9 @@ MODULES = [
     "bedroom5_bathtub",
     "passage_over_void",
     "cafe",
+    "event_space",
+    "court_library",
+    "terrace_evening",
     "detail_cameras",
     "entourage",
 ]
