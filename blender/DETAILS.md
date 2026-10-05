@@ -52,7 +52,8 @@ Rules for every item:
 ## Ground floor interiors (p25, p27, p28, p13, p15, p20)
 - [x] living1-teak-floor: teak floor in Living 1, brass lanterns hanging, glazed doors to the lawn (p25, p27).
   - note: room is x 0.62..2.33, z 1.33..3.2 per the plan; the existing teak finish rect (z from 0.2) also runs over the office toilet and the stair void, left as is. Also the ceiling fan and the window's grille bars from p25/p27. French doors modelled closed.
-- [ ] dining1-display-unit: teak display unit against the wall of Dining 1 (p28).
+- [x] dining1-display-unit: teak display unit against the wall of Dining 1 (p28).
+  - note: placed where the plan draws it, in the wide opening between Family 1 and Dining 1, facing Family 1 (p28 is taken from Family 1; its double glazed doors to the west garden are on the left). Plaster added above the opening's teak head.
 - [ ] kitchen1-galley: black granite counters both sides of the galley, mauve laminate fronts (p13).
 - [ ] caretaker-red-oxide: red-oxide floor in the caretaker room (p15).
 - [ ] stair-to-basement: the inside stair under the DOUBLE HEIGHT box down to basement Court 1, wooden balustrade, blue glass lantern (p20).

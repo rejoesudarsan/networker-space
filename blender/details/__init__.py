@@ -33,6 +33,7 @@ MODULES = [
     "front_lawn_and_steps",
     "side_garden_passage",
     "living1_teak_floor",
+    "dining1_display_unit",
 ]
 
 
