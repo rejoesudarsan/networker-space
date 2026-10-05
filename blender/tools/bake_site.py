@@ -1,7 +1,12 @@
 """Bake the house's light into textures for the website, one atlas per floor.
 
   Blender -b blender/space-house.blend --python blender/tools/bake_site.py -- \
-      [--floors ground,first] [--set day] [--res 2048] [--samples 128] [--exposure 0]
+      [--floors ground,first] [--rooms cafe,court] [--set day] [--res 2048] [--samples 128] [--exposure -0.4]
+
+--rooms bakes the homepage's room dioramas from site/src/space/rooms.json
+instead: each room alone (nothing else in the scene), cut to its rectangle
+and wall height, lit identically, written as room-<id>-<set>.gltf. Given
+alone, --rooms skips the floors.
 
 For each floor: every mesh the build put under Floor.<floor> (walls, slab,
 finishes, every detail and fit-out module, modifiers applied) is joined in

@@ -3,13 +3,15 @@ fit-out the way the site shows it (an open-topped diorama).
 
   Blender -b blender/space-house.blend --python blender/tools/room_shot.py -- \
       <floor> <x0>,<z0>,<x1>,<z1> [--module cafe] [--az 20] [--el 38] [--engine eevee|cycles|workbench] \
-      [--samples 32] [--out name]
+      [--samples 32] [--set day|night] [--out name]
 
 The rectangle is in that floor's Three.js plan units. --module rebuilds a
 detail module first (as preview.py does) so unsaved edits show. The camera
 looks at the rectangle from the street side (azimuth in degrees, 0 = from
 the street, positive = from the east) at elevation --el, framed to fit.
-Writes blender/renders/room-<out or floor>.png."""
+--set lights the scene as bake_site.py's light set of that name (sun, sky,
+glow materials and club_lamp lights) instead of the saved dawn light, so a
+Cycles shot shows what the bake will. Writes blender/renders/room-<out or floor>.png."""
 import math
 import os
 import sys
@@ -74,6 +76,34 @@ for o in bpy.data.objects:
     n = o.name.lower()
     if "fog" in n or "haze" in n:
         o.hide_render = True
+
+light_set = opt("--set", None)
+if light_set:
+    # Mirror bake_site.set_light().
+    sun = bpy.data.objects.get("Sun.Dawn")
+    world = scene.world
+    bgs = [n for n in world.node_tree.nodes if n.type == "BACKGROUND"] if world and world.node_tree else []
+    if light_set == "day":
+        if sun:
+            sun.rotation_euler = (math.radians(90 - 52), 0, math.radians(180 - 135))
+            sun.data.energy = 3.2
+            sun.data.color = (1.0, 0.93, 0.84)
+        for o in bpy.data.objects:
+            if o.type == "LIGHT" and o.get("club_lamp"):
+                o.data.energy *= 0.25
+    else:
+        if sun:
+            sun.hide_render = True
+        for n in bgs:
+            n.inputs["Strength"].default_value *= 0.04
+        for m in bpy.data.materials:
+            b = next((n for n in m.node_tree.nodes if n.type == "BSDF_PRINCIPLED"), None) if m.node_tree else None
+            if b is None or "Emission Strength" not in b.inputs:
+                continue
+            es = b.inputs["Emission Strength"]
+            ec = b.inputs.get("Emission Color") or b.inputs.get("Emission")
+            if es.default_value > 0 and ec is not None and max(ec.default_value[:3]) > 0.01:
+                es.default_value *= 6.0
 
 empty = bpy.data.objects["Floor.%s" % floor]
 U = ns["UNIT_M"]

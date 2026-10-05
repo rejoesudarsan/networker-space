@@ -1,3 +1,5 @@
+import ROOM_GEOMETRY from './rooms.json'
+
 // The homepage as one scroll through a day (reference/astra-design/README.md,
 // used as a reference for pacing only). Progress 0 → 1. Scenes change only
 // inside a veil of fog, so no cut is ever seen.
@@ -13,9 +15,11 @@ export const BEATS = [
   { veil: true, from: 0.29, to: 0.31 },
   { id: 'cafe', from: 0.31, to: 0.4, scene: 'room', room: 'cafe' },
   { veil: true, from: 0.4, to: 0.42 },
-  { id: 'court', from: 0.42, to: 0.53, scene: 'room', room: 'court' },
-  { veil: true, from: 0.53, to: 0.56 },
-  { id: 'terrace', from: 0.56, to: 0.65, scene: 'room', room: 'terrace' },
+  { id: 'court', from: 0.42, to: 0.48, scene: 'room', room: 'court' },
+  { veil: true, from: 0.48, to: 0.5 },
+  { id: 'event', from: 0.5, to: 0.55, scene: 'room', room: 'event' },
+  { veil: true, from: 0.55, to: 0.57 },
+  { id: 'terrace', from: 0.57, to: 0.65, scene: 'room', room: 'terrace' },
   { veil: true, from: 0.65, to: 0.68 },
   { id: 'night', from: 0.68, to: 0.78, scene: 'exterior', night: true },
   { veil: true, from: 0.78, to: 0.81 },
@@ -27,7 +31,7 @@ export const BEATS = [
 // Hour of the illustrative day at each progress point.
 export const HOURS = [
   [0, 6], [0.11, 6.5], [0.17, 7.5], [0.2, 9], [0.29, 9.5], [0.31, 10], [0.4, 13],
-  [0.42, 16], [0.53, 17.5], [0.56, 18.5], [0.65, 19], [0.68, 20], [0.75, 22], [1, 22],
+  [0.42, 16], [0.48, 16.5], [0.5, 17], [0.55, 17.5], [0.57, 18.5], [0.65, 19], [0.68, 20], [0.75, 22], [1, 22],
 ]
 
 // Fog by hour (board 08 / the Astra system board).
@@ -41,7 +45,6 @@ export const FOG = [
 // gone), the camera's azimuth / elevation in degrees, and the copy.
 export const ROOMS = {
   lower: {
-    floor: 'basement', rect: [-0.62, -0.52, 2.05, 1.84], az: 16, el: 46,
     label: 'Lower level', title: 'Work, with room to think.', line: 'Quiet rooms. Courts open to the sky.',
     explore: {
       head: 'Work, with room to think.',
@@ -52,7 +55,6 @@ export const ROOMS = {
     },
   },
   cafe: {
-    floor: 'ground', rect: [0.56, 1.3, 2.46, 3.16], az: 14, el: 40,
     label: 'Ground floor', title: 'Coffee. A table. An unhurried start.', line: 'Walk-in café · 08:00–18:00',
     explore: {
       head: 'An unhurried start.',
@@ -63,8 +65,7 @@ export const ROOMS = {
     },
   },
   court: {
-    floor: 'first', rect: [0.76, 0.12, 2.66, 4.0], az: -24, el: 48, zoom: 0.72,
-    label: 'First floor', title: 'Read. Talk. Let an idea take its time.', line: 'Courtyard · Event room · Library',
+    label: 'First floor', title: 'Read. Talk. Let an idea take its time.', line: 'Courtyard · Library · Shared tables',
     explore: {
       head: 'A little distance from the day.',
       body: [
@@ -74,8 +75,17 @@ export const ROOMS = {
       ],
     },
   },
+  event: {
+    label: 'First floor', title: 'Bring the room together.', line: 'Talks · Demo nights · Gigs',
+    explore: {
+      head: 'A room for the evening.',
+      body: [
+        'Off the courtyard, a room with a low stage, a screen and tiered teak seats. Talks, demo nights and small gigs, from 18:00.',
+        'The programme is shaped with members. Access depends on membership; talk to us about what is right for you.',
+      ],
+    },
+  },
   terrace: {
-    floor: 'second', rect: [-2.36, -3.5, -0.78, 3.42], az: -62, el: 44, zoom: 0.62,
     label: 'Second floor', title: 'The day opens into evening.', line: 'Terrace conversations. Room to linger.',
     explore: {
       head: 'The day opens into evening.',
@@ -86,6 +96,8 @@ export const ROOMS = {
     },
   },
 }
+
+for (const [id, g] of Object.entries(ROOM_GEOMETRY)) if (ROOMS[id]) Object.assign(ROOMS[id], g)
 
 export const TIERS = [
   { id: 'visit', name: 'Visit', has: ['Walk-in access', 'Table booking'], focus: 'For the odd morning and a table when you need one.' },

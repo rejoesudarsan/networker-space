@@ -229,6 +229,16 @@ export async function createScene(canvas) {
     floors[id] = g
     house.add(g)
   })
+  // Each room's own diorama bake (bake_site.py --rooms), where it exists;
+  // otherwise the room is its floor's bake cut by the clipping planes.
+  const roomModels = {}
+  await Promise.all(Object.keys(ROOMS).map(async (id) => {
+    const m = await load('room-' + id)
+    if (!m) return
+    m.visible = false
+    floors[ROOMS[id].floor].add(m)
+    roomModels[id] = m
+  }))
   const roof = loaded[4]
   if (roof) floors.second.add(roof)
   const site = loaded[5] || new THREE.Group()
@@ -477,13 +487,16 @@ export async function createScene(canvas) {
       const f = FLOORS[id]
       if (isRoom) {
         g.visible = id === ROOMS[state.room].floor
+        if (loaded[ORDER.indexOf(id)]) loaded[ORDER.indexOf(id)].visible = !roomModels[state.room]
         g.position.y = f.y
       } else {
         g.visible = true
+        if (loaded[ORDER.indexOf(id)]) loaded[ORDER.indexOf(id)].visible = true
         g.position.y = f.y + PART[id] * state.open
       }
     }
     if (roof) roof.visible = !isRoom
+    for (const [id, m] of Object.entries(roomModels)) m.visible = isRoom && id === state.room
     setClip(isRoom ? ROOMS[state.room].rect : null, isRoom ? ROOMS[state.room].floor : null)
 
     // Fog per scene.

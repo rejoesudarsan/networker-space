@@ -29,11 +29,23 @@ const ROOM_PEOPLE = {
     [1.23, 1.13, N, 'seated-laptop', CHAIR],
     [0.93, 1.13, N, 'seated-table', CHAIR],
   ],
+  // The lounge at the north end of the terrace (terrace_evening.py).
   terrace: [
-    [-1.62, 1.12, 0.6, 'idle', 0, 'cup'],
-    [-1.42, 1.22, -2.2, 'idle', 0],
-    [-1.47, 0.98, -0.6, 'idle', 0, 'cup'],
-    [-1.55, -1.55 - 0.32, E, 'seated', ARM],
+    [-1.87, -1.55, E, 'seated', ARM],
+    [-1.25, -1.4, W, 'seated', ARM],
+    [-1.72, -2.62, 0.4, 'idle', 0],
+    [-1.5, -2.5, -2.5, 'idle', 0],
+    [-1.42, -2.75, -1.2, 'idle', 0],
+  ],
+  // A talk: one on the stage, the audience on the bleachers
+  // (event_space.py: stage top 0.123, cushion rows at x 1.97 / 2.22 / 2.47).
+  event: [
+    [1.02, 3.15, E, 'idle', 0.123],
+    [1.973, 2.6, W, 'seated', 0.012],
+    [1.973, 3.35, W, 'seated', 0.012],
+    [2.219, 2.85, W, 'seated', 0.176],
+    [2.219, 3.6, W, 'seated', 0.176],
+    [2.465, 3.1, W, 'seated', 0.34],
   ],
 }
 

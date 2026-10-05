@@ -58,6 +58,7 @@ MODULES = [
     "quiet_rooms_second",
     "basement_work_games",
     "gulmohar_refine",
+    "room_lights",
     "detail_cameras",
     "entourage",
 ]
