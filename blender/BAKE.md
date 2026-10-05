@@ -31,7 +31,7 @@ Every space is baked alone, cut to the same kind of box, with identical light, s
 - [x] room-terrace-day (small wall fixtures read as soft dark smudges at this texel density; see texel-density)
 
 ## Day set (whole floors: the street views)
-- [ ] basement-day
+- [x] basement-day
 - [ ] ground-day
 - [ ] first-day
 - [ ] second-day
@@ -54,3 +54,5 @@ Every space is baked alone, cut to the same kind of box, with identical light, s
 
 ## Re-bake (append: `- [ ] <part>-<set>: <module> changed <date>`)
 - [ ] room-lower-day: basement_work_games changed 2026-10-05 (office -> lounge with RC football)
+- [ ] room-court-day: bake_site.py now bakes the entourage in (two people in the court) 2026-10-06
+- [ ] room-terrace-day: bake_site.py now bakes the entourage in (woman on the bench) 2026-10-06

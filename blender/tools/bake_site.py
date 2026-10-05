@@ -15,6 +15,7 @@ world space into one object, given a second, non-overlapping UV map
 indirect + colour), which holds the materials' colour and texture times the
 light that falls on them, independent of the viewing angle. Glass and
 emissive lamps are left out of the bake and exported with flat materials.
+The linked entourage (people, the garage car) is made real and baked in.
 
 The bake is lit the way the site shows a floor: the floors above and the
 roof are hidden (the site sees every room open-topped), the floors below and
@@ -175,6 +176,46 @@ def set_cycles():
 
 # ---------------------------------------------------------------- joining
 
+def realized(pick):
+    """World-space mesh copies of the linked entourage (people, cars:
+    collection-instance empties) that `pick` keeps, so they are baked into
+    the shell with their shadows instead of leaving shadows of nothing.
+    Returns (temporary mesh objects, the instancing empties)."""
+    dg = bpy.context.evaluated_depsgraph_get()
+    empties = [o for o in bpy.data.objects if o.type == "EMPTY" and o.instance_type == "COLLECTION"
+               and o.instance_collection and not o.hide_render and pick(o)]
+    names = {e.name for e in empties}
+    out = []
+    for inst in dg.object_instances:
+        par = inst.parent.original if inst.is_instance and inst.parent else None
+        if par is None or par.name not in names or inst.object.type not in {"MESH", "CURVE"}:
+            continue
+        me = bpy.data.meshes.new_from_object(inst.object)
+        if not me.polygons:
+            bpy.data.meshes.remove(me)
+            continue
+        me.transform(inst.matrix_world)
+        # The assets keep their materials on object slots: carry them over.
+        slots = [sl.material for sl in inst.object.material_slots]
+        for i, m in enumerate(slots):           # assign in place: clear() would reset the face indices
+            if i < len(me.materials):
+                me.materials[i] = m
+            else:
+                me.materials.append(m)
+        # Their textures use the asset's own UV map: keep it, under the name the join keeps.
+        uvs = [uv for uv in me.uv_layers if uv.active_render] or list(me.uv_layers)[:1]
+        if uvs:
+            for uv in list(me.uv_layers):
+                if uv != uvs[0] and uv.name == "BoxUV":
+                    me.uv_layers.remove(uv)
+            uvs[0].name = "BoxUV"
+        t = bpy.data.objects.new("inst.%s.%s" % (par.name, inst.object.name), me)
+        bpy.context.scene.collection.objects.link(t)
+        out.append(t)
+    log("entourage: %d meshes from %d instances" % (len(out), len(empties)))
+    return out, empties
+
+
 def joined(objs, name):
     """World-space copies of the evaluated meshes, joined into one object."""
     dg = bpy.context.evaluated_depsgraph_get()
@@ -258,6 +299,18 @@ def lightmap_uv(ob):
     t = time.time()
     bpy.ops.uv.smart_project(angle_limit=math.radians(60), island_margin=0.0, area_weight=0.0,
                              correct_aspect=True, scale_to_bounds=False)
+    # People and cars (materials "Ent ...") are small and curved: scaled up
+    # 3x before packing they get ~9x the texels, enough to keep their colours.
+    bpy.ops.object.mode_set(mode="OBJECT")
+    ent = {i for i, m in enumerate(me.materials) if m is not None and m.name.startswith("Ent ")}
+    if ent:
+        uvd = uv.data
+        for p in me.polygons:
+            if p.material_index in ent:
+                for li in p.loop_indices:
+                    uvd[li].uv *= 3.0
+    bpy.ops.object.mode_set(mode="EDIT")
+    bpy.ops.mesh.select_all(action="SELECT")
     # Pack with a real margin in texels so the bake margin can't bleed across islands.
     try:
         bpy.ops.uv.pack_islands(udim_source="CLOSEST_UDIM", rotate=True, margin_method="FRACTION",
@@ -499,8 +552,11 @@ def bake_part(name, root, pick, hide, cut=None):
             hidden.append(o)
     srcs = [o for o in bpy.data.objects if o.type in {"MESH", "CURVE", "FONT"} and pick(o)
             and not o.hide_render and re.sub(r"\.\d+$", "", o.name).split(".")[-1] not in SKIP]
-    ob = joined(srcs, "%s.baked" % name)
-    for o in srcs:
+    inst, empties = realized(pick)
+    ob = joined(srcs + inst, "%s.baked" % name)
+    for o in inst:
+        bpy.data.objects.remove(o)
+    for o in srcs + empties:
         o.hide_render = True
     if cut:
         cut_to(ob, root, *cut)
@@ -541,7 +597,7 @@ def bake_part(name, root, pick, hide, cut=None):
     if fixtures and light_set == "day":
         export(fixtures, os.path.join(OUT, "%s-fixtures.gltf" % name), root)
     # Put the scene back for the next part.
-    for o in srcs + hidden:
+    for o in srcs + empties + hidden:
         o.hide_render = False
     for o in [ob] + fixtures:
         bpy.data.objects.remove(o)

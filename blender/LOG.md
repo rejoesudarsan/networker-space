@@ -38,3 +38,4 @@
 - 2026-10-05 22:59 basement-lounge-rc-football + family2-ps5 (user request, built in the bake thread): build ok, eevee renders checked (PS5 laid flat under the TV, sofa cushions dropped). room-lower-day queued for re-bake.
 - 2026-10-05 23:15 room-event-day: bake 874 s (2048, 256 spp, CPU). Unlit glTF view matches the Cycles reference; black atlas islands are the slab underside and buried layers only.
 - 2026-10-05 23:34 room-terrace-day: bake 1017 s (2048, 256 spp, CPU). Unlit glTF view matches the Cycles reference; small fixtures blur at 2k.
+- 2026-10-06 01:49 basement-day: bake 3832 s (4096, 256 spp, CPU). First bake showed the garage car's shadow without the car: bake_site.py now realizes the linked entourage (slot materials kept, UVs scaled 3x for texels) and bakes it in; re-baked, matches the reference. room-court/terrace queued for re-bake.
