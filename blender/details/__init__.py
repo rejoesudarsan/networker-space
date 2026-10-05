@@ -40,6 +40,7 @@ MODULES = [
     "court1_big_tree",
     "garage_fitout",
     "office_den",
+    "court2_flagstones_olive",
 ]
 
 

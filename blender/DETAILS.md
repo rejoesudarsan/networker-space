@@ -70,7 +70,8 @@ Rules for every item:
   - note: in the basement OFFICE (walls measured from a straight-down render: x -0.57..2.0, z -0.47..1.88). Desk ledge, chair and whiteboard on the west wall (p31), cubby shelf and AC at the south window (p31), green pinboard on the east wall (p10).
 
 ## First floor (p1, p11, p14, p8, p35, p16, p26)
-- [ ] court2-flagstones-olive: sandstone flagstones in the Double HT Court and the olive tree in a planter (p11, p14).
+- [x] court2-flagstones-olive: sandstone flagstones in the Double HT Court and the olive tree in a planter (p11, p14).
+  - note: court measured top-down (x 0.81..2.51, z 0.18..1.69, first frame), matching the second-floor void. Random flagstones in four tones with a few red accent tiles (p11); olive in a round concrete planter at the back before the east wall, as in p11 (site had it at the south-east).
 - [ ] court2-nest-pendants: three woven nest pendants hanging from the skylight into the court (p1, p11).
 - [ ] court2-skylight: skylight frame and glass over the court void above the second floor, roof void opened (`ROOF_VOIDS`) (p1).
 - [ ] court2-louvred-doors: teak louvred doors between the court and Living 2 (p1, p11, p14).
