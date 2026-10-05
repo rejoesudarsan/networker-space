@@ -22,3 +22,4 @@
 - 2026-10-05 08:13 office_den: build ~90 s; first bounds guessed and the desk floated mid-room, measured the walls from an orthographic top-down render (new /tmp/topo.py approach) and refit.
 - 2026-10-05 08:16 court2_flagstones_olive: build ~90 s; two eye-level renders and a top-down. Olive crown first too heavy vs p11, made slimmer and greyer. Added tools/topdown_with.py.
 - 2026-10-05 08:18 court2_nest_pendants: build ~90 s; eye-level render matched p11's framing; spikes shortened.
+- 2026-10-05 08:21 court2_skylight: build 96 s; roof cut and skylight in finish(); looking-up render matched p1.
