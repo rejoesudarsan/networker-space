@@ -1,0 +1,717 @@
+{
+  "generator": "OpenAI built-in image_gen",
+  "export": "Native generated files resized only at export to requested dimensions; no synthetic image or text compositing.",
+  "generations": [
+    {
+      "file": "home-03-dawn.png",
+      "prompt": "Create a finished website design comp, output exactly 1920 x 1080 pixels, landscape 16:9. Edit the approved house image (first reference) into a wide website viewport by extending the fog horizontally, preserving this EXACT house facade, windows, gate, stepped roofline, sparse two gulmohars, surface textures, frontal camera and scale relative to image height. The second reference is actual house grounding; do not add its cars or neighbours. Whole house occupies middle 34 percent of viewport width, 57 percent height, centered at x=960 y=550. Soft quiet grey-pink dawn fog #D1BFC2, no bright sun or flare. Approved premium photoreal architectural miniature atmosphere, not illustration. Add ONLY four corner HUD labels in small precise JetBrains Mono character, charcoal #383B3A, 18px at this resolution, 48px inset: top-left 'SPACE', top-right 'Book a call', bottom-left 'Scroll', bottom-right '06:00 IST'. No other text. No headline, cards, panels, extra building, neon, people, logos, street numbers. This is home-01-dawn. Preserve confirmed building, don't redesign it.",
+      "references": [
+        "reference/art-direction/01-dawn-exterior.png",
+        "docs/house-understanding/img/p19.jpg"
+      ],
+      "generation_file": "home-01-dawn.png",
+      "references_at_generation": [
+        "reference/art-direction/01-dawn-exterior.png",
+        "docs/house-understanding/img/p19.jpg"
+      ],
+      "status": "selected",
+      "attempt": 1
+    },
+    {
+      "file": "home-04-opening.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. EDIT previous frame: same exact frontal camera, gate, trees, building scale and facade. Time 06:30 IST. Begin precise sectional opening: two narrow horizontal gaps, each only 30 pixels tall, part the ground/first/second floor masses vertically; preserve every window and asymmetrical facade. Roof moves up slightly. Fine hairline survey lines in fog beside the house mark original floor levels with tiny numerals '01', '02', '03'; no labels pasted on surfaces. Fog at street grows. Architectural exploded model, not collapse, no debris. House remains centered.",
+      "references": [
+        "reference/astra-design/home-03-dawn.png"
+      ],
+      "generation_file": "home-02-opening.png",
+      "references_at_generation": [
+        "reference/astra-design/home-01-dawn.png"
+      ],
+      "status": "superseded",
+      "attempt": 2
+    },
+    {
+      "file": "home-05-parted.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. EDIT previous frame consecutively. Preserve exact facade pieces and camera orientation. Clock '07:00 IST'. Upper floor masses lift another 40 pixels, ground remains, denser pale warm fog starts veiling lowest facade. Keep precise thin survey lines, remove artificial luminous strips at floor seams: gaps are natural shadow and mist, no glowing edges. Add small two-line freestanding editorial caption at left in EMPTY FOG, x=260 y=380, not headline: 'A house for startup people.' then 'Four levels. Room to belong.' Text Schibsted Grotesk character 22px regular. Never across building. Lifted roof remains below top 100px. Do not add any floor or window.",
+      "references": [
+        "reference/astra-design/home-04-opening.png"
+      ],
+      "generation_file": "home-03-parted.png",
+      "references_at_generation": [
+        "reference/astra-design/home-02-opening.png"
+      ],
+      "status": "selected",
+      "attempt": 3
+    },
+    {
+      "file": "home-01-falling.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. EDIT hero anchor for the first opening frame. Same exact camera, fog palette and corner HUD clock 06:00 IST. House in exact original location but 90% veiled in fog, only faint stepped roof visible. A sparse arrangement of FIVE real domestic objects falling downward out of the sky in the central third: TWO elegant small teak cafe chairs tilted naturally, TWO closed cream clothbound books at different heights, and ONE small spray of gulmohar orange petals. Topmost chair partly enters at top edge near center, other chair at x=1040 y=350, books lower above roof. Believable gravity, tiny restrained downward motion blur, no debris, no destruction, no magical glows. These are quiet real objects, photoreal, not giant. No other text or objects. At least 70 percent empty fog. The house is not replaced or redesigned.",
+      "references": [
+        "reference/astra-design/home-03-dawn.png"
+      ],
+      "generation_file": "home-00a-falling.png",
+      "references_at_generation": [
+        "reference/astra-design/home-01-dawn.png"
+      ],
+      "status": "superseded",
+      "attempt": 4
+    },
+    {
+      "file": "home-01-falling.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Targeted correction to reference: KEEP all falling chairs, books and petals in exact same positions and keep exact four HUD labels. Remove ALL visible house silhouette, trees, roof and street. Entire lower two-thirds is empty softly luminous grey pink fog #D1BFC2, with no ground horizon. Nothing else changes. This first beat must be mostly empty with falling everyday objects. No building visible.",
+      "references": [
+        "reference/astra-design/home-01-falling.png"
+      ],
+      "generation_file": "home-00a-falling.png",
+      "references_at_generation": [
+        "reference/astra-design/home-00a-falling.png"
+      ],
+      "status": "selected",
+      "attempt": 5
+    },
+    {
+      "file": "home-02-settling.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Consecutive edit of first falling-object frame. Same camera and four HUD labels, 06:00 IST. Advance same two chairs and same two books downwards by 380px; they are now dissolving into deep fog around lower-middle viewport, 80% obscured, only a chair back and one book discernible. Petals descend with them, nearly lost. Upper sky now empty. Whole frame 90% negative space, no building or ground visible. No new objects. This is the empty landing beat before the house emerges. Add tiny freestanding mono line near left at x=260 y=600: 'Make room for what comes next.'",
+      "references": [
+        "reference/astra-design/home-01-falling.png"
+      ],
+      "generation_file": "home-00b-settling.png",
+      "references_at_generation": [
+        "reference/astra-design/home-00a-falling.png"
+      ],
+      "status": "selected",
+      "attempt": 6
+    },
+    {
+      "file": "home-06-fog-basement.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Consecutive edit of parted-house frame. Dense uniform grey-pink fog #CFBDC0 swallows the entire parted house, trees and street; at most a whisper of roof in exact original location, no readable architecture. Remove all survey lines and all body copy. Corner HUD remains exact, clock '08:00 IST'. Flat near-empty atmospheric beat, no clouds with hard edges, no sun, no objects.",
+      "references": [
+        "reference/astra-design/home-05-parted.png"
+      ],
+      "generation_file": "home-04-fog-basement.png",
+      "references_at_generation": [
+        "reference/astra-design/home-03-parted.png"
+      ],
+      "status": "selected",
+      "attempt": 7
+    },
+    {
+      "file": "home-07-basement.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Reveal a basement architectural diorama in the same warm pale fog as first reference, clock 09:00 IST. Single compact open-top basement SECTION of the actual Space house, centered at x=1030 y=540, width about 720px, no upper storeys. Elevated 30 degree down view, front orientation consistent with house. Basement includes quiet modest workroom with terrazzo floor, teak windows, a long worktable and two chairs, adjoining DOUBLE HEIGHT court with ONE large tree and wooden balustrade staircase rising to ground; separate SMALL open-to-sky entry court with outside stair; garage access ramp on different side, just its edge discernible in fog. Two courts must remain separate. No nest pendants or olive planter from first-floor court. Photographs establish materials and stair character, not a complete basement survey. Approved courtyard board establishes render quality and compact section treatment. Two small people maximum. Exposed cut edges dissolve into fog, not a floating rock. Freestanding tiny left callout with fine leader stopping 40px before diorama, exact text: 'LOWER LEVEL' / 'Work, with room to think.' / 'Quiet rooms. Courts open to the sky.' / 'Explore →'. Place copy around x=220 y=430 in clear negative space, no overlap with building.",
+      "references": [
+        "reference/astra-design/home-06-fog-basement.png",
+        "reference/art-direction/04-courtyard-afternoon.png",
+        "docs/house-understanding/img/p20.jpg",
+        "docs/house-understanding/img/p31.jpg"
+      ],
+      "generation_file": "home-05-basement.png",
+      "references_at_generation": [
+        "reference/astra-design/home-04-fog-basement.png",
+        "reference/art-direction/04-courtyard-afternoon.png",
+        "docs/house-understanding/img/p20.jpg",
+        "docs/house-understanding/img/p31.jpg"
+      ],
+      "status": "superseded",
+      "attempt": 8
+    },
+    {
+      "file": "home-07-basement.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Targeted revision. Preserve entire diorama materials, two separate courts, tree, furniture, composition, HUD and exact content. Remove the car completely from right-side ramp. Replace long white diagonal line which crosses the room with a much shorter charcoal hairline placed only in EMPTY FOG between text block and outer left edge of building; it must stop 40px before architecture and touch no wall or furnishing. Pull entire diorama back by 15 percent so it fits fully within middle 50 percent of viewport, keeping camera orientation. No other edits.",
+      "references": [
+        "reference/astra-design/home-07-basement.png"
+      ],
+      "generation_file": "home-05-basement.png",
+      "references_at_generation": [
+        "reference/astra-design/home-05-basement.png"
+      ],
+      "status": "selected",
+      "attempt": 9
+    },
+    {
+      "file": "home-08-basement-exit.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Consecutive edit of basement comp. Keep diorama exact, camera orientation exact. Shift it upward 140 pixels and veil the lower half in rising grey warm fog, upper section remains faintly readable. Remove content callout entirely, keep four corners clock 09:30 IST. It is exiting into fog with no new content or subjects. Desaturate sky slightly toward #BDB0B2. Deliberately quiet transition.",
+      "references": [
+        "reference/astra-design/home-07-basement.png"
+      ],
+      "generation_file": "home-06-basement-exit.png",
+      "references_at_generation": [
+        "reference/astra-design/home-05-basement.png"
+      ],
+      "status": "selected",
+      "attempt": 10
+    },
+    {
+      "file": "home-10-cafe.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Use first reference for corner HUD framing. New scene revealed after opaque fog; approved cafe board is exact geometry and material anchor, photo reinforces room. Ground-floor open-top room with polished teak planks, deep glazed teak doors, two brass hanging lanterns on slender beam, exactly two cafe tables and four chairs. Remove no architectural features, add no cafe counter. Slight downward view, SAME frontal azimuth as house, centered at x=1050 y=560 and only 43% viewport width. Wide pale morning fog #BDB0B2 around all edges; no hard pedestal. Clock '10:00 IST'. Sparse tiny left in-world caption x=220 y=450: 'GROUND FLOOR' / 'Coffee. A table. An unhurried start.' / 'Walk-in café · 08:00–18:00' / 'Explore →'. Short hairline only in empty gap, stops before room. Warm teak is muted, not orange wash. No people. No text over room.",
+      "references": [
+        "reference/astra-design/home-07-basement.png",
+        "reference/art-direction/03-cafe-morning.png",
+        "docs/house-understanding/img/p25.jpg"
+      ],
+      "generation_file": "home-08-cafe.png",
+      "references_at_generation": [
+        "reference/astra-design/home-05-basement.png",
+        "reference/art-direction/03-cafe-morning.png",
+        "docs/house-understanding/img/p25.jpg"
+      ],
+      "status": "selected",
+      "attempt": 11
+    },
+    {
+      "file": "home-09-fog-cafe.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Edit this basement exit into a fully opaque morning fog beat. ALL architecture, people, objects and text content disappear. Only exact four corner labels remain, clock '10:00 IST'. Smooth pale warm grey atmosphere #BDB0B2 with very subtle volumetric depth, no horizon, no distinct clouds or silhouette. Deliberate rest, not a loading screen.",
+      "references": [
+        "reference/astra-design/home-08-basement-exit.png"
+      ],
+      "generation_file": "home-07-fog-cafe.png",
+      "references_at_generation": [
+        "reference/astra-design/home-06-basement-exit.png"
+      ],
+      "status": "selected",
+      "attempt": 12
+    },
+    {
+      "file": "home-11-cafe-exit.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Consecutive edit of cafe frame: same exact cafe geometry and camera direction, now drifts upward 100 pixels. More fog rises through room so lower teak floor and table legs are 70 percent obscured. Remove all in-world copy and callout line, only four exact corner labels remain, clock '13:00 IST'. Neutral daylight, paler less pink atmosphere. No new furniture, people, or architecture.",
+      "references": [
+        "reference/astra-design/home-10-cafe.png"
+      ],
+      "generation_file": "home-09-cafe-exit.png",
+      "references_at_generation": [
+        "reference/astra-design/home-08-cafe.png"
+      ],
+      "status": "selected",
+      "attempt": 13
+    },
+    {
+      "file": "home-13-courtyard.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. First reference governs HUD/scene framing. Approved courtyard image is EXACT architectural scene anchor. Reveal same compact first-floor double-height court with olive tree in round concrete planter, sandstone flagstones, three woven nest pendants at staggered heights, teak louvred doors and skylight rim. Preserve proportions and arrangement from approved board, pull back so section fits in center-right 44% viewport width with wide pale afternoon fog #CEC0C0 on all sides. At left edge of section only, a glimpse into adjacent terrazzo library nook with low teak bookcase and one reading chair, clearly proposed use; do not enlarge court. Same view angle as approved court, no extreme rotation. Only two seated people, natural scale. Clock '16:00 IST'. Small left callout entirely in empty fog: 'FIRST FLOOR' / 'Read. Talk. Let an idea take its time.' / 'Courtyard · Library · Shared tables' / 'Explore →'. Fine short hairline stops before building. No labels on architecture or central headline.",
+      "references": [
+        "reference/astra-design/home-10-cafe.png",
+        "reference/art-direction/04-courtyard-afternoon.png"
+      ],
+      "generation_file": "home-11-courtyard.png",
+      "references_at_generation": [
+        "reference/astra-design/home-08-cafe.png",
+        "reference/art-direction/04-courtyard-afternoon.png"
+      ],
+      "status": "selected",
+      "attempt": 14
+    },
+    {
+      "file": "home-12-fog-courtyard.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Edit this cafe exit into a fully opaque pale afternoon fog beat #CEC0C0. Remove ALL architecture, furniture and sky detail. No silhouette. Only four original corner HUD labels, clock '15:00 IST'. Deliberate smooth empty atmospheric interval, no text in center.",
+      "references": [
+        "reference/astra-design/home-11-cafe-exit.png"
+      ],
+      "generation_file": "home-10-fog-courtyard.png",
+      "references_at_generation": [
+        "reference/astra-design/home-09-cafe-exit.png"
+      ],
+      "status": "selected",
+      "attempt": 15
+    },
+    {
+      "file": "home-14-whos-inside.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. EDIT courtyard frame maintaining EXACT architecture, camera, tree, pendants, doors and lighting. Scale whole diorama to 82 percent of prior size and center slightly right to open more fog; all edges fit. Replace left callout copy with this exact small mono in-world selector: 'WHO’S INSIDE' / '● Founders' / 'Artists' / 'Music' / 'Play'. Selected Founders has tiny gulmohar orange dot; other words charcoal. Under selector small Schibsted character text: 'Find a sounding board.' / 'A conversation can change the day.' Fine short callout lines fan from choices into empty fog but STOP BEFORE building, no labels on walls, no panel background. Two people discussing an open notebook by court, never more than three people. Clock '17:00 IST'. Keep four original corner labels.",
+      "references": [
+        "reference/astra-design/home-13-courtyard.png"
+      ],
+      "generation_file": "home-12-whos-inside.png",
+      "references_at_generation": [
+        "reference/astra-design/home-11-courtyard.png"
+      ],
+      "status": "selected",
+      "attempt": 16
+    },
+    {
+      "file": "home-15-fog-terrace.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Transition from courtyard toward terrace. Obscure all architecture and in-world copy in fully opaque fog. Only four corner HUD labels. Clock '18:00 IST'. Atmosphere gradually cooler dusky mauve #786C7D mixed with pale afternoon #CEC0C0, soft and nearly empty, no sun, skyline or objects. Warm-white corner text where needed.",
+      "references": [
+        "reference/astra-design/home-13-courtyard.png"
+      ],
+      "generation_file": "home-13-fog-terrace.png",
+      "references_at_generation": [
+        "reference/astra-design/home-11-courtyard.png"
+      ],
+      "status": "superseded",
+      "attempt": 17
+    },
+    {
+      "file": "home-15-fog-terrace.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Edit this EMPTY FOG image. Change only the atmosphere to dusky violet grey #786C7D and four corner text to warm white. Clock '18:00 IST'. Preserve absence of objects: absolutely NO building, NO terrace, NO people, NO furniture, NO silhouette, NO horizon. Completely empty mist across entire screen except four corner labels. This is a blank transition pause.",
+      "references": [
+        "reference/astra-design/home-12-fog-courtyard.png"
+      ],
+      "generation_file": "home-13-fog-terrace.png",
+      "references_at_generation": [
+        "reference/astra-design/home-10-fog-courtyard.png"
+      ],
+      "status": "selected",
+      "attempt": 18
+    },
+    {
+      "file": "home-16-terrace.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Reveal the approved terrace from second reference in wide website viewport. Preserve actual photo p33 long narrow terracotta terrace, white parapet with rectangular openings, timber bench and long side room with teak door/window, no new building. Pull back until ENTIRE section fits within center-right 45% width and 60% height, no side room touching any viewport edge. Slight downward view consistent with preceding floor scenes. Violet-grey fog #786C7D eats edges, muted orange low sky without sun disc, no neighbours. Exactly THREE people quietly talking near far end, one sparse strand of small warm lights. Clock '18:30 IST'. Left in-world callout in empty fog, warm-white small mono: 'SECOND FLOOR' / 'The day opens into evening.' / 'Terrace conversations. Room to linger.' / 'Explore →'. Fine short leader ends before architecture, no panel.",
+      "references": [
+        "reference/astra-design/home-15-fog-terrace.png",
+        "reference/art-direction/05-terrace-sundown.png",
+        "docs/house-understanding/img/p33.jpg"
+      ],
+      "generation_file": "home-14-terrace.png",
+      "references_at_generation": [
+        "reference/astra-design/home-13-fog-terrace.png",
+        "reference/art-direction/05-terrace-sundown.png",
+        "docs/house-understanding/img/p33.jpg"
+      ],
+      "status": "selected",
+      "attempt": 19
+    },
+    {
+      "file": "home-17-fog-evening.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Edit this EMPTY FOG frame only. Deepen dusk toward desaturated slate blue #394252 transitioning to #1C2D4C. Keep no objects at all. Exact four warm-white HUD corners, clock '19:30 IST'. No buildings, no people, no text elsewhere, no sun or horizon. Smooth dense volumetric veil.",
+      "references": [
+        "reference/astra-design/home-15-fog-terrace.png"
+      ],
+      "generation_file": "home-15-fog-evening.png",
+      "references_at_generation": [
+        "reference/astra-design/home-13-fog-terrace.png"
+      ],
+      "status": "selected",
+      "attempt": 20
+    },
+    {
+      "file": "home-18-reassembling.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Reassembly frame: first reference is EXACT parted house geometry and frontal camera; second reference is closed house target. Preserve original facade pieces, stepped roof, window placement, two trees and street gate. Shift separated floors toward original closed positions leaving very thin 10px natural shadow gaps; roof lowered, all aligned. Dark slate blue evening fog #394252 veils bottom gate and lower floor. Windows begin soft amber glow, no luminous seams. Clock '20:00 IST'. Keep corner labels warm-white, remove all survey lines and body copy. It is this same house returning out of fog, not another building. No people or cars.",
+      "references": [
+        "reference/astra-design/home-04-opening.png",
+        "reference/astra-design/home-03-dawn.png"
+      ],
+      "generation_file": "home-16-reassembling.png",
+      "references_at_generation": [
+        "reference/astra-design/home-02-opening.png",
+        "reference/astra-design/home-01-dawn.png"
+      ],
+      "status": "superseded",
+      "attempt": 21
+    },
+    {
+      "file": "home-19-night.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Night return. First reference is consecutive evening frame; second is exact closed-house position and shape to match. House now FULLY assembled in exact dawn position/scale, same facade/window/gate/tree arrangement. Change lighting only: deep blue fog #1C2D4C, warm amber glowing windows, modest roof string lights barely visible, quiet street fades out. Four warm-white corner labels clock '22:00 IST'. Small freestanding left caption in clear fog: 'A CAFÉ BY DAY. A CLUB BY NIGHT.' / 'Evenings · 18:00–23:00' / 'A programme for startup people.' / 'Access depends on membership.' Use small Schibsted/mono character, no large headline, no invented event schedule, no crowds, no neon.",
+      "references": [
+        "reference/astra-design/home-18-reassembling.png",
+        "reference/astra-design/home-03-dawn.png"
+      ],
+      "generation_file": "home-17-night.png",
+      "references_at_generation": [
+        "reference/astra-design/home-16-reassembling.png",
+        "reference/astra-design/home-01-dawn.png"
+      ],
+      "status": "superseded",
+      "attempt": 22
+    },
+    {
+      "file": "home-20-fog-memberships.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Edit empty blue fog to near-uniform deep quiet night #1C2D4C with soft faint lighter mist centrally. Exact warm-white corner HUD clock '22:00 IST'. No house, no objects, no central text, no horizon. This empty beat hides the membership scene change.",
+      "references": [
+        "reference/astra-design/home-17-fog-evening.png"
+      ],
+      "generation_file": "home-18-fog-memberships.png",
+      "references_at_generation": [
+        "reference/astra-design/home-15-fog-evening.png"
+      ],
+      "status": "selected",
+      "attempt": 23
+    },
+    {
+      "file": "home-21-memberships.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Membership scene emerges from night fog. Keep exact corner HUD clock 22:00 IST. No house. In-world installation: three small low horizontal sandstone plinths arranged along a shallow arc, center at x=960 y=590, all within central 70% width. Each plinth has a tactile house object: left a single teak cafe chair; middle a closed book on a reading chair; right two small teak chairs beside a shared table. Sparse tiny real objects, no people. Ground and bases dissolve into dark blue fog #1C2D4C. These are physical diorama objects, not screen cards. Below each plinth in clear EMPTY fog, legible small warm-white mono 20px callout text, no rectangles, no boxes, no panel backgrounds. Left exact five lines: 'VISIT' / 'Walk-in access' / 'Table booking' / 'Needs —' / 'Book a call →'. Middle exact five lines: 'REGULAR' / 'Quiet spaces' / 'Game rooms' / 'Needs —' / 'Book a call →'. Right exact five lines: 'HOUSE' / 'Broader access' / 'Team + guests' / 'Needs —' / 'Book a call →'. Each text block aligned under respective object. Far left above arc tiny label 'MEMBERSHIPS'. Tiny footnote beneath arc 'Requirements to be confirmed on a call.' No prices or invented access promises, no central large heading. One tiny orange petal on center plinth as only accent.",
+      "references": [
+        "reference/astra-design/home-20-fog-memberships.png"
+      ],
+      "generation_file": "home-19-memberships.png",
+      "references_at_generation": [
+        "reference/astra-design/home-18-fog-memberships.png"
+      ],
+      "status": "selected",
+      "attempt": 24
+    },
+    {
+      "file": "home-22-membership-focus.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Hover/focus state of same membership scene. Preserve exact camera, three object positions, fog, geometry and all existing text. Center REGULAR plinth comes gently into focus and gets 15% brighter, outer two recede gently but all copy stays legible. Add fine warm-white underline beneath 'REGULAR' and tiny orange dot beside it. Under center CTA add one small line 'For a more regular rhythm.' No larger scale, no glow, no card container, no outlines around objects. Four corner HUD unchanged. This is keyboard focus as well as hover.",
+      "references": [
+        "reference/astra-design/home-21-memberships.png"
+      ],
+      "generation_file": "home-20-membership-focus.png",
+      "references_at_generation": [
+        "reference/astra-design/home-19-memberships.png"
+      ],
+      "status": "failed",
+      "error": "HTTP 504: bb connect timed out waiting for tunnel client; later built-in retry succeeded.",
+      "attempt": 25
+    },
+    {
+      "file": "home-22-membership-focus.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Edit this membership image. Keep everything fixed and all text identical. Underline REGULAR and add one tiny orange focus dot beside it. Center chair slightly brighter, outer two slightly dimmer while text remains readable. Add 'For a more regular rhythm.' under middle Book a call. No other changes.",
+      "references": [
+        "reference/astra-design/home-21-memberships.png"
+      ],
+      "generation_file": "home-20-membership-focus.png",
+      "references_at_generation": [
+        "reference/astra-design/home-19-memberships.png"
+      ],
+      "status": "selected",
+      "attempt": 26
+    },
+    {
+      "file": "home-23-fog-cta.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Edit empty dark fog. Keep empty atmosphere but make it calmer and flatter, charcoal blue #1C2D4C. Clock 22:00 IST. Bottom-left now 'Stay a while' instead of Scroll. All other corners unchanged. Absolutely no architecture or objects. A quiet final pause before invitation.",
+      "references": [
+        "reference/astra-design/home-20-fog-memberships.png"
+      ],
+      "generation_file": "home-21-fog-cta.png",
+      "references_at_generation": [
+        "reference/astra-design/home-18-fog-memberships.png"
+      ],
+      "status": "selected",
+      "attempt": 27
+    },
+    {
+      "file": "home-24-call.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Final invitation. Dark quiet blue fog #1C2D4C, only ONE in-world element: single tactile teak chair from left membership object on a very small sandstone floor fragment, alone at x=970 y=520, modest 260px high, subtle warm grazing light and one orange petal on floor. No house, no other plinths or objects. Generous empty night atmosphere. At x=1110 y=560 beside this single chair, small freestanding invitation integrated with same object: Newsreader-character 28px line 'There’s room for you.' then small 18px Schibsted text 'Tell us what you’re building.' then mono 20px 'Book a call →'. No large central headline or box. Corner HUD: SPACE / Book a call / Stay a while / 22:00 IST. Calm, real wood grain, no beams or glow.",
+      "references": [
+        "reference/astra-design/home-21-memberships.png",
+        "reference/astra-design/home-23-fog-cta.png"
+      ],
+      "generation_file": "home-22-call.png",
+      "references_at_generation": [
+        "reference/astra-design/home-19-memberships.png",
+        "reference/astra-design/home-21-fog-cta.png"
+      ],
+      "status": "selected",
+      "attempt": 28
+    },
+    {
+      "file": "mobile-01-dawn.png",
+      "prompt": "Finished MOBILE Space homepage comp, exactly 390x844 pixels portrait, full-bleed viewport with NO device frame. Recompose reference dawn hero for narrow phone. Preserve EXACT house facade/window/roof/gate/tree geometry and frontal camera; entire house and both trees fit within x=30..360, y=290..590, no cropping. Large grey-pink dawn fog above and below. Very small legible JetBrains Mono character HUD: SPACE at (20,32), Book a call right-aligned at (370,32), Scroll at (20,808), 06:00 IST right-aligned at (370,808), roughly 11px. Add small two-line Schibsted character copy in empty fog below building at (24,660), 15px: 'A house for startup people.' / 'HSR Layout, Bengaluru.' No other text, no headlines or panels. No extra buildings or people. Quiet approved materials.",
+      "references": [
+        "reference/astra-design/home-03-dawn.png"
+      ],
+      "generation_file": "mobile-01-dawn.png",
+      "references_at_generation": [
+        "reference/astra-design/home-01-dawn.png"
+      ],
+      "status": "selected",
+      "attempt": 29
+    },
+    {
+      "file": "mobile-02-courtyard.png",
+      "prompt": "Finished MOBILE Space comp exactly 390x844 portrait, full-bleed no device. Recompose courtyard reference preserving exact court geometry, olive tree, three pendants, teak doors and sandstone. Whole miniature centered x=195 y=390, occupies only width 310 and height 360, no clipped walls or pendants. Pale afternoon fog fills margins. Four small mono corners 20px inset, SPACE / Book a call / Scroll / 16:00 IST, 11px. Below miniature in clear fog y=630, left aligned small 13px text: 'FIRST FLOOR' / 'Read. Talk. Take your time.' / 'Courtyard · Library' / 'Explore →'. No text over building, no panel or bottom sheet. Tiny people max three, no crowd. Do not redraw as generic room.",
+      "references": [
+        "reference/astra-design/home-13-courtyard.png"
+      ],
+      "generation_file": "mobile-02-courtyard.png",
+      "references_at_generation": [
+        "reference/astra-design/home-11-courtyard.png"
+      ],
+      "status": "selected",
+      "attempt": 30
+    },
+    {
+      "file": "mobile-03-memberships.png",
+      "prompt": "Finished MOBILE Space comp exactly 390x844 portrait, full-bleed no phone frame. Same night fog #1C2D4C and physical membership objects as reference. Show selected REGULAR only: reading chair and book on low sandstone fragment centered x195 y365, whole object width250. Above it y215 small mono label MEMBERSHIPS. Below object y520 visible mono tier selector 'Visit   Regular   House', Regular underlined and one tiny orange dot. Below y570 left-aligned 14px text: 'Quiet spaces' / 'Game rooms' / 'Needs —' / 'Requirements to be confirmed.' / 'Book a call →'. Small visible previous and next arrows flank sandstone fragment, both reachable. Four corner labels 11px 20px inset: SPACE / Book a call / Scroll / 22:00 IST. No panels, cards, headlines, extra objects or fabricated data. All copy legible and comfortable spacing.",
+      "references": [
+        "reference/astra-design/home-21-memberships.png"
+      ],
+      "generation_file": "mobile-03-memberships.png",
+      "references_at_generation": [
+        "reference/astra-design/home-19-memberships.png"
+      ],
+      "status": "selected",
+      "attempt": 31
+    },
+    {
+      "file": "mobile-04-call.png",
+      "prompt": "Finished MOBILE Space final CTA comp exactly 390x844 portrait, full-bleed no device. Recompose reference with single teak chair on tiny sandstone fragment, orange petal, calm dark blue fog. Whole chair centered x195 y350, width180, ample void above. Beneath in empty fog y545, small Newsreader-character line 'There’s room for you.' 22px. Then 'Tell us what you’re building.' Schibsted 14px. Then 'Book a call →' mono 15px with short underline, generous touch space. Four small 11px corner labels: SPACE / Book a call / Stay a while / 22:00 IST, 20px inset. No other objects, no phone frame, no panel, no big title.",
+      "references": [
+        "reference/astra-design/home-24-call.png"
+      ],
+      "generation_file": "mobile-04-call.png",
+      "references_at_generation": [
+        "reference/astra-design/home-22-call.png"
+      ],
+      "status": "selected",
+      "attempt": 32
+    },
+    {
+      "file": "interaction-01-explore-closed.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Closed explore state of first-floor scene. Keep same camera, architecture, fog and exact left copy. Underline 'Explore →' and add tiny orange dot to left to indicate hover/focus; fine leader redraws within empty gap only. Bottom-left corner contains two compact lines: 'Scroll' and 'Sound off'. All other corners unchanged 16:00 IST. No cursor icon, no overlay or new panel. The geometry must not change.",
+      "references": [
+        "reference/astra-design/home-13-courtyard.png"
+      ],
+      "generation_file": "interaction-01-explore-closed.png",
+      "references_at_generation": [
+        "reference/astra-design/home-11-courtyard.png"
+      ],
+      "status": "selected",
+      "attempt": 33
+    },
+    {
+      "file": "interaction-02-explore-open.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. OPEN explore state using same courtyard image. Camera and geometry unchanged. Darken entire world to near charcoal #151C24; court still faintly recognizable on RIGHT only, at 20% brightness. No opaque rectangular panel. Corner HUD warm-white: SPACE top-left; 'Close ×' top-right; 'Sound off' bottom-left; '16:00 IST' bottom-right. All prior captions removed. Left of court in clear dark space x=200 y=280, a reading column maximum 520px wide with beautifully legible small warm-white JetBrains Mono-character text, 22px/34px. Exact text with paragraphs: 'FIRST FLOOR / EXPLORE' then 'A little distance from the day.' then 'Read in the library. Find a quiet corner. Let a conversation unfold beside the courtyard.' then 'Space is a private club for startup people in HSR Layout, Bengaluru. A house for work, shared interests and time together.' then 'Membership shapes your access.' then two links 'Walk through the house →' and 'Book a call →'. Include all copy as final decoded real text, not gibberish. No enormous heading, no border, no text laid over architecture. Igloo style intimate dark reading state.",
+      "references": [
+        "reference/astra-design/home-13-courtyard.png"
+      ],
+      "generation_file": "interaction-02-explore-open.png",
+      "references_at_generation": [
+        "reference/astra-design/home-11-courtyard.png"
+      ],
+      "status": "selected",
+      "attempt": 34
+    },
+    {
+      "file": "state-01-loading.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Loading state based on EMPTY dawn fog. No house yet. Four small mono corner areas: top-left SPACE; top-right 'Book a call'; bottom-left two lines 'Preparing the house' and 'Continue without motion →'; bottom-right '—'. At center a single tiny gulmohar orange petal descending, only 18px wide at 1920 resolution, subtle vertical motion trace. No spinner, no loading bar, no invented percentage, no large text. Nearly empty warm grey fog #D1BFC2.",
+      "references": [
+        "reference/astra-design/home-09-fog-cafe.png"
+      ],
+      "generation_file": "state-01-loading.png",
+      "references_at_generation": [
+        "reference/astra-design/home-07-fog-cafe.png"
+      ],
+      "status": "selected",
+      "attempt": 35
+    },
+    {
+      "file": "state-02-not-found.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. 404 page within Space world. Mostly empty pale grey-pink fog. One small closed clothbound book from falling intro rests on faint sandstone ground around x=1040 y=580, tiny object, not a building. Four small mono corners SPACE / Book a call / 'Back to Space →' / '404'. In empty fog left of book, restrained 22px mono text block: 'This room isn’t here.' then 18px 'The page may have moved.' then 'Back to Space →'. No giant 404, no cards, no invented address, no multiple books, no house redesign. Quiet helpful tone.",
+      "references": [
+        "reference/astra-design/home-02-settling.png"
+      ],
+      "generation_file": "state-02-not-found.png",
+      "references_at_generation": [
+        "reference/astra-design/home-00b-settling.png"
+      ],
+      "status": "selected",
+      "attempt": 36
+    },
+    {
+      "file": "interaction-03-artists.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. People selector alternate state. Preserve exact reference architecture, camera, three pendants, olive tree, fog, selector layout, corner HUD and clock 17:00 IST. Move orange selected dot from Founders to Artists. Replace bottom left two lines with 'Make something. Share a perspective.' and 'Ideas take different forms here.' Within same court, exactly two people quietly sketching in small notebooks while seated; no easels, no additional furniture or architectural changes. Selector labels remain WHO’S INSIDE / Founders / Artists / Music / Play. Keep callouts in empty fog.",
+      "references": [
+        "reference/astra-design/home-14-whos-inside.png"
+      ],
+      "generation_file": "interaction-03-artists.png",
+      "references_at_generation": [
+        "reference/astra-design/home-12-whos-inside.png"
+      ],
+      "status": "selected",
+      "attempt": 37
+    },
+    {
+      "file": "interaction-04-music.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. People selector alternate state. Preserve exact reference architecture, camera, pendants, olive tree, fog, selector layout, corner HUD and clock 17:00 IST. Move orange selected dot from Founders to Music. Replace bottom left two lines with 'Listen closer.' and 'A small room. A shared rhythm.' Within same court exactly two people seated: one holds a small acoustic guitar, one listening, no stage, microphone, amplifier, lights or crowd. Selector labels remain WHO’S INSIDE / Founders / Artists / Music / Play. No building or camera changes.",
+      "references": [
+        "reference/astra-design/home-14-whos-inside.png"
+      ],
+      "generation_file": "interaction-04-music.png",
+      "references_at_generation": [
+        "reference/astra-design/home-12-whos-inside.png"
+      ],
+      "status": "selected",
+      "attempt": 38
+    },
+    {
+      "file": "interaction-05-play.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. People selector alternate state. Preserve exact reference architecture, camera, pendants, olive tree, fog, selector layout, corner HUD and clock 17:00 IST. Orange selected dot on Play only. Bottom left copy: 'Leave room for play.' / 'A game. A pause. A different kind of focus.' Two people in same seating area playing a modest board game on a tiny low teak table. No sports arena, no crowds or new architectural parts. Selector labels WHO’S INSIDE / Founders / Artists / Music / Play. Same restrained materials, no bright game colors.",
+      "references": [
+        "reference/astra-design/home-14-whos-inside.png"
+      ],
+      "generation_file": "interaction-05-play.png",
+      "references_at_generation": [
+        "reference/astra-design/home-12-whos-inside.png"
+      ],
+      "status": "failed",
+      "error": "HTTP 504: bb connect timed out waiting for tunnel client; later built-in retry succeeded.",
+      "attempt": 39
+    },
+    {
+      "file": "interaction-05-play.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Edit only activity and selector. Keep court architecture, camera, fog and HUD exact. Orange dot on Play only. Two people quietly playing a board game at a small low teak table. Left copy 'Leave room for play.' and 'A game. A pause. A different kind of focus.' All four selector labels stay. No other changes.",
+      "references": [
+        "reference/astra-design/home-14-whos-inside.png"
+      ],
+      "generation_file": "interaction-05-play.png",
+      "references_at_generation": [
+        "reference/astra-design/home-12-whos-inside.png"
+      ],
+      "status": "selected",
+      "attempt": 40
+    },
+    {
+      "file": "state-03-booking-unavailable.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Booking unavailable overlay. Dim same single chair on right against blue fog. Four corners: SPACE top-left; Close × top-right; Back to Space → bottom-left; — bottom-right. Clear left text column, small warm-white mono: 'Book a call' / 'Call booking is not available yet.' / 'Please check back soon.' / 'Back to Space →'. No other copy. No fake calendar or contact details, no panel rectangle, no large heading.",
+      "references": [
+        "reference/astra-design/home-24-call.png"
+      ],
+      "generation_file": "state-03-booking-unavailable.png",
+      "references_at_generation": [
+        "reference/astra-design/home-22-call.png"
+      ],
+      "status": "selected",
+      "attempt": 41
+    },
+    {
+      "file": "walkthrough-01-courtyard.png",
+      "prompt": "Separate Space room-by-room walkthrough page, finished 1920x1080 16:9. Photoreal eye-level view INSIDE actual courtyard from photos p11/p01, preserve compact sandstone floor, olive tree in round concrete planter at right, three woven nest pendants, teak louvred doors on right, doorway ahead left and skylight above. No different house, no enlargement to atrium. Render quality and warm muted materials of approved board. No people needed. Camera 1.6m high looking toward court, straight verticals. Very subtle atmospheric softness, NOT dense indoor smoke. The interior fills center and right 72% viewport, left margin gently fades to warm fog for small in-world text: 'FIRST FLOOR / COURTYARD' / 'Sandstone, teak and an open volume of light.' / 'Pause by the courtyard, then continue through the rooms.' / '← Previous room     Next room →'. Tiny text, no panel box and no text on walls. Four corner areas: SPACE and below it tiny 'THE HOUSE / WALKTHROUGH' top-left; Book a call top-right; Back to the story bottom-left; 16:00 IST bottom-right. This is an intimate house tour, not a hotel brochure.",
+      "references": [
+        "docs/house-understanding/img/p11.jpg",
+        "docs/house-understanding/img/p01.jpg",
+        "reference/art-direction/04-courtyard-afternoon.png"
+      ],
+      "generation_file": "walkthrough-01-courtyard.png",
+      "references_at_generation": [
+        "docs/house-understanding/img/p11.jpg",
+        "docs/house-understanding/img/p01.jpg",
+        "reference/art-direction/04-courtyard-afternoon.png"
+      ],
+      "status": "selected",
+      "attempt": 42
+    },
+    {
+      "file": "system-01-type-and-hud.png",
+      "prompt": "Create finished Space DESIGN SYSTEM BOARD exactly 1920x1080 landscape. Flat warm off-white #E8E4DA background, crisp charcoal text, abundant whitespace, editorial technical grid. This is a specification board, not a website screenshot. Small title top-left 'SPACE / TYPE + HUD'. Left half shows three elegant real legible type specimens: 'JetBrains Mono' with 'SPACE   Book a call   06:00 IST' and label 'HUD 14/20 · regular'; 'Schibsted Grotesk' with 'A house for startup people.' and label 'Body 16/24 · regular'; 'Newsreader' with 'There’s room for you.' and label 'Editorial 28/34 · regular'. Render those font characters accurately, no invented decorative face. Lower-left type scale four lines: '12/18  Metadata' / '14/20  HUD + actions' / '16/24  Reading copy' / '28/34  Editorial'. Right half: thin-line 16:9 viewport diagram with SPACE / Book a call / Scroll / 06:00 IST only at four corners. Center empty dashed safe zone labelled 'WORLD / NO CHROME'. Dimension labels '48 px desktop' and '20 px mobile'. Bottom-right show interaction states in one row: 'Rest' with plain Book a call; 'Hover' with underlined Book a call; 'Focus' with thin offset charcoal rectangular outline around Book a call; 'Pressed' with orange tiny dot. Small footnote '44 × 44 minimum hit area · sound off by default'. One orange accent #C96A3D only. All spelling exact. No house imagery needed.",
+      "references": [
+        "reference/art-direction/08-palette-and-materials.png"
+      ],
+      "generation_file": "system-01-type-and-hud.png",
+      "references_at_generation": [
+        "reference/art-direction/08-palette-and-materials.png"
+      ],
+      "status": "superseded",
+      "attempt": 43
+    },
+    {
+      "file": "system-01-type-and-hud.png",
+      "prompt": "Targeted correction ONLY inside the right-hand 16:9 viewport diagram. Its four labels must be: top-left SPACE; top-right Book a call; bottom-left Scroll; bottom-right 06:00 IST. Currently three labels are in wrong corners. Replace those three positions exactly. Preserve ALL other type specimens, board layout, colors, scale labels, interaction states and footnotes unchanged. No additional labels.",
+      "references": [
+        "reference/astra-design/system-01-type-and-hud.png"
+      ],
+      "generation_file": "system-01-type-and-hud.png",
+      "references_at_generation": [
+        "reference/astra-design/system-01-type-and-hud.png"
+      ],
+      "status": "selected",
+      "attempt": 44
+    },
+    {
+      "file": "system-02-palette-fog.png",
+      "prompt": "Space palette and fog design system board, exactly 1920x1080 landscape, flat editorial board closely matching approved material board. Warm offwhite, charcoal small mono text, tidy precise grid, real material textures in samples only. Heading 'SPACE / PALETTE + FOG'. Upper half nine rectangular swatches in ONE neat 3x3 grid on left two-thirds: 'LIME WHITE #E8E4DA', 'TEAK #805238', 'SANDSTONE #B3A68B', 'TERRAZZO #CBC4B5', 'TERRACOTTA #B66E51', 'RED OXIDE #884B45', 'CHARCOAL STEEL #383B3A', 'FOLIAGE #59634D', 'GULMOHAR #C96A3D'. On right small copy 'One orange accent.' and 'Materials stay muted.' and 'Fog carries the hour.' Bottom full-width row of FIVE large flat fog chips with exact labels: '06:00 / #D1BFC2', '10:00 / #BDB0B2', '16:00 / #CEC0C0', '18:30 / #786C7D', '22:00 / #1C2D4C'. Small footer 'Transition veil: #CFBDC0 · Values are art-direction targets, not measured material samples.' All hex spelling exact, no random extra values. No house, no decoration, no gradients inside chips. Photoreal textures grounded in approved board.",
+      "references": [
+        "reference/art-direction/08-palette-and-materials.png"
+      ],
+      "generation_file": "system-02-palette-fog.png",
+      "references_at_generation": [
+        "reference/art-direction/08-palette-and-materials.png"
+      ],
+      "status": "superseded",
+      "attempt": 45
+    },
+    {
+      "file": "system-02-palette-fog.png",
+      "prompt": "Correct ONE text value on this board. Under GULMOHAR, replace erroneous '#596A3D' with exact '#C96A3D'. First character after hash is capital C. Keep orange swatch unchanged. Preserve every other pixel, text, fog chip and layout. No other changes.",
+      "references": [
+        "reference/astra-design/system-02-palette-fog.png"
+      ],
+      "generation_file": "system-02-palette-fog.png",
+      "references_at_generation": [
+        "reference/astra-design/system-02-palette-fog.png"
+      ],
+      "status": "selected",
+      "attempt": 46
+    },
+    {
+      "file": "system-03-components.png",
+      "prompt": "Finished Space component system board exactly 1920x1080 16:9. Flat warm offwhite editorial layout with small charcoal mono headings. Top-left title 'SPACE / COMPONENTS'. Upper half three columns with generous whitespace. Column 1 heading 'ACTIONS', show plain 'Book a call →', underlined hover version, fine rectangular keyboard focus outline; small label '44 × 44 hit area'. Column 2 heading 'CALLOUTS', show 'FIRST FLOOR' and 'Explore →' with fine elbow line ending in tiny dot, note 'Stop before the architecture.' Column 3 heading 'QUIET CONTROLS', show 'Sound off' and 'Sound on' with tiny simple speaker marks; then 'Scroll ↓' and 'Stay a while'; small note 'Sound starts off.' Lower half is one continuous dark-blue fog strip containing the SAME three tiny sandstone furniture objects from membership reference, not boxed cards: Visit teak chair, Regular reading chair with book, House shared table/chairs. Under each exact small warm-white text: 'VISIT / Walk-in + table booking / Needs —'; 'REGULAR / Quiet spaces + games / Needs —'; 'HOUSE / Team + guests / Needs —'. Keep Regular's tiny orange dot. Lower strip caption small 'IN-WORLD MEMBERSHIPS'. No other text. Precise legible spelling, quiet materials, no gradients on UI controls, no pill buttons, no generic pricing cards.",
+      "references": [
+        "reference/astra-design/home-21-memberships.png",
+        "reference/astra-design/system-01-type-and-hud.png"
+      ],
+      "generation_file": "system-03-components.png",
+      "references_at_generation": [
+        "reference/astra-design/home-19-memberships.png",
+        "reference/astra-design/system-01-type-and-hud.png"
+      ],
+      "status": "selected",
+      "attempt": 47
+    },
+    {
+      "file": "state-04-load-failed.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Edit loading screen to recoverable load failure. Keep same pale empty fog, tiny petal now STILL. Corners SPACE top-left, Book a call top-right, 'Continue without motion →' bottom-left, '—' bottom-right. In left-middle empty fog add exact small charcoal mono copy: 'The house is taking longer to arrive.' / 'Try again' / 'Continue without motion →'. No spinner, no error code, no browser message, no panel or giant text. Quiet useful recovery.",
+      "references": [
+        "reference/astra-design/state-01-loading.png"
+      ],
+      "generation_file": "state-04-load-failed.png",
+      "references_at_generation": [
+        "reference/astra-design/state-01-loading.png"
+      ],
+      "status": "selected",
+      "attempt": 48
+    },
+    {
+      "file": "state-05-without-motion.png",
+      "prompt": "Finished Space website comp, exactly 1920x1080 landscape 16:9. Photoreal architectural material quality of approved boards, quiet desaturated palette, subtle volumetric fog. No illustration, neon, crowds, neighbours, oversized headings, floating UI cards, labels attached to architecture. One subject, abundant negative space. Four corner HUD labels ONLY: 'SPACE' top-left, 'Book a call' top-right, 'Scroll' bottom-left, clock bottom-right. JetBrains Mono character, small 18px charcoal on light / warm white on dark, 48px corner inset. All text exact and legible. Keep same HUD positions and proportions as first reference. World interactions can use tiny freestanding mono callouts in empty fog with fine leader lines stopping short of subject. Do not add other chrome. Space still / reduced-motion mode. Same dawn house image, exact facade/camera/trees/gate unchanged, quiet static fog. Corners SPACE / Book a call / 'Previous    Next →' / 06:00 IST. In left empty margin small mono 'Explore at your own pace.' then small Schibsted 'A house for startup people.' and 'HSR Layout, Bengaluru.' Beneath in small mono 'The house · 01 / 06'. No falling objects or motion blur, no animation markers, no cards or panels. Six-stop static chapter reader using same scene art; this shows first stop, Previous visibly muted, Next active. All type small and outside house silhouette.",
+      "references": [
+        "reference/astra-design/home-03-dawn.png"
+      ],
+      "generation_file": "state-05-without-motion.png",
+      "references_at_generation": [
+        "reference/astra-design/home-01-dawn.png"
+      ],
+      "status": "selected",
+      "attempt": 49
+    },
+    {
+      "file": "home-04-opening.png",
+      "prompt": "Targeted edit, same 1920x1080 comp. Preserve EVERY geometry position, camera, gap size, survey line, corner HUD and color. Remove ONLY all bright amber glowing horizontal strips under separated floor slabs. These seams must be natural neutral shadow and fog with no emitted light. No luminous floor edges. Keep normal window light and all other details unchanged.",
+      "references": [
+        "reference/astra-design/home-04-opening.png"
+      ],
+      "status": "failed",
+      "error": "HTTP 504 tunnel timeout during final review correction",
+      "attempt": 50
+    },
+    {
+      "file": "home-04-opening.png",
+      "prompt": "Keep this image unchanged except remove the glowing horizontal amber light strips between separated floors. Replace luminous seams with neutral dark shadow. Same geometry, survey lines, camera and HUD. Output 1920x1080.",
+      "references": [
+        "reference/astra-design/home-04-opening.png"
+      ],
+      "status": "selected",
+      "post_review": true,
+      "attempt": 51
+    },
+    {
+      "file": "home-19-night.png",
+      "prompt": "Change ONLY time of day of this exact dawn comp to night. Same house size, exact roof/window/gate positions, same camera and two trees. Do not make house taller or larger. Deep blue fog #1C2D4C, warm amber windows, no sunset patch. Small warm-white corner labels SPACE / Book a call / Scroll / 22:00 IST. Add only small left-side mono caption in empty fog: 'A CAFÉ BY DAY. A CLUB BY NIGHT.' / 'Evenings · 18:00–23:00' / 'A programme for startup people.' / 'Access depends on membership.' Preserve facade registration exactly. No other geometry or objects. Output 1920x1080.",
+      "references": [
+        "reference/astra-design/home-03-dawn.png"
+      ],
+      "status": "selected",
+      "post_review": true,
+      "attempt": 52
+    },
+    {
+      "file": "home-18-reassembling.png",
+      "prompt": "Edit this exact Space house dawn website comp into the 20:00 evening reassembly beat. Preserve exact front elevation, silhouette, fenestration, asymmetrical parapet, gate, two trees, camera, perspective, framing and house size of the source. Same real house, no added floor or building, no taller proportions. Very small dark horizontal separation at floor joints, at most 8 pixels at 1920 wide, indicates slabs just about to close. Fine faint neutral survey ticks in empty fog only. No glowing seams. Deep desaturated blue grey evening fog hides base and wraps edges, quiet slate sky, warm amber light in existing windows. Same corner mono HUD text, top left SPACE, top right Book a call, bottom left Scroll, bottom right 20:00 IST, all warm off-white. No additional words. No panels, headlines, people, cars, spotlights, neon. Architectural material realism, lime plaster, teak frames, stone accent, sparse muted gulmohar trees. Preserve source image composition precisely; change lighting and weather only except the tiny dark closing gaps.",
+      "references": [
+        "reference/astra-design/home-03-dawn.png"
+      ],
+      "status": "selected",
+      "post_review": true,
+      "attempt": 53
+    }
+  ],
+  "finalized": true,
+  "reference_note": "Self-references denote the immediately preceding variant, not the selected final file. Original filenames are retained for audit. Superseded variants were visually reviewed and replaced; failed requests produced no selected artifact."
+}

@@ -14,5 +14,4 @@ Downloaded by `blender/fetch_assets.py`. Every asset is **CC0 1.0 Universal** (p
 | seaworn_stone_tiles -> textures/sandstone (2K: color, roughness, normal) | https://polyhaven.com/a/seaworn_stone_tiles | 7.8 MB | CC0 1.0 |
 | terracotta_floor_tiles -> textures/terracotta (2K: color, roughness, normal) | https://polyhaven.com/a/terracotta_floor_tiles | 8.0 MB | CC0 1.0 |
 | asphalt_02 -> textures/asphalt (2K: color, roughness, normal) | https://polyhaven.com/a/asphalt_02 | 10.3 MB | CC0 1.0 |
-| Metal027 -> textures/steel (2K: color, roughness, normal, metalness) | https://ambientcg.com/view?id=Metal027 | 13.2 MB (24.9 MB zip) | CC0 1.0 |
-| jacaranda_tree (model, glTF 1k) | https://polyhaven.com/a/jacaranda_tree | 214.6 MB | CC0 1.0 |
+| Metal027 -> textures/steel (2K: color, roughness, normal, metalness) | https://ambientcg.com/view?id=Metal027 | 24.9 MB | CC0 1.0 |

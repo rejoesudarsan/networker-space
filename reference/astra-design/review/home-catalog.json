@@ -1,0 +1,338 @@
+[
+  {
+    "file": "home-01-falling.png",
+    "source_file": "home-00a-falling.png",
+    "title": "Objects arrive",
+    "range": [
+      0,
+      3
+    ],
+    "hour": "06:00",
+    "seen": "Two teak chairs, two books and a few gulmohar petals fall from above into a nearly empty dawn atmosphere. The house is fully hidden.",
+    "camera": "Lock the exterior camera. Move the objects downward on scroll; introduce no orbit.",
+    "fog": "Dense fog hides the destination and the entire building.",
+    "modules": "world.js, characters.js, environment.js, main.js"
+  },
+  {
+    "file": "home-02-settling.png",
+    "source_file": "home-00b-settling.png",
+    "title": "Into the house",
+    "range": [
+      3,
+      5
+    ],
+    "hour": "06:00",
+    "seen": "The same objects descend and become faint. A small line reads “Make room for what comes next.”",
+    "camera": "Hold the same camera; continue the same trajectories without spawning replacements.",
+    "fog": "The objects disappear before they could intersect the closed roof; the landing and relocation into rooms happen unseen.",
+    "modules": "world.js, characters.js, environment.js, main.js"
+  },
+  {
+    "file": "home-03-dawn.png",
+    "source_file": "home-01-dawn.png",
+    "title": "Dawn / house at rest",
+    "range": [
+      5,
+      10
+    ],
+    "hour": "06:00",
+    "seen": "The confirmed house appears intact, with the stepped roof, teak windows, grey gate and two sparse gulmohars. Four corners read SPACE / Book a call / Scroll / 06:00 IST.",
+    "camera": "Hold the reference frontal street camera; use this as the exterior framing master.",
+    "fog": "Fog reveals the facade while suppressing neighbours and the street edges.",
+    "modules": "world.js, details.js, windows.js, environment.js, main.js"
+  },
+  {
+    "file": "home-04-opening.png",
+    "source_file": "home-02-opening.png",
+    "title": "The first separation",
+    "range": [
+      10,
+      14
+    ],
+    "hour": "06:30",
+    "seen": "Floors begin parting vertically; fine survey lines in empty space describe the separation. No geometry rotates or breaks.",
+    "camera": "Same azimuth, focal length and facade registration; move floor groups only.",
+    "fog": "Low fog hides the basement and the ground contact.",
+    "modules": "world.js, details.js, windows.js, main.js"
+  },
+  {
+    "file": "home-05-parted.png",
+    "source_file": "home-03-parted.png",
+    "title": "A house for startup people",
+    "range": [
+      14,
+      18
+    ],
+    "hour": "07:00",
+    "seen": "The parting reaches its widest point. Copy: “A house for startup people. Four levels. Room to belong.” Seam glow is removed in this refinement.",
+    "camera": "Keep the street camera fixed; the roof and floor groups lift along their original vertical axes.",
+    "fog": "Rising fog begins masking the section edges and the lowest floor.",
+    "modules": "world.js, details.js, windows.js, environment.js, main.js"
+  },
+  {
+    "file": "home-06-fog-basement.png",
+    "source_file": "home-04-fog-basement.png",
+    "title": "An empty breath",
+    "range": [
+      18,
+      21
+    ],
+    "hour": "08:00",
+    "seen": "Only a very faint upper silhouette and the corner HUD remain. This is a deliberate quiet interval.",
+    "camera": "Reposition the one camera to the lower-level section only after opacity passes 0.98.",
+    "fog": "The entire exterior-to-basement scene change is concealed.",
+    "modules": "world.js, environment.js, main.js"
+  },
+  {
+    "file": "home-07-basement.png",
+    "source_file": "home-05-basement.png",
+    "title": "Work / lower level",
+    "range": [
+      21,
+      27
+    ],
+    "hour": "09:00",
+    "seen": "A compact lower-level section reveals work space, the large-tree court, a separate open-to-sky access court and a distinct garage-ramp edge. “Work, with room to think.” leads to Explore.",
+    "camera": "Hold a mild elevated view, matching the main house front orientation as far as plan visibility permits; no ongoing spin.",
+    "fog": "Fog consumes external section edges and hides everything beyond the selected floor.",
+    "modules": "world.js, details.js, program.js, characters.js, environment.js, main.js"
+  },
+  {
+    "file": "home-08-basement-exit.png",
+    "source_file": "home-06-basement-exit.png",
+    "title": "Lower level leaves",
+    "range": [
+      27,
+      29
+    ],
+    "hour": "09:30",
+    "seen": "The same section drifts up, with the table and floor disappearing first. Its caption and leader withdraw.",
+    "camera": "Truck the camera gently down relative to the held section, with unchanged azimuth.",
+    "fog": "Rising mist erases the lower geometry before the object leaves view.",
+    "modules": "world.js, environment.js, main.js"
+  },
+  {
+    "file": "home-09-fog-cafe.png",
+    "source_file": "home-07-fog-cafe.png",
+    "title": "Morning pause",
+    "range": [
+      29,
+      31
+    ],
+    "hour": "10:00",
+    "seen": "The viewport is empty warm-grey fog with four quiet corners.",
+    "camera": "Complete the move to the ground-floor camera while fully masked.",
+    "fog": "The basement is removed and the ground-floor section becomes ready entirely out of sight.",
+    "modules": "world.js, environment.js, main.js"
+  },
+  {
+    "file": "home-10-cafe.png",
+    "source_file": "home-08-cafe.png",
+    "title": "Coffee / ground floor",
+    "range": [
+      31,
+      38
+    ],
+    "hour": "10:00",
+    "seen": "The teak-floored living room appears with the glazed doors, brass lanterns and two small tables. “Coffee. A table. An unhurried start.” accompanies the café hours, 08:00–18:00.",
+    "camera": "Hold a shallow elevated frontal camera; keep the complete room inside the safe scene area.",
+    "fog": "Fog obscures the cut edges and upper-floor absence.",
+    "modules": "world.js, windows.js, details.js, characters.js, program.js, environment.js, main.js"
+  },
+  {
+    "file": "home-11-cafe-exit.png",
+    "source_file": "home-09-cafe-exit.png",
+    "title": "The morning clears",
+    "range": [
+      38,
+      40
+    ],
+    "hour": "13:00",
+    "seen": "The café moves upward and its floor is veiled; all in-world copy has faded.",
+    "camera": "Slow vertical travel only, retaining the café perspective.",
+    "fog": "Mist erases the table legs and section perimeter first.",
+    "modules": "world.js, environment.js, main.js"
+  },
+  {
+    "file": "home-12-fog-courtyard.png",
+    "source_file": "home-10-fog-courtyard.png",
+    "title": "Afternoon pause",
+    "range": [
+      40,
+      42
+    ],
+    "hour": "15:00",
+    "seen": "An empty afternoon atmosphere separates café and courtyard.",
+    "camera": "Move the camera to the court overview only inside opaque fog.",
+    "fog": "No room substitution or camera jump is visible.",
+    "modules": "world.js, environment.js, main.js"
+  },
+  {
+    "file": "home-13-courtyard.png",
+    "source_file": "home-11-courtyard.png",
+    "title": "Read / first floor",
+    "range": [
+      42,
+      49
+    ],
+    "hour": "16:00",
+    "seen": "The approved double-height court returns: olive tree, three nest pendants, sandstone and louvred teak. A library glimpse is a proposed adjacent use. The caption reads “Read. Talk. Let an idea take its time.”",
+    "camera": "Hold the court overview established by approved board 04.",
+    "fog": "Fog masks external walls and limits the view to one section.",
+    "modules": "world.js, details.js, characters.js, program.js, environment.js, main.js"
+  },
+  {
+    "file": "home-14-whos-inside.png",
+    "source_file": "home-12-whos-inside.png",
+    "title": "Who’s inside",
+    "range": [
+      49,
+      55
+    ],
+    "hour": "17:00",
+    "seen": "A slightly wider court view makes space for Founders / Artists / Music / Play. Founders is selected; two people talk over a notebook. Labels and short callout lines live in empty fog.",
+    "camera": "Ease back once, then hold the camera throughout all four selection states.",
+    "fog": "A small local haze crossfade may hide activity replacement; never mask an unexpected architectural change.",
+    "modules": "program.js, characters.js, world.js, main.js"
+  },
+  {
+    "file": "home-15-fog-terrace.png",
+    "source_file": "home-13-fog-terrace.png",
+    "title": "Into sundown",
+    "range": [
+      55,
+      58
+    ],
+    "hour": "18:00",
+    "seen": "The screen becomes empty violet-grey fog. The rejected pass that invented a new terrace was replaced.",
+    "camera": "Transition the single camera to the terrace view only while opaque.",
+    "fog": "The court and activities disappear before the terrace is introduced.",
+    "modules": "environment.js, world.js, main.js"
+  },
+  {
+    "file": "home-16-terrace.png",
+    "source_file": "home-14-terrace.png",
+    "title": "Terrace / sundown",
+    "range": [
+      58,
+      65
+    ],
+    "hour": "18:30",
+    "seen": "The full narrow terracotta terrace, white parapet openings, teak side room and timber bench appear. Three people talk under restrained warm lights. “The day opens into evening.”",
+    "camera": "Hold a gentle downward view with the entire side room inside the image.",
+    "fog": "Fog hides all neighbours, lower floors and the section base.",
+    "modules": "world.js, details.js, characters.js, program.js, environment.js, main.js"
+  },
+  {
+    "file": "home-17-fog-evening.png",
+    "source_file": "home-15-fog-evening.png",
+    "title": "Evening pause",
+    "range": [
+      65,
+      68
+    ],
+    "hour": "19:30",
+    "seen": "Empty slate-blue atmosphere deepens toward night.",
+    "camera": "Return to the exact exterior camera registration while masked.",
+    "fog": "The floor sections can rejoin their parent house here.",
+    "modules": "world.js, environment.js, main.js"
+  },
+  {
+    "file": "home-18-reassembling.png",
+    "source_file": "home-16-reassembling.png",
+    "title": "Coming back together",
+    "range": [
+      68,
+      72
+    ],
+    "hour": "20:00",
+    "seen": "The familiar facade comes back almost closed, with narrow seams and the first warm windows. The initial roof separation resolves as scrolling continues.",
+    "camera": "Use the exterior master camera; do not orbit. Register the building to frame 03 in the actual build.",
+    "fog": "Fog at the base conceals the joins and returning ground contact.",
+    "modules": "world.js, details.js, windows.js, environment.js, main.js"
+  },
+  {
+    "file": "home-19-night.png",
+    "source_file": "home-17-night.png",
+    "title": "A club by night",
+    "range": [
+      72,
+      78
+    ],
+    "hour": "22:00",
+    "seen": "The closed house glows softly. The copy explains evening hours, 18:00–23:00, and membership-dependent access. No programme frequency is invented.",
+    "camera": "Hold the original street camera and closed facade dimensions.",
+    "fog": "Dark fog hides the neighbourhood and keeps attention on windows.",
+    "modules": "world.js, windows.js, environment.js, program.js, main.js"
+  },
+  {
+    "file": "home-20-fog-memberships.png",
+    "source_file": "home-18-fog-memberships.png",
+    "title": "Night pause",
+    "range": [
+      78,
+      81
+    ],
+    "hour": "22:00",
+    "seen": "The house vanishes into empty deep-blue mist.",
+    "camera": "Move to a shallow view of the membership objects after full masking.",
+    "fog": "All house-to-membership object changes happen unseen.",
+    "modules": "world.js, environment.js, main.js"
+  },
+  {
+    "file": "home-21-memberships.png",
+    "source_file": "home-19-memberships.png",
+    "title": "Three ways to belong",
+    "range": [
+      81,
+      88
+    ],
+    "hour": "22:00",
+    "seen": "Visit, Regular and House appear as three furniture compositions on small sandstone fragments. Each lists inclusions, “Needs —” and Book a call. Requirements remain visibly unconfirmed.",
+    "camera": "Hold one shallow arc view; the objects share a scale and ground plane.",
+    "fog": "Fog eats the fragments’ bases so they belong to the same world.",
+    "modules": "world.js, characters.js, environment.js, main.js; proposed membership data"
+  },
+  {
+    "file": "home-22-membership-focus.png",
+    "source_file": "home-20-membership-focus.png",
+    "title": "Regular / selected",
+    "range": [
+      88,
+      92
+    ],
+    "hour": "22:00",
+    "seen": "The Regular object brightens subtly with an underline and orange focus dot. The other two remain readable. The helper line says “For a more regular rhythm.”",
+    "camera": "No camera movement or geometry change on hover, focus or selection.",
+    "fog": "Fog stays constant; it is not used to conceal the other tiers’ copy.",
+    "modules": "main.js, world.js; proposed membership data"
+  },
+  {
+    "file": "home-23-fog-cta.png",
+    "source_file": "home-21-fog-cta.png",
+    "title": "One last breath",
+    "range": [
+      92,
+      95
+    ],
+    "hour": "22:00",
+    "seen": "The three objects withdraw. “Stay a while” replaces the scroll hint as the final empty interval arrives.",
+    "camera": "Set the final invitation camera while masked.",
+    "fog": "This hides the change from three tier objects to one chair.",
+    "modules": "world.js, environment.js, main.js"
+  },
+  {
+    "file": "home-24-call.png",
+    "source_file": "home-22-call.png",
+    "title": "There’s room for you",
+    "range": [
+      95,
+      100
+    ],
+    "hour": "22:00",
+    "seen": "One empty teak chair and one petal form the final in-world invitation. “There’s room for you. Tell us what you’re building. Book a call →.” The top-right action remains.",
+    "camera": "Settle and hold. Clamp progress at the end; do not loop visitors away from booking.",
+    "fog": "Fog leaves the chair alone and suppresses the floor fragment’s edge.",
+    "modules": "world.js, characters.js, environment.js, main.js"
+  }
+]
