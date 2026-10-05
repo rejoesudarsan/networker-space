@@ -160,16 +160,54 @@ async function start() {
     still()
     return
   }
+  countBytes()
   const { createScene } = await import('./scene.js')
   world = await createScene($('.stage'))
-  document.body.classList.add('ready')
-  performance.mark('house-shown')
   // For measuring (site/PERF.md): the world in dev, or with ?debug.
   if (import.meta.env.DEV || location.search.includes('debug')) window.__world = world
   world.state.still = reduced.matches
   if (matchMedia('(max-width: 720px)').matches) setFocus(1)
   reduced.addEventListener('change', (e) => (world.state.still = e.matches))
   loop()
+  // The fog lifts only once the house is drawn.
+  await world.firstFrame
+  document.body.classList.add('ready')
+  performance.mark('house-shown')
+}
+
+// Loading: the bytes of the house as they arrive, counted off the network
+// (models and the light), against the sizes the server has announced so far.
+function countBytes() {
+  const bar = $('.loading-bar')
+  const text = $('.loading-bytes')
+  let got = 0
+  let known = 0
+  const show = () => {
+    if (document.body.classList.contains('ready')) return
+    text.textContent = `${(got / 1048576).toFixed(1)} MB`
+    bar.style.transform = `scaleX(${known ? Math.min(1, got / known) : 0})`
+  }
+  const raw = window.fetch
+  window.fetch = async (...args) => {
+    const res = await raw(...args)
+    const url = String(args[0]?.url || args[0])
+    if (!/\/(models|world)\//.test(url) || !res.body) return res
+    const size = +res.headers.get('content-length') || 0
+    known += size
+    const reader = res.body.getReader()
+    const body = new ReadableStream({
+      async pull(c) {
+        const { done, value } = await reader.read()
+        if (done) return c.close()
+        got += value.byteLength
+        // No announced size (a compressed response): count what came.
+        if (!size) known += value.byteLength
+        show()
+        c.enqueue(value)
+      },
+    })
+    return new Response(body, { status: res.status, statusText: res.statusText, headers: res.headers })
+  }
 }
 
 // The page never scrolls; the day does.

@@ -87,3 +87,12 @@ URL modifier picks WebP when the browser decodes it (else the JPEG) and the
   when the camera, size, fog, veil or scene state changes.
 - Headless here (SwiftShader, ~1 fps): detected weak, 1 → 0.8 → 0.75, then still;
   jumping to a floor still redraws. `window.__world.quality()` with `?debug`.
+
+## loading-state (5 Oct 2026)
+- `house-shown` (the fog lifting, `body.ready`) now waits for the first drawn
+  frame: before, it came ~3 s before it; now 1 ms after (5.99 s / 5.99 s here).
+- The loader counts real bytes off the network (models + light) against the
+  sizes the server announced so far: "Preparing the house 5.8 MB" and a hairline.
+- No WebGL / `?still` / a failed load: the reader opens on a still of the house
+  (`public/still/house-dawn.webp` 40 kB, `.jpg` 83 kB fallback, lazy), then the
+  full copy, now including the day/night rhythm, Inside and Evenings.

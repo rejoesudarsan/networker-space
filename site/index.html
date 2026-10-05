@@ -80,7 +80,8 @@
     </dialog>
 
     <div class="loading" aria-live="polite">
-      <p>Preparing the house</p>
+      <p>Preparing the house <span class="loading-bytes" aria-hidden="true"></span></p>
+      <span class="loading-track" aria-hidden="true"><i class="loading-bar"></i></span>
       <button class="still link" type="button">Continue without motion →</button>
     </div>
     <div class="failure" role="alert">
@@ -90,10 +91,24 @@
 
     <!-- Without motion: the same story as a reader, for no WebGL, a failed load or by choice. -->
     <article class="reader" aria-label="Space, without motion">
+      <picture class="reader-still">
+        <source srcset="/still/house-dawn.webp" type="image/webp" />
+        <img src="/still/house-dawn.jpg" width="1920" height="1200" loading="lazy" alt="The house at dawn: a white four-level house with a grey stair tower, two trees at the gate, in pink morning fog on its street in HSR Layout." />
+      </picture>
       <section>
         <p class="kicker">HSR Layout, Bengaluru</p>
-        <h2>A house for startup people.</h2>
-        <p>Space is a private club for startup people in HSR Layout, Bengaluru. A house for work, shared interests and time together. Four levels. Room to belong.</p>
+        <h2 class="serif">A house for startup people.</h2>
+        <p>Space is a private club for founders, early teams and the people around startups. A four-level house for work, shared interests and time together.</p>
+        <dl class="rhythm">
+          <div><dt>By day</dt><dd>A walk-in café, 08:00–18:00</dd></div>
+          <div><dt>By night</dt><dd>A club with a programme, 18:00–23:00</dd></div>
+          <div><dt>To join</dt><dd>Three memberships, each starting with a call</dd></div>
+        </dl>
+      </section>
+      <section>
+        <p class="kicker">Inside</p>
+        <h2>Four levels. Room to belong.</h2>
+        <p>Work below, a café on the ground, a courtyard, library and event room above, and a terrace for the evening.</p>
       </section>
       <section>
         <p class="kicker">Lower level</p>
@@ -114,6 +129,11 @@
         <p class="kicker">Second floor</p>
         <h2>The day opens into evening.</h2>
         <p>Terracotta underfoot, a long bench and the evening air. The club's evening rhythm runs from 18:00 to 23:00; access depends on membership.</p>
+      </section>
+      <section>
+        <p class="kicker">A café by day. A club by night.</p>
+        <h2>Evenings, 18:00–23:00.</h2>
+        <p>Talks, demo nights, music and long dinners: a programme for startup people. Access depends on membership.</p>
       </section>
       <section>
         <p class="kicker">Memberships</p>

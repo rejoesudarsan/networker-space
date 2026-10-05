@@ -42,7 +42,7 @@ The user's latest plan (5 Oct 2026), newer than PRODUCT.md where they differ:
 - [x] compress-geometry: serve the baked glTFs with meshopt (or Draco) compression via a build step that writes to `dist/` only; leave `public/models/baked/` as the bake writes it. Record the size win in PERF.md. Done: meshopt + quantize in `scripts/compress-models.mjs` (runs in `npm run build`); geometry 18.2 → 4.9 MB, first load 22.3 → 10.6 MB.
 - [x] compress-textures: atlases as KTX2/Basis (or at least resized WebP with a JPEG fallback); a smaller tier for phones. Record the win. Done: WebP + half-size phone tier written to dist (`scripts/compress-textures.mjs`), JPEG fallback; textures 7.4 → 2.6 MB (1.1 MB phone); first load 7.7 MB desktop / 6.7 MB phone.
 - [x] adaptive-quality: cap pixel ratio and Reflector resolution on phones and weak GPUs; drop to a still frame when the frame rate stays low; respect `prefers-reduced-motion`. Done: start tier by screen/GPU (ratio 1.75/1.5/1, reflector 1024/512), fps watch steps ratio to 0.75 then a still frame; reduced motion = still frame drawn on change only.
-- [ ] loading-state: a quiet loading state in the design's style (no spinner), progress from real bytes, and a no-WebGL fallback showing a still image of the house with the full copy.
+- [x] loading-state: a quiet loading state in the design's style (no spinner), progress from real bytes, and a no-WebGL fallback showing a still image of the house with the full copy. Done: loader shows bytes received and a hairline filling against announced sizes; the fog lifts only after the first drawn frame; the reader (no WebGL, ?still, failure, noscript) opens on a still render of the house and carries the full copy.
 - [ ] cache: long-lived cache headers for hashed assets in the Cloudflare config (`wrangler.jsonc` / `_headers`); check the HTML stays fresh.
 
 ## Polish
@@ -67,4 +67,5 @@ The user's latest plan (5 Oct 2026), newer than PRODUCT.md where they differ:
 - [ ] end-to-end: walk the whole path on desktop and phone, from first frame to the thank-you state; fix anything that breaks the flow. Then output the promise.
 
 ## Needs your input
+- [?] still image: `public/still/house-dawn.*` is the site's own hero, captured headless (software GL, soft). Re-capture on a real GPU (`?debug`, hide the corners) or have the bake render one; same frame serves the OG image.
 - [?] bake: the two trees beside the gate are low-poly blobs; board 01 has two sparse gulmohars (thin trunks, open canopy, a few orange blossoms). That lives in the bake (`site-day.gltf`), so the bake loop needs to change it. Also the left tree sits further out than the right, so the margin fog swallows it at night.

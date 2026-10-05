@@ -467,6 +467,8 @@ export async function createScene(canvas) {
     }
   }
 
+  let firstFrameDone
+  const firstFrame = new Promise((r) => (firstFrameDone = r))
   // What waits for the first frame: the basement, then the props.
   const pending = new Set(['basement', 'props'])
   let started = false
@@ -760,6 +762,7 @@ export async function createScene(canvas) {
     renderer.render(scene, camera)
     if (!started) {
       performance.mark('first-frame')
+      firstFrameDone()
       later()
     }
   }
@@ -785,6 +788,8 @@ export async function createScene(canvas) {
     people,
     // Still loading: 'basement' or 'props'. A scene that needs one stays veiled.
     pending: (what) => pending.has(what),
+    // Resolves once a frame is on the canvas (shaders compiled), not before.
+    firstFrame,
     quality: () => ({ gpu, weak, small, ...quality }),
     // Draw calls and triangles of the last frame, for site/PERF.md.
     info: () => ({ ...renderer.info.render, geometries: renderer.info.memory.geometries, textures: renderer.info.memory.textures }),

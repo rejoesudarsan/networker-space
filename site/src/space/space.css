@@ -151,24 +151,31 @@ body.pristine .brief { opacity: 0; filter: blur(6px); pointer-events: none }
   font: 400 14px/20px var(--mono); transition: opacity 0.8s var(--ease);
 }
 body.ready .loading { opacity: 0; pointer-events: none }
+/* Progress: a hairline that fills with the bytes, no spinner. */
+.loading-bytes { opacity: 0.7; margin-left: 0.6em; font-variant-numeric: tabular-nums }
+.loading-track { justify-self: center; width: 160px; height: 1px; background: color-mix(in srgb, var(--fg) 18%, transparent); overflow: hidden }
+.loading-bar { display: block; height: 100%; background: var(--fg); transform: scaleX(0); transform-origin: 0 50%; transition: transform 0.4s var(--ease) }
 .loading, .failure { pointer-events: none }
 .loading button, .failure button { pointer-events: auto }
 .failure { display: none }
 body.failed .failure { display: grid }
 body.failed .loading { display: none }
 
-/* Without motion: a plain reader over the fog. */
-.reader { display: none }
-body.still .reader {
-  display: block; position: fixed; inset: 0; z-index: 4; overflow-y: auto; overscroll-behavior: contain;
-  padding: calc(var(--inset) + 72px) var(--inset) calc(var(--inset) + 72px) calc(var(--inset) + 8vw);
+/* Without motion: the house as a still, then a plain reader over the fog. */
+.reader {
+  display: none; position: fixed; inset: 0; z-index: 4; overflow-y: auto; overscroll-behavior: contain;
+  padding: 0 var(--inset) calc(var(--inset) + 72px) calc(var(--inset) + 8vw);
 }
-body.still .reader section { max-width: 52ch; margin-bottom: 56px; display: grid; gap: 8px }
-body.still .reader h2 { font: 400 22px/30px var(--sans) }
-body.still .reader .serif { font: 400 28px/34px var(--serif) }
-body.still .reader-tiers { list-style: none; padding: 0; display: grid; gap: 6px; font: 400 14px/22px var(--mono) }
-body.still .reader-tiers b { font-weight: 600; margin-right: 10px; letter-spacing: 0.08em; text-transform: uppercase }
-body.still .stage, body.still .copy, body.still .loading, body.still .failure, body.still .hint { display: none }
+body.still .reader { display: block }
+.reader-still { display: block; margin: 0 calc(-1 * var(--inset)) 48px calc(-1 * (var(--inset) + 8vw)) }
+.reader-still img { display: block; width: 100%; height: min(72vh, 62.5vw); object-fit: cover; object-position: 50% 30%; mask-image: linear-gradient(180deg, #000 75%, transparent) }
+.reader section { max-width: 52ch; margin-bottom: 56px; display: grid; gap: 8px }
+.reader h2 { font: 400 22px/30px var(--sans) }
+.reader .serif { font: 400 clamp(30px, 3.2vw, 44px)/1.08 var(--serif); letter-spacing: -0.015em }
+.reader .rhythm { margin-top: 10px }
+.reader-tiers { list-style: none; padding: 0; display: grid; gap: 6px; font: 400 14px/22px var(--mono) }
+.reader-tiers b { font-weight: 600; margin-right: 10px; letter-spacing: 0.08em; text-transform: uppercase }
+body.still .stage, body.still .copy, body.still .loading, body.still .failure, body.still .hint, body.still .clock { display: none }
 body.still { overflow: hidden }
 
 .tier-nav { display: none }
