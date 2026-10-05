@@ -14,7 +14,15 @@ Meshes are merged per material, in two groups per floor: '<mat>' and
 '<mat>_high'. High parts are those that start more than 0.45 units above the
 floor (lanterns, fans, wall cabinets, pinboards): the site hides them while
 its walls are lowered for the cutaway. Procedural Blender materials become
-flat colours (their viewport colour); emission is kept."""
+flat colours (their viewport colour); emission is kept.
+
+Heads over doors, windows and gaps, and the sliver fills, are included; they
+start high on the wall, so they land in the _high group and hide in the
+cutaway. Also writes site.glb: everything under Site.Units (gulmohars,
+neighbour houses, office gate) in the street frame. Also writes roof.glb: everything under Floor.roof (roof slab with the
+courtyard opening, parapets, the terrace eave, the skylight) in the second
+floor's frame. The site shows it while the house is closed and hides it in
+the cutaway."""
 import os
 
 import bmesh
@@ -22,8 +30,9 @@ import bpy
 from mathutils import Matrix
 
 FLOORS = ["basement", "ground", "first", "second"]
-SKIP = ("walls", "columns", "sills", "details", "windowFrames", "windowGlass",
-        "windowHeads", "doorHeads", "gapHeads", "sliverFill")
+# What the site already draws: the CAD walls, columns, sills and plan lines,
+# and its own windows (which lower with the cutaway).
+SKIP = ("walls", "columns", "sills", "details", "windowFrames", "windowGlass")
 HIGH_Z = 0.45
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(os.path.dirname(HERE), "site", "public", "models", "blender")
@@ -32,6 +41,15 @@ OUT = os.path.join(os.path.dirname(HERE), "site", "public", "models", "blender")
 def base(name):
     import re
     return re.sub(r"\.\d+$", "", name).split(".")[-1]
+
+
+def under_roof(o, _root):
+    p = o.parent
+    while p is not None:
+        if p.name == "Floor.roof":
+            return True
+        p = p.parent
+    return False
 
 
 def under(o, root):
@@ -98,13 +116,17 @@ def main():
     os.makedirs(OUT, exist_ok=True)
     dg = bpy.context.evaluated_depsgraph_get()
     cache = {}
-    for key in FLOORS:
-        root = bpy.data.objects["Floor.%s" % key]
+    jobs = [(k, bpy.data.objects["Floor.%s" % k], under) for k in FLOORS]
+    jobs.append(("roof", bpy.data.objects["Floor.second"], under_roof))
+    # Outside the house: gulmohars, neighbours, office gate, in the street frame
+    # (ground-floor x/z, street level at y = 0).
+    jobs.append(("site", bpy.data.objects["Site.Units"], under))
+    for key, root, select in jobs:
         inv = root.matrix_world.inverted()
         groups = {}                     # (material name, high) -> bmesh
         n_obj = 0
         for o in bpy.data.objects:
-            if o.type not in {"MESH", "CURVE", "FONT"} or not under(o, root):
+            if o.type not in {"MESH", "CURVE", "FONT"} or not select(o, root):
                 continue
             if base(o.name) in SKIP or o.name.split(".")[-1] in SKIP or o.hide_render:
                 continue
@@ -115,7 +137,9 @@ def main():
                 continue
             me.transform(inv @ o.matrix_world)
             zmin = min(v.co.z for v in me.vertices)
-            high = zmin > HIGH_Z and "Tree" not in o.name and "Olive" not in o.name and "Frangipani" not in o.name
+            high = key != "roof" and zmin > HIGH_Z and "Tree" not in o.name and "Olive" not in o.name and "Frangipani" not in o.name
+            if o.name.split(".")[-1] == "sliverFill" or "CladdingStrip" in o.name or "WindowBox" in o.name:
+                high = "wall"            # wall and facade pieces: the site lowers them with its walls
             mats = list(me.materials) or [None]
             for mi, m in enumerate(mats):
                 polys = [p for p in me.polygons if p.material_index == mi] if len(mats) > 1 else list(me.polygons)
@@ -138,7 +162,7 @@ def main():
         # Build an export scene
         sc = bpy.data.scenes.new("export_" + key)
         for (mname, high), bm in groups.items():
-            nm = mname[4:] + ("_high" if high else "")
+            nm = mname[4:] + {True: "_high", "wall": "_wall"}.get(high, "")
             me = bpy.data.meshes.new(nm)
             bm.to_mesh(me)
             bm.free()

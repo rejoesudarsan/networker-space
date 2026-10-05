@@ -235,6 +235,11 @@ export async function createWorld(canvas) {
     Object.keys(LEVEL).map((id) => loader.loadAsync(`/models/blender/${id}.glb`).catch(() => null)),
   )
   const useBlender = blenderFloors.every(Boolean)
+  // The roof (slab, parapets, terrace eave, skylight), in the second floor's frame.
+  const blenderRoof = useBlender ? await loader.loadAsync('/models/blender/roof.glb').catch(() => null) : null
+  const roofParts = []
+  // Outside the house: gulmohars, neighbour houses, office gate (street frame).
+  const blenderSite = useBlender ? await loader.loadAsync('/models/blender/site.glb').catch(() => null) : null
   // Parts hung above the floor (lanterns, fans, wall cabinets): hidden while the walls are cut away.
   const highParts = []
 
@@ -286,7 +291,13 @@ export async function createWorld(canvas) {
     [-10.5, 6, 9, 1.3, -0.4], [10.8, 6.4, 9.4, 1.7, -0.2], [-18, 6.4, 9, 1.1, 0], [18.4, 6.2, 9.2, 1.5, -0.3],
     [-9, 6.5, 6, 1.2, 15], [-1.6, 6.8, 6, 1.6, 15], [5.6, 6.2, 6, 1.1, 15], [12.6, 6.6, 6, 1.4, 15],
   ]
-  for (const [x, w, d, h, z] of neighbours) {
+  if (blenderSite) {
+    blenderSite.scene.traverse((o) => {
+      if (o.isMesh) o.castShadow = o.receiveShadow = true
+    })
+    ground.add(blenderSite.scene)
+  }
+  for (const [x, w, d, h, z] of blenderSite ? [] : neighbours) {
     const b = box(w, h, d, Math.random() < 0.5 ? '#e6e3dc' : '#e1ddd5', x, 0, z)
     ground.add(b)
     // A low compound wall in front of each.
@@ -334,6 +345,7 @@ export async function createWorld(canvas) {
         o.castShadow = true
         o.receiveShadow = true
         if (o.name.endsWith('_high')) highParts.push(o)
+        if (o.name.endsWith('_wall')) walls.push({ o, full: 1, low: 0.42 / WALL })
       })
       g.add(blenderFloors[i].scene)
     }
@@ -366,6 +378,15 @@ export async function createWorld(canvas) {
   const G = floors.ground
   const F = floors.first
   const S = floors.second
+  if (blenderRoof) {
+    blenderRoof.scene.traverse((o) => {
+      if (!o.isMesh) return
+      o.castShadow = true
+      o.receiveShadow = true
+      roofParts.push(o)
+    })
+    S.add(blenderRoof.scene)
+  }
   if (!useBlender) {
     // Surfaces from the photos.
     G.add(patch(-0.2, 3.3, 1.2, 4.95, '#6f8a45'))       // front lawn
@@ -402,10 +423,12 @@ export async function createWorld(canvas) {
     parent.add(t)
     trees.push(t)
   }
-  plant(ground, tree({ height: 3.6, spread: 1.5, flowers: 70 }), -4.6, 0, 6.3)
-  plant(ground, tree({ height: 3.3, spread: 1.35, flowers: 55 }), 5.8, 0, 6.3)
-  plant(ground, tree({ height: 3.4, spread: 1.4, flowers: 40 }), -9.5, 0, 9.4)
-  plant(ground, tree({ height: 3.1, spread: 1.3, flowers: 0 }), 9.8, 0, 9.4)
+  if (!blenderSite) {
+    plant(ground, tree({ height: 3.6, spread: 1.5, flowers: 70 }), -4.6, 0, 6.3)
+    plant(ground, tree({ height: 3.3, spread: 1.35, flowers: 55 }), 5.8, 0, 6.3)
+    plant(ground, tree({ height: 3.4, spread: 1.4, flowers: 40 }), -9.5, 0, 9.4)
+    plant(ground, tree({ height: 3.1, spread: 1.3, flowers: 0 }), 9.8, 0, 9.4)
+  }
   if (!useBlender) {
     plant(G, tree({ height: 1.7, spread: 0.75 }), -2.55, 0, 1.6)
     plant(F, tree({ height: 1.25, spread: 0.45, tone: '#57703f' }), 1.95, 0, 1.55)
@@ -459,7 +482,7 @@ export async function createWorld(canvas) {
     return l
   })
 
-  addWorldDetails({ ground, floors, house, streetOnly: useBlender })
+  addWorldDetails({ ground, floors, house, streetOnly: useBlender, noNeighbours: !!blenderSite })
 
   // ---------- people inside: the programme ----------
   // A gathering is furniture plus people, built for a room and a use. When the
@@ -681,6 +704,7 @@ export async function createWorld(canvas) {
     const cut = smooth(0.15, 0.8, state.open)
     for (const w of walls) w.o.scale.y = lerp(w.full, w.low, cut)
     for (const o of highParts) o.visible = cut < 0.35
+    for (const o of roofParts) o.visible = cut < 0.1
 
     const pk = state.persona + '|' + partAt(h)
     if (pk !== programKey) {

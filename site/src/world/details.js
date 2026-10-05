@@ -856,7 +856,7 @@ function neighbours(b, s, rand) {
 // ---------- entry ----------
 // Call once, with the house closed, after the floors, slabs, surfaces, trees
 // and lights are built.
-export function addWorldDetails({ ground, floors, house, streetOnly = false }) {
+export function addWorldDetails({ ground, floors, house, streetOnly = false, noNeighbours = false }) {
   const rand = seeded(1172)
   const meshes = []
   const done = (b) => meshes.push(...b.flush())
@@ -923,7 +923,7 @@ export function addWorldDetails({ ground, floors, house, streetOnly = false }) {
     const plot = { x0: g.offset[0] - g.width / 2, x1: g.offset[0] + g.width / 2, z1: g.offset[1] + g.depth / 2 }
     const b = batch(ground, 'street')
     street(b, s, plot, rand)
-    neighbours(b, s, rand)
+    if (!noNeighbours) neighbours(b, s, rand)
     done(b)
   }
 
