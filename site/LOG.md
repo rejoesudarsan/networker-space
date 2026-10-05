@@ -20,3 +20,4 @@
 - 2026-10-05 21:16 faq: answers only from the plan; Wi-Fi left out (unknown); phone sheet width fixed (it overflowed the right edge for every sheet, not only the FAQ).
 - 2026-10-05 21:21 apply-form: endpoint is a [?]; until set, the live form can't send (says so). BOOKING_URL removed in favour of VITE_APPLY_URL.
 - 2026-10-05 21:24 membership-cta: second floor maps to 'not sure' since who gets the founder rooms is a [?].
+- 2026-10-05 21:32 end-to-end: full path on both viewports with a local endpoint; dist rebuilt without it. Not done: real devices, real trackpad, a real form service (all [?] or noted).

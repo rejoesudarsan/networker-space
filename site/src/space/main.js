@@ -281,7 +281,8 @@ const nudge = (d) => {
   if (d) lastDir = Math.sign(d)
 }
 // Where each beat reads settled: its copy up, the veil behind it.
-const STOPS = BEATS.filter((b) => !b.veil && b.id !== 'move').map((b) => b.from + Math.min(0.02, (b.to - b.from) * 0.3))
+// The first beat's stop is its start, so the first step goes in.
+const STOPS = BEATS.filter((b) => !b.veil && b.id !== 'move').map((b) => (b.from ? b.from + Math.min(0.02, (b.to - b.from) * 0.3) : 0))
 const step = (dir) => {
   const next = dir > 0 ? STOPS.find((x) => x > goal + 0.002) : [...STOPS].reverse().find((x) => x < goal - 0.002)
   if (next != null) nudge(next - goal)
