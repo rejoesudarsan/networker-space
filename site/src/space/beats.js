@@ -4,12 +4,10 @@
 // clear. Fog veils hide the few cuts (into the house, out to night, to the
 // memberships).
 
-// Scenes: prologue (objects falling at dawn), exterior (the house on its
-// street), floors (the open house; FOCUS 0 basement … 3 second), members,
+// Scenes: exterior (the house on its street), floors (the open house; FOCUS 0 basement … 3 second), members,
 // call. A beat with `floor` shows that floor's caption.
 export const BEATS = [
-  { id: 'falling', from: 0, to: 0.04, scene: 'prologue' },
-  { id: 'hero', from: 0.04, to: 0.14, scene: 'exterior' },
+  { id: 'hero', from: 0, to: 0.14, scene: 'exterior' },
   { id: 'opening', from: 0.14, to: 0.19, scene: 'exterior', open: true },
   { veil: true, from: 0.19, to: 0.22 },
   { id: 'lower', from: 0.22, to: 0.3, scene: 'floors', floor: 'lower' },

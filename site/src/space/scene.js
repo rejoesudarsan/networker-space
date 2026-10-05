@@ -348,22 +348,6 @@ export async function createScene(canvas) {
   const clouds = createClouds(scene, fogUniforms.uFog.value)
   const people = createPeople(floors, house, fogify)
 
-  // Prologue: two chairs, two books and petals falling through the dawn.
-  const falling = new THREE.Group()
-  scene.add(falling)
-  const fallers = []
-  const addFaller = (name, x, z, y0, spin, s = 1) => {
-    const o = clone(name)
-    o.scale.setScalar(s)
-    falling.add(o)
-    fallers.push({ o, x, z, y0, spin, phase: Math.random() * 6 })
-  }
-  addFaller('chair', -0.25, 16.2, 3.4, [0.5, 0.3, 0.9])
-  addFaller('chair', 0.45, 16.6, 2.6, [-0.4, 0.6, -0.3])
-  addFaller('book', -0.05, 16.0, 1.9, [1.2, 0.4, 0.8], 1.6)
-  addFaller('book', 0.35, 16.3, 1.25, [-0.8, 1.1, 0.2], 1.6)
-  for (let i = 0; i < 9; i++) addFaller('petal', 0.05 + Math.random() * 0.35, 15.9 + Math.random() * 0.4, 1.4 + Math.random() * 0.8, [3, 2, 4], 2.2)
-
   // Memberships: three compositions on sandstone fragments; the call: one chair.
   const stage = new THREE.Group()
   stage.position.set(0, 0, -60)
@@ -443,7 +427,7 @@ export async function createScene(canvas) {
 
   // ---------- state ----------
   const state = {
-    scene: 'prologue', focus: 0, local: 0, open: 0, night: 0, veil: 0, fog: '#d1bfc2', glow: 0.5,
+    scene: 'exterior', focus: 0, local: 0, open: 0, night: 0, veil: 0, fog: '#d1bfc2', glow: 0.5,
     mx: 0, my: 0, still: false, tierFocus: -1,
   }
   let width = 1
@@ -490,10 +474,9 @@ export async function createScene(canvas) {
     const s = state.scene
     const changed = s !== lastScene
     const inFloors = s === 'floors'
-    const outside = s === 'exterior' || inFloors || (s === 'prologue' && state.local > 0.85)
+    const outside = s === 'exterior' || inFloors
     const phone = camera.aspect < 0.8
     house.visible = outside
-    falling.visible = s === 'prologue'
     stage.visible = s === 'members' || s === 'call'
     members.visible = s === 'members'
     callG.visible = s === 'call'
@@ -526,11 +509,7 @@ export async function createScene(canvas) {
     street.visible = site.visible = !below
     // Fog per scene.
     const camDist = cur.pos.distanceTo(cur.look)
-    if (s === 'prologue') {
-      fogUniforms.uNear.value = 6
-      fogUniforms.uFar.value = lerp(16, 40, smooth(0.6, 1, state.local))
-      fogUniforms.uBedY.value = -100
-    } else if (outside) {
+    if (outside) {
       fogUniforms.uNear.value = camDist * 0.95
       fogUniforms.uFar.value = camDist * 2.3
       // The low fog lies on the street, or under the floor in view.
@@ -544,13 +523,13 @@ export async function createScene(canvas) {
     }
 
     // Cloud: a low bed along the street; round the stones for the memberships.
-    if (outside || s === 'prologue') clouds.gather('street', 0, -0.2, 2.5, 9, 7, { size: 0.6, ring: 0.7, bed: 0.4 })
+    if (outside) clouds.gather('street', 0, -0.2, 2.5, 9, 7, { size: 0.6, ring: 0.7, bed: 0.4 })
     else clouds.gather('stage', 0, -0.32, -60, 2.2, 1.1, { size: 0.7, ring: 0.6 })
-    clouds.update(t, (outside ? 0.35 : s === 'prologue' ? 0.3 : 0.5) * (1 - state.veil * 0.5), 1 - state.night * 0.7)
+    clouds.update(t, (outside ? 0.35 : 0.5) * (1 - state.veil * 0.5), 1 - state.night * 0.7)
     people.update(dt, t, weights, outside, state.still)
 
     // Camera target for the scene.
-    if (s === 'prologue' || s === 'exterior') {
+    if (s === 'exterior') {
       // On a phone the brief takes the lower half; the house sits above it.
       if (phone) orbit(shot, HERO, 30, 13, 50, 34, 0, 7.5)
       else orbit(shot, HERO, 34, 15, 24, 30, 2.4)
@@ -594,19 +573,6 @@ export async function createScene(canvas) {
     camera.clearViewOffset()
     camera.updateProjectionMatrix()
 
-    // The falling objects: just ahead of the camera, down on scroll, a slow tumble.
-    if (s === 'prologue') {
-      camera.getWorldDirection(tmp)
-      falling.position.copy(camera.position).addScaledVector(tmp, 6)
-      falling.quaternion.copy(camera.quaternion)
-      for (const f of fallers) {
-        const y = f.y0 - 2.1 - state.local * 2.6 + (state.still ? 0 : Math.sin(t * 0.7 + f.phase) * 0.02)
-        f.o.position.set(f.x, y, f.z - 16.2)
-        const r = state.still ? 0 : t * 0.15
-        f.o.rotation.set(f.spin[0] * (state.local + r), f.spin[1] * (state.local + r * 0.7), f.spin[2] * (state.local + r * 0.5))
-        f.o.visible = y > -1.7
-      }
-    }
     // The membership in focus lifts a touch.
     tiers.forEach((g, i) => {
       g.position.y = lerp(g.position.y, state.tierFocus === i ? 0.03 : 0, 1 - Math.pow(0.001, dt))
