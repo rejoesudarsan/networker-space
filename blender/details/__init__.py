@@ -17,6 +17,7 @@ import traceback
 
 MODULES = [
     "grey_cladding_strip",
+    "window_boxes",
 ]
 
 
