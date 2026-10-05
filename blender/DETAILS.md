@@ -64,7 +64,8 @@ Rules for every item:
 ## Basement (p2, p10, p31)
 - [x] court1-big-tree: the big tree in basement Court 1 rising through the ground-floor double-height void; trunk + canopy reaching above the ground slab.
   - note: height 2.4 (site 2.9) so the crown stays under the first-floor slab; also Court 1's flagstone floor and the kota-kerbed bed from the site.
-- [ ] garage-fitout: block-wall texture on the parking walls, a ladder, one simple car (p2).
+- [x] garage-fitout: block-wall texture on the parking walls, a ladder, one simple car (p2).
+  - note: positions from site details.js (parking rects, block wall on the west face, car at -1.55,-2.45 nose to the ramp); car is plain massing; p2's motorbike, buckets and sacks not modelled.
 - [ ] office-den: pinboard, desk, chair, whiteboard in the Office/Den (p10, p31).
 
 ## First floor (p1, p11, p14, p8, p35, p16, p26)
