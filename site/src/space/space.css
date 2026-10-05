@@ -71,7 +71,14 @@ body.reading .hint { opacity: 0 }
 .center-low { left: 50%; bottom: 13vh; transform: translateX(-50%); font: 400 16px/24px var(--mono); white-space: nowrap; padding: 12px 18px }
 
 /* The brief. */
-.brief { left: var(--inset); top: 50%; transform: translateY(-50%); width: min(30rem, 38vw); display: grid; gap: 14px }
+.brief { left: var(--inset); top: 50%; transform: translateY(-50%); width: min(25rem, 29vw); display: grid; gap: 14px }
+body.pristine .brief { opacity: 0; filter: blur(6px); pointer-events: none }
+/* Not a panel: the fog thickens at the left edge behind the brief. */
+.brief::before {
+  content: ''; position: absolute; z-index: -1; top: calc(50% - 50vh); height: 100vh; left: calc(-1 * var(--inset)); width: calc(100% + var(--inset) * 3);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--fog) 88%, transparent) 55%, transparent);
+  pointer-events: none;
+}
 .brief h1 { font: 400 clamp(34px, 3.2vw, 46px)/1.05 var(--serif); font-variation-settings: 'opsz' 60; letter-spacing: -0.015em }
 .brief .intro { font: 400 18px/27px var(--sans) }
 .rhythm { display: grid; gap: 8px; margin: 4px 0 0; border-top: 1px solid color-mix(in srgb, var(--fg) 22%, transparent); padding-top: 14px }
@@ -176,6 +183,10 @@ body.still { overflow: hidden }
   .corner, .link { font-size: 14px; line-height: 20px }
   .caption, .lead, .night-copy, .brief { left: 12px; right: 12px; width: auto; top: auto; bottom: calc(var(--inset) + 34px); transform: none; padding: 18px 20px }
   .brief h1 { font-size: 32px }
+  .brief::before {
+    left: -12px; width: 100vw; top: auto; bottom: calc(-1 * (var(--inset) + 34px)); height: 72vh;
+    background: linear-gradient(0deg, color-mix(in srgb, var(--fog) 88%, transparent) 62%, transparent);
+  }
   .brief .intro, .rhythm dd { font-size: 16px; line-height: 23px }
   .rhythm div { grid-template-columns: 5.5rem 1fr }
   .caption .title, .lead-title { font-size: 24px; line-height: 30px }

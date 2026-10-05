@@ -1,0 +1,1 @@
+- 2026-10-05 19:43 hero-board01 (user request, before measure): hero now frames like board 01; perf marks first-frame/house-shown and world.info() added for the measure item, PERF.md not written yet. Trees left to the bake ([?]).

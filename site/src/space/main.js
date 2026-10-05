@@ -163,6 +163,8 @@ async function start() {
   const { createScene } = await import('./scene.js')
   world = await createScene($('.stage'))
   document.body.classList.add('ready')
+  performance.mark('house-shown')
+  if (import.meta.env.DEV) window.__world = world
   world.state.still = reduced.matches
   if (matchMedia('(max-width: 720px)').matches) setFocus(1)
   reduced.addEventListener('change', (e) => (world.state.still = e.matches))
@@ -226,6 +228,10 @@ function loop(now = performance.now()) {
   const fl = [1, 3, 5].map((i) => parseInt(fog.slice(i, i + 2), 16) / 255).map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4))
   const dark = 0.2126 * fl[0] + 0.7152 * fl[1] + 0.0722 * fl[2] < 0.22
   document.body.classList.toggle('dark', dark)
+  // The first frame is the house alone (board 07); the brief comes with the first scroll.
+  document.body.classList.toggle('pristine', beat.id === 'hero' && local < 0.08)
+  // With copy up, the house steps right (on a phone, up) to leave it the fog.
+  s.brief = beat.id === 'hero' ? smooth(0.04, 0.12, local) : beat.id === 'opening' ? 1 : 0
   document.documentElement.style.setProperty('--fog', fog)
   $('.clock').textContent = clockText(h)
   $('.hint').textContent = beat.id === 'call' ? 'Stay a while' : 'Scroll'

@@ -63,6 +63,10 @@ const fogUniforms = {
   uBedY: { value: -100 },
   uBedDepth: { value: 1 },
   uTime: { value: 0 },
+  // Margin fog (board 01): beyond |x| = uSideX the street goes to fog, so the
+  // house stands alone. uSide 0 turns it off.
+  uSide: { value: 0 },
+  uSideX: { value: 5 },
 }
 function fogify(material, extra = {}) {
   material.onBeforeCompile = (shader) => {
@@ -75,7 +79,7 @@ function fogify(material, extra = {}) {
         '#include <common>',
         `#include <common>
         varying vec3 vWorldP;
-        uniform vec3 uFog; uniform float uNear, uFar, uBedY, uBedDepth, uTime;
+        uniform vec3 uFog; uniform float uNear, uFar, uBedY, uBedDepth, uTime, uSide, uSideX;
         ${extra.pars || ''}
         ${NOISE}`,
       )
@@ -88,6 +92,8 @@ function fogify(material, extra = {}) {
           float n = fbm(vWorldP.xz * 0.9 + vec2(uTime * 0.02, uTime * 0.013));
           float bed = smoothstep(uBedY, uBedY - uBedDepth, vWorldP.y + (n - 0.5) * 0.9);
           f = max(f, bed);
+          f = max(f, uSide * smoothstep(uSideX, uSideX + 2.5, abs(vWorldP.x) + (n - 0.5) * 1.2));
+          f = max(f, uSide * smoothstep(-4.0, -9.0, vWorldP.z));
           gl_FragColor.rgb = mix(gl_FragColor.rgb, uFog, clamp(f, 0.0, 1.0));
         }`,
       )
@@ -251,7 +257,7 @@ export async function createScene(canvas) {
       name: 'WetStreet',
       uniforms: {
         color: { value: null }, tDiffuse: { value: null }, textureMatrix: { value: null },
-        uFog: { value: new THREE.Vector3() }, uNear: { value: 20 }, uFar: { value: 60 }, uTime: { value: 0 }, uNight: { value: 0 },
+        uFog: { value: new THREE.Vector3() }, uNear: { value: 20 }, uFar: { value: 60 }, uTime: { value: 0 }, uNight: { value: 0 }, uMist: { value: 0 },
       },
       vertexShader: `
         uniform mat4 textureMatrix;
@@ -264,7 +270,7 @@ export async function createScene(canvas) {
         }`,
       fragmentShader: `
         uniform sampler2D tDiffuse;
-        uniform vec3 uFog; uniform float uNear, uFar, uTime, uNight;
+        uniform vec3 uFog; uniform float uNear, uFar, uTime, uNight, uMist;
         varying vec4 vUv;
         varying vec3 vWorldP;
         ${NOISE}
@@ -279,6 +285,8 @@ export async function createScene(canvas) {
           vec3 col = mix(asphalt, refl, mix(0.22, 0.6, puddle) * mix(1.0, 1.25, uNight));
           float d = distance(cameraPosition, vWorldP);
           col = mix(col, uFog, smoothstep(uNear, uFar, d));
+          // The low fog lying on the road (board 01): thick, drifting.
+          col = mix(col, uFog * 0.84, uMist * mix(0.35, 0.7, fbm(vWorldP.xz * 0.4 + uTime * 0.02)));
           gl_FragColor = vec4(col, 1.0);
         }`,
     },
@@ -491,8 +499,9 @@ export async function createScene(canvas) {
     out.fovY = fovY
   }
   const fovYFor = (fovX) => THREE.MathUtils.radToDeg(2 * Math.atan(Math.tan(deg(fovX) / 2) / camera.aspect))
-  // The house on its street, three-quarters from the gate side.
-  const HERO = new THREE.Vector3(-0.3, 1.9, 0.9)
+  // The house on its street, square on from across the road at eye level,
+  // alone in the fog (board 01).
+  const HERO = new THREE.Vector3(0, 2.05, 0.9)
   // Distance that frames each whole floor.
   const FLOOR_DIST = { basement: 14, ground: 17.5, first: 15.5, second: 14.5 }
   const fTarget = new THREE.Vector3()
@@ -500,7 +509,7 @@ export async function createScene(canvas) {
   // ---------- state ----------
   const state = {
     scene: 'exterior', focus: 0, local: 0, open: 0, night: 0, veil: 0, fog: '#d1bfc2', glow: 0.5,
-    mx: 0, my: 0, still: false, tierFocus: -1,
+    mx: 0, my: 0, still: false, tierFocus: -1, brief: 0,
   }
   let width = 1
   let height = 1
@@ -517,7 +526,7 @@ export async function createScene(canvas) {
 
   const clock = new THREE.Clock()
   const tmp = new THREE.Vector3()
-  orbit(shot, HERO, 34, 15, 24, 30, 2.4)
+  orbit(shot, HERO, 0, 2, 27, 26, 0, -0.55)
   const cur = { pos: shot.pos.clone(), look: shot.look.clone(), fovY: shot.fovY }
   let lastScene = null
 
@@ -536,6 +545,7 @@ export async function createScene(canvas) {
       u.uFar.value = fogUniforms.uFar.value
       u.uTime.value = t
       u.uNight.value = state.night
+      u.uMist.value = fogUniforms.uSide.value * lerp(1, 0.6, state.night)
     }
     // Until the night bake lands: lit windows are warm glass.
     for (const m of glassMats) {
@@ -586,9 +596,11 @@ export async function createScene(canvas) {
       fogUniforms.uNear.value = camDist * 0.95
       fogUniforms.uFar.value = camDist * 2.3
       // The low fog lies on the street, or under the floor in view.
-      fogUniforms.uBedY.value = inFloors ? Math.min(0.05, lerp(FLOORS.basement.y, 0.05, Math.min(1, state.focus)) - 0.25) : 0.05
-      fogUniforms.uBedDepth.value = 0.6
+      fogUniforms.uBedY.value = inFloors ? Math.min(0.05, lerp(FLOORS.basement.y, 0.05, Math.min(1, state.focus)) - 0.25) : 0.6
+      fogUniforms.uBedDepth.value = inFloors ? 0.6 : 0.8
+      fogUniforms.uSide.value = inFloors ? 0 : 1
     } else {
+      fogUniforms.uSide.value = 0
       fogUniforms.uNear.value = 3.5
       fogUniforms.uFar.value = 9
       fogUniforms.uBedY.value = 0.0
@@ -603,9 +615,9 @@ export async function createScene(canvas) {
 
     // Camera target for the scene.
     if (s === 'exterior') {
-      // On a phone the brief takes the lower half; the house sits above it.
-      if (phone) orbit(shot, HERO, 30, 13, 50, 34, 0, 7.5)
-      else orbit(shot, HERO, 34, 15, 24, 30, 2.4)
+      // On a phone the brief takes the lower half; the house rises above it.
+      if (phone) orbit(shot, HERO, 0, 4, 34, 40, 0, 2.2 + 4.2 * state.brief - 2.6 * state.open)
+      else orbit(shot, HERO, 0, 2, 27, 26, 3.6 * state.brief, -0.55)
     } else if (inFloors) {
       const i0 = Math.min(3, Math.floor(state.focus))
       const i1 = Math.min(3, i0 + 1)
@@ -652,6 +664,7 @@ export async function createScene(canvas) {
     })
 
     renderer.render(scene, camera)
+    if (!performance.getEntriesByName('first-frame').length) performance.mark('first-frame')
   }
   renderer.setAnimationLoop(frame)
 
@@ -673,6 +686,8 @@ export async function createScene(canvas) {
   return {
     state,
     people,
+    // Draw calls and triangles of the last frame, for site/PERF.md.
+    info: () => ({ ...renderer.info.render, geometries: renderer.info.memory.geometries, textures: renderer.info.memory.textures }),
     markerScreens: () => markerAnchors.map(toScreen),
     tierScreens: () => tierAnchors.map(toScreen),
     callScreen: () => toScreen(callAnchor),

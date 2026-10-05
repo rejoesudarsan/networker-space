@@ -46,6 +46,7 @@ The user's latest plan (5 Oct 2026), newer than PRODUCT.md where they differ:
 - [ ] cache: long-lived cache headers for hashed assets in the Cloudflare config (`wrangler.jsonc` / `_headers`); check the HTML stays fresh.
 
 ## Polish
+- [x] hero-board01 (user, 5 Oct): the hero rebuilt to look like art-direction board 01/07: square-on street camera at eye level, house centred at ~54% of the frame height, margin fog beyond |x| 5 and behind the house, a fog bed on the road; first frame shows only the four corners; the brief fades in with the first scroll as the house steps right (on a phone, up). Board 06's night uses the same camera.
 - [ ] flicker-aa: check the hero, each floor and the night beat for z-fighting, shimmering edges and flicker; fix (polygon offset, depth, AA).
 - [ ] phone-layout: every beat on a 390×844 phone: copy never covers the house's key part, tap targets ≥ 44 px, no horizontal scroll, safe areas.
 - [ ] scroll-feel: scroll pacing per beat; veils neither too long nor abrupt; the captions appear in time; keyboard and trackpad both feel right.
@@ -66,3 +67,4 @@ The user's latest plan (5 Oct 2026), newer than PRODUCT.md where they differ:
 - [ ] end-to-end: walk the whole path on desktop and phone, from first frame to the thank-you state; fix anything that breaks the flow. Then output the promise.
 
 ## Needs your input
+- [?] bake: the two trees beside the gate are low-poly blobs; board 01 has two sparse gulmohars (thin trunks, open canopy, a few orange blossoms). That lives in the bake (`site-day.gltf`), so the bake loop needs to change it. Also the left tree sits further out than the right, so the margin fog swallows it at night.
