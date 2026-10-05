@@ -431,7 +431,7 @@ VARIANTS = {
         ("Person.ManWalk.Shirt",   "ManWalk",   dress("#6B7F8E", "#3B4A63", SKIN[2], arm=SKIN[2])),
         ("Person.ManWalk.Kurta",   "ManWalk",   dress("#F1ECE2", "#F1ECE2", SKIN[3], shoes="#6B4A2E")),
         ("Person.ManIdle.Tee",     "ManIdle",   dress("#2F5B55", "#4F6280", SKIN[0], arm=SKIN[0], shoes="#F2EFE8")),
-        ("Person.WomanIdle.Churidar", "WomanIdle", dress("#6D2F4A", "#D8B7A0", SKIN[1], arm=SKIN[1], shoes="#8A5232")),
+        ("Person.WomanIdle.Churidar", "WomanIdle", dress("#6D2F4A", "#ECE6DA", SKIN[1], arm=SKIN[1], shoes="#8A5232")),
         ("Person.WomanWalk.Kurta", "WomanWalk", dress("#C47B2B", "#D8CFBD", SKIN[4], arm=SKIN[4], shoes="#8A5232")),
         ("Person.ManPhone.Blue",   "ManPhone",  dress("#C9B48F", "#3B4A63", SKIN[3], top2="#6B7F8E")),
         ("Person.WomanWalk.Green", "WomanWalk", dress("#2F5B55", "#E7DCC8", SKIN[1], arm=SKIN[1], shoes="#3A2E26")),

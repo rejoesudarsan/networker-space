@@ -9,7 +9,7 @@ import bmesh
 import bpy
 from mathutils import Matrix, Vector
 
-from . import _trees
+from . import _entourage, _trees
 
 PARKING = [(-2.2, -3.54, 0.1, -0.52), (-2.2, -0.52, -0.61, 1.0)]
 WEST_FACE = -2.2
@@ -41,6 +41,24 @@ def _rod(bm, a, b, r, segs=6):
     g = bmesh.ops.create_cone(bm, cap_ends=True, segments=segs, radius1=r, radius2=r, depth=d.length)
     rot = Vector((0, 0, 1)).rotation_difference(d.normalized()).to_matrix().to_4x4()
     bmesh.ops.transform(bm, matrix=Matrix.Translation((a + b) / 2) @ rot, verts=g["verts"])
+
+
+def _car_massing(c, coll, empty, paint, tint, tyre):
+    """Plain SUV massing (body, cabin, glass band, wheels)."""
+    cx, cy = c["x"], -c["z"]
+    L, W = c["L"], c["W"]
+    body, glass, wheels = bmesh.new(), bmesh.new(), bmesh.new()
+    _box(body, cx - W / 2, cx + W / 2, cy - L / 2, cy + L / 2, 0.08, 0.31)                       # lower body
+    _box(body, cx - W / 2 + 0.04, cx + W / 2 - 0.04, cy - L / 2 + 0.38, cy + L / 2 - 0.12, 0.31, 0.58)   # cabin
+    _box(glass, cx - W / 2 + 0.035, cx + W / 2 - 0.035, cy - L / 2 + 0.42, cy + L / 2 - 0.16, 0.34, 0.53)
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            g = bmesh.ops.create_cone(wheels, cap_ends=True, segments=14, radius1=0.135, radius2=0.135, depth=0.09)
+            m = Matrix.Translation((cx + sx * (W / 2 - 0.03), cy + sy * (L / 2 - 0.3), 0.135)) @ Matrix.Rotation(math.pi / 2, 4, "Y")
+            bmesh.ops.transform(wheels, matrix=m, verts=g["verts"])
+    _mesh("basement.Car.body", body, coll, empty, paint)
+    _mesh("basement.Car.glass", glass, coll, empty, tint)
+    _mesh("basement.Car.wheels", wheels, coll, empty, tyre)
 
 
 def build(ctx):
@@ -87,22 +105,14 @@ def build(ctx):
     _mesh("basement.Parking.blockWall", bw, coll, empty, block)
     _mesh("basement.Parking.blockJoints", bj, coll, empty, bjoint)
 
-    # The car: body, cabin, glass band, wheels. Nose toward the ramp (+z, i.e. -y).
+    # The car: the white SUV from entourage.blend, nose toward the ramp (+z,
+    # i.e. -y); the plain massing below is the fallback without the library.
     c = CAR
-    cx, cy = c["x"], -c["z"]
-    L, W = c["L"], c["W"]
-    body, glass, wheels = bmesh.new(), bmesh.new(), bmesh.new()
-    _box(body, cx - W / 2, cx + W / 2, cy - L / 2, cy + L / 2, 0.08, 0.31)                       # lower body
-    _box(body, cx - W / 2 + 0.04, cx + W / 2 - 0.04, cy - L / 2 + 0.38, cy + L / 2 - 0.12, 0.31, 0.58)   # cabin
-    _box(glass, cx - W / 2 + 0.035, cx + W / 2 - 0.035, cy - L / 2 + 0.42, cy + L / 2 - 0.16, 0.34, 0.53)
-    for sx in (-1, 1):
-        for sy in (-1, 1):
-            g = bmesh.ops.create_cone(wheels, cap_ends=True, segments=14, radius1=0.135, radius2=0.135, depth=0.09)
-            m = Matrix.Translation((cx + sx * (W / 2 - 0.03), cy + sy * (L / 2 - 0.3), 0.135)) @ Matrix.Rotation(math.pi / 2, 4, "Y")
-            bmesh.ops.transform(wheels, matrix=m, verts=g["verts"])
-    _mesh("basement.Car.body", body, coll, empty, paint)
-    _mesh("basement.Car.glass", glass, coll, empty, tint)
-    _mesh("basement.Car.wheels", wheels, coll, empty, tyre)
+    if _entourage.enabled():
+        _entourage.place(ctx, "Car.SUV.White", "basement", c["x"], c["z"], rot=-90, coll=coll,
+                         label="basement.Car")
+    else:
+        _car_massing(c, coll, empty, paint, tint, tyre)
 
     # Ladder leaning on the east side
     lad = bmesh.new()

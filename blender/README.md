@@ -51,6 +51,22 @@ How it works:
   - `slivers`: gaps under 1 ft between wall strips, which are drafting artefacts. These are filled full height; switch with `FILL_SLIVERS`.
 - If the JSON file is missing, `build_house.py` warns and the door gaps stay full height.
 
+### Entourage
+
+People, cars and two-wheelers are linked from a separate library,
+`blender/entourage.blend`, by `details/entourage.py`; the basement car comes
+from it too (`details/garage_fitout.py`). See `ENTOURAGE.md` for the
+library, its sources and licences, and how to rebuild it. Leave them out,
+for clean detail-checking renders, with `--no-entourage` (or
+`SPACE_ENTOURAGE=0`); the garage then gets its plain massing car:
+
+```
+/Applications/Blender.app/Contents/MacOS/Blender -b --factory-startup --python /Users/rejoesudarsan/Dev/networker-space/blender/build_house.py -- --quick --no-entourage
+```
+
+`space-house.blend` links `entourage.blend` by a relative path, so keep the
+two files together.
+
 ## Output
 
 - `blender/space-house.blend` is the scene, in metres. It is saved before rendering, so it survives a render crash.
@@ -123,4 +139,4 @@ Coordinates are floor-local Three.js units (x to the east, z toward the street; 
 - **The street camera is about 56 m away.** At the spec's 22 m, the 50 mm lens can't fit the house. Override it with `CAM_DISTANCE_M` and `CAM_AIM_Z_M`.
 - **The haze is a finite fog box.** It is 160×160×60 m with a density of 0.005 per metre. The spec's 0.012 read muddy at this distance. Set `FOG_MODE = 'world'` for a world volume instead.
 - **The sun is stronger than the spec:** 4 instead of about 2, to get the bright facade on the board.
-- **Not modelled:** slab overhang profiles, furniture, people and trees.
+- **Not modelled:** slab overhang profiles. (Furniture, trees and people were added later as details and entourage.)
