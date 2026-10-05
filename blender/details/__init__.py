@@ -27,6 +27,7 @@ MODULES = [
     "front_compound_wall_and_fern_planter",
     "office_outside_stair",
     "neighbour_massing",
+    "entrance_court_floor_and_bench",
 ]
 
 

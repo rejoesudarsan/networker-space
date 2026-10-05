@@ -1,6 +1,6 @@
 """Fast close-up preview of one detail module, before the full build.
 
-  /snap/bin/blender -b blender/space-house.blend --python blender/tools/preview.py -- <module> [--dir sx,sy,sz]
+  /snap/bin/blender -b blender/space-house.blend --python blender/tools/preview.py -- <module> [--dir sx,sy,sz] [--cut <floor>]
 
 Loads the last saved scene, runs only blender/details/<module>.py, frames a
 camera on the objects it created and renders two Workbench close-ups (a few
@@ -68,6 +68,17 @@ lo = Vector((min(p.x for p in pts), min(p.y for p in pts), min(p.z for p in pts)
 hi = Vector((max(p.x for p in pts), max(p.y for p in pts), max(p.z for p in pts)))
 centre, size = (lo + hi) / 2, max((hi - lo).length, 1.0)
 print("[preview] bounds (m): %s .. %s" % (tuple(round(v, 2) for v in lo), tuple(round(v, 2) for v in hi)))
+
+# Cutaway: hide every floor above --cut, and the roof
+if "--cut" in args:
+    order = ns["FLOOR_ORDER"]
+    keep = args[args.index("--cut") + 1]
+    for k in order[order.index(keep) + 1:]:
+        colls[k].hide_render = True
+    roof = bpy.data.collections.get("Roof")
+    if roof:
+        roof.hide_render = True
+    print("[preview] cutaway above %s" % keep)
 
 # Hide haze so the close-up reads
 for o in bpy.data.objects:

@@ -36,7 +36,8 @@ Rules for every item:
   - note: only the four side neighbours; the site's far row across the street is left out because the street camera stands inside it (it darkened the foreground even when hidden from the camera). Heights scaled 2.6x the site's to match p19/p03's two-to-four storeys.
 
 ## Entrance court and gardens (p24, p6, p36, p21, p9)
-- [ ] entrance-court-floor-and-bench: stone floor in the entrance court and the green bench against the wall (p24).
+- [x] entrance-court-floor-and-bench: stone floor in the entrance court and the green bench against the wall (p24).
+  - note: also the plank shelf of potted plants (p24). The court is roofed by the first-floor slab in the model, so it is only visible in cutaway; p24 suggests it is open above with the first-floor balcony over part of it.
 - [ ] outside-stair-to-first: the outside stair from the entrance court up to the first-floor porch with steel railing and the frangipani at its foot (p6, p4).
 - [ ] first-floor-porch: washed-concrete porch floor, mesh railing, grass pendant at the first-floor entrance (p4).
 - [ ] front-lawn-and-steps: raised lawn outside Living 1 with the garden steps up to it (p21, p36).
