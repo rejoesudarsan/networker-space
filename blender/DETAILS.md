@@ -130,6 +130,9 @@ Environment and lighting detail so the light bakes match the Astra comps
 - [x] gulmohar-refine: the four street gulmohars rebuilt as airy trees: slim trunk forking at ~40% into 4-5 limbs, five branch orders, a crown of feathery bipinnate fronds with sky gaps, small orange-red blossom clusters on the outer/upper shell.
   - note: 22-31k faces per tree; each frond / blossom cluster is one connected strip so it is one lightmap island (~8k islands for the four trees in the site atlas). Replaces gulmohar_trees' blob crowns (same names Site.Gulmohar.<i>.*).
 
+- [x] room-lights: warm fixtures with real lights so the bake shows lamp pools: brass sconces with glowing cups in the café (4) and court (3) and one on the terrace house wall, up/down wall washers in the event room (4) and basement office (3), a point light in each of the 24 terrace festoon bulbs.
+  - note: shades are 'Lamp Glow' (exported as glow fixtures); lights are Lamp.<room>.<n> (point/spot, 2700 K, 35 W sconces, 30 W per washer spot, 8 W bulbs), parented to the floor empty, custom property club_lamp = 1. bake_site's day set now scales club_lamp lights to 25%, night keeps them full; room_shot.py --set day|night mirrors the bake's light sets.
+
 ## Needs your input
 - [x] garden-steps-p36: answered by p9 and the plan: they are the side passage's flights; built in side-garden-passage.
 - [?] terrace-parapet-style: p33 (the terrace as built) shows the west parapet as plaster with tall square plaster piers standing up from it at intervals, and no steel rail. The terrace-railing item followed the design board and put a three-bar steel rail on it. Which should the model show: the board's rail, p33's piers, or both?

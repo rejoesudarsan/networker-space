@@ -18,8 +18,9 @@ set keeps them at full power. Lights are named Lamp.<room>.<n>.
 - Event space (first, Living 2): up/down wall washers, two on the west wall
   either side of the screen, two on the east wall above the bleachers.
 - Basement office: up/down wall washers on the north, east and south walls.
-- Terrace (second): a small point light in every bulb of the festoon that
-  terrace_evening.py hangs ('Lamp Glow' balls in second.TerraceEvening.LampGlow).
+- Terrace (second): a sconce on the house wall above the banquette, and a small point light in
+  every bulb of the festoon that terrace_evening.py hangs ('Lamp Glow' balls in
+  second.TerraceEvening.LampGlow).
 Floor-local Three.js units for positions, metres for fixture sizes."""
 import math
 
@@ -99,7 +100,7 @@ def washer(ctx, kit, floor, room, n, x, z, side, y_m=2.1, power=30.0):
     return [up, dn]
 
 
-def festoon_lights(ctx, power=5.0, every=1):
+def festoon_lights(ctx, power=8.0, every=1):
     """Point lights in the festoon bulbs: one per `every` bulbs, at the bulb
     centres (islands of the LampGlow mesh terrace_evening.py made)."""
     ob = bpy.data.objects.get("second.TerraceEvening.LampGlow")
@@ -193,7 +194,15 @@ def build(ctx):
     lights += washer(ctx, k, "basement", "office", 2, 0.55, os_, "south", y_m=2.0)
     k.done()
 
-    # ---- Terrace festoon (second)
+    # ---- Terrace (second): sconces on the house wall, the festoon
+    k = F.Kit(ctx, "second", "second.RoomLights")
+    for i, z in enumerate((1.3,)):           # z -0.6 is the recessed doorway
+        te = F.wall(ctx, "second", -1.6, z, "east", h=2.0)
+        if te < -0.9:                       # solid house wall, not an opening
+            lights.append(sconce(ctx, k, "second", "terrace", 10 + i, te, z, "east", y_m=2.0))
+        else:
+            ctx["helpers"]["warn"]("room_lights: terrace wall at z %.2f is open (%.3f); no sconce" % (z, te))
+    k.done()
     lights += festoon_lights(ctx)
 
     info("room_lights: %d lights; cafe w %.3f/%.3f e %.3f, court n %.3f, event w %.3f e %.3f, office n %.3f e %.3f s %.3f"
