@@ -54,6 +54,9 @@ MODULES = [
     "event_space",
     "court_library",
     "terrace_evening",
+    "game_room_first",
+    "quiet_rooms_second",
+    "basement_work_games",
     "detail_cameras",
     "entourage",
 ]

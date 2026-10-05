@@ -103,9 +103,12 @@ room with `tools/room_shot.py` (open-topped, EEVEE, ~10 s).
 - [x] cafe: Living 1 front room (banquette, two-tops, tables for four, guestbook faces wall, gulmohar light cone with the empty chair) and Family 1 bar (slatted counter, espresso machine, open shelves, communal table, AM/PM sandstone panel).
 - [x] event-space: first-floor Living 2: low teak stage, tiered teak seating with cushions, projection screen, the court as foyer.
   - note: room x 0.813..2.625, z 1.76..4.07 by raycast; stage on the west wall, three-tier bleachers on the east wall, poufs between; z 1.76..2.38 kept clear for circulation.
-- [ ] game-room-first: first-floor Bedroom 3: carrom, a board-game table, chalkboard game wall.
-- [ ] quiet-rooms-second: second-floor Bedroom 3 and Bedroom 4: desks, velvet armchairs, bookshelves.
-- [ ] basement-work-games: basement office: quiet work desks plus a games corner.
+- [x] game-room-first: first-floor Bedroom 3: carrom, a board-game table, chalkboard game wall.
+  - note: main floor x -1.59..-0.02, z 2.23..3.76 plus west alcove (sofa) and east vestibule (games shelf); north-east kept clear to the toilet.
+- [x] quiet-rooms-second: second-floor Bedroom 3 and Bedroom 4: desks, velvet armchairs, bookshelves.
+  - note: the Dress became a phone booth (felt panel, call desk) with a clear strip to the Bedroom 5 bath door; delete the three phone-booth lines to leave it empty.
+- [x] basement-work-games: basement office: quiet work desks plus a games corner.
+  - note: office gets a shared table for six, three focus desks, armchair pair, game table in the curved corner; the studio/gallery became the games and meeting room (table for seven, screen, GAMES cupboard). No table tennis: 3.4 m deep.
 - [x] court-library: first-floor court and library: armchairs, bookshelves, reading lamps.
   - note: library = the alcove x 0.073..0.729, z -1.827..-1.30 plus the west end of Dining 2 (reading). Must run after court2_louvred_doors (raycasts its dado).
 - [x] terrace-evening: second-floor terrace: low tables, cushions and string lights, for evenings.
