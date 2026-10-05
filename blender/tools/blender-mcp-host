@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Run Blender headlessly (virtual X display) with the MCP for Blender addon listening on localhost:9876.
+# Usage: blender-mcp-host start|stop|status|log
+LOG=~/.local/share/blender-mcp/blender.log
+PIDF=~/.local/share/blender-mcp/blender.pid
+case "${1:-start}" in
+  start)
+    if [ -f "$PIDF" ] && kill -0 "$(cat "$PIDF")" 2>/dev/null; then echo "already running (pid $(cat "$PIDF"))"; exit 0; fi
+    nohup xvfb-run -a -s "-screen 0 1600x1000x24" blender --python ~/.local/share/blender-mcp/startup.py >"$LOG" 2>&1 &
+    echo $! >"$PIDF"; echo "started (pid $!), log: $LOG" ;;
+  stop)   [ -f "$PIDF" ] && pkill -P "$(cat "$PIDF")" 2>/dev/null; pkill -f "blender --python .*blender-mcp/startup.py" 2>/dev/null; rm -f "$PIDF"; echo stopped ;;
+  status) (echo > /dev/tcp/127.0.0.1/9876) 2>/dev/null && echo "listening on 9876" || echo "not listening" ;;
+  log)    tail -n 40 "$LOG" ;;
+  *) echo "usage: blender-mcp-host start|stop|status|log"; exit 1 ;;
+esac

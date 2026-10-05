@@ -920,6 +920,25 @@ def build():
              % (key, nw, nd, ng, ns))
     build_site_works(empties, colls, site, mats)
 
+    # Details from blender/details/ (see DETAILS.md). Each is its own module.
+    detail_views = []
+    try:
+        if SCRIPT_DIR not in sys.path:
+            sys.path.insert(0, SCRIPT_DIR)
+        import details as detail_modules
+        detail_views = detail_modules.build_all(dict(
+            scene=scene, mats=mats, empties=empties, colls=colls, site=site, house=house,
+            roof_coll=roof_coll,
+            helpers=dict(add_box=add_box, add_slab=add_slab, get_collection=get_collection,
+                         set_parent=set_parent, three_rect_to_blender=three_rect_to_blender,
+                         new_material=new_material, link_only=link_only, info=info, warn=warn),
+            constants=dict(UNIT_M=UNIT_M, SLAB_T=SLAB_T, STOREY=STOREY, WALL_H=WALL_H,
+                           FLOORS=FLOORS, PARAPET_H=PARAPET_H, PARAPET_T=PARAPET_T,
+                           TERRACE_X1=TERRACE_X1, SLAB_VOIDS=SLAB_VOIDS),
+        )) or []
+    except Exception as e:
+        warn("details package failed: %s" % e)
+
     # Finish planes
     fin_t = FINISH_T_M / UNIT_M
     for key, name, rect, mname in FINISHES:
@@ -988,6 +1007,7 @@ def build():
          + [o for o in bpy.data.objects
             if o.name.endswith((".doorHeads", ".windowHeads", ".gapHeads"))]),
     ]
+    views.extend(detail_views)
     return scene, cam, sun, house_bbox, views
 
 

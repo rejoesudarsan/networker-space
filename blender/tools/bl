@@ -1,0 +1,31 @@
+#!/usr/bin/env python3
+"""Run Python inside the headless Blender via the MCP addon socket.
+Usage: bl script.py | bl -c 'code' | bl shot out.png | bl render out.png [engine]"""
+import socket, json, sys
+def call(t, p=None, timeout=600):
+    s = socket.create_connection(("127.0.0.1", 9876), timeout=timeout)
+    s.sendall(json.dumps({"type": t, "params": p or {}}).encode())
+    buf = b""
+    while True:
+        c = s.recv(1 << 16); buf += c
+        try: return json.loads(buf.decode())
+        except Exception:
+            if not c: raise RuntimeError(buf[:500])
+a = sys.argv[1:]
+if a and a[0] == "shot":
+    r = call("get_viewport_screenshot", {"max_size": 1200, "filepath": a[1], "format": "png"})
+    print(r.get("status"), r.get("result", {}).get("method"), r.get("message", ""))
+elif a and a[0] == "render":
+    eng = a[2] if len(a) > 2 else "BLENDER_WORKBENCH"
+    code = f"""
+import bpy
+sc=bpy.context.scene; sc.render.engine='{eng}'
+sc.render.resolution_x=1400; sc.render.resolution_y=900; sc.render.resolution_percentage=100
+sc.render.filepath='{a[1]}'; bpy.ops.render.render(write_still=True); print('rendered')
+"""
+    r = call("execute_code", {"code": code}); print(json.dumps(r)[:600])
+else:
+    code = a[1] if a and a[0] == "-c" else open(a[0]).read()
+    r = call("execute_code", {"code": code})
+    if r.get("status") == "success": print(r["result"].get("result", ""))
+    else: print("ERROR:", r.get("message")); sys.exit(1)
