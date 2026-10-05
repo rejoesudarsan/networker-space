@@ -75,3 +75,15 @@ URL modifier picks WebP when the browser decodes it (else the JPEG) and the
 - KTX2/Basis not done: it would cut GPU memory too, but needs a transcoder
   (~0.5 MB wasm) and a toktx/basisu step; worth it if phones show memory trouble.
 - Left: `world/env/sunrise_1k.hdr` 1.3 MB, used only for prop lighting.
+
+## adaptive-quality (5 Oct 2026)
+- Start tier: pixel ratio ≤ 1.75 (desktop), ≤ 1.5 (screen long side ≤ 1024),
+  1 on weak/software GPUs (SwiftShader, llvmpipe, old Mali/Adreno/PowerVR by
+  renderer string); street reflection 1024² → 512² on phones and weak GPUs.
+- Watch: from 3 s after the first frame, 2 s windows; under 28 fps the pixel
+  ratio steps ×0.8 down to 0.75; then two windows under 18 fps → still frame.
+- Still frame (that, or `prefers-reduced-motion`): time stops (fog, cloud,
+  walkers, parallax), the camera cuts instead of easing, and a frame is drawn only
+  when the camera, size, fog, veil or scene state changes.
+- Headless here (SwiftShader, ~1 fps): detected weak, 1 → 0.8 → 0.75, then still;
+  jumping to a floor still redraws. `window.__world.quality()` with `?debug`.

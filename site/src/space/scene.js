@@ -132,7 +132,15 @@ function canWebp() {
 // ---------- the scene ----------
 export async function createScene(canvas) {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' })
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75))
+  // Quality: phones and weak or software GPUs start lower, and a frame rate
+  // that stays low steps the pixel ratio down, then settles on a still frame.
+  const gl = renderer.getContext()
+  const dbg = gl.getExtension('WEBGL_debug_renderer_info')
+  const gpu = dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : ''
+  const weak = /swiftshader|llvmpipe|software|mali-[24t]|adreno \(tm\) [3-5]\d\d|powervr sgx/i.test(gpu)
+  const small = Math.max(screen.width, screen.height) <= 1024
+  const quality = { ratio: Math.min(devicePixelRatio, weak ? 1 : small ? 1.5 : 1.75), floor: 0.75, low: false }
+  renderer.setPixelRatio(quality.ratio)
   renderer.toneMapping = THREE.ACESFilmicToneMapping
   renderer.toneMappingExposure = 1.0
   renderer.localClippingEnabled = true
@@ -211,7 +219,6 @@ export async function createScene(canvas) {
   // (scripts/compress-textures.mjs). The dev server has only the JPEGs.
   const manager = new THREE.LoadingManager()
   const webp = import.meta.env.PROD && (await canWebp())
-  const small = Math.max(screen.width, screen.height) <= 1024
   if (webp) manager.setURLModifier((url) => (/\/models\/.*\.jpg$/.test(url) ? url.replace(/\.jpg$/, small ? '-sm.webp' : '.webp') : url))
   const loader = new GLTFLoader(manager).setMeshoptDecoder(MeshoptDecoder)
   const glassMats = []
@@ -269,8 +276,8 @@ export async function createScene(canvas) {
   // The street: wet asphalt holding a soft, broken reflection of the house,
   // going to fog before the frame's edge (Astra frames 03 and 19).
   const street = new Reflector(new THREE.PlaneGeometry(200, 200), {
-    textureWidth: 1024,
-    textureHeight: 1024,
+    textureWidth: weak || small ? 512 : 1024,
+    textureHeight: weak || small ? 512 : 1024,
     multisample: 0,
     clipBias: 0.003,
     shader: {
@@ -469,8 +476,12 @@ export async function createScene(canvas) {
     load('basement').then((g) => {
       if (g) floors.basement.add(g)
       pending.delete('basement')
+      dirty = true
     })
-    loadProps().finally(() => pending.delete('props'))
+    loadProps().finally(() => {
+      pending.delete('props')
+      dirty = true
+    })
   }
 
   const clouds = createClouds(scene, fogUniforms.uFog.value)
@@ -578,9 +589,37 @@ export async function createScene(canvas) {
   const cur = { pos: shot.pos.clone(), look: shot.look.clone(), fovY: shot.fovY }
   let lastScene = null
 
-  function frame() {
+  // Frame-rate watch: two-second windows, from three seconds after the first frame.
+  const watch = { from: 0, frames: 0, slow: 0 }
+  function pace(now) {
+    if (!watch.from) watch.from = now + 3000
+    if (now < watch.from || state.still) return
+    watch.frames++
+    if (now - watch.from < 2000) return
+    const fps = (watch.frames * 1000) / (now - watch.from)
+    watch.from = now
+    watch.frames = 0
+    if (fps >= 28) return (watch.slow = 0)
+    if (quality.ratio > quality.floor) {
+      quality.ratio = Math.max(quality.floor, quality.ratio * 0.8)
+      renderer.setPixelRatio(quality.ratio)
+      resize()
+    } else if (fps < 18 && ++watch.slow >= 2) {
+      quality.low = true
+    }
+  }
+  // Still (reduced motion, or the frame rate gave out): time stops, nothing
+  // drifts, and a frame is drawn only when what it shows has changed.
+  let tStill = 0
+  let shown = ''
+  let dirty = true
+
+  function frame(now) {
     const dt = Math.min(clock.getDelta(), 0.05)
-    const t = clock.elapsedTime
+    pace(now)
+    if (quality.low) state.still = true
+    if (!state.still) tStill = clock.elapsedTime
+    const t = tStill
     fogUniforms.uTime.value = t
     fogUniforms.uFog.value.copy(srgb(state.fog))
     sky.material.uniforms.uGlowK.value = state.glow
@@ -708,9 +747,16 @@ export async function createScene(canvas) {
 
     // The membership in focus lifts a touch.
     tiers.forEach((g, i) => {
-      g.position.y = lerp(g.position.y, state.tierFocus === i ? 0.03 : 0, 1 - Math.pow(0.001, dt))
+      g.position.y = lerp(g.position.y, state.tierFocus === i ? 0.03 : 0, state.still ? 1 : 1 - Math.pow(0.001, dt))
     })
 
+    if (state.still) {
+      const key = [...camera.position.toArray(), ...cur.look.toArray(), camera.fov, width, height, state.fog, state.veil, state.night, state.open, state.focus, state.tierFocus, state.glow]
+        .map((v) => (typeof v === 'number' ? v.toFixed(4) : v)).join()
+      if (key === shown && !dirty) return
+      shown = key
+      dirty = false
+    }
     renderer.render(scene, camera)
     if (!started) {
       performance.mark('first-frame')
@@ -739,6 +785,7 @@ export async function createScene(canvas) {
     people,
     // Still loading: 'basement' or 'props'. A scene that needs one stays veiled.
     pending: (what) => pending.has(what),
+    quality: () => ({ gpu, weak, small, ...quality }),
     // Draw calls and triangles of the last frame, for site/PERF.md.
     info: () => ({ ...renderer.info.render, geometries: renderer.info.memory.geometries, textures: renderer.info.memory.textures }),
     markerScreens: () => markerAnchors.map(toScreen),

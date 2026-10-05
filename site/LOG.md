@@ -3,3 +3,4 @@
 - 2026-10-05 19:50 lazy-floors: only basement + props deferred (upper floors form the façade, so they can't wait). Further wins need compression.
 - 2026-10-05 19:53 compress-geometry: meshopt build step, 18.2 → 4.9 MB geometry. Local timings unchanged (localhost); network win estimated, not measured on a real link.
 - 2026-10-05 19:58 compress-textures: WebP + -sm tier chosen by screen size; KTX2 not done (noted in PERF.md).
+- 2026-10-05 20:03 adaptive-quality: verified on SwiftShader only (weak tier, step-down, still); real-phone fps not measured.

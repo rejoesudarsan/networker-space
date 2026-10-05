@@ -164,7 +164,8 @@ async function start() {
   world = await createScene($('.stage'))
   document.body.classList.add('ready')
   performance.mark('house-shown')
-  if (import.meta.env.DEV) window.__world = world
+  // For measuring (site/PERF.md): the world in dev, or with ?debug.
+  if (import.meta.env.DEV || location.search.includes('debug')) window.__world = world
   world.state.still = reduced.matches
   if (matchMedia('(max-width: 720px)').matches) setFocus(1)
   reduced.addEventListener('change', (e) => (world.state.still = e.matches))
