@@ -30,7 +30,8 @@ Rules for every item:
   - note: also built the ramp slope itself (none existed) and cut the basement footprint out of the street disc via a new finish(ctx) hook; the disc used to run through the basement at street level. Rails follow site details.js: 3 bars, 0.36 high.
 - [x] front-compound-wall-and-fern-planter: check `frontWall`/`streetGate` exist; add the fern planter beside gate no. 1172 (p05) and the house number plate.
   - note: gate, piers and front wall already existed. Number and letter slot are on the plinth face right of the gate steps; p05's tall wall and concrete canopy over the gate are not modelled (the existing gate sits at the top of the steps).
-- [ ] office-outside-stair: outside stair from the open-to-sky court up to the basement office entrance with a steel rail (plan basement, p03).
+- [x] office-outside-stair: outside stair from the open-to-sky court up to the basement office entrance with a steel rail (plan basement, p03).
+  - note: also floored the open-to-sky court in flagstones (site does the same). Stair positions from details.js PLAN; landing meets the existing Site.OfficeGate.
 - [ ] neighbour-massing: plain neighbour blocks and compound walls on both sides and across the street, positions from `site/src/world/world.js` `neighbours`.
 
 ## Entrance court and gardens (p24, p6, p36, p21, p9)

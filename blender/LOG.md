@@ -5,3 +5,4 @@
 - 2026-10-05 01:12 gulmohar_trees: build 74 s, two previews; first crowns too small vs p19, widened; blossoms floated above the crown in the angle view, pulled onto the shell.
 - 2026-10-05 01:30 ramp_railing: build 74 s, two previews; first preview showed the ramp hidden under the street disc; added details finish() hook and cut the basement pit; also added the ramp wedge and grooves.
 - 2026-10-05 01:50 front_compound_wall_and_fern_planter: build 78 s, four previews; numerals floated 16 cm off the wall, fixed; fronds read as agave, then as beads, finally as overlapping plume tufts.
+- 2026-10-05 02:05 office_outside_stair: build 78 s, three previews (street view hid the flight behind the plinth; checked from above and from the east).
