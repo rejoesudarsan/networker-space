@@ -19,8 +19,8 @@ emissive lamps are left out of the bake and exported with flat materials.
 The bake is lit the way the site shows a floor: the floors above and the
 roof are hidden (the site sees every room open-topped), the floors below and
 the street stay for bounce light. --set picks the light: "day" (high warm
-sun, the sky HDRI) or "night" (sun off, a low blue sky, the house's lamps
-and glow materials on).
+sun, the sky HDRI, the club_lamp lights at a quarter power) or "night" (sun
+off, a low blue sky, the house's lamps at full power and glow materials on).
 
 Writes site/public/models/baked/<floor>-<set>.gltf (+ .bin), its atlas
 <floor>-<set>.jpg (the scene's view transform and --exposure applied, so the
@@ -123,6 +123,11 @@ def set_light(kind):
             sun.data.color = (1.0, 0.93, 0.84)
         for n in bgs:
             n.inputs["Strength"].default_value = n.inputs["Strength"].default_value * 1.0
+        # The club's lamps (details/room_lights.py, club_lamp = 1) stay on by
+        # day at a quarter of their power: soft pools, not night glare.
+        for o in bpy.data.objects:
+            if o.type == "LIGHT" and o.get("club_lamp"):
+                o.data.energy *= 0.25
     else:
         if sun:
             sun.hide_render = True
