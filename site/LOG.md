@@ -12,3 +12,4 @@
 - 2026-10-05 20:38 two-angles (user request): beats rebuilt (hero → veil → 4 floors → veil → night/members/call on the street). Toured 8 beats desktop + phone. Brief now on the first frame again (user: 'starts with the building, same as my previous version').
 - 2026-10-05 20:45 a11y: found two-angles commit (50e83fa) had deleted sheet/loading/reader CSS; restored here. Screen reader itself not run (no SR in headless).
 - 2026-10-05 20:48 meta: og.jpg inherits the soft headless still ([?] still image re-capture covers it). Old red 'N' favicon replaced.
+- 2026-10-05 20:56 copy-audit: copy rewritten to the user's 5 Oct plan (big tree is in the basement court per blender/details/court1_big_tree.py). Library and game room dropped from the first floor per the plan. Tier contents drafted, [?] added; no prices, dates or frequencies stated.

@@ -106,7 +106,7 @@ const tiersEl = $('.tiers')
 TIERS.forEach((t, i) => {
   const el = document.createElement('article')
   el.className = 'tier'
-  el.innerHTML = `<h3>${t.name}</h3><ul>${t.has.map((h) => `<li>${h}</li>`).join('')}<li>Needs —</li></ul><a class="link" href="#book" data-book>Book a call →</a>`
+  el.innerHTML = `<h3>${t.name}</h3><ul>${t.has.map((h) => `<li>${h}</li>`).join('')}</ul><p class="needs">Needs: ${t.needs}</p><a class="link" href="#book" data-book>Book a call →</a>`
   el.addEventListener('pointerenter', () => setFocus(i))
   el.addEventListener('focusin', () => setFocus(i))
   tiersEl.append(el)

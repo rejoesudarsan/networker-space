@@ -85,7 +85,7 @@ body.reading .hint { opacity: 0 }
 .margin { left: var(--left); top: 50%; transform: translateY(-50%); width: min(25rem, 29vw); display: grid; gap: 14px }
 .margin::before {
   content: ''; position: absolute; z-index: -1; top: calc(50% - 50vh); height: 100vh; left: calc(-1 * var(--left)); width: calc(100% + var(--inset) * 1.6);
-  background: linear-gradient(90deg, color-mix(in srgb, var(--fog) 88%, transparent) 55%, transparent);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--fog) 88%, transparent) calc(100% - 3.5rem), transparent);
   pointer-events: none;
 }
 
@@ -93,7 +93,7 @@ body.reading .hint { opacity: 0 }
 .brief h1 { font: 400 clamp(34px, 3.2vw, 46px)/1.05 var(--serif); font-variation-settings: 'opsz' 60; letter-spacing: -0.015em }
 .brief .intro { font: 400 18px/27px var(--sans) }
 .rhythm { display: grid; gap: 8px; margin: 4px 0 0; border-top: 1px solid color-mix(in srgb, var(--fg) 22%, transparent); padding-top: 14px }
-.rhythm div { display: grid; grid-template-columns: 6.5rem 1fr; gap: 12px; align-items: baseline }
+.rhythm div { display: grid; grid-template-columns: 7.5rem 1fr; gap: 12px; align-items: baseline }
 .rhythm dt { font: 500 13px/20px var(--mono); letter-spacing: 0.08em; text-transform: uppercase }
 .rhythm dd { margin: 0; font: 400 17px/24px var(--sans) }
 .link.strong { font-size: 16px; font-weight: 600 }
@@ -119,9 +119,9 @@ body.reading .hint { opacity: 0 }
 .tier h3 { font: 500 14px/20px var(--mono); letter-spacing: 0.12em; text-transform: uppercase; position: relative }
 body.dark .tier h3 { color: #f0d3b2 }
 .tier.focus h3::before { content: ''; position: absolute; left: -14px; top: 7px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent) }
-.tier ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; column-gap: 0.5em }
-.tier li + li::before { content: '· '; opacity: 0.6 }
+.tier ul { list-style: none; padding: 0 }
 .tier .link { font-size: 14px }
+.tier .needs { font: 400 13px/20px var(--mono); color: var(--fg-soft) }
 .tier-help { font: 400 15px/22px var(--sans); color: var(--fg-soft) }
 
 /* The last invitation. */
@@ -191,9 +191,12 @@ body.still { overflow: hidden }
     left: -12px; width: 100vw; top: auto; bottom: calc(-1 * (var(--bottom) + 34px)); height: 72vh;
     background: linear-gradient(0deg, color-mix(in srgb, var(--fog) 88%, transparent) 62%, transparent);
   }
-  .brief h1 { font-size: 32px }
-  .brief .intro, .rhythm dd { font-size: 16px; line-height: 23px }
-  .rhythm div { grid-template-columns: 5.5rem 1fr }
+  .brief h1 { font-size: 28px }
+  .margin { gap: 10px; padding: 14px 20px }
+  .brief .intro, .rhythm dd { font-size: 15px; line-height: 21px }
+  .rhythm { gap: 6px; padding-top: 10px }
+  .rhythm div { grid-template-columns: 6.6rem 1fr; gap: 10px }
+  .rhythm dt { font-size: 12px; letter-spacing: 0.04em }
   .caption .title, .lead-title { font-size: 24px; line-height: 30px }
   .caption .line, .night-copy p:last-child { font-size: 16px; line-height: 24px }
   .members { gap: 12px }

@@ -606,7 +606,7 @@ export async function createScene(canvas) {
     // Camera target for the scene.
     if (s === 'exterior') {
       // On a phone the copy takes the lower half; the house sits above it.
-      if (phone) orbit(shot, HERO, 0, 4, 34, 40, 0, 5.7)
+      if (phone) orbit(shot, HERO, 0, 4, 37, 40, 0, 6.5)
       else orbit(shot, HERO, 0, 2, 27, 26, 0, -0.55)
     } else if (inFloors) {
       const i0 = Math.min(3, Math.floor(state.focus))

@@ -38,63 +38,73 @@ export const FOG = [
   [6, '#d1bfc2'], [10, '#c9bcbd'], [16, '#d2c5c3'], [17.6, '#8f7f88'], [18.4, '#564b5e'], [20, '#2c3048'], [22, '#1c2d4c'],
 ]
 
-// One caption per floor: what it is and what is on it (the Blender fit-out
-// in blender/details/), plus the Explore copy from CONTENT.md.
+// One caption per floor: what you do there and when, from the user's zone
+// plan (site/POLISH.md, 5 Oct), plus the Explore copy.
 export const FLOOR_COPY = {
   lower: {
     label: 'Lower level',
-    title: 'Work, with room to think.',
-    line: 'Quiet work rooms · A games and meeting room · Courts open to the sky',
+    title: 'Make things, round the big tree.',
+    line: "Open work area · The maker's table · A seat round the big tree · The founders' lounge",
     explore: {
-      head: 'Work, with room to think.',
+      head: 'The working floor, below the street.',
       body: [
-        'A quieter part of the house for focused work and small conversations. Work rooms sit beside courts that bring light below street level.',
-        'Find the kind of space that suits your day. Membership shapes your access.',
+        'An open work area, lit by a court where a big tree rises through two floors. A seating platform runs round its trunk.',
+        "The maker's table is for building things by hand. Daytime workshops start here.",
+        "Off the court, the old office is a private lounge for founders.",
       ],
     },
   },
   ground: {
     label: 'Ground floor',
-    title: 'Coffee. A table. An unhurried start.',
-    line: 'Walk-in café, 08:00–18:00 · Coffee bar · The garden',
+    title: 'The café. Walk in from 08:00.',
+    line: 'Walk-in café, 08:00–18:00 · Breakfast · The garden',
     explore: {
-      head: 'An unhurried start.',
+      head: 'The café.',
       body: [
-        'Coffee, a table and the possibility of a good conversation. By day, Space runs as a walk-in café, from 08:00 to 18:00.',
-        'Stay close to the garden, meet someone new or take a little time for yourself. Talk to us about table booking and membership.',
+        'Anyone can walk in, from 08:00 to 18:00: breakfast, coffee and a table to work at. Pay as you go.',
+        'It opens onto the garden. At 18:00 the work stops and the evening begins.',
       ],
     },
   },
   first: {
     label: 'First floor',
-    title: 'Read. Talk. Bring the room together.',
-    line: 'The courtyard · Library · Event room · Game room',
+    title: 'Where the evenings happen.',
+    line: 'The event room · Seats round the courtyard · Private rooms',
     explore: {
-      head: 'A little distance from the day, and a room for the evening.',
+      head: 'Meetups, talks and film nights.',
       body: [
-        'Read in the library. Find a quiet corner. Let a conversation unfold beside the courtyard.',
-        'Off the courtyard, a room with a low stage, a screen and tiered teak seats for talks, demo nights and small gigs. Next door, carrom and board games.',
-        'Membership shapes your access.',
+        'The event room has a low stage, a screen and tiered teak seats, for meetups, learning events and film nights.',
+        'Informal seating runs round the courtyard. Private rooms off it take a meeting or a small group.',
       ],
     },
   },
   second: {
     label: 'Second floor',
-    title: 'The day opens into evening.',
-    line: 'The terrace · Quiet rooms · A phone booth',
+    title: 'Two quiet rooms, and the roof.',
+    line: 'Two quiet founder rooms · The terrace: grills, work, rooftop parties',
     explore: {
-      head: 'The day opens into evening.',
+      head: 'Up to the terrace.',
       body: [
-        'Take the conversation upstairs. Terracotta underfoot, a long bench and the evening air make room for a different pace.',
-        'Quiet rooms for focused work sit beside the terrace.',
-        "The club's evening rhythm runs from 18:00 to 23:00. Access depends on membership; talk to us about what is right for you.",
+        'Two quiet rooms for founders who need a closed door to work.',
+        'The terrace takes a laptop by day, the grill in the evening, and the rooftop parties.',
       ],
     },
   },
 }
 
+// Three ways in (the user's plan, 5 Oct). What each unlocks is a draft for
+// the user to confirm (site/POLISH.md, Needs your input); no prices yet.
 export const TIERS = [
-  { id: 'visit', name: 'Visit', has: ['Walk-in access', 'Table booking'], focus: 'For the odd morning and a table when you need one.' },
-  { id: 'regular', name: 'Regular', has: ['Quiet spaces', 'Game rooms'], focus: 'For a more regular rhythm.' },
-  { id: 'house', name: 'House', has: ['Broader access', 'Team + guests'], focus: 'For bringing your team and your guests.' },
+  {
+    id: 'walkin', name: 'Walk-in', has: ['The café and open work area, 08:00–18:00', 'Pay as you go'],
+    needs: 'Nothing: come in', focus: 'For a day of work, or a coffee, when you need one.',
+  },
+  {
+    id: 'member', name: 'Member', has: ['Every day, 08:00–23:00', "The maker's table and workshops", 'The evening programme', 'Private rooms to book'],
+    needs: 'A call with us', focus: 'For founders and early teams who are here most days.',
+  },
+  {
+    id: 'lifetime', name: 'Lifetime', has: ["Everything a member has", "The founders' lounge", 'Bring your team and guests'],
+    needs: 'A call with us · 20 places only', focus: 'For the few who want Space for good.',
+  },
 ]

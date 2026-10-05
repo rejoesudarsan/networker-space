@@ -55,7 +55,20 @@ The user's latest plan (5 Oct 2026), newer than PRODUCT.md where they differ:
 - [x] meta: title, description, Open Graph image (a render of the house), favicon set, theme colour. Done: canonical, description, Open Graph + Twitter card with `og.jpg` (1200×630 from the street view still), new favicon (the house's stepped façade and tower on dawn fog; SVG + 32 px + 180 px apple-touch), theme colour #d1bfc2.
 
 ## Copy
-- [ ] copy-audit: read every line on the page in order, as a founder seeing it first. List in this file what is vague, repeated or missing; then rewrite `index.html`, `FLOOR_COPY` and `TIERS` in one pass.
+- [x] copy-audit: read every line on the page in order, as a founder seeing it first. List in this file what is vague, repeated or missing; then rewrite `index.html`, `FLOOR_COPY` and `TIERS` in one pass. Done: audit below; `index.html` (brief, night, memberships, call, reader), `FLOOR_COPY` and `TIERS` rewritten to the 5 Oct plan.
+  Audit (5 Oct, read in order as a founder seeing it first):
+  1. Brief, "To join: three memberships, each starting with a call": out of date. The plan is walk-in (pay as you go), one membership, and a lifetime membership for 20.
+  2. "A house for work, shared interests and time together": vague; says nothing about what happens. Say work and learn by day, meet after six.
+  3. "By day: a walk-in café": half the day. The plan's day is work and learn (breakfast, desks, the maker's table, workshops), the café is one floor of it.
+  4. Floor titles are moods, not facts ("Read. Talk. Bring the room together.", "The day opens into evening."). A first-time reader can't tell what each floor is for.
+  5. Lower level lists quiet work rooms and a games room; the plan makes it the open work area, the maker space and maker's table, the platform round the big tree, and the founders' lounge.
+  6. First floor lists a library and game room; the plan makes it the events floor, with informal seating and private rooms.
+  7. Second floor lists quiet rooms and a phone booth; the plan has two quiet founder work rooms and the terrace for grills, work and rooftop parties.
+  8. Repeated: "Membership shapes your access" (×3) and "Access depends on membership" (×3) say nothing; cut to one honest line where access is actually explained (the memberships).
+  9. Night lists talks, demo nights, music and long dinners; the plan's evenings are meetups, learning events, film nights, PlayStation, rooftop parties, lounge access. And the plan's rule "no work after 18:00" is missing.
+  10. Tiers Visit / Regular / House with "Needs —": names and contents out of date; walk-in needs nothing, which can be said.
+  11. The call says only "Book a call"; a walk-in doesn't need one. Say they can just come in.
+  12. Missing and not to be invented: prices, address beyond HSR Layout, dates, how often evenings run.
 - [ ] floor-copy: each floor caption says what you do there and when (morning work, the café, the court and library, the evening on the terrace), using the zone plan in `PRODUCT.md` and `DESIGN.md`.
 - [ ] night-copy: what an evening is: the kinds of nights (talks, demo nights, dinners, film nights, rooftop), how often, who comes, how a member gets in. No made-up dates or names.
 
@@ -68,6 +81,7 @@ The user's latest plan (5 Oct 2026), newer than PRODUCT.md where they differ:
 - [ ] end-to-end: walk the whole path on desktop and phone, from first frame to the thank-you state; fix anything that breaks the flow. Then output the promise.
 
 ## Needs your input
+- [?] the three ways in (drafted in `TIERS`, src/space/beats.js): confirm what each unlocks. Drafted: Walk-in = café + open work area 08:00–18:00, pay as you go; Member = every day 08:00–23:00, the maker's table and workshops, the evening programme, private rooms to book; Lifetime = all of that + the founders' lounge + team and guests, 20 places. Open: which tier gets the founders' lounge and the two quiet founder rooms; can walk-ins come to any evenings; prices.
 - [?] bake: the first-floor court tree's inner canopy is unlit (black) when the floor cut opens it; the bake could light or fill those faces (site leaves it as baked).
 - [?] still image: `public/still/house-dawn.*` is the site's own hero, captured headless (software GL, soft). Re-capture on a real GPU (`?debug`, hide the corners) or have the bake render one; same frame serves the OG image.
 - [?] bake: the two trees beside the gate are low-poly blobs; board 01 has two sparse gulmohars (thin trunks, open canopy, a few orange blossoms). That lives in the bake (`site-day.gltf`), so the bake loop needs to change it. Also the left tree sits further out than the right, so the margin fog swallows it at night.
