@@ -28,7 +28,7 @@ Every space is baked alone, cut to the same kind of box, with identical light, s
 - [x] room-cafe-day (hidden base floor plane 1.3 mm under the planks bakes black, ~4% of the atlas; never visible)
 - [x] room-court-day (the double-height void at the north-west reads as an open hole, since rooms bake alone; the wicker pendant hangs in it)
 - [x] room-event-day
-- [ ] room-terrace-day
+- [x] room-terrace-day (small wall fixtures read as soft dark smudges at this texel density; see texel-density)
 
 ## Day set (whole floors: the street views)
 - [ ] basement-day
