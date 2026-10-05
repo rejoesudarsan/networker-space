@@ -50,7 +50,8 @@ Rules for every item:
   - note: the gate is at street level (p5) and the passage climbs to the ground floor in the plan's two flights, 4 risers each (p9, p36). Removed the old outside gate steps, brought the gate and piers down to street level, opened the slab over the passage, added the retaining wall, a tall west boundary wall with handrails, p36's ochre planter and pots.
 
 ## Ground floor interiors (p25, p27, p28, p13, p15, p20)
-- [ ] living1-teak-floor: teak floor in Living 1, brass lanterns hanging, glazed doors to the lawn (p25, p27).
+- [x] living1-teak-floor: teak floor in Living 1, brass lanterns hanging, glazed doors to the lawn (p25, p27).
+  - note: room is x 0.62..2.33, z 1.33..3.2 per the plan; the existing teak finish rect (z from 0.2) also runs over the office toilet and the stair void, left as is. Also the ceiling fan and the window's grille bars from p25/p27. French doors modelled closed.
 - [ ] dining1-display-unit: teak display unit against the wall of Dining 1 (p28).
 - [ ] kitchen1-galley: black granite counters both sides of the galley, mauve laminate fronts (p13).
 - [ ] caretaker-red-oxide: red-oxide floor in the caretaker room (p15).
