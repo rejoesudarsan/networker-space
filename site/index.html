@@ -17,18 +17,34 @@
     <span class="corner br clock" aria-label="Time in the house">06:00 IST</span>
 
     <main class="copy" aria-live="polite">
-      <h1 class="sr-only">Space, a private club for startup people in HSR Layout, Bengaluru</h1>
-      <p class="beat center-low" data-beat="falling">Make room for what comes next.</p>
-      <p class="beat lead" data-beat="opening">A house for startup people.<span>Four levels. Room to belong.</span></p>
-      <div class="beat night-copy" data-beat="night">
-        <p class="kicker">A café by day. A club by night.</p>
-        <p>Evenings · 18:00–23:00</p>
-        <p>A programme for startup people.</p>
-        <p>Access depends on membership.</p>
-      </div>
+      <p class="beat center-low panel" data-beat="falling">Make room for what comes next.</p>
 
-      <section class="caption" aria-label="This floor">
-        <span class="leader" aria-hidden="true"></span>
+      <!-- The brief: what Space is, who it's for, how the day runs. -->
+      <section class="beat brief panel" data-beat="falling hero">
+        <p class="kicker">HSR Layout, Bengaluru</p>
+        <h1>A house for startup people.</h1>
+        <p class="intro">Space is a private club for founders, early teams and the people around startups. A four-level house for work, shared interests and time together.</p>
+        <dl class="rhythm">
+          <div><dt>By day</dt><dd>A walk-in café, 08:00–18:00</dd></div>
+          <div><dt>By night</dt><dd>A club with a programme, 18:00–23:00</dd></div>
+          <div><dt>To join</dt><dd>Three memberships, each starting with a call</dd></div>
+        </dl>
+        <a class="link strong" href="#book" data-book>Book a call →</a>
+      </section>
+
+      <section class="beat lead panel" data-beat="opening">
+        <p class="kicker">Inside</p>
+        <p class="lead-title">Four levels. Room to belong.</p>
+        <p>Work below, a café on the ground, a courtyard, library and event room above, and a terrace for the evening.</p>
+      </section>
+
+      <section class="beat night-copy panel" data-beat="night">
+        <p class="kicker">A café by day. A club by night.</p>
+        <p class="lead-title">Evenings, 18:00–23:00.</p>
+        <p>Talks, demo nights, music and long dinners: a programme for startup people. Access depends on membership.</p>
+      </section>
+
+      <section class="caption panel" aria-label="This floor">
         <p class="label"></p>
         <p class="title"></p>
         <p class="line"></p>
@@ -42,7 +58,10 @@
       </div>
 
       <section class="beat members" data-beat="members" aria-label="Memberships">
-        <p class="kicker members-label">Memberships</p>
+        <div class="members-head">
+          <p class="kicker">Memberships</p>
+          <p class="members-title">Three ways to belong.</p>
+        </div>
         <div class="tier-nav" role="group" aria-label="Choose a membership"></div>
         <div class="tiers"></div>
         <p class="tier-help">Requirements to be confirmed on a call.</p>

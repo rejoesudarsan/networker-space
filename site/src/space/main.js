@@ -2,7 +2,7 @@ import '@fontsource-variable/newsreader/opsz.css'
 import '@fontsource-variable/schibsted-grotesk'
 import '@fontsource-variable/jetbrains-mono'
 import './space.css'
-import { BEATS, HOURS, FOG, ROOMS, TIERS } from './beats.js'
+import { BEATS, HOURS, FOG, FOCUS, FLOOR_COPY, TIERS } from './beats.js'
 
 // The booking link (Cal.com or Calendly) for every "Book a call". Until it is
 // set, Book a call opens an honest "not available yet" note.
@@ -88,7 +88,7 @@ if (BOOKING_URL) for (const a of $$('[data-book]')) a.href = BOOKING_URL
 
 // ---------- explore ----------
 $('.caption .explore').addEventListener('click', () => {
-  const r = ROOMS[current.beat.room]
+  const r = FLOOR_COPY[current.beat.floor]
   if (!r) return
   openSheet(
     `<p class="kicker">${r.label}</p><h2>${r.explore.head}</h2>${r.explore.body.map((b) => `<p>${b}</p>`).join('')}
@@ -131,6 +131,11 @@ let current = locate(0)
 const at = +(location.hash.match(/t=([\d.]+)/) || [])[1]
 let goal = at >= 0 && at <= 1 ? at : 0
 let p = goal
+// A link such as #t=0.5 jumps there, also after load.
+addEventListener('hashchange', () => {
+  const v = +(location.hash.match(/t=([\d.]+)/) || [])[1]
+  if (v >= 0 && v <= 1) goal = p = v
+})
 
 function webgl() {
   try {
@@ -209,7 +214,7 @@ function loop(now = performance.now()) {
   const fog = fogAt(h)
   const s = world.state
   s.scene = beat.scene
-  s.room = beat.room || null
+  s.focus = keyed(FOCUS, Math.min(0.66, Math.max(0.22, p)))
   s.local = local
   s.veil = veil
   s.fog = fog
@@ -217,8 +222,9 @@ function loop(now = performance.now()) {
   s.open = beat.open ? smooth(0, 0.8, local) : 0
   s.night = beat.night || beat.scene === 'members' || beat.scene === 'call' ? 1 : smooth(18, 20, h) * 0.8
 
-  // Light text once the fog is dark.
-  const dark = h > 18.2
+  // Light text once the fog is dark (by its luminance, not the hour).
+  const fl = [1, 3, 5].map((i) => parseInt(fog.slice(i, i + 2), 16) / 255).map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4))
+  const dark = 0.2126 * fl[0] + 0.7152 * fl[1] + 0.0722 * fl[2] < 0.22
   document.body.classList.toggle('dark', dark)
   document.documentElement.style.setProperty('--fog', fog)
   $('.clock').textContent = clockText(h)
@@ -229,7 +235,7 @@ function loop(now = performance.now()) {
   if (key !== shownKey) {
     shownKey = key
     for (const el of $$('[data-beat]')) el.classList.toggle('on', el.dataset.beat.split(' ').includes(key))
-    const r = ROOMS[beat.room]
+    const r = FLOOR_COPY[beat.floor]
     const cap = $('.caption')
     cap.classList.toggle('on', !!r && key !== 'veil')
     if (r) {

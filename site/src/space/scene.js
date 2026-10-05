@@ -2,14 +2,15 @@ import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
 import { Reflector } from 'three/examples/jsm/objects/Reflector.js'
-import { ROOMS } from './beats.js'
 import { createClouds } from './clouds.js'
 import { createPeople } from './people.js'
 
 // The house, baked in Blender (blender/tools/bake_site.py): each floor is one
 // unlit mesh whose atlas already holds its light, so what the site shows is
-// what Cycles rendered. One camera, one house, fog that carries the hour;
-// every change of scene happens inside a veil of cloud.
+// what Cycles rendered. One camera, one house on its street among its
+// neighbours, fog that carries the hour. When the house opens, the camera
+// visits each floor whole: the floors above lift clear and the walls of the
+// floor in view are cut down to a section, so every room on it shows.
 // Units: 1 = 8 ft. Floors sit in their own frames (house.json offsets).
 
 const FLOORS = {
@@ -21,6 +22,8 @@ const FLOORS = {
 const ORDER = ['basement', 'ground', 'first', 'second']
 // How far each floor lifts when the house parts on the street.
 const PART = { basement: 0, ground: 0.32, first: 0.66, second: 1.0 }
+// How far the floors above the one in view rise: clear out of the frame.
+const CLEAR = 9
 const WALL = 1.3
 const LIME = '#e8e4da'
 
@@ -190,8 +193,10 @@ export async function createScene(canvas) {
   const glassMats = []
   const glassDay = new THREE.Color('#cfd8d6')
   const glassNight = new THREE.Color('#ffb466')
-  const clip = [0, 1, 2, 3, 4].map(() => new THREE.Plane(new THREE.Vector3(0, -1, 0), 1e5))
+  // One cutaway plane per floor (the walls cut down to a section).
+  const cuts = Object.fromEntries([...ORDER, 'roof', 'site', 'none'].map((k) => [k, new THREE.Plane(new THREE.Vector3(0, -1, 0), 1e5)]))
   const load = async (name) => {
+    const clip = [cuts[name] || cuts.none]
     const g = await loader.loadAsync(`/models/baked/${name}-day.gltf`).catch(() => null)
     if (!g) return null
     g.scene.traverse((o) => {
@@ -229,16 +234,6 @@ export async function createScene(canvas) {
     floors[id] = g
     house.add(g)
   })
-  // Each room's own diorama bake (bake_site.py --rooms), where it exists;
-  // otherwise the room is its floor's bake cut by the clipping planes.
-  const roomModels = {}
-  await Promise.all(Object.keys(ROOMS).map(async (id) => {
-    const m = await load('room-' + id)
-    if (!m) return
-    m.visible = false
-    floors[ROOMS[id].floor].add(m)
-    roomModels[id] = m
-  }))
   const roof = loaded[4]
   if (roof) floors.second.add(roof)
   const site = loaded[5] || new THREE.Group()
@@ -291,6 +286,43 @@ export async function createScene(canvas) {
   street.position.y = -0.002
   house.add(street)
 
+  // The neighbours: plain plaster massing, two to four storeys (photos p03,
+  // p19), so the house stands in a real street at its real size.
+  // Only the two sides: the row across the street would stand between the
+  // camera and the house.
+  const NEIGHBOURS = [
+    [-10.5, 6, 9, 2.1, -0.4], [10.8, 6.4, 9.4, 2.7, -1.2], [-18, 6.4, 9, 1.8, 0], [18.4, 6.2, 9.2, 2.4, -0.3],
+  ]
+  const nMat = [fogify(new THREE.MeshStandardMaterial({ color: '#d9d1c4', roughness: 0.95 })), fogify(new THREE.MeshStandardMaterial({ color: '#cfc6b8', roughness: 0.95 }))]
+  const winMat = fogify(new THREE.MeshStandardMaterial({ color: '#6d6460', roughness: 0.6, emissive: new THREE.Color('#ffb466'), emissiveIntensity: 0 }))
+  const neighbours = new THREE.Group()
+  house.add(neighbours)
+  NEIGHBOURS.forEach(([x, w, d, h, z], i) => {
+    const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), nMat[i % 2])
+    m.position.set(x, h / 2, z)
+    neighbours.add(m)
+    // Windows on every face, a row per storey, and a parapet.
+    for (let y = 0.5; y < h - 0.3; y += 0.62) {
+      for (let k = -1; k <= 1; k++) {
+        const front = new THREE.Mesh(new THREE.PlaneGeometry(0.62, 0.34), winMat)
+        front.position.set(x + k * w * 0.28, y, z + d / 2 + 0.01)
+        neighbours.add(front)
+        for (const sx of [-1, 1]) {
+          const side = new THREE.Mesh(new THREE.PlaneGeometry(0.62, 0.34), winMat)
+          side.position.set(x + sx * (w / 2 + 0.01), y, z + k * d * 0.3)
+          side.rotation.y = sx * Math.PI / 2
+          neighbours.add(side)
+        }
+      }
+    }
+    const parapet = new THREE.Mesh(new THREE.BoxGeometry(w + 0.08, 0.14, d + 0.08), nMat[(i + 1) % 2])
+    parapet.position.set(x, h + 0.07, z)
+    neighbours.add(parapet)
+    const wall = new THREE.Mesh(new THREE.BoxGeometry(w, 0.5, 0.12), nMat[(i + 1) % 2])
+    wall.position.set(x, 0.25, z > 10 ? z - d / 2 - 0.5 : z + d / 2 + 0.4)
+    neighbours.add(wall)
+  })
+
   // ---------- the loose props (blender/tools/build_props.py) ----------
   const propsG = await loader.loadAsync('/models/props/props.gltf').catch(() => null)
   const proto = {}
@@ -314,7 +346,7 @@ export async function createScene(canvas) {
   const clone = (name) => (proto[name] ? proto[name].clone() : new THREE.Group())
 
   const clouds = createClouds(scene, fogUniforms.uFog.value)
-  const people = createPeople(floors, ROOMS, fogify)
+  const people = createPeople(floors, house, fogify)
 
   // Prologue: two chairs, two books and petals falling through the dawn.
   const falling = new THREE.Group()
@@ -387,33 +419,31 @@ export async function createScene(canvas) {
   callG.add(callAnchor)
 
   // ---------- cameras ----------
-  // The street master: Blender's Camera.Street (50 mm, level, at 1.7 m),
-  // with the lens shift kept as a view offset so verticals stay level.
-  const STREET = { pos: new THREE.Vector3(0, 0.697, 24.5), look: new THREE.Vector3(0, 0.697, 0), fovX: 41, shift: 0.15 }
-  const shot = { pos: new THREE.Vector3(), look: new THREE.Vector3(), fovX: 41, shift: 0 }
-  const fovYFor = (fovX) => THREE.MathUtils.radToDeg(2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(fovX) / 2) / camera.aspect))
-
-  function roomShot(room, p, out) {
-    const r = ROOMS[room]
-    const f = FLOORS[r.floor]
-    const [x0, z0, x1, z1] = r.rect
-    const cx = f.x + (x0 + x1) / 2
-    const cz = f.z + (z0 + z1) / 2
-    const span = Math.max(x1 - x0, (z1 - z0) * 0.9)
-    const az = THREE.MathUtils.degToRad(r.az + (p - 0.5) * 6)
-    const el = THREE.MathUtils.degToRad(r.el)
-    const fovX = camera.aspect < 0.8 ? 46 : 34
-    const fit = camera.aspect < 0.8 ? 0.62 : 1
-    const dist = ((span * 1.45) / Math.tan(THREE.MathUtils.degToRad(fovX) / 2)) * fit * (r.zoom || 1) * (1.04 - p * 0.06)
-    out.look.set(cx, f.y + WALL * 0.18, cz)
-    out.pos.set(cx + Math.sin(az) * Math.cos(el) * dist, out.look.y + Math.sin(el) * dist, cz + Math.cos(az) * Math.cos(el) * dist)
-    out.fovX = fovX
-    out.shift = 0
+  // Shots orbit a target: azimuth from the street side (degrees, + from the
+  // east), elevation, distance, vertical field of view, and `side`: how far
+  // (units) the subject sits right of centre, leaving the left for copy.
+  const shot = { pos: new THREE.Vector3(), look: new THREE.Vector3(), fovY: 30 }
+  const deg = THREE.MathUtils.degToRad
+  const right = new THREE.Vector3()
+  function orbit(out, target, azD, elD, dist, fovY, side = 0, drop = 0) {
+    const az = deg(azD)
+    const el = deg(elD)
+    right.set(Math.cos(az), 0, -Math.sin(az))
+    out.look.copy(target).addScaledVector(right, -side)
+    out.look.y -= drop
+    out.pos.set(out.look.x + Math.sin(az) * Math.cos(el) * dist, out.look.y + Math.sin(el) * dist, out.look.z + Math.cos(az) * Math.cos(el) * dist)
+    out.fovY = fovY
   }
+  const fovYFor = (fovX) => THREE.MathUtils.radToDeg(2 * Math.atan(Math.tan(deg(fovX) / 2) / camera.aspect))
+  // The house on its street, three-quarters from the gate side.
+  const HERO = new THREE.Vector3(-0.3, 1.9, 0.9)
+  // Distance that frames each whole floor.
+  const FLOOR_DIST = { basement: 14, ground: 17.5, first: 15.5, second: 14.5 }
+  const fTarget = new THREE.Vector3()
 
   // ---------- state ----------
   const state = {
-    scene: 'prologue', room: null, local: 0, open: 0, night: 0, veil: 0, fog: '#d1bfc2', glow: 0.5,
+    scene: 'prologue', focus: 0, local: 0, open: 0, night: 0, veil: 0, fog: '#d1bfc2', glow: 0.5,
     mx: 0, my: 0, still: false, tierFocus: -1,
   }
   let width = 1
@@ -431,22 +461,9 @@ export async function createScene(canvas) {
 
   const clock = new THREE.Clock()
   const tmp = new THREE.Vector3()
-  const cur = { pos: STREET.pos.clone(), look: STREET.look.clone(), fovX: STREET.fovX, shift: STREET.shift }
+  orbit(shot, HERO, 34, 15, 24, 30, 2.4)
+  const cur = { pos: shot.pos.clone(), look: shot.look.clone(), fovY: shot.fovY }
   let lastScene = null
-
-  function setClip(rect, floorId) {
-    if (!rect) {
-      for (const p of clip) p.set(new THREE.Vector3(0, -1, 0), 1e5)
-      return
-    }
-    const f = FLOORS[floorId]
-    const [x0, z0, x1, z1] = rect
-    clip[0].set(new THREE.Vector3(1, 0, 0), -(f.x + x0))
-    clip[1].set(new THREE.Vector3(-1, 0, 0), f.x + x1)
-    clip[2].set(new THREE.Vector3(0, 0, 1), -(f.z + z0))
-    clip[3].set(new THREE.Vector3(0, 0, -1), f.z + z1)
-    clip[4].set(new THREE.Vector3(0, -1, 0), f.y + WALL * 0.84)
-  }
 
   function frame() {
     const dt = Math.min(clock.getDelta(), 0.05)
@@ -471,51 +488,54 @@ export async function createScene(canvas) {
     }
 
     const s = state.scene
-    const sceneKey = s + ':' + (state.room || '')
-    const changed = sceneKey !== lastScene
-    const isRoom = s === 'room'
-    house.visible = s === 'exterior' || isRoom || (s === 'prologue' && state.local > 0.85)
+    const changed = s !== lastScene
+    const inFloors = s === 'floors'
+    const outside = s === 'exterior' || inFloors || (s === 'prologue' && state.local > 0.85)
+    const phone = camera.aspect < 0.8
+    house.visible = outside
     falling.visible = s === 'prologue'
     stage.visible = s === 'members' || s === 'call'
     members.visible = s === 'members'
     callG.visible = s === 'call'
-    street.visible = site.visible = s !== 'room'
+    winMat.emissiveIntensity = 1.4 * state.night
 
-    // Floors: on the street they part a little; in a room only that floor shows.
-    for (const id of ORDER) {
+    // Floors: on the street they part a little (the opening); inside, the
+    // floors above the one in view rise clear and its walls are cut down.
+    const weights = {}
+    ORDER.forEach((id, i) => {
       const g = floors[id]
       const f = FLOORS[id]
-      if (isRoom) {
-        g.visible = id === ROOMS[state.room].floor
-        if (loaded[ORDER.indexOf(id)]) loaded[ORDER.indexOf(id)].visible = !roomModels[state.room]
-        g.position.y = f.y
+      if (inFloors) {
+        const above = smooth(0, 1, i - state.focus)
+        const w = Math.max(0, 1 - Math.abs(i - state.focus))
+        weights[id] = w
+        g.position.y = f.y + CLEAR * above
+        g.visible = above < 0.98
+        cuts[id].set(new THREE.Vector3(0, -1, 0), g.position.y + lerp(WALL * 1.4, WALL * 0.48, smooth(0, 1, w)))
       } else {
+        weights[id] = 0
         g.visible = true
-        if (loaded[ORDER.indexOf(id)]) loaded[ORDER.indexOf(id)].visible = true
         g.position.y = f.y + PART[id] * state.open
+        cuts[id].set(new THREE.Vector3(0, -1, 0), 1e5)
       }
-    }
-    if (roof) roof.visible = !isRoom
-    for (const [id, m] of Object.entries(roomModels)) m.visible = isRoom && id === state.room
-    setClip(isRoom ? ROOMS[state.room].rect : null, isRoom ? ROOMS[state.room].floor : null)
-
+    })
+    if (roof) roof.visible = !inFloors
+    // The lower level sits below the street: while it is in view the street,
+    // the compound wall and the trees step aside so it can be seen.
+    const below = inFloors && state.focus < 0.6
+    street.visible = site.visible = !below
     // Fog per scene.
+    const camDist = cur.pos.distanceTo(cur.look)
     if (s === 'prologue') {
       fogUniforms.uNear.value = 6
-      fogUniforms.uFar.value = lerp(16, 34, smooth(0.6, 1, state.local))
+      fogUniforms.uFar.value = lerp(16, 40, smooth(0.6, 1, state.local))
       fogUniforms.uBedY.value = -100
-    } else if (s === 'exterior') {
-      fogUniforms.uNear.value = 18
-      fogUniforms.uFar.value = 44
-      fogUniforms.uBedY.value = lerp(0.25, 0.9, state.open)
-      fogUniforms.uBedDepth.value = 0.9
-    } else if (isRoom) {
-      const f = FLOORS[ROOMS[state.room].floor]
-      const d = cur.pos.distanceTo(cur.look)
-      fogUniforms.uNear.value = d * 1.05
-      fogUniforms.uFar.value = d * 1.9
-      fogUniforms.uBedY.value = f.y + 0.02
-      fogUniforms.uBedDepth.value = 0.55
+    } else if (outside) {
+      fogUniforms.uNear.value = camDist * 0.95
+      fogUniforms.uFar.value = camDist * 2.3
+      // The low fog lies on the street, or under the floor in view.
+      fogUniforms.uBedY.value = inFloors ? Math.min(0.05, lerp(FLOORS.basement.y, 0.05, Math.min(1, state.focus)) - 0.25) : 0.05
+      fogUniforms.uBedDepth.value = 0.6
     } else {
       fogUniforms.uNear.value = 3.5
       fogUniforms.uFar.value = 9
@@ -523,72 +543,68 @@ export async function createScene(canvas) {
       fogUniforms.uBedDepth.value = 0.4
     }
 
-    // Cloud gathers round what is in view.
-    if (isRoom) {
-      const r = ROOMS[state.room]
-      const f = FLOORS[r.floor]
-      const [x0, z0, x1, z1] = r.rect
-      clouds.gather('room:' + state.room, f.x + (x0 + x1) / 2, f.y, f.z + (z0 + z1) / 2, (x1 - x0) / 2 + 0.2, (z1 - z0) / 2 + 0.2)
-    } else if (s === 'exterior' || s === 'prologue') {
-      clouds.gather('street', 0, 0.05, 2.5, 7.5, 5.5, { size: 0.55, bed: 0.5 })
-    } else {
-      clouds.gather('stage', 0, -0.32, -60, 2.2, 1.1, { size: 0.7, ring: 0.6 })
-    }
-    const cloudK = isRoom ? 0.95 : s === 'exterior' ? 0.55 + 0.35 * state.open : s === 'prologue' ? 0.3 : 0.5
-    clouds.update(t, cloudK * (1 - state.veil * 0.5), 1 - state.night * 0.7)
-    people.update(t, isRoom ? state.room : null, state.still)
+    // Cloud: a low bed along the street; round the stones for the memberships.
+    if (outside || s === 'prologue') clouds.gather('street', 0, -0.2, 2.5, 9, 7, { size: 0.6, ring: 0.7, bed: 0.4 })
+    else clouds.gather('stage', 0, -0.32, -60, 2.2, 1.1, { size: 0.7, ring: 0.6 })
+    clouds.update(t, (outside ? 0.35 : s === 'prologue' ? 0.3 : 0.5) * (1 - state.veil * 0.5), 1 - state.night * 0.7)
+    people.update(dt, t, weights, outside, state.still)
 
     // Camera target for the scene.
     if (s === 'prologue' || s === 'exterior') {
-      shot.pos.copy(STREET.pos)
-      shot.look.copy(STREET.look)
-      // On a phone the house fills the width and sits above the copy.
-      shot.fovX = camera.aspect < 0.8 ? 24 : STREET.fovX
-      shot.shift = camera.aspect < 0.8 ? 0.06 : STREET.shift
-    } else if (isRoom) {
-      roomShot(state.room, state.local, shot)
+      // On a phone the brief takes the lower half; the house sits above it.
+      if (phone) orbit(shot, HERO, 30, 13, 50, 34, 0, 7.5)
+      else orbit(shot, HERO, 34, 15, 24, 30, 2.4)
+    } else if (inFloors) {
+      const i0 = Math.min(3, Math.floor(state.focus))
+      const i1 = Math.min(3, i0 + 1)
+      const u = state.focus - i0
+      const a = FLOORS[ORDER[i0]]
+      const b = FLOORS[ORDER[i1]]
+      fTarget.set(lerp(a.x, b.x, u), lerp(a.y, b.y, u) + 0.15, lerp(a.z, b.z, u) + 0.3)
+      const dist = lerp(FLOOR_DIST[ORDER[i0]], FLOOR_DIST[ORDER[i1]], u)
+      const drift = (state.local - 0.5) * 4
+      if (phone) orbit(shot, fTarget, 28 + drift, 52, dist * 1.75, 36, 0, 1.6)
+      else orbit(shot, fTarget, 30 + drift, 44, dist, 30, 2.6)
     } else if (s === 'members') {
       // A phone shows one membership at a time.
-      const fx = camera.aspect < 0.8 ? tiers[Math.max(0, state.tierFocus)].position.x : 0
-      shot.look.set(fx, camera.aspect < 0.8 ? -0.05 : 0.1, -60)
+      const fx = phone ? tiers[Math.max(0, state.tierFocus)].position.x : 0
+      shot.look.set(fx, phone ? -0.05 : 0.1, -60)
       shot.pos.set(fx, 0.85, -60 + 4.4)
-      shot.fovX = camera.aspect < 0.8 ? 26 : 38
-      shot.shift = 0
+      shot.fovY = fovYFor(phone ? 26 : 38)
     } else {
-      const phone = camera.aspect < 0.8
       shot.look.set(phone ? 0 : 0.25, phone ? -0.05 : 0.15, -60)
       shot.pos.set(phone ? 0 : 0.1, 0.75, -60 + 3.2)
-      shot.fovX = phone ? 30 : 36
-      shot.shift = 0
+      shot.fovY = fovYFor(phone ? 30 : 36)
     }
     // Inside a full veil the camera jumps; otherwise it eases.
-    const k = state.veil > 0.97 || changed || state.still ? 1 : 1 - Math.pow(0.002, dt)
+    const k = state.veil > 0.97 || (changed && state.veil > 0.5) || state.still ? 1 : 1 - Math.pow(0.004, dt)
     cur.pos.lerp(shot.pos, k)
     cur.look.lerp(shot.look, k)
-    cur.fovX = lerp(cur.fovX, shot.fovX, k)
-    cur.shift = lerp(cur.shift, shot.shift, k)
-    lastScene = sceneKey
+    cur.fovY = lerp(cur.fovY, shot.fovY, k)
+    lastScene = s
 
     camera.position.copy(cur.pos)
     // A breath of parallax from the pointer.
     if (!state.still) {
-      camera.position.x += state.mx * 0.06 * (isRoom ? 1 : 0.5)
-      camera.position.y -= state.my * 0.04
+      camera.position.x += state.mx * 0.12
+      camera.position.y -= state.my * 0.08
     }
     camera.lookAt(cur.look)
-    camera.fov = fovYFor(cur.fovX)
-    if (Math.abs(cur.shift) > 1e-4) camera.setViewOffset(width, height, 0, -cur.shift * width, width, height)
-    else camera.clearViewOffset()
+    camera.fov = cur.fovY
+    camera.clearViewOffset()
     camera.updateProjectionMatrix()
 
-    // The falling objects: down on scroll, a slow tumble in time.
+    // The falling objects: just ahead of the camera, down on scroll, a slow tumble.
     if (s === 'prologue') {
+      camera.getWorldDirection(tmp)
+      falling.position.copy(camera.position).addScaledVector(tmp, 6)
+      falling.quaternion.copy(camera.quaternion)
       for (const f of fallers) {
-        const y = f.y0 - state.local * 2.6 + (state.still ? 0 : Math.sin(t * 0.7 + f.phase) * 0.02)
-        f.o.position.set(f.x, y, f.z)
+        const y = f.y0 - 2.1 - state.local * 2.6 + (state.still ? 0 : Math.sin(t * 0.7 + f.phase) * 0.02)
+        f.o.position.set(f.x, y, f.z - 16.2)
         const r = state.still ? 0 : t * 0.15
         f.o.rotation.set(f.spin[0] * (state.local + r), f.spin[1] * (state.local + r * 0.7), f.spin[2] * (state.local + r * 0.5))
-        f.o.visible = y > 0.8 - 0.4
+        f.o.visible = y > -1.7
       }
     }
     // The membership in focus lifts a touch.
