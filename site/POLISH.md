@@ -47,7 +47,7 @@ The user's latest plan (5 Oct 2026), newer than PRODUCT.md where they differ:
 
 ## Polish
 - [x] hero-board01 (user, 5 Oct): the hero rebuilt to look like art-direction board 01/07: square-on street camera at eye level, house centred at ~54% of the frame height, margin fog beyond |x| 5 and behind the house, a fog bed on the road; first frame shows only the four corners; the brief fades in with the first scroll as the house steps right (on a phone, up). Board 06's night uses the same camera.
-- [ ] flicker-aa: check the hero, each floor and the night beat for z-fighting, shimmering edges and flicker; fix (polygon offset, depth, AA).
+- [x] flicker-aa: check the hero, each floor and the night beat for z-fighting, shimmering edges and flicker; fix (polygon offset, depth, AA). Done: near plane scales with camera distance (0.05 → up to 1.0; ~20× depth precision on the street's mm-apart layers); unlit wall ends exposed by the floor cut (black dashes that shimmer) painted with the plaster cap; lights dim outdoors at night so side walls and walkers no longer glow white. MSAA was already on.
 - [ ] phone-layout: every beat on a 390×844 phone: copy never covers the house's key part, tap targets ≥ 44 px, no horizontal scroll, safe areas.
 - [ ] scroll-feel: scroll pacing per beat; veils neither too long nor abrupt; the captions appear in time; keyboard and trackpad both feel right.
 - [ ] a11y: semantic headings in order, focus states, the booking sheet traps focus and closes on Esc, alt text / aria for the canvas, contrast of copy on every fog colour (WCAG AA).
@@ -67,5 +67,6 @@ The user's latest plan (5 Oct 2026), newer than PRODUCT.md where they differ:
 - [ ] end-to-end: walk the whole path on desktop and phone, from first frame to the thank-you state; fix anything that breaks the flow. Then output the promise.
 
 ## Needs your input
+- [?] bake: the first-floor court tree's inner canopy is unlit (black) when the floor cut opens it; the bake could light or fill those faces (site leaves it as baked).
 - [?] still image: `public/still/house-dawn.*` is the site's own hero, captured headless (software GL, soft). Re-capture on a real GPU (`?debug`, hide the corners) or have the bake render one; same frame serves the OG image.
 - [?] bake: the two trees beside the gate are low-poly blobs; board 01 has two sparse gulmohars (thin trunks, open canopy, a few orange blossoms). That lives in the bake (`site-day.gltf`), so the bake loop needs to change it. Also the left tree sits further out than the right, so the margin fog swallows it at night.

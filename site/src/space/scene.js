@@ -114,6 +114,13 @@ function bakedMaterial(map) {
     pars: 'uniform float uNight; uniform vec3 uCap;',
     map: `
       if (!gl_FrontFacing) diffuseColor.rgb = pow(uCap, vec3(2.2)) * 0.82;
+      #if NUM_CLIPPING_PLANES > 0
+        // Just under the cut, upright faces the bake never lit (wall ends
+        // between rooms) show black texels that shimmer: give them the cap too.
+        float underCut = clippingPlanes[0].w - dot(vClipPosition, clippingPlanes[0].xyz);
+        float upness = abs(normalize(cross(dFdx(vWorldP), dFdy(vWorldP))).y);
+        if (underCut < 0.14 && upness < 0.2 && dot(diffuseColor.rgb, vec3(0.333)) < 0.05) diffuseColor.rgb = pow(uCap, vec3(2.2)) * 0.82;
+      #endif
       vec3 nightCol = diffuseColor.rgb * vec3(0.16, 0.19, 0.3);
       diffuseColor.rgb = mix(diffuseColor.rgb, nightCol, uNight);
     `,
@@ -695,6 +702,12 @@ export async function createScene(canvas) {
       fogUniforms.uBedY.value = 0.0
       fogUniforms.uBedDepth.value = 0.4
     }
+    // Night outside: the lit plaster (neighbours, walls, walkers) goes dark
+    // with the house; the memberships keep their light.
+    const dusk = outside ? state.night : 0
+    hemi.intensity = lerp(0.6, 0.1, dusk)
+    key.intensity = lerp(2.2, 0.2, dusk)
+    scene.environmentIntensity = lerp(1, 0.15, dusk)
 
     // Cloud: a low bed along the street; round the stones for the memberships.
     if (outside) clouds.gather('street', 0, -0.2, 2.5, 9, 7, { size: 0.6, ring: 0.7, bed: 0.4 })
@@ -744,6 +757,9 @@ export async function createScene(canvas) {
     }
     camera.lookAt(cur.look)
     camera.fov = cur.fovY
+    // Near plane with the distance: depth precision for the street's thin
+    // layers (road, yards, paving millimetres apart) without z-fighting.
+    camera.near = Math.min(1, Math.max(0.05, cur.pos.distanceTo(cur.look) * 0.04))
     camera.clearViewOffset()
     camera.updateProjectionMatrix()
 

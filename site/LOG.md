@@ -6,3 +6,4 @@
 - 2026-10-05 20:03 adaptive-quality: verified on SwiftShader only (weak tier, step-down, still); real-phone fps not measured.
 - 2026-10-05 20:08 loading-state: bytes counted via a fetch wrapper (Cloudflare gzip may omit content-length: then the bar tracks received only). Still image is a soft headless capture ([?]).
 - 2026-10-05 20:13 cache: _headers + hashed model files; caught and fixed compress-geometry breaking the memberships props in the build (quantize vs node reset).
+- 2026-10-05 20:21 flicker-aa: checked hero, ground/first floors, night, memberships at 1x; flicker judged from stills (headless 1 fps), not motion. Court tree black canopy left to the bake ([?]).
