@@ -1,0 +1,177 @@
+/Users/rejoesudarsan/Dev/networker-space/blender/build_house.py:716: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True  # deprecated / implicit in 5.x
+15:28:47 | INFO: Data are loaded, start creating Blender stuff
+15:28:47 | INFO: Blender create Mesh node 0
+15:28:47 | INFO: Blender create Mesh node 1
+15:28:47 | INFO: Blender create Mesh node 2
+15:28:47 | INFO: Blender create Mesh node 3
+15:28:47 | INFO: Blender create Mesh node 4
+15:28:47 | INFO: glTF import finished in 0.00s
+[build_house] imported basement: {'columns': 1, 'details': 1, 'sills': 1, 'walls': 1}
+15:28:47 | INFO: Data are loaded, start creating Blender stuff
+15:28:47 | INFO: Blender create Mesh node 0
+15:28:47 | INFO: Blender create Mesh node 1
+15:28:47 | INFO: Blender create Mesh node 2
+15:28:47 | INFO: Blender create Mesh node 3
+15:28:47 | INFO: Blender create Mesh node 4
+15:28:47 | INFO: glTF import finished in 0.00s
+[build_house] imported ground: {'columns': 1, 'details': 1, 'sills': 1, 'walls': 1}
+15:28:47 | INFO: Data are loaded, start creating Blender stuff
+15:28:47 | INFO: Blender create Mesh node 0
+15:28:47 | INFO: Blender create Mesh node 1
+15:28:47 | INFO: Blender create Mesh node 2
+15:28:47 | INFO: Blender create Mesh node 3
+15:28:47 | INFO: Blender create Mesh node 4
+15:28:47 | INFO: glTF import finished in 0.00s
+[build_house] imported first: {'columns': 1, 'details': 1, 'sills': 1, 'walls': 1}
+15:28:47 | INFO: Data are loaded, start creating Blender stuff
+15:28:47 | INFO: Blender create Mesh node 0
+15:28:47 | INFO: Blender create Mesh node 1
+15:28:47 | INFO: Blender create Mesh node 2
+15:28:47 | INFO: Blender create Mesh node 3
+15:28:47 | INFO: Blender create Mesh node 4
+15:28:47 | INFO: glTF import finished in 0.00s
+/Users/rejoesudarsan/Dev/networker-space/blender/build_house.py:1811: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  world.use_nodes = True
+[build_house] imported second: {'columns': 1, 'details': 1, 'sills': 1, 'walls': 1}
+[build_house] basement: 5 windows framed (0 boxes), 2 door heads, 1 gap heads, 14 slivers filled
+[build_house] ground: 21 windows framed (3 boxes), 15 door heads, 6 gap heads, 8 slivers filled
+[build_house] first: 14 windows framed (3 boxes), 10 door heads, 2 gap heads, 13 slivers filled
+[build_house] second: 10 windows framed (1 boxes), 5 door heads, 4 gap heads, 2 slivers filled
+[build_house] detail grey_cladding_strip built
+[build_house] window_boxes: first 2 street windows boxed
+[build_house] window_boxes: second 1 street windows boxed
+[build_house] detail window_boxes built
+[build_house] detail terrace_railing built
+[build_house] detail gulmohar_trees built
+[build_house] detail ramp_railing built
+[build_house] WARNING: front wall check: ground.streetGate is missing
+[build_house] WARNING: front wall check: ground.frontWall is missing
+[build_house] WARNING: front wall check: ground.copings is missing
+[build_house] detail front_compound_wall_and_fern_planter built
+[build_house] detail office_outside_stair built
+[build_house] detail neighbour_massing built
+[build_house] detail entrance_court_floor_and_bench built
+[build_house] detail outside_stair_to_first built
+[build_house] detail first_floor_porch built
+[build_house] detail front_lawn_and_steps built
+[build_house] detail side_garden_passage built
+[build_house] living1: grille on 1 south window(s)
+[build_house] detail living1_teak_floor built
+[build_house] detail dining1_display_unit built
+[build_house] detail kitchen1_galley built
+[build_house] detail caretaker_red_oxide built
+[build_house] detail stair_to_basement built
+[build_house] detail court1_big_tree built
+[build_house] detail garage_fitout built
+[build_house] detail office_den built
+[build_house] detail court2_flagstones_olive built
+[build_house] nest pendants: cords to 2.75 units above the first floor
+[build_house] detail court2_nest_pendants built
+[build_house] detail court2_skylight built
+[build_house] detail court2_louvred_doors built
+[build_house] detail steel_stair_to_second built
+[build_house] detail family2_sliding_teak_door built
+[build_house] detail kitchen2 built
+[build_house] detail terrace_terracotta built
+[build_house] detail bedroom5_bathtub built
+[build_house] detail passage_over_void built
+[build_house] cafe: 18 objects; walls living e 2.414 w 0.607 n 1.390, family n -2.225 e 0.518
+[build_house] detail cafe built
+[build_house] event_space: 10 objects; walls w 0.816 e 2.622 s 4.070
+[build_house] detail event_space built
+[build_house] court_library: 12 objects; court dado 2.487, alcove n -1.825 w 0.076 e 0.726, kitchen s -1.299
+[build_house] detail court_library built
+[build_house] WARNING: wall(): no west wall from (-1.60, 0.60) on second
+[build_house] terrace_evening: 11 objects; terrace x -2.100..-1.000
+[build_house] detail terrace_evening built
+[build_house] detail detail_cameras built
+[build_house] entourage: 22 placed from /Users/rejoesudarsan/Dev/networker-space/blender/entourage.blend
+[build_house] detail entourage built
+[build_house] ramp_railing: cut basement pit -4.64..6.66 x -12.26..5.49 m from the street
+[build_house] detail ramp_railing finished
+[build_house] first_floor_porch: opened the court over the entrance court in first.slab
+[build_house] detail first_floor_porch finished
+[build_house] detail front_lawn_and_steps finished
+[build_house] WARNING: cut_box: no mesh ground.frontWall
+[build_house] WARNING: cut_box: no mesh ground.copings
+[build_house] side_garden_passage: passage opened in the ground slab (True), gate brought to street level
+[build_house] detail side_garden_passage finished
+[build_house] skylight: roof slab opened (True), 6 panes
+[build_house] detail court2_skylight finished
+[build_house] steel_stair_to_second: stairwell opened in second.slab (True)
+[build_house] detail steel_stair_to_second finished
+[build_house] detail terrace_terracotta finished
+[build_house] detail cameras: 4 views, haze hidden indoors (0 objects)
+[build_house] detail detail_cameras finished
+[build_house] WARNING: tree model not found; trees skipped (run fetch_assets.py)
+[build_house] bevel on 39 objects
+[build_house] world: HDRI bryanston_park_sunrise_2k.hdr
+[build_house] Cycles device: GPU
+[build_house] compositor fog: mist 12..122 m, amount 0.70
+Info: Saved as "space-house.blend"
+[build_house] saved /Users/rejoesudarsan/Dev/networker-space/blender/space-house.blend
+[build_house] ---- summary ----
+[build_house] collection Basement      94 objects
+[build_house] collection Detail         4 objects
+[build_house] collection Entourage     22 objects
+[build_house] collection First        100 objects
+[build_house] collection Ground       191 objects
+[build_house] collection House        479 objects
+[build_house] collection Neighbours    33 objects
+[build_house] collection Roof           8 objects
+[build_house] collection Second        86 objects
+[build_house] collection Site          69 objects
+[build_house] collection Trees         18 objects
+[build_house] collection Trees.001      5 objects
+[build_house] collection Car.SUV.White   1 objects
+[build_house] collection Car.SUV.Silver   1 objects
+[build_house] collection Car.Hatch.White   1 objects
+[build_house] collection Car.Hatch.Red   1 objects
+[build_house] collection Bike.Scooter.White   1 objects
+[build_house] collection Bike.Vespa.Mint   1 objects
+[build_house] collection Bike.Motorbike.Red   1 objects
+[build_house] collection Bike.Auto.Driven   2 objects
+[build_house] collection Bike.Scooter.Blue.Ridden   2 objects
+[build_house] collection Car.Hatch.Silver   1 objects
+[build_house] collection Bike.Motorbike.Black.Ridden   2 objects
+[build_house] collection Bike.Scooter.Grey.Ridden   2 objects
+[build_house] collection Person.WomanBags.Kurta   1 objects
+[build_house] collection Person.ManWalk.Kurta   1 objects
+[build_house] collection Person.ManPhone   1 objects
+[build_house] collection Person.WomanWalk.Kurta   1 objects
+[build_house] collection Person.ManSit   1 objects
+[build_house] collection Person.WomanIdle.Churidar   1 objects
+[build_house] collection Person.WomanWalk.Green   1 objects
+[build_house] collection Person.ManIdle.Shirt   1 objects
+[build_house] collection Person.WomanSit   1 objects
+[build_house] collection Person.ManIdle.Tee   1 objects
+[build_house] house bbox (m): x -7.62..7.62  y -12.20..12.19  z 0.00..13.17
+[build_house] street camera at (0.00, -61.75, 1.70), 61.7 m from house centre, shift_y 0.137
+[build_house] fog mode: compositor; view transform: Khronos PBR Neutral
+[build_house] provisional elements (20):
+[build_house]   - Ground-floor plot boundary wall cut to a 0.20 m kerb -- walls west of ground-local x -2.95 (the side-passage boundary)
+[build_house]   - Slab overhang trimmed to ~30 cm, first floor (7 cuts) -- front edge x -1.67..-0.86 z 3.97..4.18 (-0.46 m); front edge x 2.62..2.70 z 3.97..4.18 (-0.46 m); east edge x 2.83..2.94 z 1.69..3.84 (-0.20 m); east edge x 2.73..2.94 z 0.19..1.68 (-0.46 m); east edge x 2.83..2.94 z -0.79..0.18 (-0.20 m); east edge x 2.83..2.94 z -1.31..-1.20 (-0.20 m); east edge x 2.83..2.94 z -2.90..-1.70 (-0.20 m)
+[build_house]   - Slab overhang trimmed to ~30 cm, second floor (6 cuts) -- front edge x -0.64..-0.09 z 3.34..3.55 (-0.46 m); front edge x 1.21..2.07 z 3.34..3.55 (-0.46 m); east edge x 2.21..2.31 z 1.06..3.22 (-0.20 m); east edge x 2.10..2.31 z -0.44..1.05 (-0.46 m); east edge x 2.21..2.31 z -1.94..-1.51 (-0.20 m); east edge x 2.21..2.31 z -3.52..-2.43 (-0.20 m)
+[build_house]   - Window box + sunshade, ground floor -- street window x -0.78..-0.23 (ground frame), outer face Three z 3.00 (ground frame)
+[build_house]   - Window box + sunshade, ground floor -- street window x -0.12..0.16 (ground frame), outer face Three z 3.11 (ground frame)
+[build_house]   - Window box + sunshade, ground floor -- street window x 1.31..2.42 (ground frame), outer face Three z 3.31 (ground frame)
+[build_house]   - Window box + sunshade, first floor -- street window x -1.06..-0.22 (ground frame), outer face Three z 3.00 (ground frame)
+[build_house]   - Window box + sunshade, first floor -- street window x -0.11..0.19 (ground frame), outer face Three z 3.23 (ground frame)
+[build_house]   - Window box + sunshade, first floor -- street window x 1.31..2.46 (ground frame), outer face Three z 3.31 (ground frame)
+[build_house]   - Window box + sunshade, second floor -- street window x -0.50..-0.22 (ground frame), outer face Three z 2.63 (ground frame)
+[build_house]   - Grey cladding box around second-floor street window -- window x 0.63..1.63 (ground frame), from the front face (Three z 3.31) back to the window
+[build_house]   - Grey cladding strip, first floor -- street face Three z 3.31 (ground frame), x 0.25..1.25, floor-local height -0.15..1.45 units
+[build_house]   - Grey cladding strip, second floor -- street face Three z 3.31 (ground frame), x 0.25..0.50, floor-local height -0.15..1.75 units
+[build_house]   - Street pedestrian gate (charcoal steel, horizontal slats, 1.40 m high) -- compound wall line Three z 5.85, x -3.10..-2.35 (ground frame)
+[build_house]   - Street vehicle gate (charcoal steel, horizontal slats, 1.40 m high) -- compound wall line Three z 5.85, x -1.85..-0.20 (ground frame)
+[build_house]   - Street office gate (charcoal steel, horizontal slats, 1.40 m high) -- compound wall line Three z 5.85, x 1.25..3.05 (ground frame)
+[build_house]   - Street compound wall, 1.50 m high, plastered, with coping and piers -- Three z 5.85 (ground frame; in front of the gate steps), x -3.30..3.25, side returns z 5.00..5.85
+[build_house]   - Concrete pergola over the pedestrian gate (p05) -- x -3.32..-2.12, Three z 5.00..5.95 (ground frame), top 2.65 m
+[build_house]   - Terrace railing (charcoal steel, 3 horizontal bars, 0.90 m) -- on the second-floor terrace parapet: west edge x -2.29, south/north edges x -2.29..-0.95 (second-floor local)
+[build_house]   - Copings on all parapets and the compound wall -- 50 mm thick, 30 mm overhang
+[build_house] blend:  /Users/rejoesudarsan/Dev/networker-space/blender/space-house.blend
+[build_house] renders: skipped (--no-render)
+Blender 5.2.1 LTS (hash 9e2066aef7ef built 2026-08-25 01:35:57)
+
+Blender quit

@@ -2,85 +2,118 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Space · A house in HSR Layout that becomes what the hour needs</title>
-    <meta name="description" content="A members’ house in HSR Layout, Bengaluru. Café by day, club by night, and whatever its people make of it in between." />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Space · A house for startup people in HSR Layout, Bengaluru</title>
+    <meta name="description" content="Space is a private club for startup people in HSR Layout, Bengaluru. A café by day, a club by night: a house for work, shared interests and time together." />
     <link rel="icon" href="/favicon.svg" />
   </head>
-  <body class="world">
+  <body>
     <canvas class="stage" aria-hidden="true"></canvas>
-    <div class="grain" aria-hidden="true"></div>
 
-    <header class="bar">
-      <a class="mark" href="/" aria-label="Space, home">
-        <span class="mark-name">Space</span>
-        <span class="mark-place">HSR Layout, Bengaluru</span>
-      </a>
-      <nav class="links" aria-label="Main">
-        <a class="call" data-book href="#book">Book a call</a>
-      </nav>
-    </header>
+    <!-- The four corners: everything else lives in the world. -->
+    <a class="corner tl wordmark" href="/" aria-label="Space, home">SPACE</a>
+    <a class="corner tr link" href="#book" data-book>Book a call</a>
+    <span class="corner bl hint" aria-hidden="true">Scroll</span>
+    <span class="corner br clock" aria-label="Time in the house">06:00 IST</span>
 
-    <main class="story" aria-live="polite">
-      <section class="chapter" data-from="0" data-to="0.09">
-        <h1>A house that becomes what the hour needs.</h1>
-        <p>A members’ house in HSR Layout, Bengaluru. Four floors, and a day that keeps changing what each room is for.</p>
-        <p class="hint">Scroll to spend a day inside</p>
+    <main class="copy" aria-live="polite">
+      <h1 class="sr-only">Space, a private club for startup people in HSR Layout, Bengaluru</h1>
+      <p class="beat center-low" data-beat="falling">Make room for what comes next.</p>
+      <p class="beat lead" data-beat="opening">A house for startup people.<span>Four levels. Room to belong.</span></p>
+      <div class="beat night-copy" data-beat="night">
+        <p class="kicker">A café by day. A club by night.</p>
+        <p>Evenings · 18:00–23:00</p>
+        <p>A programme for startup people.</p>
+        <p>Access depends on membership.</p>
+      </div>
+
+      <section class="caption" aria-label="This floor">
+        <span class="leader" aria-hidden="true"></span>
+        <p class="label"></p>
+        <p class="title"></p>
+        <p class="line"></p>
+        <button class="explore link" type="button">Explore →</button>
       </section>
-      <section class="chapter" data-from="0.12" data-to="0.3">
-        <h2>Morning. The doors are open.</h2>
-        <p>From eight, the ground floor runs as a walk-in café. Upstairs, laptops come out in the courtyard under the olive tree.</p>
+
+      <div class="beat markers" data-beat="opening" aria-hidden="true">
+        <span class="marker"><b>01</b><i></i></span>
+        <span class="marker"><b>02</b><i></i></span>
+        <span class="marker"><b>03</b><i></i></span>
+      </div>
+
+      <section class="beat members" data-beat="members" aria-label="Memberships">
+        <p class="kicker members-label">Memberships</p>
+        <div class="tier-nav" role="group" aria-label="Choose a membership"></div>
+        <div class="tiers"></div>
+        <p class="tier-help">Requirements to be confirmed on a call.</p>
       </section>
-      <section class="chapter" data-from="0.3" data-to="0.46">
-        <h2>Midday. The house goes to work.</h2>
-        <p>Down in the gallery and the office, teams take over the lower floor. It has its own entrance, so they come and go as they need.</p>
-      </section>
-      <section class="chapter" data-from="0.46" data-to="0.62">
-        <h2>Afternoon. The rooms shift.</h2>
-        <p>The courtyard that held a quiet table at nine holds a pitch, a rehearsal or a clay table by four. Change who’s inside and watch it follow.</p>
-      </section>
-      <section class="chapter" data-from="0.62" data-to="0.77">
-        <h2>Evening. It turns into a club.</h2>
-        <p>From six, the house runs a programme. The terrace takes the sunset, the courtyard takes the music, and the gate gets busy.</p>
-      </section>
-      <section class="chapter" data-from="0.77" data-to="0.9">
-        <h2>Night. Long tables, loud rooms.</h2>
-        <p>Dinner downstairs, a dance floor in the hall, a jam in the courtyard. Whatever the people that night bring.</p>
-      </section>
-      <section class="chapter end" data-from="0.92" data-to="1.01">
-        <h2>Space. It becomes what you bring to it.</h2>
-        <p>Three memberships, from walk-in to bringing your team. Every one starts with a call.</p>
-        <div class="actions">
-          <a class="btn solid" data-book href="#book">Book a call</a>
-        </div>
+
+      <section class="beat call-copy" data-beat="call" aria-label="Book a call">
+        <h2>There’s room for you.</h2>
+        <p>Tell us what you’re building.</p>
+        <a class="link" href="#book" data-book>Book a call →</a>
       </section>
     </main>
 
-    <div class="who" role="group" aria-label="Who’s inside">
-      <span class="who-label">Who’s inside</span>
-      <div class="who-options"></div>
+    <dialog class="sheet" aria-label="">
+      <button class="sheet-close link" type="button">Close ×</button>
+      <div class="sheet-body"></div>
+    </dialog>
+
+    <div class="loading" aria-live="polite">
+      <p>Preparing the house</p>
+      <button class="still link" type="button">Continue without motion →</button>
+    </div>
+    <div class="failure" role="alert">
+      <p>The house is taking longer to arrive.</p>
+      <p class="failure-actions"><button class="retry link" type="button">Try again</button> <button class="still link" type="button">Continue without motion →</button></p>
     </div>
 
-    <aside class="clock" aria-label="Time in the house">
-      <span class="clock-time">06:00</span>
-      <span class="clock-part">Dawn</span>
-      <span class="clock-now">Bengaluru now <b class="now">--:--</b></span>
-    </aside>
+    <!-- Without motion: the same story as a reader, for no WebGL, a failed load or by choice. -->
+    <article class="reader" aria-label="Space, without motion">
+      <section>
+        <p class="kicker">HSR Layout, Bengaluru</p>
+        <h2>A house for startup people.</h2>
+        <p>Space is a private club for startup people in HSR Layout, Bengaluru. A house for work, shared interests and time together. Four levels. Room to belong.</p>
+      </section>
+      <section>
+        <p class="kicker">Lower level</p>
+        <h2>Work, with room to think.</h2>
+        <p>A quieter part of the house for focused work and small conversations. Work rooms sit beside courts that bring light below street level.</p>
+      </section>
+      <section>
+        <p class="kicker">Ground floor · Walk-in café · 08:00–18:00</p>
+        <h2>Coffee. A table. An unhurried start.</h2>
+        <p>Coffee, a table and the possibility of a good conversation. Stay close to the garden, meet someone new or take a little time for yourself.</p>
+      </section>
+      <section>
+        <p class="kicker">First floor · Courtyard · Event room · Library</p>
+        <h2>Read. Talk. Let an idea take its time.</h2>
+        <p>Read in the library. Find a quiet corner. Let a conversation unfold beside the courtyard.</p>
+      </section>
+      <section>
+        <p class="kicker">Second floor</p>
+        <h2>The day opens into evening.</h2>
+        <p>Terracotta underfoot, a long bench and the evening air. The club's evening rhythm runs from 18:00 to 23:00; access depends on membership.</p>
+      </section>
+      <section>
+        <p class="kicker">Memberships</p>
+        <h2>Three ways to belong.</h2>
+        <ul class="reader-tiers">
+          <li><b>Visit</b> Walk-in access · Table booking · Needs —</li>
+          <li><b>Regular</b> Quiet spaces · Game rooms · Needs —</li>
+          <li><b>House</b> Broader access · Team + guests · Needs —</li>
+        </ul>
+        <p>Requirements to be confirmed on a call.</p>
+      </section>
+      <section>
+        <h2 class="serif">There’s room for you.</h2>
+        <p>Tell us what you’re building.</p>
+        <a class="link" href="#book" data-book>Book a call →</a>
+      </section>
+    </article>
 
-    <nav class="rail" aria-label="Jump to a time of day">
-      <span class="rail-fill"></span>
-      <button data-to="0" aria-label="Dawn, the house">06</button>
-      <button data-to="0.22" aria-label="Morning">09</button>
-      <button data-to="0.38" aria-label="Midday">13</button>
-      <button data-to="0.54" aria-label="Afternoon">16</button>
-      <button data-to="0.7" aria-label="Evening">19</button>
-      <button data-to="0.84" aria-label="Night">21</button>
-      <button data-to="1" aria-label="Back to the house">23</button>
-    </nav>
-
-    <div class="veil"><span>Space</span></div>
-
-    <noscript><p class="fallback-note">This page draws the house in 3D and needs JavaScript. Book a call to visit.</p></noscript>
-    <script type="module" src="/src/world/main.js"></script>
+    <noscript><style>.reader { display: block !important } .loading { display: none }</style></noscript>
+    <script type="module" src="/src/space/main.js"></script>
   </body>
 </html>

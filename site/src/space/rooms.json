@@ -1,0 +1,8 @@
+{
+  "_": "The homepage's room dioramas, shared by the site (beats.js) and the bake (blender/tools/bake_site.py --rooms). rect = [x0, z0, x1, z1] in the floor's plan units (1 = 8 ft); every diorama is cut to it and to `top` (wall height kept, units), baked on its own with the same open-top light, and framed by the site with az/el (degrees). Keep them close in size so every space reads the same.",
+  "lower": { "floor": "basement", "rect": [-0.62, -0.52, 2.05, 1.84], "top": 1.1, "az": 16, "el": 46 },
+  "cafe": { "floor": "ground", "rect": [0.56, 1.3, 2.46, 3.16], "top": 1.1, "az": 14, "el": 42 },
+  "court": { "floor": "first", "rect": [0.76, 0.12, 2.66, 2.3], "top": 1.1, "az": -18, "el": 46 },
+  "event": { "floor": "first", "rect": [0.76, 1.68, 2.7, 4.0], "top": 1.1, "az": 20, "el": 46 },
+  "terrace": { "floor": "second", "rect": [-2.3, -3.52, 0.95, -1.44], "top": 1.1, "az": -40, "el": 44 }
+}

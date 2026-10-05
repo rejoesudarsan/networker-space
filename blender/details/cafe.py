@@ -45,7 +45,7 @@ def build(ctx):
     F.faces_wall(k, living_w, 2.3, E, 1.9, 1.15, y0=0.95)
     F.spotlight_cone(k, 2.0, living_n, S, top_y=2.35, width=0.95, floor_depth=0.75)
     F.chair(k, 2.0, 1.52, S)
-    F.plant(k, 2.27, 3.13, h=1.2, seed=3)
+    F.plant(k, 2.25, 3.0, h=1.2, seed=3)
     F.plant(k, 0.72, 1.45, h=0.9, pot_r=0.16, seed=4)
 
     # ---- Family 1: the coffee bar and the communal table

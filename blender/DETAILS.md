@@ -101,12 +101,18 @@ comps in `reference/astra-design/`, used as references only. Shared pieces are i
 `details/_furniture.py`, and `F.wall()` snaps to real wall faces by raycast. Check each
 room with `tools/room_shot.py` (open-topped, EEVEE, ~10 s).
 - [x] cafe: Living 1 front room (banquette, two-tops, tables for four, guestbook faces wall, gulmohar light cone with the empty chair) and Family 1 bar (slatted counter, espresso machine, open shelves, communal table, AM/PM sandstone panel).
-- [ ] event-space: first-floor Living 2: low teak stage, tiered teak seating with cushions, projection screen, the court as foyer.
-- [ ] game-room-first: first-floor Bedroom 3: carrom, a board-game table, chalkboard game wall.
-- [ ] quiet-rooms-second: second-floor Bedroom 3 and Bedroom 4: desks, velvet armchairs, bookshelves.
-- [ ] basement-work-games: basement office: quiet work desks plus a games corner.
-- [ ] court-library: first-floor court and library: armchairs, bookshelves, reading lamps.
-- [ ] terrace-evening: second-floor terrace: low tables, cushions and string lights, for evenings.
+- [x] event-space: first-floor Living 2: low teak stage, tiered teak seating with cushions, projection screen, the court as foyer.
+  - note: room x 0.813..2.625, z 1.76..4.07 by raycast; stage on the west wall, three-tier bleachers on the east wall, poufs between; z 1.76..2.38 kept clear for circulation.
+- [x] game-room-first: first-floor Bedroom 3: carrom, a board-game table, chalkboard game wall.
+  - note: main floor x -1.59..-0.02, z 2.23..3.76 plus west alcove (sofa) and east vestibule (games shelf); north-east kept clear to the toilet.
+- [x] quiet-rooms-second: second-floor Bedroom 3 and Bedroom 4: desks, velvet armchairs, bookshelves.
+  - note: the Dress became a phone booth (felt panel, call desk) with a clear strip to the Bedroom 5 bath door; delete the three phone-booth lines to leave it empty.
+- [x] basement-work-games: basement office: quiet work desks plus a games corner.
+  - note: office gets a shared table for six, three focus desks, armchair pair, game table in the curved corner; the studio/gallery became the games and meeting room (table for seven, screen, GAMES cupboard). No table tennis: 3.4 m deep.
+- [x] court-library: first-floor court and library: armchairs, bookshelves, reading lamps.
+  - note: library = the alcove x 0.073..0.729, z -1.827..-1.30 plus the west end of Dining 2 (reading). Must run after court2_louvred_doors (raycasts its dado).
+- [x] terrace-evening: second-floor terrace: low tables, cushions and string lights, for evenings.
+  - note: lounge group, two bistros, banquette on the house wall, planters, festoon of Lamp Glow bulbs on posts (lights the night bake).
 
 ## Cameras and renders
 - [x] detail-cameras: add cameras `Camera.Court2`, `Camera.Court1`, `Camera.Entrance`, `Camera.Terrace` framed like p1, p20, p24, p30, so each detail can be checked from a photo-matched view; render them in `--quick` mode.
@@ -115,6 +121,17 @@ room with `tools/room_shot.py` (open-topped, EEVEE, ~10 s).
 ## Entourage (ENTOURAGE.md)
 - [x] entourage: people, cars and two-wheelers linked from `blender/entourage.blend` (open-source assets, built by tools/build_entourage.py): people at the gate, in the entrance court, the Double HT Court and on the terrace; parked and passing cars, scooters, a motorbike and an auto on the street; the garage car swapped for the library's white SUV.
   - note: off with `-- --no-entourage`; garage_fitout keeps its massing car as the fallback. Check placements with tools/preview_entourage.py. The entrance-court bench man is outside Camera.Entrance's frame (the bench sits to the camera's right).
+
+## Environment and light (Astra)
+Environment and lighting detail so the light bakes match the Astra comps
+(`reference/astra-design/home-03-dawn`, `-05-parted`, `-07-basement`, `-10-cafe`,
+`-13-courtyard`, `-16-terrace`, `-19-night`). Check the street with
+`tools/street_shot.py` (Camera.Street or `--focus <object prefix>`, EEVEE or Cycles).
+- [x] gulmohar-refine: the four street gulmohars rebuilt as airy trees: slim trunk forking at ~40% into 4-5 limbs, five branch orders, a crown of feathery bipinnate fronds with sky gaps, small orange-red blossom clusters on the outer/upper shell.
+  - note: 22-31k faces per tree; each frond / blossom cluster is one connected strip so it is one lightmap island (~8k islands for the four trees in the site atlas). Replaces gulmohar_trees' blob crowns (same names Site.Gulmohar.<i>.*).
+
+- [x] room-lights: warm fixtures with real lights so the bake shows lamp pools: brass sconces with glowing cups in the café (4) and court (3) and one on the terrace house wall, up/down wall washers in the event room (4) and basement office (3), a point light in each of the 24 terrace festoon bulbs.
+  - note: shades are 'Lamp Glow' (exported as glow fixtures); lights are Lamp.<room>.<n> (point/spot, 2700 K, 35 W sconces, 30 W per washer spot, 8 W bulbs), parented to the floor empty, custom property club_lamp = 1. bake_site's day set now scales club_lamp lights to 25%, night keeps them full; room_shot.py --set day|night mirrors the bake's light sets.
 
 ## Needs your input
 - [x] garden-steps-p36: answered by p9 and the plan: they are the side passage's flights; built in side-garden-passage.

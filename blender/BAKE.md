@@ -22,7 +22,15 @@ Rules:
 - Commit the outputs and push to `site-realism`, so the Mac thread can pull them.
 - A part needs a re-bake whenever a fit-out module that builds on its floor changes after its atlas was baked. The **Re-bake** section lists these. Add a line there when `git log` shows such a change.
 
-## Day set
+## Room dioramas (the homepage's room scenes; `--rooms`, from site/src/space/rooms.json)
+Every space is baked alone, cut to the same kind of box, with identical light, so they read as one set (user request, 5 Oct 2026). Production: `--rooms <id> --res 2048 --samples 256`.
+- [ ] room-lower-day
+- [ ] room-cafe-day
+- [ ] room-court-day
+- [ ] room-event-day
+- [ ] room-terrace-day
+
+## Day set (whole floors: the street views)
 - [ ] basement-day
 - [ ] ground-day
 - [ ] first-day
