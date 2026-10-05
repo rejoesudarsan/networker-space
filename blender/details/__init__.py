@@ -10,6 +10,9 @@ three_rect_to_blender, new_material, link_only, info, warn), constants
 (UNIT_M, SLAB_T, STOREY, WALL_H, FLOORS, PARAPET_H, PARAPET_T, TERRACE_X1).
 
 A returned view is (name, camera_object, output_path, hide_objects).
+
+A module may also define finish(ctx). It runs at the end of the build, after
+the roof, the street disc and the lights exist, for edits to those.
 Add the module name to MODULES in the order items appear in DETAILS.md.
 """
 import importlib
@@ -20,6 +23,7 @@ MODULES = [
     "window_boxes",
     "terrace_railing",
     "gulmohar_trees",
+    "ramp_railing",
 ]
 
 
@@ -36,3 +40,14 @@ def build_all(ctx):
         except Exception:
             ctx["helpers"]["warn"]("detail %s FAILED:\n%s" % (name, traceback.format_exc()))
     return views
+
+
+def finish_all(ctx):
+    for name in MODULES:
+        try:
+            mod = importlib.import_module("details." + name)
+            if hasattr(mod, "finish"):
+                mod.finish(ctx)
+                ctx["helpers"]["info"]("detail %s finished" % name)
+        except Exception:
+            ctx["helpers"]["warn"]("detail %s finish FAILED:\n%s" % (name, traceback.format_exc()))

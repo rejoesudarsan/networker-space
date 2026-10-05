@@ -26,7 +26,8 @@ Rules for every item:
 - [x] terrace-railing: three-bar steel rail 0.35 above the second-floor terrace parapet; west edge x -2.29, north and south edges x -2.29..-0.95.
 - [x] gulmohar-trees: four trees at ground units (-4.6, z 6.3) h 3.6 flowering, (5.8, z 6.3) h 3.3 flowering, (-9.5, z 9.4), (9.8, z 9.4) not flowering. Trunk + 3 to 5 canopy blobs, red-orange blossom material on the flowering ones.
   - note: low-poly umbrella crowns (crown 1.45x the site tree, flatter), 3x the site's flower count at half size; shared builder in details/_trees.py for later trees.
-- [ ] ramp-railing: charcoal steel railing along the side drive ramp down to the basement garage (p03, p02); follow the ramp opening in the ground slab.
+- [x] ramp-railing: charcoal steel railing along the side drive ramp down to the basement garage (p03, p02); follow the ramp opening in the ground slab.
+  - note: also built the ramp slope itself (none existed) and cut the basement footprint out of the street disc via a new finish(ctx) hook; the disc used to run through the basement at street level. Rails follow site details.js: 3 bars, 0.36 high.
 - [ ] front-compound-wall-and-fern-planter: check `frontWall`/`streetGate` exist; add the fern planter beside gate no. 1172 (p05) and the house number plate.
 - [ ] office-outside-stair: outside stair from the open-to-sky court up to the basement office entrance with a steel rail (plan basement, p03).
 - [ ] neighbour-massing: plain neighbour blocks and compound walls on both sides and across the street, positions from `site/src/world/world.js` `neighbours`.

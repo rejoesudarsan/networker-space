@@ -54,6 +54,8 @@ import importlib
 before = set(bpy.data.objects)
 mod = importlib.import_module("details." + module)
 mod.build(ctx)
+if hasattr(mod, "finish"):
+    mod.finish(ctx)
 bpy.context.view_layer.update()
 new = [o for o in bpy.data.objects if o not in before and o.type in {"MESH", "CURVE"}]
 print("[preview] %s: %d new objects" % (module, len(new)))

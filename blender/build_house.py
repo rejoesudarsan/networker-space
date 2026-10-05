@@ -922,11 +922,12 @@ def build():
 
     # Details from blender/details/ (see DETAILS.md). Each is its own module.
     detail_views = []
+    detail_ctx = None
     try:
         if SCRIPT_DIR not in sys.path:
             sys.path.insert(0, SCRIPT_DIR)
         import details as detail_modules
-        detail_views = detail_modules.build_all(dict(
+        detail_ctx = dict(
             scene=scene, mats=mats, empties=empties, colls=colls, site=site, house=house,
             roof_coll=roof_coll,
             helpers=dict(add_box=add_box, add_slab=add_slab, get_collection=get_collection,
@@ -935,7 +936,8 @@ def build():
             constants=dict(UNIT_M=UNIT_M, SLAB_T=SLAB_T, STOREY=STOREY, WALL_H=WALL_H,
                            FLOORS=FLOORS, PARAPET_H=PARAPET_H, PARAPET_T=PARAPET_T,
                            TERRACE_X1=TERRACE_X1, SLAB_VOIDS=SLAB_VOIDS),
-        )) or []
+        )
+        detail_views = detail_modules.build_all(detail_ctx) or []
     except Exception as e:
         warn("details package failed: %s" % e)
 
@@ -988,6 +990,9 @@ def build():
     street = bpy.data.objects.new("Site.Street", me)
     site.objects.link(street)
     me.materials.append(mats["Asphalt"])
+
+    if detail_ctx is not None:
+        detail_modules.finish_all(detail_ctx)
 
     house_bbox = compute_house_bbox()
     world = build_world(scene)
