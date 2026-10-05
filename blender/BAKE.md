@@ -24,7 +24,7 @@ Rules:
 
 ## Room dioramas (the homepage's room scenes; `--rooms`, from site/src/space/rooms.json)
 Every space is baked alone, cut to the same kind of box, with identical light, so they read as one set (user request, 5 Oct 2026). Production: `--rooms <id> --res 2048 --samples 256`.
-- [ ] room-lower-day
+- [x] room-lower-day (slab underside takes ~9% of the atlas, never seen from above; left for texel-density)
 - [ ] room-cafe-day
 - [ ] room-court-day
 - [ ] room-event-day
