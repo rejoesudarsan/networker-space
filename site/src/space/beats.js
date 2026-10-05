@@ -44,13 +44,13 @@ export const FLOOR_COPY = {
   lower: {
     label: 'Lower level',
     title: 'Make things, round the big tree.',
-    line: "Open work area · The maker's table · A seat round the big tree · The founders' lounge",
+    line: "08:00–18:00 · Open work area · The maker's table and workshops · The founders' lounge",
     explore: {
       head: 'The working floor, below the street.',
       body: [
         'An open work area, lit by a court where a big tree rises through two floors. A seating platform runs round its trunk.',
-        "The maker's table is for building things by hand. Daytime workshops start here.",
-        "Off the court, the old office is a private lounge for founders.",
+        "Work here from 08:00 to 18:00. The maker's table is for building things by hand, and the daytime workshops run round it.",
+        "Off the court, the old office is a private lounge for founders, open into the evening.",
       ],
     },
   },
@@ -69,11 +69,11 @@ export const FLOOR_COPY = {
   first: {
     label: 'First floor',
     title: 'Where the evenings happen.',
-    line: 'The event room · Seats round the courtyard · Private rooms',
+    line: '18:00–23:00 · The event room · Seats round the courtyard · Private rooms',
     explore: {
       head: 'Meetups, talks and film nights.',
       body: [
-        'The event room has a low stage, a screen and tiered teak seats, for meetups, learning events and film nights.',
+        'From 18:00 to 23:00 the event room holds meetups, learning events and film nights: a low stage, a screen and tiered teak seats.',
         'Informal seating runs round the courtyard. Private rooms off it take a meeting or a small group.',
       ],
     },
@@ -81,12 +81,12 @@ export const FLOOR_COPY = {
   second: {
     label: 'Second floor',
     title: 'Two quiet rooms, and the roof.',
-    line: 'Two quiet founder rooms · The terrace: grills, work, rooftop parties',
+    line: 'Quiet founder rooms by day · The terrace: work by day, grills and parties after 18:00',
     explore: {
       head: 'Up to the terrace.',
       body: [
-        'Two quiet rooms for founders who need a closed door to work.',
-        'The terrace takes a laptop by day, the grill in the evening, and the rooftop parties.',
+        'Two quiet rooms for founders who need a closed door to work, 08:00 to 18:00.',
+        'The terrace takes a laptop by day; after 18:00, the grill and the rooftop parties.',
       ],
     },
   },

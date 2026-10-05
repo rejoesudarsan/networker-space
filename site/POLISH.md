@@ -69,7 +69,7 @@ The user's latest plan (5 Oct 2026), newer than PRODUCT.md where they differ:
   10. Tiers Visit / Regular / House with "Needs —": names and contents out of date; walk-in needs nothing, which can be said.
   11. The call says only "Book a call"; a walk-in doesn't need one. Say they can just come in.
   12. Missing and not to be invented: prices, address beyond HSR Layout, dates, how often evenings run.
-- [ ] floor-copy: each floor caption says what you do there and when (morning work, the café, the court and library, the evening on the terrace), using the zone plan in `PRODUCT.md` and `DESIGN.md`.
+- [x] floor-copy: each floor caption says what you do there and when (morning work, the café, the court and library, the evening on the terrace), using the zone plan in `PRODUCT.md` and `DESIGN.md`. Done: each caption now opens with when (lower 08:00–18:00 work and workshops; ground café 08:00–18:00; first 18:00–23:00 evenings; second quiet rooms by day, terrace grills and parties after 18:00), same in Explore and the reader. Zones from the user's 5 Oct plan (newer than PRODUCT.md's library/dining).
 - [ ] night-copy: what an evening is: the kinds of nights (talks, demo nights, dinners, film nights, rooftop), how often, who comes, how a member gets in. No made-up dates or names.
 
 ## The way to a membership
