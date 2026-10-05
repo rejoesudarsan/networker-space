@@ -42,3 +42,11 @@ faster, but the order of events is the same.
 
 Headless frame rate here is ~1 fps (software), so not a useful number; measure
 fps on a real phone in the adaptive-quality item.
+
+## lazy-floors (5 Oct 2026)
+The street view needs ground, first, second, roof and site (the closed house is
+made of the floors' own walls), so only the basement (2.3 MB, below the road)
+and the props (1.2 MB + textures, memberships and call only) wait for the first
+frame. A scene that needs one before it arrives stays veiled.
+- Bytes before the first frame: 22.3 MB → 18.3 MB (total unchanged).
+- house-shown: ~3.0 s → 1.3–1.5 s; first-frame: ~6.0 s → 2.9 s desktop, 5.7 s phone (SwiftShader).

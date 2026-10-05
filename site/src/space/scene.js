@@ -232,18 +232,21 @@ export async function createScene(canvas) {
   const house = new THREE.Group()
   scene.add(house)
   const floors = {}
-  const loaded = await Promise.all([...ORDER, 'roof', 'site'].map(load))
-  ORDER.forEach((id, i) => {
+  // First only what the street shows: the basement sits below the road and
+  // follows after the first frame (see `later`), behind the veil into the house.
+  const FIRST = ['ground', 'first', 'second', 'roof', 'site']
+  const loaded = Object.fromEntries((await Promise.all(FIRST.map(load))).map((g, i) => [FIRST[i], g]))
+  ORDER.forEach((id) => {
     const g = new THREE.Group()
     const f = FLOORS[id]
     g.position.set(f.x, f.y, f.z)
-    if (loaded[i]) g.add(loaded[i])
+    if (loaded[id]) g.add(loaded[id])
     floors[id] = g
     house.add(g)
   })
-  const roof = loaded[4]
+  const roof = loaded.roof
   if (roof) floors.second.add(roof)
-  const site = loaded[5] || new THREE.Group()
+  const site = loaded.site || new THREE.Group()
   house.add(site)
 
   // The street: wet asphalt holding a soft, broken reflection of the house,
@@ -404,9 +407,17 @@ export async function createScene(canvas) {
   }
 
   // ---------- the loose props (blender/tools/build_props.py) ----------
-  const propsG = await loader.loadAsync('/models/props/props.gltf').catch(() => null)
-  const proto = {}
-  if (propsG) {
+  // Only the memberships and the call use them, so they load after the first
+  // frame; until then each prop is an empty slot, filled when they arrive.
+  const slots = []
+  const clone = (name) => {
+    const g = new THREE.Group()
+    slots.push([name, g])
+    return g
+  }
+  async function loadProps() {
+    const propsG = await loader.loadAsync('/models/props/props.gltf').catch(() => null)
+    if (!propsG) return
     propsG.scene.traverse((o) => {
       if (o.isMesh) {
         o.castShadow = o.receiveShadow = false
@@ -418,12 +429,32 @@ export async function createScene(canvas) {
         fogify(m)
       }
     })
+    const proto = {}
     for (const child of [...propsG.scene.children]) {
       child.position.set(0, 0, 0)
       proto[child.name] = child
     }
+    for (const [name, g] of slots) {
+      if (!proto[name]) continue
+      const o = proto[name].clone()
+      // A slot given its own scale replaces the prop's.
+      if (g.scale.x !== 1) o.scale.set(1, 1, 1)
+      g.add(o)
+    }
   }
-  const clone = (name) => (proto[name] ? proto[name].clone() : new THREE.Group())
+
+  // What waits for the first frame: the basement, then the props.
+  const pending = new Set(['basement', 'props'])
+  let started = false
+  function later() {
+    if (started) return
+    started = true
+    load('basement').then((g) => {
+      if (g) floors.basement.add(g)
+      pending.delete('basement')
+    })
+    loadProps().finally(() => pending.delete('props'))
+  }
 
   const clouds = createClouds(scene, fogUniforms.uFog.value)
   const people = createPeople(floors, house, fogify)
@@ -664,7 +695,10 @@ export async function createScene(canvas) {
     })
 
     renderer.render(scene, camera)
-    if (!performance.getEntriesByName('first-frame').length) performance.mark('first-frame')
+    if (!started) {
+      performance.mark('first-frame')
+      later()
+    }
   }
   renderer.setAnimationLoop(frame)
 
@@ -686,6 +720,8 @@ export async function createScene(canvas) {
   return {
     state,
     people,
+    // Still loading: 'basement' or 'props'. A scene that needs one stays veiled.
+    pending: (what) => pending.has(what),
     // Draw calls and triangles of the last frame, for site/PERF.md.
     info: () => ({ ...renderer.info.render, geometries: renderer.info.memory.geometries, textures: renderer.info.memory.textures }),
     markerScreens: () => markerAnchors.map(toScreen),

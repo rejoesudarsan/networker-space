@@ -205,13 +205,18 @@ addEventListener('pointermove', (e) => {
 
 let last = performance.now()
 let shownKey = ''
+let held = 0
 function loop(now = performance.now()) {
   const dt = Math.min(0.05, (now - last) / 1000)
   last = now
   p = reduced.matches ? goal : p + (goal - p) * (1 - Math.exp(-dt * 3))
   if (Math.abs(goal - p) < 0.00005) p = goal
   current = locate(p)
-  const { beat, local, veil } = current
+  const { beat, local } = current
+  // A part of the house still on its way stays behind the veil.
+  const waiting = (beat.scene === 'floors' && p < 0.33 && world.pending('basement')) || ((beat.scene === 'members' || beat.scene === 'call') && world.pending('props'))
+  held = waiting ? 1 : Math.max(0, held - dt * 1.5)
+  const veil = Math.max(current.veil, held)
   const h = keyed(HOURS, p)
   const fog = fogAt(h)
   const s = world.state

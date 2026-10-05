@@ -1,2 +1,3 @@
 - 2026-10-05 19:43 hero-board01 (user request, before measure): hero now frames like board 01; perf marks first-frame/house-shown and world.info() added for the measure item, PERF.md not written yet. Trees left to the bake ([?]).
 - 2026-10-05 19:46 measure: PERF.md baseline. Times are SwiftShader (no GPU), so only relative. dist/models/blender (13 MB) is unused; left for compress/lazy items.
+- 2026-10-05 19:50 lazy-floors: only basement + props deferred (upper floors form the façade, so they can't wait). Further wins need compression.
