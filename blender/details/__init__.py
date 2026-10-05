@@ -50,6 +50,7 @@ MODULES = [
     "terrace_terracotta",
     "bedroom5_bathtub",
     "passage_over_void",
+    "cafe",
     "detail_cameras",
     "entourage",
 ]

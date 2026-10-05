@@ -93,6 +93,21 @@ Rules for every item:
 - [x] passage-over-void: the passage railing over the courtyard void and the study nook (p30).
   - note: p30 shows a low glass-fronted cabinet, not a railing, on the void's west edge; built that plus a plaster upstand to the south wall. Study nook (p32) in the stair-top hall north of the void: desk along the void-side wall, drawer unit, pier with black pinboard. Guard rail on the stairwell's open edges.
 
+## Club fit-out (room programme confirmed by the user, 5 Oct 2026)
+Room uses: walk-in café on the ground floor, event space in first-floor Living 2,
+game rooms and quiet rooms in the basement office and every first- and second-floor
+bedroom. Inspiration: `reference/pinterest-cafe/` (the user's board) and the Astra
+comps in `reference/astra-design/`, used as references only. Shared pieces are in
+`details/_furniture.py`, and `F.wall()` snaps to real wall faces by raycast. Check each
+room with `tools/room_shot.py` (open-topped, EEVEE, ~10 s).
+- [x] cafe: Living 1 front room (banquette, two-tops, tables for four, guestbook faces wall, gulmohar light cone with the empty chair) and Family 1 bar (slatted counter, espresso machine, open shelves, communal table, AM/PM sandstone panel).
+- [ ] event-space: first-floor Living 2: low teak stage, tiered teak seating with cushions, projection screen, the court as foyer.
+- [ ] game-room-first: first-floor Bedroom 3: carrom, a board-game table, chalkboard game wall.
+- [ ] quiet-rooms-second: second-floor Bedroom 3 and Bedroom 4: desks, velvet armchairs, bookshelves.
+- [ ] basement-work-games: basement office: quiet work desks plus a games corner.
+- [ ] court-library: first-floor court and library: armchairs, bookshelves, reading lamps.
+- [ ] terrace-evening: second-floor terrace: low tables, cushions and string lights, for evenings.
+
 ## Cameras and renders
 - [x] detail-cameras: add cameras `Camera.Court2`, `Camera.Court1`, `Camera.Entrance`, `Camera.Terrace` framed like p1, p20, p24, p30, so each detail can be checked from a photo-matched view; render them in `--quick` mode.
   - note: Camera.Court2 / Court1 / Entrance / Terrace render to renders/04..07 with every build. Interiors are dark under the dawn lighting (Court 1 nearly black); the build now takes ~5.5 min instead of ~1.5.
