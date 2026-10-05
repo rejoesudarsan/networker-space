@@ -6,7 +6,7 @@
 	"scene":0,
 	"scenes":[
 		{
-			"name":"export.002",
+			"name":"export",
 			"nodes":[
 				0
 			]
@@ -66,7 +66,7 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":83568,
+			"count":116947,
 			"max":[
 				2.9166667461395264,
 				2.7541697025299072,
@@ -82,45 +82,45 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":83568,
+			"count":116947,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":83568,
+			"count":116947,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5125,
-			"count":126528,
+			"count":162018,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":1002816,
+			"byteLength":1403364,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1002816,
-			"byteOffset":1002816,
+			"byteLength":1403364,
+			"byteOffset":1403364,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":668544,
-			"byteOffset":2005632,
+			"byteLength":935576,
+			"byteOffset":2806728,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":506112,
-			"byteOffset":2674176,
+			"byteLength":648072,
+			"byteOffset":3742304,
 			"target":34963
 		}
 	],
@@ -132,7 +132,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":3180288,
+			"byteLength":4390376,
 			"uri":"first-day.bin"
 		}
 	]

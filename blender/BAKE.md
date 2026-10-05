@@ -33,7 +33,7 @@ Every space is baked alone, cut to the same kind of box, with identical light, s
 ## Day set (whole floors: the street views)
 - [x] basement-day
 - [x] ground-day (.bin 7.6 MB, close to the 8 MB budget)
-- [ ] first-day
+- [x] first-day (bake took 100 min at 4096/256, over the 90 min line; kept, but bake first-night at --samples 192)
 - [ ] second-day
 - [ ] roof-day
 - [ ] site-day
