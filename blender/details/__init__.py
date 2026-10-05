@@ -45,6 +45,7 @@ MODULES = [
     "court2_skylight",
     "court2_louvred_doors",
     "steel_stair_to_second",
+    "family2_sliding_teak_door",
 ]
 
 
