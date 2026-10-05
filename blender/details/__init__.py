@@ -28,6 +28,7 @@ MODULES = [
     "office_outside_stair",
     "neighbour_massing",
     "entrance_court_floor_and_bench",
+    "outside_stair_to_first",
 ]
 
 

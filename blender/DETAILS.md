@@ -38,7 +38,8 @@ Rules for every item:
 ## Entrance court and gardens (p24, p6, p36, p21, p9)
 - [x] entrance-court-floor-and-bench: stone floor in the entrance court and the green bench against the wall (p24).
   - note: also the plank shelf of potted plants (p24). The court is roofed by the first-floor slab in the model, so it is only visible in cutaway; p24 suggests it is open above with the first-floor balcony over part of it.
-- [ ] outside-stair-to-first: the outside stair from the entrance court up to the first-floor porch with steel railing and the frangipani at its foot (p6, p4).
+- [x] outside-stair-to-first: the outside stair from the entrance court up to the first-floor porch with steel railing and the frangipani at its foot (p6, p4).
+  - note: 13 risers on the site's line (site had 9 at 39 cm); rod rail on the court side only, p6's wall handrail omitted because the model has no wall on that side; frangipani moved from the site's spot (crown crossed the boundary wall) to the stair's foot as in p6. The stair's top meets first-floor level; whether the porch is there is the next item.
 - [ ] first-floor-porch: washed-concrete porch floor, mesh railing, grass pendant at the first-floor entrance (p4).
 - [ ] front-lawn-and-steps: raised lawn outside Living 1 with the garden steps up to it (p21, p36).
 - [ ] side-garden-passage: west garden strip with potted plants and steps (p9).
