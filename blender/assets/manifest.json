@@ -1,0 +1,77 @@
+{
+  "hdri": "assets/hdri/bryanston_park_sunrise_2k.hdr",
+  "textures": {
+    "plaster": {
+      "source": "polyhaven",
+      "id": "white_stucco",
+      "maps": {
+        "color": "assets/textures/plaster/color.jpg",
+        "roughness": "assets/textures/plaster/roughness.jpg",
+        "normal": "assets/textures/plaster/normal.jpg"
+      },
+      "size_m": 1.998
+    },
+    "teak": {
+      "source": "polyhaven",
+      "id": "teak_veneer",
+      "maps": {
+        "color": "assets/textures/teak/color.jpg",
+        "roughness": "assets/textures/teak/roughness.jpg",
+        "normal": "assets/textures/teak/normal.jpg"
+      },
+      "size_m": 1.0
+    },
+    "cladding": {
+      "source": "polyhaven",
+      "id": "concrete_tile_facade",
+      "maps": {
+        "color": "assets/textures/cladding/color.jpg",
+        "roughness": "assets/textures/cladding/roughness.jpg",
+        "normal": "assets/textures/cladding/normal.jpg"
+      },
+      "size_m": 2.09
+    },
+    "sandstone": {
+      "source": "polyhaven",
+      "id": "seaworn_stone_tiles",
+      "maps": {
+        "color": "assets/textures/sandstone/color.jpg",
+        "roughness": "assets/textures/sandstone/roughness.jpg",
+        "normal": "assets/textures/sandstone/normal.jpg"
+      },
+      "size_m": 2.0
+    },
+    "terracotta": {
+      "source": "polyhaven",
+      "id": "terracotta_floor_tiles",
+      "maps": {
+        "color": "assets/textures/terracotta/color.jpg",
+        "roughness": "assets/textures/terracotta/roughness.jpg",
+        "normal": "assets/textures/terracotta/normal.jpg"
+      },
+      "size_m": 2.08
+    },
+    "asphalt": {
+      "source": "polyhaven",
+      "id": "asphalt_02",
+      "maps": {
+        "color": "assets/textures/asphalt/color.jpg",
+        "roughness": "assets/textures/asphalt/roughness.jpg",
+        "normal": "assets/textures/asphalt/normal.jpg"
+      },
+      "size_m": 3.0
+    },
+    "steel": {
+      "source": "ambientcg",
+      "id": "Metal027",
+      "maps": {
+        "color": "assets/textures/steel/color.jpg",
+        "roughness": "assets/textures/steel/roughness.jpg",
+        "normal": "assets/textures/steel/normal.jpg",
+        "metalness": "assets/textures/steel/metalness.jpg"
+      },
+      "size_m": 1.0
+    }
+  },
+  "tree": "assets/models/jacaranda_tree/jacaranda_tree_1k.gltf"
+}

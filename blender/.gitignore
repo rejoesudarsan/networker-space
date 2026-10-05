@@ -1,2 +1,6 @@
 renders/
 *.blend1
+__pycache__/
+assets/hdri/
+assets/textures/
+assets/models/

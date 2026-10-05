@@ -315,6 +315,59 @@ function wallGaps(walls, skip) {
 const local = (origin) => ([x, y]) => [(x - origin[0]) / UNIT, -(y - origin[1]) / UNIT]
 const r4 = (v) => +v.toFixed(4)
 
+// Slab overhang trim (first and second floors): along the street (front, +z)
+// and side edges, scan inward from the slab edge to the first wall of the same
+// floor; where that is farther than OVERHANG_IN, cut the slab back to
+// OVERHANG_IN from the wall. Keep rects (floor-local units) are never cut:
+// the second-floor terrace and the first-floor balcony over the entrance court.
+const OVERHANG_IN = 12 // ~30 cm sunshade depth
+const MAX_TRIM_IN = 40  // deeper overhangs (> ~1.3 m past the wall) are taken as real balconies / terraces and kept
+const TRIM_FLOORS = ['first', 'second']
+const KEEP = {
+  first: [[-2.1, 0.5, -1.3, 2.2]],      // balcony over the entrance court (p24), provisional
+  second: [[-2.3, -3.6, -0.95, 3.6]],   // roof terrace
+}
+function slabTrim(id, walls, origin, x0, y0, x1, y1) {
+  if (!TRIM_FLOORS.includes(id)) return []
+  const L = ([x, y]) => [(x - origin[0]) / UNIT, -(y - origin[1]) / UNIT]
+  const kept = ([x, y]) => (KEEP[id] || []).some(([a, b, c, d]) => { const [lx, lz] = L([x, y]); return lx > a && lx < c && lz > b && lz < d })
+  const edges = [
+    // name, start point fn(t), inward direction, length
+    { name: 'front', at: (t) => [x0 + t, y0], dir: [0, 1], len: x1 - x0 },
+    { name: 'west', at: (t) => [x0, y0 + t], dir: [1, 0], len: y1 - y0 },
+    { name: 'east', at: (t) => [x1, y0 + t], dir: [-1, 0], len: y1 - y0 },
+  ]
+  const cuts = []
+  for (const e of edges) {
+    let run = null
+    const flush = () => { if (run && run.t1 - run.t0 >= 6) cuts.push(run); run = null }
+    for (let t = 0; t <= e.len; t += 1) {
+      const p = e.at(t)
+      let d = 0
+      for (; d <= 120; d += 1) if (inWalls(walls, [p[0] + e.dir[0] * d, p[1] + e.dir[1] * d])) break
+      const depth = d > 120 || d - OVERHANG_IN > MAX_TRIM_IN ? 0 : Math.floor((d - OVERHANG_IN) / 2) * 2
+      const mid = [p[0] + e.dir[0] * depth / 2, p[1] + e.dir[1] * depth / 2]
+      if (depth < 4 || kept(p) || kept(mid)) { flush(); continue }
+      if (run && Math.abs(run.depth - depth) <= 2) { run.t1 = t; run.depth = Math.min(run.depth, depth) } else { flush(); run = { e, t0: t, t1: t, depth } }
+    }
+    flush()
+  }
+  return cuts.map(({ e, t0, t1, depth }) => {
+    const a = e.at(t0)
+    const b = e.at(t1)
+    const pts = [a, b, [a[0] + e.dir[0] * depth, a[1] + e.dir[1] * depth], [b[0] + e.dir[0] * depth, b[1] + e.dir[1] * depth]]
+    const q = pts.map(L)
+    const xs = q.map((v) => v[0])
+    const zs = q.map((v) => v[1])
+    const pad = 0.02 // push the outer side past the slab edge so the notch cuts cleanly
+    let r = { x0: Math.min(...xs), z0: Math.min(...zs), x1: Math.max(...xs), z1: Math.max(...zs) }
+    if (e.name === 'front') r.z1 += pad
+    if (e.name === 'west') r.x0 -= pad
+    if (e.name === 'east') r.x1 += pad
+    return { edge: e.name, depth_m: +(depth * 0.0254).toFixed(2), x0: r4(r.x0), z0: r4(r.z0), x1: r4(r.x1), z1: r4(r.z1) }
+  })
+}
+
 const result = { unit: UNIT, doorHead: 84 / UNIT, note: 'floor-local Three.js units; Blender y = -z', floors: {} }
 for (const [id, range] of Object.entries(FLOORS)) {
   const cols = columns(range)
@@ -390,8 +443,9 @@ for (const [id, range] of Object.entries(FLOORS)) {
     const sz = Math.abs(q[1][1] - q[0][1])
     return { x0: r4(Math.min(q[0][0], q[1][0])), z0: r4(Math.min(q[0][1], q[1][1])), x1: r4(Math.max(q[0][0], q[1][0])), z1: r4(Math.max(q[0][1], q[1][1])), length: r4(Math.max(sx, sz)), simple: Math.max(sx, sz) >= 0.18 && Math.min(sx, sz) <= 0.2 }
   })
-  result.floors[id] = { doors, gaps: openGaps, slivers, windows, rejected, offsite }
-  console.log(`${id}: ${doors.length} doors (${doors.map((d) => d.width_ft).join(', ')} ft), ${rejected.length} rejected, ${offsite.length} off-site, ${openGaps.length} other gaps (${openGaps.filter((g) => g.perimeter).length} perimeter), ${slivers.length} slivers (${slivers.filter((g) => g.perimeter).length} perimeter), ${windows.length} sill islands (${windows.filter((w) => w.simple).length} simple)`)
+  const trim = slabTrim(id, walls, origin, x0, y0, x1, y1)
+  result.floors[id] = { doors, gaps: openGaps, slivers, windows, rejected, offsite, slabTrim: trim }
+  console.log(`${id}: ${doors.length} doors (${doors.map((d) => d.width_ft).join(', ')} ft), ${rejected.length} rejected, ${offsite.length} off-site, ${openGaps.length} other gaps (${openGaps.filter((g) => g.perimeter).length} perimeter), ${slivers.length} slivers (${slivers.filter((g) => g.perimeter).length} perimeter), ${trim.length} slab trims, ${windows.length} sill islands (${windows.filter((w) => w.simple).length} simple)`)
 }
 mkdirSync(dirname(OUT), { recursive: true })
 writeFileSync(OUT, JSON.stringify(result, null, 2) + '\n')

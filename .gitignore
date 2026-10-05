@@ -4,3 +4,5 @@ dist/
 .playwright-mcp/
 .claude/
 .impeccable/review/
+__pycache__/
+*.pyc
