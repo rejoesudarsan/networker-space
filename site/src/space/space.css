@@ -1,0 +1,132 @@
+/* Space: corner chrome over one world (reference/astra-design system boards).
+   Mono for the HUD, a grotesk for captions, one serif line at the end. */
+:root {
+  --fg: #383b3a;
+  --fg-soft: rgb(56 59 58 / 0.72);
+  --accent: #c96a3d;
+  --fog: #d1bfc2;
+  --mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+  --sans: 'Schibsted Grotesk Variable', system-ui, sans-serif;
+  --serif: 'Newsreader Variable', Georgia, serif;
+  --inset: clamp(20px, calc(32px + (100vw - 1024px) * 0.0179), 48px);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+body.dark {
+  --fg: #ece8df;
+  --fg-soft: rgb(236 232 223 / 0.72);
+}
+* { box-sizing: border-box; margin: 0 }
+html, body { height: 100%; overflow: hidden; overscroll-behavior: none }
+body {
+  background: var(--fog);
+  color: var(--fg);
+  font: 400 16px/24px var(--sans);
+  -webkit-font-smoothing: antialiased;
+  transition: color 0.9s var(--ease);
+}
+a { color: inherit; text-decoration: none }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer }
+:focus-visible { outline: 2px solid currentColor; outline-offset: 4px }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%) }
+.stage { position: fixed; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity 1.2s var(--ease) }
+body.ready .stage { opacity: 1 }
+
+/* Links: no containers; underline on hover, an orange dot for selection. */
+.link {
+  font: 400 14px/20px var(--mono);
+  display: inline-flex; align-items: center; min-height: 44px;
+  background: linear-gradient(currentColor, currentColor) 0 calc(100% - 10px) / 0 1px no-repeat;
+  transition: background-size 0.12s linear;
+}
+.link:hover, .link:focus-visible { background-size: 100% 1px }
+
+/* ---------- corners ---------- */
+.corner { position: fixed; z-index: 5; font: 400 14px/20px var(--mono); letter-spacing: 0.02em }
+.tl { top: calc(var(--inset) - 12px); left: var(--inset); min-height: 44px; display: inline-flex; align-items: center }
+.tr { top: calc(var(--inset) - 12px); right: var(--inset) }
+.bl { bottom: var(--inset); left: var(--inset) }
+.br { bottom: var(--inset); right: var(--inset); font-variant-numeric: tabular-nums }
+.wordmark { letter-spacing: 0.08em }
+body.reading .hint { opacity: 0 }
+
+/* ---------- copy in the world ---------- */
+.copy { position: fixed; inset: 0; z-index: 4; pointer-events: none }
+.beat, .caption {
+  position: absolute; opacity: 0; filter: blur(6px);
+  transition: opacity 0.6s var(--ease), filter 0.8s var(--ease);
+}
+.beat.on, .caption.on { opacity: 1; filter: none; pointer-events: auto }
+.kicker { font: 400 12px/18px var(--mono); letter-spacing: 0.12em; text-transform: uppercase }
+
+.center-low { left: 50%; bottom: 22vh; transform: translateX(-50%); font: 400 14px/20px var(--mono); white-space: nowrap }
+.lead { left: var(--inset); top: 50%; transform: translateY(-50%); font: 400 16px/24px var(--sans); max-width: 22ch }
+.lead span { display: block; color: var(--fg-soft) }
+.night-copy { left: var(--inset); top: 44%; display: grid; gap: 2px; font: 400 14px/20px var(--mono) }
+.night-copy .kicker { margin-bottom: 10px }
+
+/* Floor captions: label, line, hours, Explore, with a short leader. */
+.caption { left: calc(var(--inset) + 4vw); top: 38%; max-width: 30ch; font: 400 14px/22px var(--mono) }
+.caption .label { font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px }
+.caption .title { font: 400 16px/24px var(--sans) }
+.caption .line { color: var(--fg-soft) }
+.caption .explore { margin-top: 4px; font-weight: 600 }
+.caption .leader { position: absolute; left: 100%; top: 10px; width: 9vw; height: 1px; background: currentColor; opacity: 0.5; transform-origin: 0 0; transform: rotate(12deg) translateX(18px) }
+
+/* Memberships: each tier's copy hangs under its object. */
+.members { inset: 0 }
+.members-label { position: absolute; left: calc(var(--inset) + 6vw); top: 24vh }
+.tiers { position: absolute; inset: 0 }
+.tier {
+  position: absolute; left: 0; top: 0; width: 15rem; padding-left: 1.5rem;
+  font: 400 15px/24px var(--mono);
+  transition: opacity 0.3s;
+}
+.tier h3 { font: 400 14px/20px var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: #e8c9a8; position: relative }
+.tier.focus h3::before { content: ''; position: absolute; left: -14px; top: 7px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent) }
+.tier.focus h3 { text-decoration: underline; text-underline-offset: 5px }
+.tier ul { list-style: none; padding: 0 }
+.tier-help { position: absolute; left: 50%; bottom: 7vh; transform: translateX(-50%); font: 400 12px/18px var(--mono); color: var(--fg-soft); white-space: nowrap }
+
+/* The last invitation. */
+.call-copy { left: 0; top: 0; padding-left: 2rem; display: grid; justify-items: start; gap: 6px }
+.call-copy h2 { font: 400 28px/34px var(--serif); font-variation-settings: 'opsz' 36; letter-spacing: -0.01em }
+.call-copy p { font: 400 15px/22px var(--sans); color: var(--fg-soft) }
+
+/* ---------- explore / booking sheet ---------- */
+.sheet {
+  border: 0; padding: 0; margin: 0; max-width: none; max-height: none; width: 100%; height: 100%;
+  background: transparent; color: var(--fg);
+}
+.sheet::backdrop { background: color-mix(in srgb, var(--fog) 72%, transparent); backdrop-filter: blur(6px) }
+.sheet-close { position: fixed; top: calc(var(--inset) - 12px); right: var(--inset) }
+.sheet-body {
+  position: absolute; left: calc(var(--inset) + 8vw); top: 50%; transform: translateY(-50%);
+  width: min(52ch, calc(100vw - 2 * var(--inset))); max-height: 80vh; overflow: auto;
+  display: grid; gap: 14px; animation: decode 0.45s var(--ease) both;
+}
+.sheet-body h2 { font: 400 22px/30px var(--sans) }
+.sheet-body p { font: 400 16px/24px var(--sans) }
+.sheet-body .kicker { font: 400 12px/18px var(--mono) }
+@keyframes decode { from { clip-path: inset(0 100% 0 0); opacity: 0.4 } to { clip-path: inset(0 0 0 0); opacity: 1 } }
+
+/* ---------- states ---------- */
+.loading, .failure {
+  position: fixed; inset: 0; z-index: 6; display: grid; place-content: center; gap: 12px; text-align: center;
+  font: 400 14px/20px var(--mono); transition: opacity 0.8s var(--ease);
+}
+body.ready .loading { opacity: 0; pointer-events: none }
+.failure { display: none }
+body.failed .failure { display: grid }
+body.failed .loading { display: none }
+
+@media (max-width: 720px) {
+  .corner, .link { font-size: 12px; line-height: 18px }
+  .caption { left: 20px; right: 20px; top: auto; bottom: calc(var(--inset) + 40px); max-width: none }
+  .caption .leader { display: none }
+  .lead, .night-copy { top: auto; bottom: calc(var(--inset) + 48px); transform: none }
+  .call-copy h2 { font-size: 22px; line-height: 28px }
+  .tier { width: 11rem; font-size: 13px; line-height: 20px }
+}
+@media (prefers-reduced-motion: reduce) {
+  .beat, .caption, .sheet-body { transition: none; animation: none; filter: none }
+}
