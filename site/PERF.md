@@ -50,3 +50,16 @@ and the props (1.2 MB + textures, memberships and call only) wait for the first
 frame. A scene that needs one before it arrives stays veiled.
 - Bytes before the first frame: 22.3 MB → 18.3 MB (total unchanged).
 - house-shown: ~3.0 s → 1.3–1.5 s; first-frame: ~6.0 s → 2.9 s desktop, 5.7 s phone (SwiftShader).
+
+## compress-geometry (5 Oct 2026)
+`npm run build` now runs `scripts/compress-models.mjs` after Vite: every glTF in
+`dist/models/baked` and `dist/models/props` gets dedup + reorder + quantize
+(positions 14 bit, UVs 16 bit or float where out of [0,1]) + EXT_meshopt_compression.
+`public/` is untouched; the dev server still serves the raw bake. The loader has
+the meshopt decoder. Compressed and raw renders compared side by side: no visible difference.
+- glTF geometry: 18.2 MB → 4.9 MB (ground-day 6.9 MB → 1.7 MB; site 1.3 MB → 0.39 MB; props 1.1 MB → 0.43 MB).
+- Bytes before the first frame: 18.3 MB → 8.4 MB; whole page 22.3 MB → 10.6 MB.
+- On localhost the times did not move (house-shown 2.6–2.9 s, first-frame 5.5–5.9 s,
+  SwiftShader, noisy): bytes are nearly free locally. The win is on a real network:
+  ~10 MB less, e.g. ~16 s less on a 5 Mbit/s phone link.
+- Textures (JPEG atlases + HDR) are now the largest part: ~5.7 MB of what remains.

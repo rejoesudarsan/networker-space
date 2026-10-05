@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
 import { Reflector } from 'three/examples/jsm/objects/Reflector.js'
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
@@ -196,7 +197,8 @@ export async function createScene(canvas) {
   }
 
   // ---------- the baked house ----------
-  const loader = new GLTFLoader()
+  // The build meshopt-compresses the glTFs (scripts/compress-models.mjs).
+  const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder)
   const glassMats = []
   const glassDay = new THREE.Color('#cfd8d6')
   const glassNight = new THREE.Color('#ffb466')
