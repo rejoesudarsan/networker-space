@@ -98,6 +98,8 @@ $('.caption .explore').addEventListener('click', () => {
 })
 
 let world = null
+// Until the first frame, no copy is in view: none of it takes focus.
+for (const el of $$('[data-beat], .caption')) el.inert = true
 
 // ---------- memberships ----------
 const tiersEl = $('.tiers')
@@ -150,6 +152,9 @@ function webgl() {
 function still() {
   document.body.classList.add('still')
   stopped = true
+  const reader = $('.reader')
+  reader.tabIndex = -1
+  reader.focus()
 }
 let stopped = false
 for (const b of $$('.still')) b.addEventListener('click', still)
@@ -171,6 +176,7 @@ async function start() {
   // The fog lifts only once the house is drawn.
   await world.firstFrame
   document.body.classList.add('ready')
+  $('.loading').inert = true
   performance.mark('house-shown')
 }
 
@@ -302,10 +308,11 @@ function loop(now = performance.now()) {
   const key = veil > 0.6 ? 'veil' : beat.id
   if (key !== shownKey) {
     shownKey = key
-    for (const el of $$('[data-beat]')) el.classList.toggle('on', el.dataset.beat.split(' ').includes(key))
+    // Copy not in view is out of the tab order and the reading order too.
+    for (const el of $$('[data-beat]')) el.inert = !el.classList.toggle('on', el.dataset.beat.split(' ').includes(key))
     const r = FLOOR_COPY[beat.floor]
     const cap = $('.caption')
-    cap.classList.toggle('on', !!r && key !== 'veil')
+    cap.inert = !cap.classList.toggle('on', !!r && key !== 'veil')
     if (r) {
       $('.caption .label', cap).textContent = r.label
       $('.caption .title', cap).textContent = r.title

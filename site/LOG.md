@@ -10,3 +10,4 @@
 - 2026-10-05 20:27 phone-layout: safe areas untested on a real notched phone (headless has none).
 - 2026-10-05 20:30 scroll-feel: judged from numbers + key test (Space lands on beats); not felt on a real trackpad/phone. User then asked for fewer camera angles, no chair scenes, start with the place: next.
 - 2026-10-05 20:38 two-angles (user request): beats rebuilt (hero → veil → 4 floors → veil → night/members/call on the street). Toured 8 beats desktop + phone. Brief now on the first frame again (user: 'starts with the building, same as my previous version').
+- 2026-10-05 20:45 a11y: found two-angles commit (50e83fa) had deleted sheet/loading/reader CSS; restored here. Screen reader itself not run (no SR in headless).

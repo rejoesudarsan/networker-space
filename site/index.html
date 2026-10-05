@@ -8,6 +8,8 @@
     <link rel="icon" href="/favicon.svg" />
   </head>
   <body>
+    <!-- For screen readers and keyboards: the whole story as text, in one place. -->
+    <button class="skip link still" type="button">Read it as text →</button>
     <canvas class="stage" aria-hidden="true"></canvas>
 
     <!-- The four corners: everything else lives in the world. -->
@@ -34,21 +36,21 @@
 
       <section class="beat night-copy margin" data-beat="night">
         <p class="kicker">A café by day. A club by night.</p>
-        <p class="lead-title">Evenings, 18:00–23:00.</p>
+        <h2 class="lead-title">Evenings, 18:00–23:00.</h2>
         <p>Talks, demo nights, music and long dinners: a programme for startup people. Access depends on membership.</p>
       </section>
 
       <section class="caption panel" aria-label="This floor">
         <p class="label"></p>
-        <p class="title"></p>
+        <h2 class="title"></h2>
         <p class="line"></p>
-        <button class="explore link" type="button">Explore →</button>
+        <button class="explore link" type="button" aria-haspopup="dialog">Explore →</button>
       </section>
 
       <section class="beat members margin" data-beat="members" aria-label="Memberships">
         <div class="members-head">
           <p class="kicker">Memberships</p>
-          <p class="members-title">Three ways to belong.</p>
+          <h2 class="members-title">Three ways to belong.</h2>
         </div>
         <div class="tier-nav" role="group" aria-label="Choose a membership"></div>
         <div class="tiers"></div>
@@ -85,7 +87,7 @@
       </picture>
       <section>
         <p class="kicker">HSR Layout, Bengaluru</p>
-        <h2 class="serif">A house for startup people.</h2>
+        <h1 class="serif">A house for startup people.</h1>
         <p>Space is a private club for founders, early teams and the people around startups. A four-level house for work, shared interests and time together.</p>
         <dl class="rhythm">
           <div><dt>By day</dt><dd>A walk-in café, 08:00–18:00</dd></div>
