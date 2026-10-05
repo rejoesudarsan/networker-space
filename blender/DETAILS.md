@@ -82,7 +82,8 @@ Rules for every item:
   - note: dog-leg read from the CAD tread lines on both plans (first frame x 1.56..2.32, flights at z -0.32..0.09 and -0.8..-0.38, landing to the east wall), 2 x 8 risers of 22 cm; second-floor slab opened over the well. Eye-level render from the west hall matches p8, louvres visible through the court doorway.
 - [x] family2-sliding-teak-door: the sliding teak door and cove light in Family 2 (p16).
   - note: room measured top-down; panel parked on the south wall's room face beside the opening to the hall, with p16's four frames; bulkhead with an emissive cove strip, floating shelf on a dark panel (west wall), blind on the east window, fan.
-- [ ] kitchen2: light-wood cabinets and double sink (p26).
+- [x] kitchen2: light-wood cabinets and double sink (p26).
+  - note: room measured top-down; three runs from p26 (east hob run with wenge lowers, glass wall cabinets and hood; south base + display cabinet + tall light-wood pantry; west granite run with the double sink south of the door), black tile floor.
 
 ## Second floor and terrace (p29, p30, p32, p33, p34)
 - [ ] terrace-terracotta: terracotta tile floor on the long terrace.
