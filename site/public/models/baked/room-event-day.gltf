@@ -6,7 +6,7 @@
 	"scene":0,
 	"scenes":[
 		{
-			"name":"export.003",
+			"name":"export",
 			"nodes":[
 				0
 			]
@@ -66,11 +66,11 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":4932,
+			"count":4171,
 			"max":[
 				2.700000047683716,
 				1.0999999046325684,
-				4.119999885559082
+				4
 			],
 			"min":[
 				0.7600000500679016,
@@ -82,45 +82,45 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":4932,
+			"count":4171,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":4932,
+			"count":4171,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5123,
-			"count":7905,
+			"count":6705,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":59184,
+			"byteLength":50052,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":59184,
-			"byteOffset":59184,
+			"byteLength":50052,
+			"byteOffset":50052,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":39456,
-			"byteOffset":118368,
+			"byteLength":33368,
+			"byteOffset":100104,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":15810,
-			"byteOffset":157824,
+			"byteLength":13410,
+			"byteOffset":133472,
 			"target":34963
 		}
 	],
@@ -132,7 +132,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":173636,
+			"byteLength":146884,
 			"uri":"room-event-day.bin"
 		}
 	]

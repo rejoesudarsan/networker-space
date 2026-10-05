@@ -72,18 +72,6 @@ body.reading .hint { opacity: 0 }
 .caption .explore { margin-top: 4px; font-weight: 600 }
 .caption .leader { position: absolute; left: 100%; top: 10px; width: 9vw; height: 1px; background: currentColor; opacity: 0.5; transform-origin: 0 0; transform: rotate(12deg) translateX(18px) }
 
-/* Who's inside: an interest picker beside the court (not a live feed). */
-.who { right: calc(var(--inset) + 2vw); top: 36%; border: 0; padding: 0; margin: 0; min-width: 0; max-width: 30ch; font: 400 14px/20px var(--mono) }
-.who legend { padding: 0; margin-bottom: 8px }
-.who-options { display: grid; gap: 0 }
-.who-options label { display: flex; align-items: center; gap: 10px; min-height: 32px; cursor: pointer; position: relative; padding-left: 16px }
-.who-options input { position: absolute; opacity: 0; width: 1px; height: 1px }
-.who-options label:has(input:checked)::before { content: ''; position: absolute; left: 0; top: 13px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent) }
-.who-options label:has(input:checked) span { text-decoration: underline; text-underline-offset: 5px }
-.who-options label:has(input:focus-visible) span { outline: 2px solid currentColor; outline-offset: 4px }
-.who-caption { margin-top: 14px; font: 400 15px/22px var(--sans) }
-.who-line { font: 400 15px/22px var(--sans); color: var(--fg-soft) }
-
 /* Floor numbers while the house parts (frame 05). */
 .markers { inset: 0 }
 .marker { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 12px; font: 400 12px/18px var(--mono); transition: transform 0.1s linear }
@@ -155,9 +143,6 @@ body.still { overflow: hidden }
 .tier-nav { display: none }
 .tier-nav button[aria-pressed='true'] { text-decoration: underline; text-underline-offset: 5px }
 @media (max-width: 720px) {
-  .who { left: 20px; right: 20px; top: 14vh; max-width: none }
-  .who-options { grid-auto-flow: column; justify-content: start; gap: 16px }
-  .who-caption, .who-line { font-size: 14px }
   .markers { display: none }
   .members-label { left: 20px; top: 18vh }
   .tier-nav { display: flex; gap: 20px; position: absolute; left: 20px; top: calc(18vh + 22px) }

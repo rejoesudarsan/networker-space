@@ -99,28 +99,6 @@ $('.caption .explore').addEventListener('click', () => {
 
 let world = null
 
-// ---------- who's inside ----------
-const INTEREST_LIST = [
-  ['founders', 'Founders', 'Find a sounding board.', 'A conversation can change the day.'],
-  ['artists', 'Artists', 'Make something. Share a perspective.', 'Ideas take different forms here.'],
-  ['music', 'Music', 'Listen closer.', 'A small room. A shared rhythm.'],
-  ['play', 'Play', 'Leave room for play.', 'A game. A pause. A different kind of focus.'],
-]
-const whoOptions = $('.who-options')
-for (const [id, name] of INTEREST_LIST) {
-  const l = document.createElement('label')
-  l.innerHTML = `<input type="radio" name="who" value="${id}"${id === 'founders' ? ' checked' : ''}><span>${name}</span>`
-  whoOptions.append(l)
-}
-function setInterest(id) {
-  const [, , caption, line] = INTEREST_LIST.find((i) => i[0] === id)
-  $('.who-caption').textContent = caption
-  $('.who-line').textContent = line
-  world?.people.setInterest(id)
-}
-whoOptions.addEventListener('change', (e) => setInterest(e.target.value))
-setInterest('founders')
-
 // ---------- memberships ----------
 const tiersEl = $('.tiers')
 TIERS.forEach((t, i) => {
@@ -181,7 +159,6 @@ async function start() {
   world = await createScene($('.stage'))
   document.body.classList.add('ready')
   world.state.still = reduced.matches
-  world.people.setInterest($('.who-options input:checked').value)
   if (matchMedia('(max-width: 720px)').matches) setFocus(1)
   reduced.addEventListener('change', (e) => (world.state.still = e.matches))
   loop()
