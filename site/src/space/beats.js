@@ -2,7 +2,7 @@
 // Two camera angles only: the street (board 01), and one cutaway angle for the
 // open house, rising floor to floor. It opens on the house with the brief; the
 // first scroll goes in. Night returns to the street, where the evening, the
-// memberships and the call sit in the fog beside the lit house. Fog veils hide
+// memberships, how joining works and the call sit in the fog beside the lit house. Fog veils hide
 // the two cuts (into the house, out to night).
 
 // Scenes: exterior (the house on its street), floors (the open house; FOCUS 0
@@ -19,8 +19,9 @@ export const BEATS = [
   { id: 'second', from: 0.52, to: 0.62, scene: 'floors', floor: 'second' },
   { veil: true, from: 0.62, to: 0.65 },
   { id: 'night', from: 0.65, to: 0.75, scene: 'exterior', night: true },
-  { id: 'members', from: 0.75, to: 0.89, scene: 'exterior', night: true },
-  { id: 'call', from: 0.89, to: 1.0001, scene: 'exterior', night: true },
+  { id: 'members', from: 0.75, to: 0.86, scene: 'exterior', night: true },
+  { id: 'join', from: 0.86, to: 0.93, scene: 'exterior', night: true },
+  { id: 'call', from: 0.93, to: 1.0001, scene: 'exterior', night: true },
 ]
 
 // Which floor the open house is showing, through the floors beats.

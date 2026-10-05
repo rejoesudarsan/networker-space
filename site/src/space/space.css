@@ -134,6 +134,15 @@ body.dark .compare thead th { color: #f0d3b2 }
 .compare tfoot .no { font-size: 13px; display: inline-flex; min-height: 44px; align-items: center }
 .tier-help { font: 400 14px/20px var(--sans); color: var(--fg-soft) }
 
+/* How joining works: four numbered lines. */
+.join { gap: 12px }
+.steps { list-style: none; padding: 0; counter-reset: step; display: grid; gap: 8px; border-top: 1px solid color-mix(in srgb, var(--fg) 22%, transparent); padding-top: 12px }
+.steps li { counter-increment: step; display: grid; grid-template-columns: 2rem 1fr; column-gap: 8px; font: 400 16px/22px var(--sans) }
+.steps li::before { content: counter(step, decimal-leading-zero); grid-row: span 2; font: 500 13px/22px var(--mono); color: var(--accent) }
+body.dark .steps li::before { color: #f0d3b2 }
+.steps b { font-weight: 600 }
+.join p.who { color: var(--fg-soft); font-size: 15px; line-height: 22px }
+
 /* The last invitation. */
 .call-copy { gap: 6px; justify-items: start }
 .call-copy h2 { font: 400 40px/46px var(--serif); font-variation-settings: 'opsz' 48; letter-spacing: -0.01em }
@@ -219,6 +228,8 @@ body.still { overflow: hidden }
   .compare thead td { width: 32% }
   .compare tfoot .link, .compare tfoot .no { font-size: 12px }
   .call-copy h2 { font-size: 30px; line-height: 36px }
+  .steps li { font-size: 15px; line-height: 20px }
+  .join p.who { font-size: 14px; line-height: 20px }
 }
 @media (prefers-reduced-motion: reduce) {
   .beat, .caption, .sheet-body { transition: none; animation: none; filter: none }
