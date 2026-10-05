@@ -233,15 +233,15 @@
 		{
 			"bufferView":9,
 			"componentType":5126,
-			"count":120,
+			"count":408,
 			"max":[
-				0.14340198040008545,
+				2.381593704223633,
 				0.8738577365875244,
-				-0.9753937721252441
+				3.0254268646240234
 			],
 			"min":[
 				0.09659802168607712,
-				0.8492512702941895,
+				0.7220827341079712,
 				-1.674606442451477
 			],
 			"type":"VEC3"
@@ -249,13 +249,13 @@
 		{
 			"bufferView":10,
 			"componentType":5126,
-			"count":120,
+			"count":408,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":11,
 			"componentType":5123,
-			"count":216,
+			"count":744,
 			"type":"SCALAR"
 		}
 	],
@@ -316,26 +316,26 @@
 		},
 		{
 			"buffer":0,
-			"byteLength":1440,
+			"byteLength":4896,
 			"byteOffset":26352,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1440,
-			"byteOffset":27792,
+			"byteLength":4896,
+			"byteOffset":31248,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":432,
-			"byteOffset":29232,
+			"byteLength":1488,
+			"byteOffset":36144,
 			"target":34963
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":29664,
+			"byteLength":37632,
 			"uri":"ground-fixtures.bin"
 		}
 	]
