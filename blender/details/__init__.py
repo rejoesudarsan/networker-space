@@ -41,6 +41,7 @@ MODULES = [
     "garage_fitout",
     "office_den",
     "court2_flagstones_olive",
+    "court2_nest_pendants",
 ]
 
 

@@ -72,7 +72,8 @@ Rules for every item:
 ## First floor (p1, p11, p14, p8, p35, p16, p26)
 - [x] court2-flagstones-olive: sandstone flagstones in the Double HT Court and the olive tree in a planter (p11, p14).
   - note: court measured top-down (x 0.81..2.51, z 0.18..1.69, first frame), matching the second-floor void. Random flagstones in four tones with a few red accent tiles (p11); olive in a round concrete planter at the back before the east wall, as in p11 (site had it at the south-east).
-- [ ] court2-nest-pendants: three woven nest pendants hanging from the skylight into the court (p1, p11).
+- [x] court2-nest-pendants: three woven nest pendants hanging from the skylight into the court (p1, p11).
+  - note: three jittered twig spheres (r 0.10-0.125) in the court's north-west, two high and one low as in p11, on cords to the roof slab (2.75 above the first floor); the skylight item opens that slab.
 - [ ] court2-skylight: skylight frame and glass over the court void above the second floor, roof void opened (`ROOF_VOIDS`) (p1).
 - [ ] court2-louvred-doors: teak louvred doors between the court and Living 2 (p1, p11, p14).
 - [ ] steel-stair-to-second: steel stair with timber treads beside the court up to the second floor (p8, p35).
