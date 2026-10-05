@@ -94,7 +94,8 @@ Rules for every item:
   - note: p30 shows a low glass-fronted cabinet, not a railing, on the void's west edge; built that plus a plaster upstand to the south wall. Study nook (p32) in the stair-top hall north of the void: desk along the void-side wall, drawer unit, pier with black pinboard. Guard rail on the stairwell's open edges.
 
 ## Cameras and renders
-- [ ] detail-cameras: add cameras `Camera.Court2`, `Camera.Court1`, `Camera.Entrance`, `Camera.Terrace` framed like p1, p20, p24, p30, so each detail can be checked from a photo-matched view; render them in `--quick` mode.
+- [x] detail-cameras: add cameras `Camera.Court2`, `Camera.Court1`, `Camera.Entrance`, `Camera.Terrace` framed like p1, p20, p24, p30, so each detail can be checked from a photo-matched view; render them in `--quick` mode.
+  - note: Camera.Court2 / Court1 / Entrance / Terrace render to renders/04..07 with every build. Interiors are dark under the dawn lighting (Court 1 nearly black); the build now takes ~5.5 min instead of ~1.5.
 
 ## Needs your input
 - [x] garden-steps-p36: answered by p9 and the plan: they are the side passage's flights; built in side-garden-passage.

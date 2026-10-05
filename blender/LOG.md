@@ -30,3 +30,4 @@
 - 2026-10-05 08:39 terrace_terracotta: build ~95 s; eye-level render matched p33's framing. Raised the parapet style (rail vs piers) as a [?] item.
 - 2026-10-05 08:43 bedroom5_bathtub: build ~95 s; four eye-level renders: solid tub slab, tiles behind the wall face, WC clash, plinth filling the basin; each fixed.
 - 2026-10-05 08:46 passage_over_void: build ~95 s; void and nook measured top-down; eye-level render matched p30 first try.
+- 2026-10-05 08:54 detail_cameras: build 5 min 35 s with the four new views. Court 2 and Terrace read like p11/p33; Court 1 and Entrance are dark under dawn light. Haze hiding is a no-op (haze is built after finish).
