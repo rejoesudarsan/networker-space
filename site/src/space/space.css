@@ -72,6 +72,23 @@ body.reading .hint { opacity: 0 }
 .caption .explore { margin-top: 4px; font-weight: 600 }
 .caption .leader { position: absolute; left: 100%; top: 10px; width: 9vw; height: 1px; background: currentColor; opacity: 0.5; transform-origin: 0 0; transform: rotate(12deg) translateX(18px) }
 
+/* Who's inside: an interest picker beside the court (not a live feed). */
+.who { right: calc(var(--inset) + 2vw); top: 36%; border: 0; padding: 0; margin: 0; min-width: 0; max-width: 30ch; font: 400 14px/20px var(--mono) }
+.who legend { padding: 0; margin-bottom: 8px }
+.who-options { display: grid; gap: 0 }
+.who-options label { display: flex; align-items: center; gap: 10px; min-height: 32px; cursor: pointer; position: relative; padding-left: 16px }
+.who-options input { position: absolute; opacity: 0; width: 1px; height: 1px }
+.who-options label:has(input:checked)::before { content: ''; position: absolute; left: 0; top: 13px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent) }
+.who-options label:has(input:checked) span { text-decoration: underline; text-underline-offset: 5px }
+.who-options label:has(input:focus-visible) span { outline: 2px solid currentColor; outline-offset: 4px }
+.who-caption { margin-top: 14px; font: 400 15px/22px var(--sans) }
+.who-line { font: 400 15px/22px var(--sans); color: var(--fg-soft) }
+
+/* Floor numbers while the house parts (frame 05). */
+.markers { inset: 0 }
+.marker { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 12px; font: 400 12px/18px var(--mono); transition: transform 0.1s linear }
+.marker i { display: block; height: 1px; background: currentColor; opacity: 0.45; width: var(--len, 120px) }
+
 /* Memberships: each tier's copy hangs under its object. */
 .members { inset: 0 }
 .members-label { position: absolute; left: calc(var(--inset) + 6vw); top: 24vh }
@@ -115,13 +132,33 @@ body.reading .hint { opacity: 0 }
   font: 400 14px/20px var(--mono); transition: opacity 0.8s var(--ease);
 }
 body.ready .loading { opacity: 0; pointer-events: none }
+.loading, .failure { pointer-events: none }
+.loading button, .failure button { pointer-events: auto }
 .failure { display: none }
 body.failed .failure { display: grid }
 body.failed .loading { display: none }
 
+/* Without motion: a plain reader over the fog. */
+.reader { display: none }
+body.still .reader {
+  display: block; position: fixed; inset: 0; z-index: 4; overflow-y: auto; overscroll-behavior: contain;
+  padding: calc(var(--inset) + 72px) var(--inset) calc(var(--inset) + 72px) calc(var(--inset) + 8vw);
+}
+body.still .reader section { max-width: 52ch; margin-bottom: 56px; display: grid; gap: 8px }
+body.still .reader h2 { font: 400 22px/30px var(--sans) }
+body.still .reader .serif { font: 400 28px/34px var(--serif) }
+body.still .reader-tiers { list-style: none; padding: 0; display: grid; gap: 6px; font: 400 14px/22px var(--mono) }
+body.still .reader-tiers b { font-weight: 600; margin-right: 10px; letter-spacing: 0.08em; text-transform: uppercase }
+body.still .stage, body.still .copy, body.still .loading, body.still .failure, body.still .hint { display: none }
+body.still { overflow: hidden }
+
 .tier-nav { display: none }
 .tier-nav button[aria-pressed='true'] { text-decoration: underline; text-underline-offset: 5px }
 @media (max-width: 720px) {
+  .who { left: 20px; right: 20px; top: 14vh; max-width: none }
+  .who-options { grid-auto-flow: column; justify-content: start; gap: 16px }
+  .who-caption, .who-line { font-size: 14px }
+  .markers { display: none }
   .members-label { left: 20px; top: 18vh }
   .tier-nav { display: flex; gap: 20px; position: absolute; left: 20px; top: calc(18vh + 22px) }
   .tier { display: none; transform: none !important; left: 20px; top: auto; bottom: calc(var(--inset) + 70px); width: auto; padding-left: 0 }

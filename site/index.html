@@ -35,6 +35,19 @@
         <button class="explore link" type="button">Explore →</button>
       </section>
 
+      <fieldset class="beat who" data-beat="court">
+        <legend class="kicker">Who’s inside</legend>
+        <div class="who-options"></div>
+        <p class="who-caption"></p>
+        <p class="who-line"></p>
+      </fieldset>
+
+      <div class="beat markers" data-beat="opening" aria-hidden="true">
+        <span class="marker"><b>01</b><i></i></span>
+        <span class="marker"><b>02</b><i></i></span>
+        <span class="marker"><b>03</b><i></i></span>
+      </div>
+
       <section class="beat members" data-beat="members" aria-label="Memberships">
         <p class="kicker members-label">Memberships</p>
         <div class="tier-nav" role="group" aria-label="Choose a membership"></div>
@@ -56,13 +69,58 @@
 
     <div class="loading" aria-live="polite">
       <p>Preparing the house</p>
+      <button class="still link" type="button">Continue without motion →</button>
     </div>
     <div class="failure" role="alert">
       <p>The house is taking longer to arrive.</p>
-      <button class="retry link" type="button">Try again</button>
+      <p class="failure-actions"><button class="retry link" type="button">Try again</button> <button class="still link" type="button">Continue without motion →</button></p>
     </div>
 
-    <noscript><p class="fallback-note">This page draws the house in 3D and needs JavaScript. Book a call to visit.</p></noscript>
+    <!-- Without motion: the same story as a reader, for no WebGL, a failed load or by choice. -->
+    <article class="reader" aria-label="Space, without motion">
+      <section>
+        <p class="kicker">HSR Layout, Bengaluru</p>
+        <h2>A house for startup people.</h2>
+        <p>Space is a private club for startup people in HSR Layout, Bengaluru. A house for work, shared interests and time together. Four levels. Room to belong.</p>
+      </section>
+      <section>
+        <p class="kicker">Lower level</p>
+        <h2>Work, with room to think.</h2>
+        <p>A quieter part of the house for focused work and small conversations. Work rooms sit beside courts that bring light below street level.</p>
+      </section>
+      <section>
+        <p class="kicker">Ground floor · Walk-in café · 08:00–18:00</p>
+        <h2>Coffee. A table. An unhurried start.</h2>
+        <p>Coffee, a table and the possibility of a good conversation. Stay close to the garden, meet someone new or take a little time for yourself.</p>
+      </section>
+      <section>
+        <p class="kicker">First floor · Courtyard · Event room · Library</p>
+        <h2>Read. Talk. Let an idea take its time.</h2>
+        <p>Read in the library. Find a quiet corner. Let a conversation unfold beside the courtyard.</p>
+      </section>
+      <section>
+        <p class="kicker">Second floor</p>
+        <h2>The day opens into evening.</h2>
+        <p>Terracotta underfoot, a long bench and the evening air. The club's evening rhythm runs from 18:00 to 23:00; access depends on membership.</p>
+      </section>
+      <section>
+        <p class="kicker">Memberships</p>
+        <h2>Three ways to belong.</h2>
+        <ul class="reader-tiers">
+          <li><b>Visit</b> Walk-in access · Table booking · Needs —</li>
+          <li><b>Regular</b> Quiet spaces · Game rooms · Needs —</li>
+          <li><b>House</b> Broader access · Team + guests · Needs —</li>
+        </ul>
+        <p>Requirements to be confirmed on a call.</p>
+      </section>
+      <section>
+        <h2 class="serif">There’s room for you.</h2>
+        <p>Tell us what you’re building.</p>
+        <a class="link" href="#book" data-book>Book a call →</a>
+      </section>
+    </article>
+
+    <noscript><style>.reader { display: block !important } .loading { display: none }</style></noscript>
     <script type="module" src="/src/space/main.js"></script>
   </body>
 </html>

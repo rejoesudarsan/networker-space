@@ -1,7 +1,10 @@
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
+import { Reflector } from 'three/examples/jsm/objects/Reflector.js'
 import { ROOMS } from './beats.js'
+import { createClouds } from './clouds.js'
+import { createPeople } from './people.js'
 
 // The house, baked in Blender (blender/tools/bake_site.py): each floor is one
 // unlit mesh whose atlas already holds its light, so what the site shows is
@@ -231,11 +234,49 @@ export async function createScene(canvas) {
   const site = loaded[5] || new THREE.Group()
   house.add(site)
 
-  // The street: asphalt that goes to fog before the frame's edge.
-  const street = new THREE.Mesh(
-    new THREE.PlaneGeometry(200, 200),
-    fogify(new THREE.MeshBasicMaterial({ color: '#8d8790', toneMapped: false })),
-  )
+  // The street: wet asphalt holding a soft, broken reflection of the house,
+  // going to fog before the frame's edge (Astra frames 03 and 19).
+  const street = new Reflector(new THREE.PlaneGeometry(200, 200), {
+    textureWidth: 1024,
+    textureHeight: 1024,
+    multisample: 0,
+    clipBias: 0.003,
+    shader: {
+      name: 'WetStreet',
+      uniforms: {
+        color: { value: null }, tDiffuse: { value: null }, textureMatrix: { value: null },
+        uFog: { value: new THREE.Vector3() }, uNear: { value: 20 }, uFar: { value: 60 }, uTime: { value: 0 }, uNight: { value: 0 },
+      },
+      vertexShader: `
+        uniform mat4 textureMatrix;
+        varying vec4 vUv;
+        varying vec3 vWorldP;
+        void main() {
+          vUv = textureMatrix * vec4(position, 1.0);
+          vWorldP = (modelMatrix * vec4(position, 1.0)).xyz;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }`,
+      fragmentShader: `
+        uniform sampler2D tDiffuse;
+        uniform vec3 uFog; uniform float uNear, uFar, uTime, uNight;
+        varying vec4 vUv;
+        varying vec3 vWorldP;
+        ${NOISE}
+        void main() {
+          // Ripples and puddles break the mirror up.
+          float n = fbm(vWorldP.xz * 1.7);
+          float puddle = smoothstep(0.45, 0.62, fbm(vWorldP.xz * 0.35 + 3.0));
+          vec2 wob = vec2(fbm(vWorldP.xz * 6.0 + uTime * 0.05) - 0.5, fbm(vWorldP.zx * 6.0 - uTime * 0.04) - 0.5) * mix(0.06, 0.012, puddle);
+          vec4 uv = vUv; uv.xy += wob * uv.w;
+          vec3 refl = pow(max(texture2DProj(tDiffuse, uv).rgb, 0.0), vec3(1.0 / 2.2));
+          vec3 asphalt = mix(uFog * 0.62, uFog * 0.5, n);
+          vec3 col = mix(asphalt, refl, mix(0.22, 0.6, puddle) * mix(1.0, 1.25, uNight));
+          float d = distance(cameraPosition, vWorldP);
+          col = mix(col, uFog, smoothstep(uNear, uFar, d));
+          gl_FragColor = vec4(col, 1.0);
+        }`,
+    },
+  })
   street.rotation.x = -Math.PI / 2
   street.position.y = -0.002
   house.add(street)
@@ -261,6 +302,9 @@ export async function createScene(canvas) {
     }
   }
   const clone = (name) => (proto[name] ? proto[name].clone() : new THREE.Group())
+
+  const clouds = createClouds(scene, fogUniforms.uFog.value)
+  const people = createPeople(floors, ROOMS, fogify)
 
   // Prologue: two chairs, two books and petals falling through the dawn.
   const falling = new THREE.Group()
@@ -402,6 +446,14 @@ export async function createScene(canvas) {
     sky.material.uniforms.uGlowK.value = state.glow
     veilMat.uniforms.uVeil.value = state.veil
     bakedUniforms.uNight.value = state.night
+    {
+      const u = street.material.uniforms
+      u.uFog.value.copy(fogUniforms.uFog.value)
+      u.uNear.value = fogUniforms.uNear.value
+      u.uFar.value = fogUniforms.uFar.value
+      u.uTime.value = t
+      u.uNight.value = state.night
+    }
     // Until the night bake lands: lit windows are warm glass.
     for (const m of glassMats) {
       m.color.copy(glassDay).lerp(glassNight, state.night)
@@ -457,6 +509,21 @@ export async function createScene(canvas) {
       fogUniforms.uBedY.value = 0.0
       fogUniforms.uBedDepth.value = 0.4
     }
+
+    // Cloud gathers round what is in view.
+    if (isRoom) {
+      const r = ROOMS[state.room]
+      const f = FLOORS[r.floor]
+      const [x0, z0, x1, z1] = r.rect
+      clouds.gather('room:' + state.room, f.x + (x0 + x1) / 2, f.y, f.z + (z0 + z1) / 2, (x1 - x0) / 2 + 0.2, (z1 - z0) / 2 + 0.2)
+    } else if (s === 'exterior' || s === 'prologue') {
+      clouds.gather('street', 0, 0.05, 2.5, 7.5, 5.5, { size: 0.55, bed: 0.5 })
+    } else {
+      clouds.gather('stage', 0, -0.32, -60, 2.2, 1.1, { size: 0.7, ring: 0.6 })
+    }
+    const cloudK = isRoom ? 0.95 : s === 'exterior' ? 0.55 + 0.35 * state.open : s === 'prologue' ? 0.3 : 0.5
+    clouds.update(t, cloudK * (1 - state.veil * 0.5), 1 - state.night * 0.7)
+    people.update(t, isRoom ? state.room : null, state.still)
 
     // Camera target for the scene.
     if (s === 'prologue' || s === 'exterior') {
@@ -527,8 +594,18 @@ export async function createScene(canvas) {
     return { x: (tmp.x * 0.5 + 0.5) * width, y: (-tmp.y * 0.5 + 0.5) * height, behind: tmp.z > 1 }
   }
 
+  // Where each floor's level sits on screen, for the 01 / 02 / 03 markers.
+  const markerAnchors = ['ground', 'first', 'second'].map((id) => {
+    const o = new THREE.Object3D()
+    o.position.set(-3.4, 0.55, 5.2)
+    floors[id].add(o)
+    return o
+  })
+
   return {
     state,
+    people,
+    markerScreens: () => markerAnchors.map(toScreen),
     tierScreens: () => tierAnchors.map(toScreen),
     callScreen: () => toScreen(callAnchor),
   }

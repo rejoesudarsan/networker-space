@@ -97,6 +97,30 @@ $('.caption .explore').addEventListener('click', () => {
   )
 })
 
+let world = null
+
+// ---------- who's inside ----------
+const INTEREST_LIST = [
+  ['founders', 'Founders', 'Find a sounding board.', 'A conversation can change the day.'],
+  ['artists', 'Artists', 'Make something. Share a perspective.', 'Ideas take different forms here.'],
+  ['music', 'Music', 'Listen closer.', 'A small room. A shared rhythm.'],
+  ['play', 'Play', 'Leave room for play.', 'A game. A pause. A different kind of focus.'],
+]
+const whoOptions = $('.who-options')
+for (const [id, name] of INTEREST_LIST) {
+  const l = document.createElement('label')
+  l.innerHTML = `<input type="radio" name="who" value="${id}"${id === 'founders' ? ' checked' : ''}><span>${name}</span>`
+  whoOptions.append(l)
+}
+function setInterest(id) {
+  const [, , caption, line] = INTEREST_LIST.find((i) => i[0] === id)
+  $('.who-caption').textContent = caption
+  $('.who-line').textContent = line
+  world?.people.setInterest(id)
+}
+whoOptions.addEventListener('change', (e) => setInterest(e.target.value))
+setInterest('founders')
+
 // ---------- memberships ----------
 const tiersEl = $('.tiers')
 TIERS.forEach((t, i) => {
@@ -116,7 +140,6 @@ TIERS.forEach((t, i) => {
   b.addEventListener('click', () => setFocus(i))
   nav.append(b)
 })
-let world = null
 function setFocus(i) {
   if (world) world.state.tierFocus = i
   $$('.tier').forEach((el, j) => el.classList.toggle('focus', j === i))
@@ -140,12 +163,25 @@ function webgl() {
   }
 }
 
+// Without motion: the reader, no WebGL. Chosen from the loader or the
+// failure note, or automatic when the browser has no WebGL at all.
+function still() {
+  document.body.classList.add('still')
+  stopped = true
+}
+let stopped = false
+for (const b of $$('.still')) b.addEventListener('click', still)
+
 async function start() {
-  if (!webgl()) throw new Error('no WebGL')
+  if (!webgl() || location.search.includes('still')) {
+    still()
+    return
+  }
   const { createScene } = await import('./scene.js')
   world = await createScene($('.stage'))
   document.body.classList.add('ready')
   world.state.still = reduced.matches
+  world.people.setInterest($('.who-options input:checked').value)
   if (matchMedia('(max-width: 720px)').matches) setFocus(1)
   reduced.addEventListener('change', (e) => (world.state.still = e.matches))
   loop()
@@ -233,11 +269,20 @@ function loop(now = performance.now()) {
       el.style.transform = `translate(${Math.round(pts[i].x)}px, ${Math.round(pts[i].y)}px) translateX(-50%)`
     })
   }
+  if (beat.id === 'opening' && !phone) {
+    const pts = world.markerScreens()
+    $$('.marker').forEach((el, i) => {
+      // Number at the left inset, line running in to the house's edge.
+      const x0 = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--inset')) || 32
+      el.style.transform = `translate(${x0 + 60}px, ${Math.round(pts[i].y)}px)`
+      el.style.setProperty('--len', Math.max(20, pts[i].x - x0 - 100) + 'px')
+    })
+  }
   if (beat.scene === 'call' && !phone) {
     const c = world.callScreen()
     $('.call-copy').style.transform = `translate(${Math.round(c.x)}px, ${Math.round(c.y)}px) translateY(-50%)`
   }
-  requestAnimationFrame(loop)
+  if (!stopped) requestAnimationFrame(loop)
 }
 
 start().catch((err) => {
