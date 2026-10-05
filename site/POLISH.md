@@ -1,0 +1,68 @@
+# The website: performance, polish, copy, and the way to a membership
+
+Worked by a Ralph loop, one item per iteration (prompt: `site/RALPH.md`).
+The site is `site/` (Vite + Three.js; the page is `index.html`, the scroll story
+`src/space/`). `PRODUCT.md` and `DESIGN.md` at the repo root are the brief.
+
+Markers: `[ ]` to do, `[x]` done, `[-]` skipped after three failures, `[?]` needs the user.
+
+Rules:
+- **Done** means: `npm run build` passes, and you have looked at the change in a
+  headless browser (desktop 1280×800 and phone 390×844) and it reads right.
+  Headless WebGL on this host is software-rendered: keep screenshots ≤ 960 px
+  and wait ~20 s after a load before you capture.
+- Never fabricate prices, member names, testimonials, partner logos, an address
+  or dates (PRODUCT.md, "Evidence on Hand"). Where a fact is missing, write the
+  copy so it does not need it, or leave a clearly marked placeholder and add a
+  `[?]` item with the question.
+- Do not edit `blender/` or `site/public/models/baked/`: the bake loop owns them.
+  If the site needs something from the bake, add a `[?]` item.
+- Copy: plain, specific, short. No marketing filler ("elevate", "unlock",
+  "seamless", "curated", "vibrant", "community-driven"). Say what happens, when,
+  and for whom. Keep the existing voice in `index.html`.
+- Every path ends at a membership: each section should leave the reader one
+  clear next step.
+
+The user's latest plan (5 Oct 2026), newer than PRODUCT.md where they differ:
+- Ground floor a walk-in café; basement open work area with a maker space and
+  a "maker's table"; the basement office a private founders' lounge (premium);
+  a seating platform round the big tree; first floor events with informal
+  seating and private rooms; two quiet founder work rooms above; the terrace
+  for grills, work and rooftop parties.
+- 08:00–18:00 work and learn (breakfast, work, maker's table, workshops).
+  After 18:00 no working: meetups, learning events, movie nights, PlayStation,
+  rooftop parties, lounge access.
+- Three ways in: walk-in (pay as you go), one paid membership, and a lifetime
+  membership capped at 20 people. What each unlocks is still being decided:
+  draft it from the zones above and mark it as a `[?]` for the user to confirm.
+
+## Performance
+- [ ] measure: record a baseline in `site/PERF.md`: `dist/` size, the largest assets, time to first frame and to the house showing on desktop and phone viewports (Performance API marks), and draw calls / triangles from `renderer.info` on the hero.
+- [ ] lazy-floors: load only what the hero needs first (site, ground, roof, street); fetch the other floors after the first frame or when the scroll nears them. No pop-in: a floor not loaded yet stays veiled.
+- [ ] compress-geometry: serve the baked glTFs with meshopt (or Draco) compression via a build step that writes to `dist/` only; leave `public/models/baked/` as the bake writes it. Record the size win in PERF.md.
+- [ ] compress-textures: atlases as KTX2/Basis (or at least resized WebP with a JPEG fallback); a smaller tier for phones. Record the win.
+- [ ] adaptive-quality: cap pixel ratio and Reflector resolution on phones and weak GPUs; drop to a still frame when the frame rate stays low; respect `prefers-reduced-motion`.
+- [ ] loading-state: a quiet loading state in the design's style (no spinner), progress from real bytes, and a no-WebGL fallback showing a still image of the house with the full copy.
+- [ ] cache: long-lived cache headers for hashed assets in the Cloudflare config (`wrangler.jsonc` / `_headers`); check the HTML stays fresh.
+
+## Polish
+- [ ] flicker-aa: check the hero, each floor and the night beat for z-fighting, shimmering edges and flicker; fix (polygon offset, depth, AA).
+- [ ] phone-layout: every beat on a 390×844 phone: copy never covers the house's key part, tap targets ≥ 44 px, no horizontal scroll, safe areas.
+- [ ] scroll-feel: scroll pacing per beat; veils neither too long nor abrupt; the captions appear in time; keyboard and trackpad both feel right.
+- [ ] a11y: semantic headings in order, focus states, the booking sheet traps focus and closes on Esc, alt text / aria for the canvas, contrast of copy on every fog colour (WCAG AA).
+- [ ] meta: title, description, Open Graph image (a render of the house), favicon set, theme colour.
+
+## Copy
+- [ ] copy-audit: read every line on the page in order, as a founder seeing it first. List in this file what is vague, repeated or missing; then rewrite `index.html`, `FLOOR_COPY` and `TIERS` in one pass.
+- [ ] floor-copy: each floor caption says what you do there and when (morning work, the café, the court and library, the evening on the terrace), using the zone plan in `PRODUCT.md` and `DESIGN.md`.
+- [ ] night-copy: what an evening is: the kinds of nights (talks, demo nights, dinners, film nights, rooftop), how often, who comes, how a member gets in. No made-up dates or names.
+
+## The way to a membership
+- [ ] tiers-detail: each membership shows what it includes, what it needs (eligibility), who it is for, and its hours/access, side by side and comparable at a glance. Prices: a placeholder only, plus a `[?]` item for the user.
+- [ ] how-to-join: a short "How joining works" beat between the memberships and the call: 1. book a call, 2. visit the house, 3. get your invite, 4. first day in. Each step one line.
+- [ ] faq: 6–8 short answers prospects will ask (Can I walk in? Can I bring guests or my team? Is there a desk for me? Wi-Fi, calls, quiet? Evenings without membership? Lifetime tier?). Answer only from PRODUCT.md and the notes above; anything unknown becomes a `[?]`.
+- [ ] apply-form: replace the dead "Book a call" sheet with a short apply form (name, email, what you are building, which membership, how you heard). It submits to a Cloudflare Worker endpoint or Formspree-style service: build it behind one config value, add a `[?]` for which service and inbox, and show a clear thank-you state ("We'll write within two days to set up a call").
+- [ ] membership-cta: every beat ends with one next step toward a membership (the right tier pre-selected in the form when coming from a tier).
+- [ ] end-to-end: walk the whole path on desktop and phone, from first frame to the thank-you state; fix anything that breaks the flow. Then output the promise.
+
+## Needs your input

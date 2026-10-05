@@ -1,6 +1,6 @@
 # Baked light for the website: checklist
 
-Worked by a Ralph loop on Hetzner, one item per iteration (prompt: `blender/BAKE-RALPH.md`).
+Worked by a Ralph loop on Hetzner (bb-hetzner), one item per iteration (prompt: `blender/BAKE-RALPH.md`).
 The site shows each floor as a single unlit mesh with its light baked into an atlas.
 `blender/tools/bake_site.py` produces them in `site/public/models/baked/`:
 
@@ -19,7 +19,7 @@ Rules:
   3. There are no light leaks, which show as bright seams where walls meet the slab.
   4. There are no blotches left by the denoiser.
 - Production settings are `--res 4096 --samples 256` for floors and `--res 2048 --samples 192` for roof and site. Lower them only if a bake takes more than 90 minutes, and note it.
-- Commit the outputs and push to `site-realism`, so the Mac thread can pull them.
+- Commit the outputs and push to `main`, so the Mac thread can pull them.
 - A part needs a re-bake whenever a fit-out module that builds on its floor changes after its atlas was baked. The **Re-bake** section lists these. Add a line there when `git log` shows such a change.
 
 ## Room dioramas (the homepage's room scenes; `--rooms`, from site/src/space/rooms.json)
