@@ -90,7 +90,8 @@ Rules for every item:
   - note: the tile floor already existed (build_house, 30 cm tiles); added p33's weathered timber bench along the house wall and the roof's deep eave over the terrace edge. p33 contradicts the board's steel rail on the parapet; question added under Needs your input.
 - [x] bedroom5-bathtub: bathtub in the second-floor bath (p29).
   - note: the bath is the room between the Dress and the stair (x 1.0..2.0, z -2.36..-1.535, measured). Inset tub in a slate deck on a turquoise glass-block plinth, white grid tiles, glass shower in the north-west corner, WC on the west wall, slate floor (p29).
-- [ ] passage-over-void: the passage railing over the courtyard void and the study nook (p30).
+- [x] passage-over-void: the passage railing over the courtyard void and the study nook (p30).
+  - note: p30 shows a low glass-fronted cabinet, not a railing, on the void's west edge; built that plus a plaster upstand to the south wall. Study nook (p32) in the stair-top hall north of the void: desk along the void-side wall, drawer unit, pier with black pinboard. Guard rail on the stairwell's open edges.
 
 ## Cameras and renders
 - [ ] detail-cameras: add cameras `Camera.Court2`, `Camera.Court1`, `Camera.Entrance`, `Camera.Terrace` framed like p1, p20, p24, p30, so each detail can be checked from a photo-matched view; render them in `--quick` mode.

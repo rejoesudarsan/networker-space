@@ -49,6 +49,7 @@ MODULES = [
     "kitchen2",
     "terrace_terracotta",
     "bedroom5_bathtub",
+    "passage_over_void",
 ]
 
 
