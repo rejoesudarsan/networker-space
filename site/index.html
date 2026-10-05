@@ -10,96 +10,94 @@
     <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <!-- The dawn fog: the browser chrome matches the first frame. -->
-    <meta name="theme-color" content="#d1bfc2" />
+    <meta name="theme-color" content="#e9c9c0" />
     <!-- Link previews: the house at dawn, from the site's own street view. -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Space" />
     <meta property="og:url" content="https://space.hsrfounders.club/" />
-    <meta property="og:title" content="Space · A house for startup people in HSR Layout, Bengaluru" />
+    <meta property="og:title" content="Space · A house that becomes what the hour needs" />
     <meta property="og:description" content="A private club for founders, early teams and the people around startups: work and learn by day, meet after six." />
     <meta property="og:image" content="https://space.hsrfounders.club/og.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="The house at dawn: a white four-level house with a grey stair tower and two trees at the gate, in pink morning fog." />
+    <meta property="og:image:alt" content="The house at dawn from above its street: a white four-level house with a grey stair tower, trees and neighbours either side, in pink morning haze." />
     <meta name="twitter:card" content="summary_large_image" />
   </head>
   <body>
     <!-- For screen readers and keyboards: the whole story as text, in one place. -->
     <button class="skip link still" type="button">Read it as text →</button>
     <canvas class="stage" aria-hidden="true"></canvas>
+    <div class="grain" aria-hidden="true"></div>
 
-    <!-- The four corners: everything else lives in the world. -->
-    <a class="corner tl wordmark" href="/" aria-label="Space, home">SPACE</a>
-    <a class="corner tr link" href="#book" data-book>Book a call</a>
-    <span class="corner bl hint" aria-hidden="true">Scroll</span>
-    <span class="corner br clock" aria-label="Time in the house">06:00 IST</span>
+    <header class="bar">
+      <a class="mark" href="/" aria-label="Space, home">
+        <span class="mark-name">Space</span>
+        <span class="mark-place">HSR Layout, Bengaluru</span>
+      </a>
+      <a class="call" href="#book" data-book>Book a call</a>
+    </header>
 
-    <main class="copy" aria-live="polite">
-
-      <!-- The copy on the street sits in the fog margin left of the house. -->
-      <!-- The brief: what Space is, who it's for, how the day runs. -->
-      <section class="beat brief margin" data-beat="hero">
-        <p class="kicker">HSR Layout, Bengaluru</p>
-        <h1>A house for startup people.</h1>
-        <p class="intro">Space is a private club for founders, early teams and the people around startups: a four-floor house to work and learn in by day, and to meet in after six.</p>
-        <dl class="rhythm">
-          <div><dt>08:00–18:00</dt><dd>Work and learn: breakfast, desks, the maker’s table, workshops</dd></div>
-          <div><dt>18:00–23:00</dt><dd>No work: meetups, film nights, PlayStation, rooftop parties</dd></div>
-          <div><dt>To join</dt><dd>Walk in and pay as you go, or become a member</dd></div>
-        </dl>
-        <a class="link strong" href="#book" data-book>Book a call →</a>
+    <!-- The day, told in chapters by the hour. -->
+    <main class="story" aria-live="polite">
+      <section class="chapter" data-beat="hero">
+        <h1>A house that becomes what the hour needs.</h1>
+        <p>A private club for founders, early teams and the people around startups in HSR Layout, Bengaluru: four floors to work and learn in by day, and to meet in after six.</p>
+        <p class="hint">Scroll to spend a day inside</p>
       </section>
 
-      <section class="beat night-copy margin" data-beat="night">
-        <p class="kicker">After six, no work</p>
-        <h2 class="lead-title">Evenings, 18:00–23:00.</h2>
-        <p>At six the desks close and the house turns to people.</p>
-        <dl class="nights">
-          <div><dt>Meetups</dt><dd>People building companies, in one room</dd></div>
-          <div><dt>Learning</dt><dd>A talk or a workshop, then questions</dd></div>
-          <div><dt>Film nights</dt><dd>The screen in the event room</dd></div>
-          <div><dt>PlayStation</dt><dd>Games, no agenda</dd></div>
-          <div><dt>Rooftop</dt><dd>The terrace, the grill, a party</dd></div>
-        </dl>
-        <p class="who">Founders, early teams and the people around startups. Members come in any evening; lifetime members bring their team and guests. The calendar is being set.</p>
-        <a class="link strong" href="#book" data-book data-tier="member">Become a member →</a>
+      <section class="chapter" data-beat="ground">
+        <p class="kicker">Ground floor · 08:00–18:00</p>
+        <h2>Morning. The doors are open.</h2>
+        <p>From eight the ground floor is a café anyone can walk into: breakfast, coffee and a table to work at, pay as you go. It opens onto the garden.</p>
+        <p class="actions"><a class="link" href="#book" data-book data-tier="member">Here most days? Become a member →</a> <button class="link soft" type="button" data-explore="ground" aria-haspopup="dialog">Explore</button></p>
       </section>
 
-      <section class="caption panel" aria-label="This floor">
-        <p class="label"></p>
-        <h2 class="title"></h2>
-        <p class="line"></p>
-        <p class="actions"><a class="next link strong" href="#book" data-book></a> <button class="explore link" type="button" aria-haspopup="dialog">Explore</button></p>
+      <section class="chapter" data-beat="lower">
+        <p class="kicker">Lower level · 08:00–18:00</p>
+        <h2>Midday. The house goes to work.</h2>
+        <p>Below the street, the open work area fills round the big tree, with a seating platform at its trunk. The maker’s table is for building things by hand, and the day’s workshops run round it.</p>
+        <p class="actions"><a class="link" href="#book" data-book data-tier="member">Use the maker’s table: become a member →</a> <button class="link soft" type="button" data-explore="lower" aria-haspopup="dialog">Explore</button></p>
       </section>
 
-      <section class="beat members margin" data-beat="members" aria-label="Memberships">
-        <div class="members-head">
-          <p class="kicker">Three ways in</p>
-          <h2 class="members-title">Walk in, join, or stay for good.</h2>
-        </div>
-        <table class="compare"></table>
-        <p class="tier-help">Prices are being set; we’ll go through them on a call.</p>
+      <section class="chapter" data-beat="first">
+        <p class="kicker">First floor</p>
+        <h2>Afternoon. The rooms shift.</h2>
+        <p>Private rooms off the courtyard take a meeting or a small group, and informal seats run round it. At six the event room takes over: meetups, learning events and film nights.</p>
+        <p class="actions"><a class="link" href="#book" data-book data-tier="member">Evenings come with membership →</a> <button class="link soft" type="button" data-explore="first" aria-haspopup="dialog">Explore</button></p>
       </section>
 
-      <section class="beat join margin" data-beat="join">
-        <p class="kicker">How joining works</p>
-        <h2 class="lead-title">Four steps in.</h2>
-        <ol class="steps">
-          <li><b>Book a call</b> Tell us what you’re building, and which way in fits.</li>
-          <li><b>Visit the house</b> Come by in the day and see the floors.</li>
-          <li><b>Get your invite</b> We write to you with your membership and how to start.</li>
-          <li><b>First day in</b> A desk, the maker’s table, and your first evening.</li>
-        </ol>
-        <p class="who">Walking in? Skip all four: the café opens at 08:00.</p>
-        <p class="actions"><a class="link strong" href="#book" data-book>Book a call →</a> <button class="link" type="button" data-faq aria-haspopup="dialog">Questions →</button></p>
+      <section class="chapter" data-beat="second">
+        <p class="kicker">Second floor · after 18:00</p>
+        <h2>Evening. It turns into a club.</h2>
+        <p>At six the work stops. The two quiet founder rooms close for the day, and the terrace takes the grill and the rooftop parties.</p>
+        <p class="actions"><a class="link" href="#book" data-book>Book a call →</a> <button class="link soft" type="button" data-explore="second" aria-haspopup="dialog">Explore</button></p>
       </section>
 
-      <section class="beat call-copy margin" data-beat="call" aria-label="Book a call">
-        <h2>There’s room for you.</h2>
-        <p>Tell us what you’re building, or just walk in: the café opens at 08:00.</p>
-        <p class="actions"><a class="link" href="#book" data-book>Book a call →</a> <button class="link" type="button" data-faq aria-haspopup="dialog">Questions →</button></p>
+      <section class="chapter" data-beat="night">
+        <p class="kicker">18:00–23:00 · No work</p>
+        <h2>Night. Long tables, loud rooms.</h2>
+        <p>Meetups of people building companies; a talk or a workshop, then questions; film nights; PlayStation; and rooftop parties round the grill.</p>
+        <p class="small">Founders, early teams and the people around startups. Members come in any evening; lifetime members bring their team and guests. The calendar is being set.</p>
+        <p class="actions"><a class="link" href="#book" data-book data-tier="member">Become a member →</a></p>
+      </section>
+
+      <section class="chapter end" data-beat="end">
+        <h2>Space. It becomes what you bring to it.</h2>
+        <p>Walk in and pay as you go, become a member, or take one of 20 lifetime places. Every membership starts with a call.</p>
+        <p class="actions">
+          <a class="btn solid" href="#book" data-book>Book a call</a>
+          <button class="btn" type="button" data-ways aria-haspopup="dialog">Compare the three ways in</button>
+          <button class="btn" type="button" data-faq aria-haspopup="dialog">Questions</button>
+        </p>
       </section>
     </main>
+
+    <aside class="clock" aria-label="Time in the house">
+      <span class="clock-time">06:00</span>
+      <span class="clock-part">Dawn</span>
+      <span class="clock-now">Bengaluru now <b class="now">--:--</b></span>
+    </aside>
+    <nav class="rail" aria-label="Jump to a time of day"><span class="rail-fill"></span></nav>
 
     <dialog class="sheet" aria-label="">
       <button class="sheet-close link" type="button">Close ×</button>
@@ -107,6 +105,7 @@
     </dialog>
 
     <div class="loading" aria-live="polite">
+      <p class="loading-name">Space</p>
       <p>Preparing the house <span class="loading-bytes" aria-hidden="true"></span></p>
       <span class="loading-track" aria-hidden="true"><i class="loading-bar"></i></span>
       <button class="still link" type="button">Continue without motion →</button>
@@ -120,12 +119,12 @@
     <article class="reader" aria-label="Space, without motion">
       <picture class="reader-still">
         <source srcset="/still/house-dawn.webp" type="image/webp" />
-        <img src="/still/house-dawn.jpg" width="1920" height="1200" loading="lazy" alt="The house at dawn: a white four-level house with a grey stair tower, two trees at the gate, in pink morning fog on its street in HSR Layout." />
+        <img src="/still/house-dawn.jpg" width="1920" height="1200" loading="lazy" alt="The house at dawn, seen from above its street in HSR Layout: a white four-level house with a grey stair tower, a lawn behind the gate, trees and neighbouring houses either side, in pink morning haze." />
       </picture>
       <section>
         <p class="kicker">HSR Layout, Bengaluru</p>
-        <h1 class="serif">A house for startup people.</h1>
-        <p>Space is a private club for founders, early teams and the people around startups: a four-floor house to work and learn in by day, and to meet in after six.</p>
+        <h1 class="serif">A house that becomes what the hour needs.</h1>
+        <p>A private club for founders, early teams and the people around startups in HSR Layout, Bengaluru: four floors to work and learn in by day, and to meet in after six.</p>
         <dl class="rhythm">
           <div><dt>08:00–18:00</dt><dd>Work and learn: breakfast, desks, the maker’s table, workshops</dd></div>
           <div><dt>18:00–23:00</dt><dd>No work: meetups, film nights, PlayStation, rooftop parties</dd></div>
@@ -133,28 +132,28 @@
         </dl>
       </section>
       <section>
-        <p class="kicker">Lower level · 08:00–18:00</p>
-        <h2>Make things, round the big tree.</h2>
-        <p>An open work area, lit by a court where a big tree rises through two floors, with a seating platform round its trunk. The maker’s table is for building things by hand, and the daytime workshops run round it. Off the court, a private lounge for founders, open into the evening.</p>
-      </section>
-      <section>
         <p class="kicker">Ground floor · Walk-in café · 08:00–18:00</p>
-        <h2>The café. Walk in from 08:00.</h2>
+        <h2>Morning. The doors are open.</h2>
         <p>Anyone can walk in: breakfast, coffee and a table to work at, pay as you go. It opens onto the garden.</p>
       </section>
       <section>
-        <p class="kicker">First floor · 18:00–23:00</p>
-        <h2>Where the evenings happen.</h2>
+        <p class="kicker">Lower level · 08:00–18:00</p>
+        <h2>Midday. The house goes to work.</h2>
+        <p>An open work area, lit by a court where a big tree rises through two floors, with a seating platform round its trunk. The maker’s table is for building things by hand, and the daytime workshops run round it. Off the court, a private lounge for founders, open into the evening.</p>
+      </section>
+      <section>
+        <p class="kicker">First floor</p>
+        <h2>Afternoon. The rooms shift.</h2>
         <p>From 18:00 the event room holds meetups, learning events and film nights: a low stage, a screen and tiered teak seats. Informal seating runs round the courtyard; private rooms off it take a meeting or a small group.</p>
       </section>
       <section>
         <p class="kicker">Second floor</p>
-        <h2>Two quiet rooms, and the roof.</h2>
+        <h2>Evening. It turns into a club.</h2>
         <p>Two quiet rooms for founders who need a closed door to work, 08:00 to 18:00. The terrace takes a laptop by day; after 18:00, the grill and the rooftop parties.</p>
       </section>
       <section>
-        <p class="kicker">After six, no work</p>
-        <h2>Evenings, 18:00–23:00.</h2>
+        <p class="kicker">18:00–23:00 · No work</p>
+        <h2>Night. Long tables, loud rooms.</h2>
         <p>At six the desks close and the house turns to people: meetups of people building companies; learning evenings, a talk or a workshop, then questions; film nights on the event room’s screen; PlayStation, no agenda; and rooftop parties on the terrace, with the grill.</p>
         <p>Founders, early teams and the people around startups. Members come in any evening; lifetime members bring their team and guests. The calendar is being set.</p>
       </section>
@@ -171,11 +170,11 @@
       <section>
         <p class="kicker">How joining works</p>
         <h2>Four steps in.</h2>
-        <ol>
-          <li>Book a call: tell us what you’re building, and which way in fits.</li>
-          <li>Visit the house: come by in the day and see the floors.</li>
-          <li>Get your invite: we write to you with your membership and how to start.</li>
-          <li>First day in: a desk, the maker’s table, and your first evening.</li>
+        <ol class="steps steps-src">
+          <li><b>Book a call</b> Tell us what you’re building, and which way in fits.</li>
+          <li><b>Visit the house</b> Come by in the day and see the floors.</li>
+          <li><b>Get your invite</b> We write to you with your membership and how to start.</li>
+          <li><b>First day in</b> A desk, the maker’s table, and your first evening.</li>
         </ol>
         <p>Walking in? Skip all four: the café opens at 08:00.</p>
       </section>
@@ -194,8 +193,8 @@
         </div>
       </section>
       <section>
-        <h2 class="serif">There’s room for you.</h2>
-        <p>Tell us what you’re building, or just walk in: the café opens at 08:00.</p>
+        <h2 class="serif">Space. It becomes what you bring to it.</h2>
+        <p>Walk in and pay as you go, become a member, or take one of 20 lifetime places. Every membership starts with a call. Or just walk in: the café opens at 08:00.</p>
         <a class="link" href="#book" data-book>Book a call →</a>
       </section>
     </article>

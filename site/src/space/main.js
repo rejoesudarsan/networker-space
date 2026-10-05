@@ -2,7 +2,7 @@ import '@fontsource-variable/newsreader/opsz.css'
 import '@fontsource-variable/schibsted-grotesk'
 import '@fontsource-variable/jetbrains-mono'
 import './space.css'
-import { BEATS, HOURS, FOG, FOCUS, FLOOR_COPY, TIERS, FEATURES } from './beats.js'
+import { BEATS, HOURS, FOG, FOCUS, FLOOR_COPY, TIERS, FEATURES, RAIL, partAt } from './beats.js'
 
 // Where the apply form posts (JSON): a Formspree-style form URL or a
 // Cloudflare Worker route, set at build time as VITE_APPLY_URL (.env.local or
@@ -37,7 +37,7 @@ const fogAt = (h) => {
   const [b, cb] = FOG[i + 1]
   return mixHex(ca, cb, smooth(0, 1, (h - a) / (b - a)))
 }
-const clockText = (h) => `${String(Math.floor(h)).padStart(2, '0')}:${String(Math.floor(((h % 1) * 60) / 30) * 30).padStart(2, '0')} IST`
+const clockText = (h) => `${String(Math.floor(h)).padStart(2, '0')}:${String(Math.floor(((h % 1) * 60) / 5) * 5).padStart(2, '0')}`
 
 // Where progress p sits: the beat, how far through it, and the veil.
 function locate(p) {
@@ -150,11 +150,12 @@ document.addEventListener('click', (e) => {
 })
 
 // ---------- explore ----------
-$('.caption .explore').addEventListener('click', () => {
-  const r = FLOOR_COPY[current.beat.floor]
-  if (!r) return
+document.addEventListener('click', (e) => {
+  const b = e.target.closest('[data-explore]')
+  if (!b) return
+  const r = FLOOR_COPY[b.dataset.explore]
   openSheet(
-    `<p class="kicker">${r.label}</p><h2>${r.explore.head}</h2>${r.explore.body.map((b) => `<p>${b}</p>`).join('')}
+    `<p class="kicker">${r.label}</p><h2>${r.explore.head}</h2>${r.explore.body.map((x) => `<p>${x}</p>`).join('')}
      <p class="actions"><a class="link" href="#book" data-book data-tier="${r.next.tier}">${r.next.text}</a></p>`,
     r.label,
   )
@@ -162,15 +163,17 @@ $('.caption .explore').addEventListener('click', () => {
 
 let world = null
 // Until the first frame, no copy is in view: none of it takes focus.
-for (const el of $$('[data-beat], .caption')) el.inert = true
+for (const el of $$('[data-beat]')) el.inert = true
 
-// ---------- memberships ----------
-// One table: a column per way in, a row per fact, so they compare at a glance.
-{
+// ---------- the three ways in ----------
+// One table: a column per way in, a row per fact, so they compare at a glance;
+// then how joining works. Opened from the last chapter.
+function waysHtml() {
   const cols = (f) => TIERS.map((t) => `<td>${f(t)}</td>`).join('')
   const row = (label, f, cls = '') => `<tr class="${cls}"><th scope="row">${label}</th>${cols(f)}</tr>`
   const yes = (t, id) => (t.has.includes(id) ? '<span aria-label="Included">✓</span>' : '<span class="no" aria-label="Not included">–</span>')
-  $('.compare').innerHTML = `
+  return `<p class="kicker">Three ways in</p><h2>Walk in, join, or stay for good.</h2>
+    <table class="compare">
     <caption class="sr-only">The three ways in, compared</caption>
     <thead><tr><td></td>${TIERS.map((t) => `<th scope="col">${t.name}</th>`).join('')}</tr></thead>
     <tbody>
@@ -180,7 +183,30 @@ for (const el of $$('[data-beat], .caption')) el.inert = true
       ${row('Needs', (t) => t.needs, 'needs')}
       ${row('Price', (t) => t.price, 'price')}
     </tbody>
-    <tfoot><tr><td></td>${cols((t) => (t.id === 'walkin' ? '<span class="no">Just come in</span>' : `<a class="link" href="#book" data-book data-tier="${t.id}">Book a call →</a>`))}</tr></tfoot>`
+    <tfoot><tr><td></td>${cols((t) => (t.id === 'walkin' ? '<span class="no">Just come in</span>' : `<a class="link" href="#book" data-book data-tier="${t.id}">Book a call →</a>`))}</tr></tfoot>
+    </table>
+    <p class="small">Prices are being set; we’ll go through them on a call.</p>
+    <p class="kicker">How joining works</p>
+    <ol class="steps">${$$('.reader .steps-src li').map((li) => `<li>${li.innerHTML}</li>`).join('')}</ol>`
+}
+document.addEventListener('click', (e) => {
+  if (e.target.closest('[data-ways]')) openSheet(waysHtml(), 'Three ways in')
+})
+
+// ---------- the clock and the rail ----------
+// Bengaluru's real time, beside the house's.
+function tickNow() {
+  $('.now').textContent = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit' }).format(new Date())
+}
+tickNow()
+setInterval(tickNow, 15000)
+for (const [label, to, name] of RAIL) {
+  const b = document.createElement('button')
+  b.type = 'button'
+  b.textContent = label
+  b.setAttribute('aria-label', name)
+  b.addEventListener('click', () => nudge(to - goal))
+  $('.rail').append(b)
 }
 
 // ---------- start ----------
@@ -338,14 +364,15 @@ function loop(now = performance.now()) {
   current = locate(p)
   const { beat, local } = current
   // A part of the house still on its way stays behind the veil.
-  const waiting = beat.scene === 'floors' && p < 0.24 && world.pending('basement')
+  const focus = keyed(FOCUS, Math.min(0.7, Math.max(0.13, p)))
+  const waiting = beat.scene === 'floors' && focus < 0.99 && world.pending('basement')
   held = waiting ? 1 : Math.max(0, held - dt * 1.5)
   const veil = Math.max(current.veil, held)
   const h = keyed(HOURS, p)
   const fog = fogAt(h)
   const s = world.state
   s.scene = beat.scene
-  s.focus = keyed(FOCUS, Math.min(0.62, Math.max(0.11, p)))
+  s.focus = focus
   s.local = local
   s.veil = veil
   s.fog = fog
@@ -356,28 +383,18 @@ function loop(now = performance.now()) {
   // Light text once the fog is dark (by its luminance, not the hour).
   const fl = [1, 3, 5].map((i) => parseInt(fog.slice(i, i + 2), 16) / 255).map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4))
   const dark = 0.2126 * fl[0] + 0.7152 * fl[1] + 0.0722 * fl[2] < 0.22
-  document.body.classList.toggle('dark', dark)
+  document.body.classList.toggle('night', dark)
   document.documentElement.style.setProperty('--fog', fog)
-  $('.clock').textContent = clockText(h)
-  $('.hint').textContent = beat.id === 'call' ? 'Stay a while' : 'Scroll'
+  $('.clock-time').textContent = clockText(h)
+  $('.clock-part').textContent = partAt(h)
+  $('.rail-fill').style.transform = `scaleY(${p})`
 
   // Which piece of copy is up.
   const key = veil > 0.6 ? 'veil' : beat.id
   if (key !== shownKey) {
     shownKey = key
     // Copy not in view is out of the tab order and the reading order too.
-    for (const el of $$('[data-beat]')) el.inert = !el.classList.toggle('on', el.dataset.beat.split(' ').includes(key))
-    const r = FLOOR_COPY[beat.floor]
-    const cap = $('.caption')
-    cap.inert = !cap.classList.toggle('on', !!r && key !== 'veil')
-    if (r) {
-      $('.caption .label', cap).textContent = r.label
-      $('.caption .title', cap).textContent = r.title
-      $('.caption .line', cap).textContent = r.line
-      const next = $('.caption .next', cap)
-      next.textContent = r.next.text
-      next.dataset.tier = r.next.tier
-    }
+    for (const el of $$('[data-beat]')) el.inert = !el.classList.toggle('on', el.dataset.beat === key)
   }
   if (!stopped) requestAnimationFrame(loop)
 }

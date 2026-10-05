@@ -1,42 +1,41 @@
-// The homepage as one scroll through a day. Progress 0 → 1.
-// Two camera angles only: the street (board 01), and one cutaway angle for the
-// open house, rising floor to floor. It opens on the house with the brief; the
-// first scroll goes in. Night returns to the street, where the evening, the
-// memberships, how joining works and the call sit in the fog beside the lit house. Fog veils hide
-// the two cuts (into the house, out to night).
+// The homepage as one scroll through a day, told in chapters by the hour
+// (the earlier "house world" site), on the baked house. Two camera angles: the
+// house from above its street, and one cutaway angle for the open house. The
+// floors come in the order the day uses them: the café, the work floor, the
+// rooms, the terrace. Fog veils hide the two cuts (in, and out to night).
 
 // Scenes: exterior (the house on its street), floors (the open house; FOCUS 0
-// basement … 3 second). A beat with `floor` shows that floor's caption.
+// basement … 3 second). A beat with `floor` is that floor's chapter.
 export const BEATS = [
-  { id: 'hero', from: 0, to: 0.08, scene: 'exterior' },
-  { veil: true, from: 0.08, to: 0.11 },
-  { id: 'lower', from: 0.11, to: 0.21, scene: 'floors', floor: 'lower' },
-  { id: 'move', from: 0.21, to: 0.24, scene: 'floors' },
-  { id: 'ground', from: 0.24, to: 0.35, scene: 'floors', floor: 'ground' },
-  { id: 'move', from: 0.35, to: 0.38, scene: 'floors' },
-  { id: 'first', from: 0.38, to: 0.49, scene: 'floors', floor: 'first' },
-  { id: 'move', from: 0.49, to: 0.52, scene: 'floors' },
-  { id: 'second', from: 0.52, to: 0.62, scene: 'floors', floor: 'second' },
-  { veil: true, from: 0.62, to: 0.65 },
-  { id: 'night', from: 0.65, to: 0.75, scene: 'exterior', night: true },
-  { id: 'members', from: 0.75, to: 0.86, scene: 'exterior', night: true },
-  { id: 'join', from: 0.86, to: 0.93, scene: 'exterior', night: true },
-  { id: 'call', from: 0.93, to: 1.0001, scene: 'exterior', night: true },
+  { id: 'hero', from: 0, to: 0.1, scene: 'exterior' },
+  { veil: true, from: 0.1, to: 0.13 },
+  { id: 'ground', from: 0.13, to: 0.25, scene: 'floors', floor: 'ground' },
+  { id: 'move', from: 0.25, to: 0.28, scene: 'floors' },
+  { id: 'lower', from: 0.28, to: 0.4, scene: 'floors', floor: 'lower' },
+  { id: 'move', from: 0.4, to: 0.43, scene: 'floors' },
+  { id: 'first', from: 0.43, to: 0.55, scene: 'floors', floor: 'first' },
+  { id: 'move', from: 0.55, to: 0.58, scene: 'floors' },
+  { id: 'second', from: 0.58, to: 0.7, scene: 'floors', floor: 'second' },
+  { veil: true, from: 0.7, to: 0.73 },
+  { id: 'night', from: 0.73, to: 0.86, scene: 'exterior', night: true },
+  { id: 'end', from: 0.86, to: 1.0001, scene: 'exterior', night: true },
 ]
 
 // Which floor the open house is showing, through the floors beats.
-export const FOCUS = [[0.11, 0], [0.21, 0], [0.24, 1], [0.35, 1], [0.38, 2], [0.49, 2], [0.52, 3], [0.62, 3]]
+export const FOCUS = [[0.13, 1], [0.25, 1], [0.28, 0], [0.4, 0], [0.43, 2], [0.55, 2], [0.58, 3], [0.7, 3]]
 
-// Hour of the illustrative day at each progress point.
+// Hour of the day at each progress point; the rail on the right jumps by it.
 export const HOURS = [
-  [0, 6], [0.08, 7], [0.11, 9], [0.21, 9.5], [0.24, 10.5], [0.35, 12], [0.38, 15],
-  [0.49, 16], [0.52, 18.4], [0.62, 19], [0.65, 21], [0.75, 22], [1, 22],
+  [0, 6], [0.1, 7], [0.13, 8], [0.25, 10], [0.28, 12], [0.4, 13], [0.43, 15],
+  [0.55, 16], [0.58, 19], [0.7, 19.6], [0.73, 21], [0.86, 22], [1, 23.3],
 ]
+export const RAIL = [['06', 0, 'Dawn, the house'], ['09', 0.14, 'Morning'], ['13', 0.29, 'Midday'], ['16', 0.44, 'Afternoon'], ['19', 0.59, 'Evening'], ['21', 0.74, 'Night'], ['23', 0.87, 'Back to the house']]
+export const partAt = (h) => (h < 7.5 ? 'Dawn' : h < 11.5 ? 'Morning' : h < 14 ? 'Midday' : h < 17.5 ? 'Afternoon' : h < 20 ? 'Evening' : 'Night')
 
-// Fog by hour (board 08). The evening tone is kept dark enough that light
-// text reads on it; mid-greys would fail both dark and light text.
+// The sky by hour (the earlier site's own palette): warm plaster by day, a
+// terracotta dusk, near-black night. The fog, the sky and the page take it.
 export const FOG = [
-  [6, '#d1bfc2'], [10, '#c9bcbd'], [16, '#d2c5c3'], [17.6, '#8f7f88'], [18.4, '#564b5e'], [20, '#2c3048'], [22, '#1c2d4c'],
+  [6, '#e9c9c0'], [8, '#efeae2'], [12, '#f1efe9'], [16, '#efe5d6'], [17.8, '#dcb592'], [19, '#463d46'], [20.5, '#1c1f27'], [23.5, '#121419'],
 ]
 
 // One caption per floor: what you do there and when, from the user's zone

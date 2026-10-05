@@ -471,9 +471,9 @@ export async function createScene(canvas) {
     out.pos.set(out.look.x + Math.sin(az) * Math.cos(el) * dist, out.look.y + Math.sin(el) * dist, out.look.z + Math.cos(az) * Math.cos(el) * dist)
     out.fovY = fovY
   }
-  // The house on its street, square on from across the road at eye level,
-  // alone in the fog (board 01).
-  const HERO = new THREE.Vector3(0, 2.05, 0.9)
+  // The house on its street, from above and three-quarters on, its
+  // neighbours either side (the earlier "house world" view).
+  const HERO = new THREE.Vector3(-0.3, 1.9, 0.9)
   // Distance that frames each whole floor.
   const FLOOR_DIST = { basement: 14, ground: 17.5, first: 15.5, second: 14.5 }
   const fTarget = new THREE.Vector3()
@@ -497,7 +497,7 @@ export async function createScene(canvas) {
   addEventListener('resize', resize)
 
   const clock = new THREE.Clock()
-  orbit(shot, HERO, 0, 2, 27, 26, 0, -0.55)
+  orbit(shot, HERO, 34, 22, 31, 30, 2.6)
   const cur = { pos: shot.pos.clone(), look: shot.look.clone(), fovY: shot.fovY }
   let lastScene = null
 
@@ -589,9 +589,10 @@ export async function createScene(canvas) {
     fogUniforms.uNear.value = camDist * 0.95
     fogUniforms.uFar.value = camDist * 2.3
     // The low fog lies on the street, or under the floor in view.
-    fogUniforms.uBedY.value = inFloors ? Math.min(0.05, lerp(FLOORS.basement.y, 0.05, Math.min(1, state.focus)) - 0.25) : 0.6
-    fogUniforms.uBedDepth.value = inFloors ? 0.6 : 0.8
-    fogUniforms.uSide.value = inFloors ? 0 : 1
+    fogUniforms.uBedY.value = inFloors ? Math.min(0.05, lerp(FLOORS.basement.y, 0.05, Math.min(1, state.focus)) - 0.25) : 0.05
+    fogUniforms.uBedDepth.value = 0.6
+    // No margin fog: the street and its neighbours stay in view.
+    fogUniforms.uSide.value = 0
     // Night: the lit plaster (neighbours, walls, walkers) goes dark with the house.
     const dusk = state.night
     hemi.intensity = lerp(0.6, 0.1, dusk)
@@ -606,8 +607,8 @@ export async function createScene(canvas) {
     // Camera target for the scene.
     if (s === 'exterior') {
       // On a phone the copy takes the lower half; the house sits above it.
-      if (phone) orbit(shot, HERO, 0, 4, 37, 40, 0, 6.5)
-      else orbit(shot, HERO, 0, 2, 27, 26, 0, -0.55)
+      if (phone) orbit(shot, HERO, 34, 24, 38, 40, 0, 4.4)
+      else orbit(shot, HERO, 34, 22, 31, 30, 2.6)
     } else if (inFloors) {
       const i0 = Math.min(3, Math.floor(state.focus))
       const i1 = Math.min(3, i0 + 1)
