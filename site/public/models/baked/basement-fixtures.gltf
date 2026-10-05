@@ -8,7 +8,8 @@
 		{
 			"name":"export.001",
 			"nodes":[
-				0
+				0,
+				1
 			]
 		}
 	],
@@ -16,6 +17,10 @@
 		{
 			"mesh":0,
 			"name":"basement.baked.glass.001"
+		},
+		{
+			"mesh":1,
+			"name":"basement.baked.glow.001"
 		}
 	],
 	"materials":[
@@ -36,11 +41,33 @@
 				"metallicFactor":0,
 				"roughnessFactor":0.10000000149011612
 			}
+		},
+		{
+			"doubleSided":true,
+			"emissiveFactor":[
+				1,
+				0.6938717365264893,
+				0.3915724754333496
+			],
+			"extras":{
+				"glow":1
+			},
+			"name":"fix.Lamp Glow.001",
+			"pbrMetallicRoughness":{
+				"baseColorFactor":[
+					1,
+					0.6938717365264893,
+					0.3915724754333496,
+					1
+				],
+				"metallicFactor":0,
+				"roughnessFactor":0.5
+			}
 		}
 	],
 	"meshes":[
 		{
-			"name":"basement.baked.003",
+			"name":"basement.baked.004",
 			"primitives":[
 				{
 					"attributes":{
@@ -49,6 +76,19 @@
 					},
 					"indices":2,
 					"material":0
+				}
+			]
+		},
+		{
+			"name":"basement.baked.005",
+			"primitives":[
+				{
+					"attributes":{
+						"POSITION":3,
+						"NORMAL":4
+					},
+					"indices":5,
+					"material":1
 				}
 			]
 		}
@@ -81,6 +121,34 @@
 			"componentType":5123,
 			"count":180,
 			"type":"SCALAR"
+		},
+		{
+			"bufferView":3,
+			"componentType":5126,
+			"count":360,
+			"max":[
+				1.3980823755264282,
+				0.9353734850883484,
+				1.4769574403762817
+			],
+			"min":[
+				-0.4843023419380188,
+				0.316078782081604,
+				-2.8295278549194336
+			],
+			"type":"VEC3"
+		},
+		{
+			"bufferView":4,
+			"componentType":5126,
+			"count":360,
+			"type":"VEC3"
+		},
+		{
+			"bufferView":5,
+			"componentType":5123,
+			"count":648,
+			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
@@ -101,11 +169,29 @@
 			"byteLength":360,
 			"byteOffset":2880,
 			"target":34963
+		},
+		{
+			"buffer":0,
+			"byteLength":4320,
+			"byteOffset":3240,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":4320,
+			"byteOffset":7560,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":1296,
+			"byteOffset":11880,
+			"target":34963
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":3240,
+			"byteLength":13176,
 			"uri":"basement-fixtures.bin"
 		}
 	]

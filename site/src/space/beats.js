@@ -41,7 +41,7 @@ export const FOG = [
 // gone), the camera's azimuth / elevation in degrees, and the copy.
 export const ROOMS = {
   lower: {
-    floor: 'basement', rect: [-0.62, -0.52, 2.05, 1.93], az: 18, el: 46,
+    floor: 'basement', rect: [-0.62, -0.52, 2.05, 1.84], az: 16, el: 46,
     label: 'Lower level', title: 'Work, with room to think.', line: 'Quiet rooms. Courts open to the sky.',
     explore: {
       head: 'Work, with room to think.',
@@ -63,8 +63,8 @@ export const ROOMS = {
     },
   },
   court: {
-    floor: 'first', rect: [0.76, 0.12, 2.56, 1.74], az: -14, el: 46,
-    label: 'First floor', title: 'Read. Talk. Let an idea take its time.', line: 'Courtyard · Library · Shared tables',
+    floor: 'first', rect: [0.76, 0.12, 2.66, 4.0], az: -24, el: 48, zoom: 0.72,
+    label: 'First floor', title: 'Read. Talk. Let an idea take its time.', line: 'Courtyard · Event room · Library',
     explore: {
       head: 'A little distance from the day.',
       body: [
@@ -75,7 +75,7 @@ export const ROOMS = {
     },
   },
   terrace: {
-    floor: 'second', rect: [-2.36, -3.5, -0.78, 3.42], az: -58, el: 40,
+    floor: 'second', rect: [-2.36, -3.5, -0.78, 3.42], az: -62, el: 44, zoom: 0.62,
     label: 'Second floor', title: 'The day opens into evening.', line: 'Terrace conversations. Room to linger.',
     explore: {
       head: 'The day opens into evening.',

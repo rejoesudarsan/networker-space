@@ -35,7 +35,7 @@
 	],
 	"meshes":[
 		{
-			"name":"basement.baked.002",
+			"name":"basement.baked.003",
 			"primitives":[
 				{
 					"attributes":{
@@ -66,7 +66,7 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":25200,
+			"count":45918,
 			"max":[
 				2.2920000553131104,
 				2.003086566925049,
@@ -82,45 +82,45 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":25200,
+			"count":45918,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":25200,
+			"count":45918,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5123,
-			"count":38310,
+			"count":72174,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":302400,
+			"byteLength":551016,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":302400,
-			"byteOffset":302400,
+			"byteLength":551016,
+			"byteOffset":551016,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":201600,
-			"byteOffset":604800,
+			"byteLength":367344,
+			"byteOffset":1102032,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":76620,
-			"byteOffset":806400,
+			"byteLength":144348,
+			"byteOffset":1469376,
 			"target":34963
 		}
 	],
@@ -132,7 +132,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":883020,
+			"byteLength":1613724,
 			"uri":"basement-day.bin"
 		}
 	]

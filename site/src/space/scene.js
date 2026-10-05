@@ -250,7 +250,7 @@ export async function createScene(canvas) {
         const m = o.material
         if (m.map) m.map.anisotropy = 8
         // The CC0 teak photo is pale; pull it to the palette's teak.
-        if (m.name === 'Teak') m.color.set('#c08a68')
+        if (m.name === 'Teak') m.color.set('#d4a283')
         if (m.name === 'Sandstone') m.color.set('#d8cbb0')
         fogify(m)
       }
@@ -348,9 +348,9 @@ export async function createScene(canvas) {
     const span = Math.max(x1 - x0, (z1 - z0) * 0.9)
     const az = THREE.MathUtils.degToRad(r.az + (p - 0.5) * 6)
     const el = THREE.MathUtils.degToRad(r.el)
-    const fovX = camera.aspect < 0.8 ? 70 : 34
-    const fit = camera.aspect < 0.8 ? 1.25 : 1
-    const dist = ((span * 1.45) / Math.tan(THREE.MathUtils.degToRad(fovX) / 2)) * fit * (1.04 - p * 0.06)
+    const fovX = camera.aspect < 0.8 ? 46 : 34
+    const fit = camera.aspect < 0.8 ? 0.62 : 1
+    const dist = ((span * 1.45) / Math.tan(THREE.MathUtils.degToRad(fovX) / 2)) * fit * (r.zoom || 1) * (1.04 - p * 0.06)
     out.look.set(cx, f.y + WALL * 0.18, cz)
     out.pos.set(cx + Math.sin(az) * Math.cos(el) * dist, out.look.y + Math.sin(el) * dist, cz + Math.cos(az) * Math.cos(el) * dist)
     out.fovX = fovX
@@ -462,19 +462,23 @@ export async function createScene(canvas) {
     if (s === 'prologue' || s === 'exterior') {
       shot.pos.copy(STREET.pos)
       shot.look.copy(STREET.look)
-      shot.fovX = camera.aspect < 0.8 ? 64 : STREET.fovX
-      shot.shift = STREET.shift
+      // On a phone the house fills the width and sits above the copy.
+      shot.fovX = camera.aspect < 0.8 ? 24 : STREET.fovX
+      shot.shift = camera.aspect < 0.8 ? 0.06 : STREET.shift
     } else if (isRoom) {
       roomShot(state.room, state.local, shot)
     } else if (s === 'members') {
-      shot.look.set(0, 0.1, -60)
-      shot.pos.set(0, 0.85, -60 + 4.4 * (camera.aspect < 0.8 ? 1.8 : 1))
-      shot.fovX = camera.aspect < 0.8 ? 60 : 38
+      // A phone shows one membership at a time.
+      const fx = camera.aspect < 0.8 ? tiers[Math.max(0, state.tierFocus)].position.x : 0
+      shot.look.set(fx, camera.aspect < 0.8 ? -0.05 : 0.1, -60)
+      shot.pos.set(fx, 0.85, -60 + 4.4)
+      shot.fovX = camera.aspect < 0.8 ? 26 : 38
       shot.shift = 0
     } else {
-      shot.look.set(0.25, 0.15, -60)
-      shot.pos.set(0.1, 0.75, -60 + 3.2 * (camera.aspect < 0.8 ? 1.6 : 1))
-      shot.fovX = camera.aspect < 0.8 ? 60 : 36
+      const phone = camera.aspect < 0.8
+      shot.look.set(phone ? 0 : 0.25, phone ? -0.05 : 0.15, -60)
+      shot.pos.set(phone ? 0 : 0.1, 0.75, -60 + 3.2)
+      shot.fovX = phone ? 30 : 36
       shot.shift = 0
     }
     // Inside a full veil the camera jumps; otherwise it eases.

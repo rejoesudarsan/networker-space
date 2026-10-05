@@ -48,7 +48,7 @@
 			"extras":{
 				"glass":1
 			},
-			"name":"fix.Glass.001",
+			"name":"fix.Glass.002",
 			"pbrMetallicRoughness":{
 				"baseColorFactor":[
 					0.8879231214523315,
@@ -58,6 +58,28 @@
 				],
 				"metallicFactor":0,
 				"roughnessFactor":0.10000000149011612
+			}
+		},
+		{
+			"doubleSided":true,
+			"emissiveFactor":[
+				1,
+				0.6938717365264893,
+				0.3915724754333496
+			],
+			"extras":{
+				"glow":1
+			},
+			"name":"fix.Lamp Glow.003",
+			"pbrMetallicRoughness":{
+				"baseColorFactor":[
+					1,
+					0.6938717365264893,
+					0.3915724754333496,
+					1
+				],
+				"metallicFactor":0,
+				"roughnessFactor":0.5
 			}
 		},
 		{
@@ -115,6 +137,14 @@
 					},
 					"indices":8,
 					"material":2
+				},
+				{
+					"attributes":{
+						"POSITION":9,
+						"NORMAL":10
+					},
+					"indices":11,
+					"material":3
 				}
 			]
 		}
@@ -179,6 +209,34 @@
 		{
 			"bufferView":6,
 			"componentType":5126,
+			"count":288,
+			"max":[
+				1.6480822563171387,
+				0.9353733062744141,
+				3.5795276165008545
+			],
+			"min":[
+				-1.128082513809204,
+				0.43623948097229004,
+				-0.8784547448158264
+			],
+			"type":"VEC3"
+		},
+		{
+			"bufferView":7,
+			"componentType":5126,
+			"count":288,
+			"type":"VEC3"
+		},
+		{
+			"bufferView":8,
+			"componentType":5123,
+			"count":504,
+			"type":"SCALAR"
+		},
+		{
+			"bufferView":9,
+			"componentType":5126,
 			"count":24,
 			"max":[
 				2.619999885559082,
@@ -193,13 +251,13 @@
 			"type":"VEC3"
 		},
 		{
-			"bufferView":7,
+			"bufferView":10,
 			"componentType":5126,
 			"count":24,
 			"type":"VEC3"
 		},
 		{
-			"bufferView":8,
+			"bufferView":11,
 			"componentType":5123,
 			"count":36,
 			"type":"SCALAR"
@@ -244,26 +302,44 @@
 		},
 		{
 			"buffer":0,
-			"byteLength":288,
+			"byteLength":3456,
 			"byteOffset":10368,
 			"target":34962
 		},
 		{
 			"buffer":0,
+			"byteLength":3456,
+			"byteOffset":13824,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":1008,
+			"byteOffset":17280,
+			"target":34963
+		},
+		{
+			"buffer":0,
 			"byteLength":288,
-			"byteOffset":10656,
+			"byteOffset":18288,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":288,
+			"byteOffset":18576,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":72,
-			"byteOffset":10944,
+			"byteOffset":18864,
 			"target":34963
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":11016,
+			"byteLength":18936,
 			"uri":"first-fixtures.bin"
 		}
 	]

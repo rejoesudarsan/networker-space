@@ -107,11 +107,21 @@ TIERS.forEach((t, i) => {
   el.addEventListener('focusin', () => setFocus(i))
   tiersEl.append(el)
 })
+const nav = $('.tier-nav')
+TIERS.forEach((t, i) => {
+  const b = document.createElement('button')
+  b.type = 'button'
+  b.className = 'link'
+  b.textContent = t.name
+  b.addEventListener('click', () => setFocus(i))
+  nav.append(b)
+})
 let world = null
 function setFocus(i) {
   if (world) world.state.tierFocus = i
   $$('.tier').forEach((el, j) => el.classList.toggle('focus', j === i))
   $('.tier-help').textContent = TIERS[i].focus
+  $$('.tier-nav button').forEach((b, j) => b.setAttribute('aria-pressed', j === i))
 }
 
 // ---------- start ----------
@@ -136,6 +146,7 @@ async function start() {
   world = await createScene($('.stage'))
   document.body.classList.add('ready')
   world.state.still = reduced.matches
+  if (matchMedia('(max-width: 720px)').matches) setFocus(1)
   reduced.addEventListener('change', (e) => (world.state.still = e.matches))
   loop()
 }
@@ -215,13 +226,14 @@ function loop(now = performance.now()) {
     }
   }
   // Copy that sits beside objects follows them on screen.
-  if (beat.scene === 'members') {
+  const phone = innerWidth <= 720
+  if (beat.scene === 'members' && !phone) {
     const pts = world.tierScreens()
     $$('.tier').forEach((el, i) => {
       el.style.transform = `translate(${Math.round(pts[i].x)}px, ${Math.round(pts[i].y)}px) translateX(-50%)`
     })
   }
-  if (beat.scene === 'call') {
+  if (beat.scene === 'call' && !phone) {
     const c = world.callScreen()
     $('.call-copy').style.transform = `translate(${Math.round(c.x)}px, ${Math.round(c.y)}px) translateY(-50%)`
   }
