@@ -86,7 +86,8 @@ Rules for every item:
   - note: room measured top-down; three runs from p26 (east hob run with wenge lowers, glass wall cabinets and hood; south base + display cabinet + tall light-wood pantry; west granite run with the double sink south of the door), black tile floor.
 
 ## Second floor and terrace (p29, p30, p32, p33, p34)
-- [ ] terrace-terracotta: terracotta tile floor on the long terrace.
+- [x] terrace-terracotta: terracotta tile floor on the long terrace.
+  - note: the tile floor already existed (build_house, 30 cm tiles); added p33's weathered timber bench along the house wall and the roof's deep eave over the terrace edge. p33 contradicts the board's steel rail on the parapet; question added under Needs your input.
 - [ ] bedroom5-bathtub: bathtub in the second-floor bath (p29).
 - [ ] passage-over-void: the passage railing over the courtyard void and the study nook (p30).
 
@@ -95,3 +96,4 @@ Rules for every item:
 
 ## Needs your input
 - [x] garden-steps-p36: answered by p9 and the plan: they are the side passage's flights; built in side-garden-passage.
+- [?] terrace-parapet-style: p33 (the terrace as built) shows the west parapet as plaster with tall square plaster piers standing up from it at intervals, and no steel rail. The terrace-railing item followed the design board and put a three-bar steel rail on it. Which should the model show: the board's rail, p33's piers, or both?

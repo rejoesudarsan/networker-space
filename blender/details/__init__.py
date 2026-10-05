@@ -47,6 +47,7 @@ MODULES = [
     "steel_stair_to_second",
     "family2_sliding_teak_door",
     "kitchen2",
+    "terrace_terracotta",
 ]
 
 
