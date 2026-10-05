@@ -115,19 +115,24 @@ body.reading .hint { opacity: 0 }
 .caption .line { font: 400 17px/26px var(--sans); color: var(--fg-soft) }
 .caption .explore { font-size: 15px; font-weight: 600; justify-self: start }
 
-/* Memberships: three, side by side in one column, comparable at a glance. */
-.members { gap: 18px }
+/* Memberships: one table, a column per way in, comparable at a glance. */
+.members { gap: 14px; width: min(26rem, 31vw) }
 .members-head { display: grid; gap: 6px }
 .members-title { font: 400 30px/36px var(--serif); font-variation-settings: 'opsz' 36 }
-.tiers { display: grid; gap: 14px }
-.tier { padding-left: 14px; font: 400 16px/24px var(--sans); transition: opacity 0.3s }
-.tier h3 { font: 500 14px/20px var(--mono); letter-spacing: 0.12em; text-transform: uppercase; position: relative }
-body.dark .tier h3 { color: #f0d3b2 }
-.tier.focus h3::before { content: ''; position: absolute; left: -14px; top: 7px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent) }
-.tier ul { list-style: none; padding: 0 }
-.tier .link { font-size: 14px }
-.tier .needs { font: 400 13px/20px var(--mono); color: var(--fg-soft) }
-.tier-help { font: 400 15px/22px var(--sans); color: var(--fg-soft) }
+.compare { border-collapse: collapse; width: 100%; font: 400 14px/19px var(--sans); table-layout: fixed }
+.compare th, .compare td { padding: 4px 6px 4px 0; text-align: left; vertical-align: top }
+.compare thead th { font: 500 13px/18px var(--mono); letter-spacing: 0.1em; text-transform: uppercase; padding-bottom: 8px }
+body.dark .compare thead th { color: #f0d3b2 }
+.compare thead td { width: 34% }
+.compare tbody th { font-weight: 400; color: var(--fg-soft) }
+.compare tbody tr { border-top: 1px solid color-mix(in srgb, var(--fg) 16%, transparent) }
+.compare .feature td { font-size: 15px }
+.compare .no { opacity: 0.55 }
+.compare .needs td, .compare .price td { font-weight: 500 }
+.compare tfoot td { padding-top: 6px }
+.compare tfoot .link { font-size: 13px; line-height: 17px; min-height: 44px }
+.compare tfoot .no { font-size: 13px; display: inline-flex; min-height: 44px; align-items: center }
+.tier-help { font: 400 14px/20px var(--sans); color: var(--fg-soft) }
 
 /* The last invitation. */
 .call-copy { gap: 6px; justify-items: start }
@@ -135,9 +140,6 @@ body.dark .tier h3 { color: #f0d3b2 }
 .call-copy p { font: 400 18px/26px var(--sans); color: var(--fg-soft) }
 .call-copy .link { font-size: 16px; font-weight: 600 }
 
-.tier-nav { display: none }
-.tier-nav button { min-width: 44px; justify-content: center }
-.tier-nav button[aria-pressed='true'] { text-decoration: underline; text-underline-offset: 5px }
 .sheet {
   border: 0; padding: 0; margin: 0; max-width: none; max-height: none; width: 100%; height: 100%;
   background: transparent; color: var(--fg);
@@ -208,12 +210,14 @@ body.still { overflow: hidden }
   .nights dt { font-size: 12px; letter-spacing: 0.04em }
   .nights dd { font-size: 15px; line-height: 20px }
   .night-copy p.who { font-size: 14px; line-height: 20px }
-  .members { gap: 12px }
+  .members { gap: 10px; width: auto }
   .members-title { font-size: 24px; line-height: 30px }
-  .tier-nav { display: flex; gap: 20px }
-  .tier { display: none; padding-left: 0 }
-  .tier.focus { display: block }
-  .tier.focus h3::before { display: none }
+  .compare { font-size: 13px; line-height: 17px }
+  .compare th, .compare td { padding: 3px 4px 3px 0 }
+  .compare .feature td { font-size: 14px }
+  .compare thead th { font-size: 11px; letter-spacing: 0.06em }
+  .compare thead td { width: 32% }
+  .compare tfoot .link, .compare tfoot .no { font-size: 12px }
   .call-copy h2 { font-size: 30px; line-height: 36px }
 }
 @media (prefers-reduced-motion: reduce) {

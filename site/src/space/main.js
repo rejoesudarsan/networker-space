@@ -2,7 +2,7 @@ import '@fontsource-variable/newsreader/opsz.css'
 import '@fontsource-variable/schibsted-grotesk'
 import '@fontsource-variable/jetbrains-mono'
 import './space.css'
-import { BEATS, HOURS, FOG, FOCUS, FLOOR_COPY, TIERS } from './beats.js'
+import { BEATS, HOURS, FOG, FOCUS, FLOOR_COPY, TIERS, FEATURES } from './beats.js'
 
 // The booking link (Cal.com or Calendly) for every "Book a call". Until it is
 // set, Book a call opens an honest "not available yet" note.
@@ -102,28 +102,22 @@ let world = null
 for (const el of $$('[data-beat], .caption')) el.inert = true
 
 // ---------- memberships ----------
-const tiersEl = $('.tiers')
-TIERS.forEach((t, i) => {
-  const el = document.createElement('article')
-  el.className = 'tier'
-  el.innerHTML = `<h3>${t.name}</h3><ul>${t.has.map((h) => `<li>${h}</li>`).join('')}</ul><p class="needs">Needs: ${t.needs}</p><a class="link" href="#book" data-book>Book a call →</a>`
-  el.addEventListener('pointerenter', () => setFocus(i))
-  el.addEventListener('focusin', () => setFocus(i))
-  tiersEl.append(el)
-})
-const nav = $('.tier-nav')
-TIERS.forEach((t, i) => {
-  const b = document.createElement('button')
-  b.type = 'button'
-  b.className = 'link'
-  b.textContent = t.name
-  b.addEventListener('click', () => setFocus(i))
-  nav.append(b)
-})
-function setFocus(i) {
-  $$('.tier').forEach((el, j) => el.classList.toggle('focus', j === i))
-  $('.tier-help').textContent = TIERS[i].focus
-  $$('.tier-nav button').forEach((b, j) => b.setAttribute('aria-pressed', j === i))
+// One table: a column per way in, a row per fact, so they compare at a glance.
+{
+  const cols = (f) => TIERS.map((t) => `<td>${f(t)}</td>`).join('')
+  const row = (label, f, cls = '') => `<tr class="${cls}"><th scope="row">${label}</th>${cols(f)}</tr>`
+  const yes = (t, id) => (t.has.includes(id) ? '<span aria-label="Included">✓</span>' : '<span class="no" aria-label="Not included">–</span>')
+  $('.compare').innerHTML = `
+    <caption class="sr-only">The three ways in, compared</caption>
+    <thead><tr><td></td>${TIERS.map((t) => `<th scope="col">${t.name}</th>`).join('')}</tr></thead>
+    <tbody>
+      ${row('For', (t) => t.for)}
+      ${row('Hours', (t) => t.hours)}
+      ${FEATURES.map((f) => row(f.label, (t) => yes(t, f.id), 'feature')).join('')}
+      ${row('Needs', (t) => t.needs, 'needs')}
+      ${row('Price', (t) => t.price, 'price')}
+    </tbody>
+    <tfoot><tr><td></td>${cols((t) => (t.id === 'walkin' ? '<span class="no">Just come in</span>' : `<a class="link" href="#book" data-book data-tier="${t.id}">Book a call →</a>`))}</tr></tfoot>`
 }
 
 // ---------- start ----------
@@ -170,7 +164,6 @@ async function start() {
   // For measuring (site/PERF.md): the world in dev, or with ?debug.
   if (import.meta.env.DEV || location.search.includes('debug')) window.__world = world
   world.state.still = reduced.matches
-  if (matchMedia('(max-width: 720px)').matches) setFocus(1)
   reduced.addEventListener('change', (e) => (world.state.still = e.matches))
   loop()
   // The fog lifts only once the house is drawn.

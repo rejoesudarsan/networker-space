@@ -92,19 +92,19 @@ export const FLOOR_COPY = {
   },
 }
 
-// Three ways in (the user's plan, 5 Oct). What each unlocks is a draft for
-// the user to confirm (site/POLISH.md, Needs your input); no prices yet.
+// Three ways in (the user's plan, 5 Oct). What each includes is a draft for
+// the user to confirm, and there are no prices yet (site/POLISH.md, Needs your
+// input). Shown as one comparison: a row per fact, a column per way in.
+export const FEATURES = [
+  { id: 'cafe', label: 'Café, work area' },
+  { id: 'maker', label: "Maker's table" },
+  { id: 'evenings', label: 'Evenings' },
+  { id: 'rooms', label: 'Private rooms' },
+  { id: 'lounge', label: "Founders' lounge" },
+  { id: 'guests', label: 'Team, guests' },
+]
 export const TIERS = [
-  {
-    id: 'walkin', name: 'Walk-in', has: ['The café and open work area, 08:00–18:00', 'Pay as you go'],
-    needs: 'Nothing: come in', focus: 'For a day of work, or a coffee, when you need one.',
-  },
-  {
-    id: 'member', name: 'Member', has: ['Every day, 08:00–23:00', "The maker's table and workshops", 'The evening programme', 'Private rooms to book'],
-    needs: 'A call with us', focus: 'For founders and early teams who are here most days.',
-  },
-  {
-    id: 'lifetime', name: 'Lifetime', has: ["Everything a member has", "The founders' lounge", 'Bring your team and guests'],
-    needs: 'A call with us · 20 places only', focus: 'For the few who want Space for good.',
-  },
+  { id: 'walkin', name: 'Walk-in', for: 'A day here', hours: '08:00–18:00', has: ['cafe'], needs: 'Nothing', price: 'Pay as you go' },
+  { id: 'member', name: 'Member', for: 'Here most days', hours: '08:00–23:00', has: ['cafe', 'maker', 'evenings', 'rooms'], needs: 'A call', price: 'To come' },
+  { id: 'lifetime', name: 'Lifetime', for: 'Space for good', hours: '08:00–23:00', has: ['cafe', 'maker', 'evenings', 'rooms', 'lounge', 'guests'], needs: 'A call; 20 places', price: 'To come' },
 ]
