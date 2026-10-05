@@ -51,6 +51,7 @@ MODULES = [
     "bedroom5_bathtub",
     "passage_over_void",
     "detail_cameras",
+    "entourage",
 ]
 
 

@@ -97,6 +97,10 @@ Rules for every item:
 - [x] detail-cameras: add cameras `Camera.Court2`, `Camera.Court1`, `Camera.Entrance`, `Camera.Terrace` framed like p1, p20, p24, p30, so each detail can be checked from a photo-matched view; render them in `--quick` mode.
   - note: Camera.Court2 / Court1 / Entrance / Terrace render to renders/04..07 with every build. Interiors are dark under the dawn lighting (Court 1 nearly black); the build now takes ~5.5 min instead of ~1.5.
 
+## Entourage (ENTOURAGE.md)
+- [x] entourage: people, cars and two-wheelers linked from `blender/entourage.blend` (open-source assets, built by tools/build_entourage.py): people at the gate, in the entrance court, the Double HT Court and on the terrace; parked and passing cars, scooters, a motorbike and an auto on the street; the garage car swapped for the library's white SUV.
+  - note: off with `-- --no-entourage`; garage_fitout keeps its massing car as the fallback. Check placements with tools/preview_entourage.py. The entrance-court bench man is outside Camera.Entrance's frame (the bench sits to the camera's right).
+
 ## Needs your input
 - [x] garden-steps-p36: answered by p9 and the plan: they are the side passage's flights; built in side-garden-passage.
 - [?] terrace-parapet-style: p33 (the terrace as built) shows the west parapet as plaster with tall square plaster piers standing up from it at intervals, and no steel rail. The terrace-railing item followed the design board and put a three-bar steel rail on it. Which should the model show: the board's rail, p33's piers, or both?

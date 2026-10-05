@@ -110,4 +110,10 @@ All coordinates are Three.js plan units in the ground-floor frame (x to the east
   - Walls are 1.3042 units tall.
   - The roof covers the courtyard void.
   - The roof stops short of the west wall (`TERRACE_X1`).
-- **Not modelled:** furniture and people.
+- **Entourage export:** the separate library and placement scripts are available; see the integration note below before exporting them for the website.
+
+## Entourage integration
+
+The people, cars and two-wheelers library and placement sources from the entourage branch are included. See [ENTOURAGE.md](ENTOURAGE.md) for sources, licences, placement and rebuild commands. `details/entourage.py` links collections from `entourage.blend`; `details/garage_fitout.py` can use its SUV. Use `--no-entourage` or `SPACE_ENTOURAGE=0` for architecture-only builds.
+
+The October 5 Git consolidation retains the newer textured `space-house.blend` and website exports. It does not replace them with the entourage branch's older generated house. The merged entourage placements become part of a future Blender rebuild. The current website exporter iterates mesh/curve/font objects, while these placements are collection instances; those instances must be explicitly resolved and visually verified before claiming they appear in a new website export. Keep `space-house.blend` and `entourage.blend` together when rebuilding linked scenes.
