@@ -18,7 +18,7 @@ set keeps them at full power. Lights are named Lamp.<room>.<n>.
 - Event space (first, Living 2): up/down wall washers, two on the west wall
   either side of the screen, two on the east wall above the bleachers.
 - Basement office: up/down wall washers on the north, east and south walls.
-- Terrace (second): a point light in every second bulb of the festoon that
+- Terrace (second): a small point light in every bulb of the festoon that
   terrace_evening.py hangs ('Lamp Glow' balls in second.TerraceEvening.LampGlow).
 Floor-local Three.js units for positions, metres for fixture sizes."""
 import math
@@ -65,7 +65,7 @@ def _light(ctx, floor, name, kind, x, z, y_m, power, radius=0.05, up=False, spot
     return ob
 
 
-def sconce(ctx, kit, floor, room, n, x, z, side, y_m=2.0, power=25.0):
+def sconce(ctx, kit, floor, room, n, x, z, side, y_m=2.0, power=35.0):
     """Brass wall sconce: backplate, short arm, an upturned glowing cup.
     (x, z) is the wall-face point; the light sits in the cup."""
     rot = FACING[side]
@@ -99,7 +99,7 @@ def washer(ctx, kit, floor, room, n, x, z, side, y_m=2.1, power=30.0):
     return [up, dn]
 
 
-def festoon_lights(ctx, power=6.0, every=2):
+def festoon_lights(ctx, power=5.0, every=1):
     """Point lights in the festoon bulbs: one per `every` bulbs, at the bulb
     centres (islands of the LampGlow mesh terrace_evening.py made)."""
     ob = bpy.data.objects.get("second.TerraceEvening.LampGlow")
@@ -172,8 +172,8 @@ def build(ctx):
     for i, z in enumerate((0.75, 1.25)):          # piers between the louvred bays
         ce = wall(1.9, z, "east", h=2.0)
         lights.append(sconce(ctx, k, "first", "court", i, ce, z, "east", y_m=2.05))
-    cn = wall(1.9, 0.9, "north")
-    lights.append(sconce(ctx, k, "first", "court", 2, 1.9, cn, "north", y_m=2.05))
+    cn = wall(2.35, 0.9, "north", h=1.0)           # east of the olive; ray under its crown
+    lights.append(sconce(ctx, k, "first", "court", 2, 2.35, cn, "north", y_m=2.05))
     ew = wall(1.5, 3.05, "west")
     ee = wall(1.5, 3.05, "east")
     for i, z in enumerate((2.3, 3.85)):
