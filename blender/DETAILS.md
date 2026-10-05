@@ -54,7 +54,8 @@ Rules for every item:
   - note: room is x 0.62..2.33, z 1.33..3.2 per the plan; the existing teak finish rect (z from 0.2) also runs over the office toilet and the stair void, left as is. Also the ceiling fan and the window's grille bars from p25/p27. French doors modelled closed.
 - [x] dining1-display-unit: teak display unit against the wall of Dining 1 (p28).
   - note: placed where the plan draws it, in the wide opening between Family 1 and Dining 1, facing Family 1 (p28 is taken from Family 1; its double glazed doors to the west garden are on the left). Plaster added above the opening's teak head.
-- [ ] kitchen1-galley: black granite counters both sides of the galley, mauve laminate fronts (p13).
+- [x] kitchen1-galley: black granite counters both sides of the galley, mauve laminate fronts (p13).
+  - note: runs from the plan (west run with sink and hob, south return) and p13 (north-east L with wall cabinets, concrete hood), black tile floor. p13's window over the hob and the far-wall door are not in the model's walls; not added.
 - [ ] caretaker-red-oxide: red-oxide floor in the caretaker room (p15).
 - [ ] stair-to-basement: the inside stair under the DOUBLE HEIGHT box down to basement Court 1, wooden balustrade, blue glass lantern (p20).
 
