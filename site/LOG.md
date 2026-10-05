@@ -17,3 +17,4 @@
 - 2026-10-05 21:02 night-copy: kinds from the plan, one-line glosses written plainly; frequency left as 'The calendar is being set' + [?]; access line follows the drafted tiers ([?]).
 - 2026-10-05 21:09 tiers-detail: table replaces tier cards + phone tabs; contents still the draft awaiting the user.
 - 2026-10-05 21:11 how-to-join: step lines written without durations or promises of timing.
+- 2026-10-05 21:16 faq: answers only from the plan; Wi-Fi left out (unknown); phone sheet width fixed (it overflowed the right edge for every sheet, not only the FAQ).

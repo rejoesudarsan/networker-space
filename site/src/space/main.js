@@ -86,6 +86,14 @@ document.addEventListener('click', (e) => {
 })
 if (BOOKING_URL) for (const a of $$('[data-book]')) a.href = BOOKING_URL
 
+// ---------- questions ----------
+// One list of answers, kept in the reader; the sheet shows a copy.
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('[data-faq]')) return
+  openSheet(`<p class="kicker">Questions</p><h2>Short answers.</h2><div class="faq">${$('#faq').innerHTML}</div>
+    <p class="actions"><a class="link" href="#book" data-book>Book a call →</a></p>`, 'Questions')
+})
+
 // ---------- explore ----------
 $('.caption .explore').addEventListener('click', () => {
   const r = FLOOR_COPY[current.beat.floor]
