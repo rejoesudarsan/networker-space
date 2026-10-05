@@ -122,6 +122,14 @@ room with `tools/room_shot.py` (open-topped, EEVEE, ~10 s).
 - [x] entourage: people, cars and two-wheelers linked from `blender/entourage.blend` (open-source assets, built by tools/build_entourage.py): people at the gate, in the entrance court, the Double HT Court and on the terrace; parked and passing cars, scooters, a motorbike and an auto on the street; the garage car swapped for the library's white SUV.
   - note: off with `-- --no-entourage`; garage_fitout keeps its massing car as the fallback. Check placements with tools/preview_entourage.py. The entrance-court bench man is outside Camera.Entrance's frame (the bench sits to the camera's right).
 
+## Environment and light (Astra)
+Environment and lighting detail so the light bakes match the Astra comps
+(`reference/astra-design/home-03-dawn`, `-05-parted`, `-07-basement`, `-10-cafe`,
+`-13-courtyard`, `-16-terrace`, `-19-night`). Check the street with
+`tools/street_shot.py` (Camera.Street or `--focus <object prefix>`, EEVEE or Cycles).
+- [x] gulmohar-refine: the four street gulmohars rebuilt as airy trees: slim trunk forking at ~40% into 4-5 limbs, five branch orders, a crown of feathery bipinnate fronds with sky gaps, small orange-red blossom clusters on the outer/upper shell.
+  - note: 22-31k faces per tree; each frond / blossom cluster is one connected strip so it is one lightmap island (~8k islands for the four trees in the site atlas). Replaces gulmohar_trees' blob crowns (same names Site.Gulmohar.<i>.*).
+
 ## Needs your input
 - [x] garden-steps-p36: answered by p9 and the plan: they are the side passage's flights; built in side-garden-passage.
 - [?] terrace-parapet-style: p33 (the terrace as built) shows the west parapet as plaster with tall square plaster piers standing up from it at intervals, and no steel rail. The terrace-railing item followed the design board and put a three-bar steel rail on it. Which should the model show: the board's rail, p33's piers, or both?

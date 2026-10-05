@@ -175,7 +175,7 @@ def gulmohar(ctx, name, loc, coll, parent, height, flowers, seed):
             out = out.normalized() if out.length > 1e-3 else Vector((0, -1, 0))
             nrm = (UP * 1.2 + out * 0.5 + Vector((0, -0.35, 0)) +
                    Vector((rnd.uniform(-1, 1), rnd.uniform(-1, 1), 0)) * 0.3).normalized()
-            _blossom(blossoms[0 if i % 3 else 1], c, nrm, rnd.uniform(0.022, 0.036), rnd)
+            _blossom(blossoms[0 if i % 3 else 1], c, nrm, rnd.uniform(0.03, 0.045), rnd)
 
     stats = {}
     parts = [(".wood", wood, _trees.material(ctx, "Bark", "#5A4636", 0.9)),
