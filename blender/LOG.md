@@ -15,3 +15,4 @@
 - 2026-10-05 07:50 living1_teak_floor: build 87 s, five eye-level renders. Camera landed in the void and in the office toilet until the room bounds came from the plan (z 1.33..3.2); grille bars first sat outside the glass, then the window was filtered out by the tighter bounds; fixed both.
 - 2026-10-05 07:53 dining1_display_unit: build 84 s, two eye-level renders. Located from the plan (small rectangle in the Family 1 / Dining 1 opening) and p28's viewpoint; the model had no wall over the opening, added plaster above the head.
 - 2026-10-05 07:56 kitchen1_galley: build 86 s, one eye-level render from p13's viewpoint; matched on the first try.
+- 2026-10-05 07:59 caretaker_red_oxide: build ~85 s; first bounds from the plan left gaps at the east and north walls (eye camera hit a window), fitted in a top-down cutaway.

@@ -56,7 +56,8 @@ Rules for every item:
   - note: placed where the plan draws it, in the wide opening between Family 1 and Dining 1, facing Family 1 (p28 is taken from Family 1; its double glazed doors to the west garden are on the left). Plaster added above the opening's teak head.
 - [x] kitchen1-galley: black granite counters both sides of the galley, mauve laminate fronts (p13).
   - note: runs from the plan (west run with sink and hob, south return) and p13 (north-east L with wall cabinets, concrete hood), black tile floor. p13's window over the hob and the far-wall door are not in the model's walls; not added.
-- [ ] caretaker-red-oxide: red-oxide floor in the caretaker room (p15).
+- [x] caretaker-red-oxide: red-oxide floor in the caretaker room (p15).
+  - note: floor fitted to the model's walls (x 1.56..2.58, z -4.9..-4.06), red-oxide skirting and the small brown fan from p15.
 - [ ] stair-to-basement: the inside stair under the DOUBLE HEIGHT box down to basement Court 1, wooden balustrade, blue glass lantern (p20).
 
 ## Basement (p2, p10, p31)
