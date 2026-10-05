@@ -32,7 +32,8 @@ Rules for every item:
   - note: gate, piers and front wall already existed. Number and letter slot are on the plinth face right of the gate steps; p05's tall wall and concrete canopy over the gate are not modelled (the existing gate sits at the top of the steps).
 - [x] office-outside-stair: outside stair from the open-to-sky court up to the basement office entrance with a steel rail (plan basement, p03).
   - note: also floored the open-to-sky court in flagstones (site does the same). Stair positions from details.js PLAN; landing meets the existing Site.OfficeGate.
-- [ ] neighbour-massing: plain neighbour blocks and compound walls on both sides and across the street, positions from `site/src/world/world.js` `neighbours`.
+- [x] neighbour-massing: plain neighbour blocks and compound walls on both sides and across the street, positions from `site/src/world/world.js` `neighbours`.
+  - note: only the four side neighbours; the site's far row across the street is left out because the street camera stands inside it (it darkened the foreground even when hidden from the camera). Heights scaled 2.6x the site's to match p19/p03's two-to-four storeys.
 
 ## Entrance court and gardens (p24, p6, p36, p21, p9)
 - [ ] entrance-court-floor-and-bench: stone floor in the entrance court and the green bench against the wall (p24).

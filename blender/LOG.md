@@ -6,3 +6,4 @@
 - 2026-10-05 01:30 ramp_railing: build 74 s, two previews; first preview showed the ramp hidden under the street disc; added details finish() hook and cut the basement pit; also added the ramp wedge and grooves.
 - 2026-10-05 01:50 front_compound_wall_and_fern_planter: build 78 s, four previews; numerals floated 16 cm off the wall, fixed; fronds read as agave, then as beads, finally as overlapping plume tufts.
 - 2026-10-05 02:05 office_outside_stair: build 78 s, three previews (street view hid the flight behind the plinth; checked from above and from the east).
+- 2026-10-05 07:20 neighbour_massing: build 83 s; far row blocked the street camera, then (camera-invisible) still darkened the street; omitted it. Also fixed watchdog.sh, which looked for .claude/.ralph-loop.local.md instead of .claude/ralph-loop.local.md and so reported the loop as stopped; refreshed the automation copy.
