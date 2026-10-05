@@ -26,7 +26,7 @@ Rules:
 Every space is baked alone, cut to the same kind of box, with identical light, so they read as one set (user request, 5 Oct 2026). Production: `--rooms <id> --res 2048 --samples 256`.
 - [x] room-lower-day (slab underside takes ~9% of the atlas, never seen from above; left for texel-density)
 - [x] room-cafe-day (hidden base floor plane 1.3 mm under the planks bakes black, ~4% of the atlas; never visible)
-- [ ] room-court-day
+- [x] room-court-day (the double-height void at the north-west reads as an open hole, since rooms bake alone; the wicker pendant hangs in it)
 - [ ] room-event-day
 - [ ] room-terrace-day
 

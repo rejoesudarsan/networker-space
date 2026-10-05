@@ -34,3 +34,4 @@
 - 2026-10-05 11:34 entourage: full --quick build 6 min 16 s (baseline 7 min 44 s, run under load; no measurable cost). 22 linked instances + the garage SUV; --no-entourage falls back to the massing car. Bench man sits outside Camera.Entrance's frame.
 - 2026-10-05 20:28 room-lower-day: bake 1368 s (2048, 256 spp, CPU); first run lost to a session restart and re-run. Atlas clean, matches the Cycles reference; slab underside wastes ~9% of the atlas.
 - 2026-10-05 21:22 room-cafe-day: bake 725 s (2048, 256 spp, CPU). Checked the exported glTF rendered unlit against the Cycles reference: match. Slab underside + buried base floor plane waste ~12% of the atlas.
+- 2026-10-05 21:53 room-court-day: bake 1188 s (2048, 256 spp, CPU). Unlit glTF view matches the Cycles reference; void over the floor below shows as a hole (room baked alone).
