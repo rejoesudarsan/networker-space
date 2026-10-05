@@ -211,30 +211,45 @@ function countBytes() {
 }
 
 // The page never scrolls; the day does.
+let lastInput = 0
+let lastDir = 1
 const nudge = (d) => {
   if (document.body.classList.contains('reading')) return
   goal = Math.min(1, Math.max(0, goal + d))
+  lastInput = performance.now()
+  if (d) lastDir = Math.sign(d)
+}
+// Where each beat reads settled: its copy up, the veil behind it.
+const STOPS = BEATS.filter((b) => !b.veil && b.id !== 'move').map((b) => b.from + Math.min(0.02, (b.to - b.from) * 0.3))
+const step = (dir) => {
+  const next = dir > 0 ? STOPS.find((x) => x > goal + 0.002) : [...STOPS].reverse().find((x) => x < goal - 0.002)
+  if (next != null) nudge(next - goal)
 }
 addEventListener('wheel', (e) => {
   e.preventDefault()
-  nudge((e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY) * 0.00016)
+  // One fling must not carry through a beat: a cap per event.
+  const d = (e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY) * 0.00016
+  nudge(Math.max(-0.025, Math.min(0.025, d)))
 }, { passive: false })
 let touchY = null
 addEventListener('touchstart', (e) => (touchY = e.touches[0].clientY), { passive: true })
 addEventListener('touchmove', (e) => {
   if (touchY == null) return
   const y = e.touches[0].clientY
-  nudge((touchY - y) / (innerHeight * 6))
+  // A full-height swipe carries an eighth of the day: about one beat.
+  nudge((touchY - y) / (innerHeight * 8))
   touchY = y
 }, { passive: true })
 addEventListener('keydown', (e) => {
   if (e.target.closest('input, textarea, dialog')) return
-  const step = { ArrowDown: 0.02, ArrowUp: -0.02, PageDown: 0.08, PageUp: -0.08, ' ': e.shiftKey ? -0.08 : 0.08 }[e.key]
-  if (step) {
-    e.preventDefault()
-    nudge(step)
-  } else if (e.key === 'Home') goal = 0
-  else if (e.key === 'End') goal = 1
+  // Arrows walk through a beat; Space and the page keys go beat to beat.
+  const small = { ArrowDown: 0.015, ArrowUp: -0.015 }[e.key]
+  const page = { PageDown: 1, PageUp: -1, ' ': e.shiftKey ? -1 : 1 }[e.key]
+  if (small || page) e.preventDefault()
+  if (small) nudge(small)
+  else if (page) step(page)
+  else if (e.key === 'Home') nudge(-goal)
+  else if (e.key === 'End') nudge(1 - goal)
 })
 addEventListener('pointermove', (e) => {
   if (!world) return
@@ -248,6 +263,14 @@ let held = 0
 function loop(now = performance.now()) {
   const dt = Math.min(0.05, (now - last) / 1000)
   last = now
+  // Left resting in a veil, the day carries on through it, the way it was going.
+  if (now - lastInput > 700 && Math.abs(goal - p) < 0.002) {
+    const v = BEATS.find((b) => b.veil && goal > b.from && goal < b.to)
+    if (v) {
+      goal = lastDir > 0 ? STOPS.find((x) => x > v.to) ?? v.to : [...STOPS].reverse().find((x) => x < v.from) ?? v.from
+      lastInput = now
+    }
+  }
   p = reduced.matches ? goal : p + (goal - p) * (1 - Math.exp(-dt * 3))
   if (Math.abs(goal - p) < 0.00005) p = goal
   current = locate(p)

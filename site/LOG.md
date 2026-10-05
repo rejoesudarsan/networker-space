@@ -8,3 +8,4 @@
 - 2026-10-05 20:13 cache: _headers + hashed model files; caught and fixed compress-geometry breaking the memberships props in the build (quantize vs node reset).
 - 2026-10-05 20:21 flicker-aa: checked hero, ground/first floors, night, memberships at 1x; flicker judged from stills (headless 1 fps), not motion. Court tree black canopy left to the bake ([?]).
 - 2026-10-05 20:27 phone-layout: safe areas untested on a real notched phone (headless has none).
+- 2026-10-05 20:30 scroll-feel: judged from numbers + key test (Space lands on beats); not felt on a real trackpad/phone. User then asked for fewer camera angles, no chair scenes, start with the place: next.
