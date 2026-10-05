@@ -46,7 +46,7 @@ def opt(name, default):
     return args[args.index(name) + 1] if name in args else default
 
 
-floors = opt("--floors", ",".join(FLOORS + EXTRA)).split(",")
+floors = opt("--floors", "" if "--rooms" in args else ",".join(FLOORS + EXTRA)).split(",")
 light_set = opt("--set", "day")
 RES = int(opt("--res", 2048))
 SAMPLES = int(opt("--samples", 128))
@@ -410,7 +410,8 @@ def main():
     sc.render.use_compositing = False
     order = FLOORS
     for floor in floors:
-        t0 = time.time()
+        if not floor:
+            continue
         if floor == "roof":
             root = bpy.data.objects["Floor.second"]
             pick = lambda o: under_name(o, "Floor.roof")
@@ -418,69 +419,122 @@ def main():
             root = bpy.data.objects["Site.Units"]
             # The street disc and the neighbours stay out: the site's fog
             # stands in for them, and the disc alone would eat the atlas.
-            pick = lambda o: under_name(o, "Site.Units") and not o.name.startswith(("Site.Street", "Site.Neighbour"))
+            pick = lambda o, r=None: under_name(o, "Site.Units") and not o.name.startswith(("Site.Street", "Site.Neighbour"))
         else:
             root = bpy.data.objects["Floor.%s" % floor]
-            pick = lambda o: under(o, root)
+            pick = lambda o, r=root: under(o, r)
+
         # Open-topped: everything above a floor goes, as on the site. The
         # roof and the street are baked with the whole house standing.
-        hidden = []
-        for o in bpy.data.objects:
-            fog = "fog" in o.name.lower() or "haze" in o.name.lower()
-            above = roofish = False
+        def hide(o, floor=floor):
+            if "fog" in o.name.lower() or "haze" in o.name.lower():
+                return True
             if floor in order:
-                above = any(under(o, bpy.data.objects["Floor.%s" % k]) for k in order[order.index(floor) + 1:])
-                roofish = under_name(o, "Floor.roof")
-            if (above or roofish or fog) and not o.hide_render:
-                o.hide_render = True
-                hidden.append(o)
-        srcs = [o for o in bpy.data.objects if o.type in {"MESH", "CURVE", "FONT"} and pick(o)
-                and not o.hide_render and re.sub(r"\.\d+$", "", o.name).split(".")[-1] not in SKIP]
-        ob = joined(srcs, "%s.baked" % floor)
-        for o in srcs:
-            o.hide_render = True
-        parts = split_by_kind(ob)
-        lightmap_uv(ob)
-        img = bpy.data.images.new("%s-%s" % (floor, light_set), RES, RES, float_buffer=True)
-        bake(ob, img)
-        if "--no-denoise" not in args:
-            try:
-                img = denoise(img)
-            except Exception as e:
-                log("denoise failed (%s); keeping the raw bake" % e)
-        # Bake pixels are linear scene light; save through the scene's view
-        # transform so the site can show them unlit and untouched.
-        sc.view_settings.exposure = EXPOSURE
-        jpg = os.path.join(OUT, "%s-%s.jpg" % (floor, light_set))
-        sc.render.image_settings.file_format = "JPEG"
-        sc.render.image_settings.quality = 90
-        img.save_render(jpg, scene=sc)
-        log("atlas %s" % jpg)
-        # Export: the baked shell, then the fixtures.
-        me = ob.data
-        me.materials.clear()
-        me.materials.append(baked_material("baked.%s-%s" % (floor, light_set), jpg))
-        for uv in list(me.uv_layers):
-            if uv.name != "Lightmap":
-                me.uv_layers.remove(uv)
-        export([ob], os.path.join(OUT, "%s-%s.gltf" % (floor, light_set)), root)
-        fixtures = []
-        for k, part in parts.items():
-            pm = part.data
-            for i, m in enumerate(pm.materials):
-                if m is not None:
-                    pm.materials[i] = flat_copy(m, k)
-            for uv in list(pm.uv_layers):
-                pm.uv_layers.remove(uv)
-            fixtures.append(part)
-        if fixtures and light_set == "day":
-            export(fixtures, os.path.join(OUT, "%s-fixtures.gltf" % floor), root)
-        # Put the scene back for the next floor.
-        for o in srcs + hidden:
-            o.hide_render = False
-        for o in [ob] + fixtures:
-            bpy.data.objects.remove(o)
-        log("%s done in %.0f s" % (floor, time.time() - t0))
+                if any(under(o, bpy.data.objects["Floor.%s" % k]) for k in order[order.index(floor) + 1:]):
+                    return True
+                return under_name(o, "Floor.roof")
+            return False
+        bake_part(floor, root, pick, hide)
 
+    # Room dioramas (site/src/space/rooms.json): each room alone, cut to its
+    # rectangle and wall height, lit the same way, so every space matches.
+    for rid in [r for r in opt("--rooms", "").split(",") if r]:
+        cfg = ROOMS[rid]
+        root = bpy.data.objects["Floor.%s" % cfg["floor"]]
+        pick = lambda o, r=root: under(o, r)
+
+        def hide(o, r=root):
+            if o.type == "LIGHT":
+                return o.name != "Sun.Dawn" and not under(o, r)
+            return not under(o, r)
+        bake_part("room-" + rid, root, pick, hide, cut=(cfg["rect"], cfg["top"]))
+
+
+ROOMS = {}
+try:
+    import json
+    ROOMS = {k: v for k, v in json.load(open(os.path.join(os.path.dirname(BLENDER_DIR), "site", "src", "space", "rooms.json"))).items() if k != "_"}
+except Exception as e:
+    log("no rooms.json (%s)" % e)
+
+
+def cut_to(ob, root, rect, top):
+    """Keep only what lies inside the room's rectangle and below `top`
+    (floor plan units), like the site's diorama."""
+    import bmesh
+    x0, z0, x1, z1 = rect
+    mw = root.matrix_world
+    planes = [((x0, 0, 0), (-1, 0, 0)), ((x1, 0, 0), (1, 0, 0)),
+              ((0, -z0, 0), (0, 1, 0)), ((0, -z1, 0), (0, -1, 0)), ((0, 0, top), (0, 0, 1))]
+    bm = bmesh.new()
+    bm.from_mesh(ob.data)
+    for co, no in planes:
+        wco = mw @ Vector(co)
+        wno = (mw.to_3x3() @ Vector(no)).normalized()
+        bmesh.ops.bisect_plane(bm, geom=bm.verts[:] + bm.edges[:] + bm.faces[:], plane_co=wco, plane_no=wno,
+                               clear_outer=True)
+    bm.to_mesh(ob.data)
+    bm.free()
+    ob.data.update()
+    log("cut %s to %s, top %.2f: %d faces" % (ob.name, rect, top, len(ob.data.polygons)))
+
+
+def bake_part(name, root, pick, hide, cut=None):
+    sc = bpy.context.scene
+    t0 = time.time()
+    hidden = []
+    for o in bpy.data.objects:
+        if not o.hide_render and hide(o):
+            o.hide_render = True
+            hidden.append(o)
+    srcs = [o for o in bpy.data.objects if o.type in {"MESH", "CURVE", "FONT"} and pick(o)
+            and not o.hide_render and re.sub(r"\.\d+$", "", o.name).split(".")[-1] not in SKIP]
+    ob = joined(srcs, "%s.baked" % name)
+    for o in srcs:
+        o.hide_render = True
+    if cut:
+        cut_to(ob, root, *cut)
+    parts = split_by_kind(ob)
+    lightmap_uv(ob)
+    img = bpy.data.images.new("%s-%s" % (name, light_set), RES, RES, float_buffer=True)
+    bake(ob, img)
+    if "--no-denoise" not in args:
+        try:
+            img = denoise(img)
+        except Exception as e:
+            log("denoise failed (%s); keeping the raw bake" % e)
+    # Bake pixels are linear scene light; save through the scene's view
+    # transform so the site can show them unlit and untouched.
+    sc.view_settings.exposure = EXPOSURE
+    jpg = os.path.join(OUT, "%s-%s.jpg" % (name, light_set))
+    sc.render.image_settings.file_format = "JPEG"
+    sc.render.image_settings.quality = 90
+    img.save_render(jpg, scene=sc)
+    log("atlas %s" % jpg)
+    # Export: the baked shell, then the fixtures.
+    me = ob.data
+    me.materials.clear()
+    me.materials.append(baked_material("baked.%s-%s" % (name, light_set), jpg))
+    for uv in list(me.uv_layers):
+        if uv.name != "Lightmap":
+            me.uv_layers.remove(uv)
+    export([ob], os.path.join(OUT, "%s-%s.gltf" % (name, light_set)), root)
+    fixtures = []
+    for k, part in parts.items():
+        pm = part.data
+        for i, m in enumerate(pm.materials):
+            if m is not None:
+                pm.materials[i] = flat_copy(m, k)
+        for uv in list(pm.uv_layers):
+            pm.uv_layers.remove(uv)
+        fixtures.append(part)
+    if fixtures and light_set == "day":
+        export(fixtures, os.path.join(OUT, "%s-fixtures.gltf" % name), root)
+    # Put the scene back for the next part.
+    for o in srcs + hidden:
+        o.hide_render = False
+    for o in [ob] + fixtures:
+        bpy.data.objects.remove(o)
+    log("%s done in %.0f s" % (name, time.time() - t0))
 
 main()
