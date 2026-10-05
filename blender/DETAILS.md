@@ -9,6 +9,8 @@ Photo numbers refer to `PHOTO-LABELS.md`; the images are
 `docs/house-understanding/img/pNN.jpg`. Plans are in
 `docs/house-understanding/plans/*.png`.
 
+Markers: `[ ]` to do, `[x]` done, `[-]` skipped after three failures, `[?]` needs the user's input (the loop skips these).
+
 Rules for every item:
 - Add it as a function in `blender/details/<slug>.py` (one file per item),
   registered in `blender/details/__init__.py`, and called from
@@ -42,7 +44,8 @@ Rules for every item:
   - note: 13 risers on the site's line (site had 9 at 39 cm); rod rail on the court side only, p6's wall handrail omitted because the model has no wall on that side; frangipani moved from the site's spot (crown crossed the boundary wall) to the stair's foot as in p6. Direction corrected in first-floor-porch: it rises east to the porch.
 - [x] first-floor-porch: washed-concrete porch floor, mesh railing, grass pendant at the first-floor entrance (p4).
   - note: porch = the first-floor ENTRANCE space (first frame x -1.16..-0.30, z 0.18..1.64). Also opened the first-floor slab over the entrance court (finish() boolean cut), which the plan draws open and p24/p6 show open, and reversed the outside stair to rise east to the porch (the site had it rising west).
-- [ ] front-lawn-and-steps: raised lawn outside Living 1 with the garden steps up to it (p21, p36).
+- [x] front-lawn-and-steps: raised lawn outside Living 1 with the garden steps up to it (p21, p36).
+  - note: lawn only (p21): patchy grass, east wall with a hydrangea bed, corten planter on the west edge. The p36 steps became the [?] item garden-steps-p36 at the end.
 - [ ] side-garden-passage: west garden strip with potted plants and steps (p9).
 
 ## Ground floor interiors (p25, p27, p28, p13, p15, p20)
@@ -73,3 +76,6 @@ Rules for every item:
 
 ## Cameras and renders
 - [ ] detail-cameras: add cameras `Camera.Court2`, `Camera.Court1`, `Camera.Entrance`, `Camera.Terrace` framed like p1, p20, p24, p30, so each detail can be checked from a photo-matched view; render them in `--quick` mode.
+
+## Needs your input
+- [?] garden-steps-p36: the steps in p36 (stone treads on brick risers, a plastered wall with a steel handrail on one side, an ochre planter of terracotta pots on the other, a flagstone path and lawn at the foot). Where are they on the plans? The ground plan's stepped areas are the gate steps, the ramp, the office stair and two short flights in the west garden strip.

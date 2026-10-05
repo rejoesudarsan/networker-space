@@ -3,7 +3,7 @@ Build the Blender model of the house with its details, one checklist item per it
 Context: `blender/README.md` (pipeline), `blender/DETAILS.md` (checklist and rules), `PHOTO-LABELS.md`, `docs/house-understanding/`. Blender runs on this host as `/snap/bin/blender` (5.2 LTS); fall back to `/usr/bin/blender` (4.0) if the snap one fails to start. Work in `/home/bb/projects/networker-space`.
 
 Each iteration, do exactly this:
-1. Read `blender/DETAILS.md`. Pick the FIRST unchecked item. If every item is checked, output `<promise>DETAILS COMPLETE</promise>` and stop.
+1. Read `blender/DETAILS.md`. Pick the FIRST `[ ]` item. Skip `[?]` items: they wait for the user. If no `[ ]` items remain, output `<promise>DETAILS COMPLETE</promise>` and stop.
 2. Look at the photo(s) and plan it cites (Read the jpg/png). Look at the last renders in `blender/renders/` to see the current state.
 3. Implement it as `blender/details/<slug>.py` following the rules in DETAILS.md. Keep the change to that file plus the registration and the one call site.
 4. Preview before building. Render a close-up of just the new detail on the last saved scene (about 15 s):
@@ -15,4 +15,4 @@ Each iteration, do exactly this:
 6. Tick the item in `blender/DETAILS.md`, add a one-line note under it if something was approximated, and commit: `git add -A blender && git commit -m "blender: <slug>"`, ending the message with the Co-Authored-By line from your attribution instructions. Do not push.
 7. Append one line to `blender/LOG.md`: the real time from `date '+%F %H:%M'`, slug, build time, what was approximated.
 
-Keep iterations short: one item, one commit. Do not refactor unrelated code. Do not rewrite `build_house.py` structure. If the same item fails three iterations in a row (check LOG.md), mark it `[-] skipped: <reason>` and move on.
+Keep iterations short: one item, one commit. Do not refactor unrelated code. Do not rewrite `build_house.py` structure. If the same item fails three iterations in a row (check LOG.md), mark it `[-] skipped: <reason>` and move on. If an item cannot be placed or built without a decision only the user can make, build what is certain, and move the rest to a `[?]` item under "Needs your input" with the question.
