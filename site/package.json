@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build && node scripts/compress-models.mjs && node scripts/compress-textures.mjs",
+    "build": "vite build && node scripts/compress-models.mjs && node scripts/compress-textures.mjs && node scripts/hash-models.mjs",
     "preview": "vite preview --host",
     "plans": "node scripts/extract-plans.mjs",
     "house": "node scripts/build-house.mjs",

@@ -10,6 +10,17 @@ import { MeshoptEncoder } from 'meshoptimizer'
 await MeshoptEncoder.ready
 const io = new NodeIO().setLogger(new Logger(Logger.Verbosity.ERROR)).registerExtensions(ALL_EXTENSIONS).registerDependencies({ 'meshopt.encoder': MeshoptEncoder })
 
+function nest(doc) {
+  const scene = doc.getRoot().getDefaultScene()
+  for (const node of scene.listChildren()) {
+    const top = doc.createNode(node.getName()).setTranslation(node.getTranslation()).setRotation(node.getRotation()).setScale(node.getScale())
+    node.setName(node.getName() + '-mesh').setTranslation([0, 0, 0]).setRotation([0, 0, 0, 1]).setScale([1, 1, 1])
+    scene.removeChild(node)
+    top.addChild(node)
+    scene.addChild(top)
+  }
+}
+
 const dirs = ['dist/models/baked', 'dist/models/props']
 const size = (f) => statSync(f).size
 let before = 0
@@ -23,6 +34,10 @@ for (const dir of dirs) {
     await doc.transform(
       dedup(),
       reorder({ encoder: MeshoptEncoder }),
+      // Quantizing puts a dequantizing scale and offset on the mesh's node; the
+      // scene places each prop by resetting its top node (scene.js, loadProps),
+      // so the props get a parent that keeps the layout and leaves that to the child.
+      ...(dir.endsWith('props') ? [nest] : []),
       // The baked atlases need exact UVs: keep texcoords at 16 bits.
       quantize({ quantizePosition: 14, quantizeTexcoord: 16, quantizeNormal: 10 }),
       meshopt({ encoder: MeshoptEncoder, level: 'medium' }),

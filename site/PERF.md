@@ -96,3 +96,21 @@ URL modifier picks WebP when the browser decodes it (else the JPEG) and the
 - No WebGL / `?still` / a failed load: the reader opens on a still of the house
   (`public/still/house-dawn.webp` 40 kB, `.jpg` 83 kB fallback, lazy), then the
   full copy, now including the day/night rhythm, Inside and Evenings.
+
+## cache (5 Oct 2026)
+`public/_headers` (Cloudflare static assets; rules kept from overlapping since
+matching rules merge). `scripts/hash-models.mjs` (last step of `npm run build`)
+moves every buffer and texture the glTFs reference, with its WebP tiers, to
+`dist/models/immutable/<name>.<sha256:10>.<ext>` and rewrites the glTF URIs, so a
+new bake never pairs a fresh .gltf with a stale cached .bin.
+- `/`, `/index.html`, `/models/baked/*`, `/models/props/*` (.gltf only):
+  `max-age=0, must-revalidate` (ETag revalidation).
+- `/assets/*` (Vite-hashed) and `/models/immutable/*`: `max-age=31536000, immutable`.
+- `/world/*`, `/still/*`, `/favicon.svg`: `max-age=3600, stale-while-revalidate=86400`.
+Checked with `wrangler dev`: each route answers with its header; the page loads
+with no 4xx. A repeat visit revalidates only the small .gltf files and the HTML.
+
+Fix found here: the compress-geometry step had quantized the props, and the
+scene's prop placement reset the dequantizing transform (memberships rendered as
+huge orange planes in the build only). The script now nests each prop under a
+layout node first; memberships and call checked against the raw files.
