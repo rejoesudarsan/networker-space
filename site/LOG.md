@@ -2,3 +2,4 @@
 - 2026-10-05 19:46 measure: PERF.md baseline. Times are SwiftShader (no GPU), so only relative. dist/models/blender (13 MB) is unused; left for compress/lazy items.
 - 2026-10-05 19:50 lazy-floors: only basement + props deferred (upper floors form the façade, so they can't wait). Further wins need compression.
 - 2026-10-05 19:53 compress-geometry: meshopt build step, 18.2 → 4.9 MB geometry. Local timings unchanged (localhost); network win estimated, not measured on a real link.
+- 2026-10-05 19:58 compress-textures: WebP + -sm tier chosen by screen size; KTX2 not done (noted in PERF.md).

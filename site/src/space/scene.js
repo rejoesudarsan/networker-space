@@ -120,6 +120,15 @@ function bakedMaterial(map) {
   })
 }
 
+function canWebp() {
+  return new Promise((done) => {
+    const img = new Image()
+    img.onload = () => done(img.width === 1)
+    img.onerror = () => done(false)
+    img.src = 'data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA=='
+  })
+}
+
 // ---------- the scene ----------
 export async function createScene(canvas) {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' })
@@ -197,8 +206,14 @@ export async function createScene(canvas) {
   }
 
   // ---------- the baked house ----------
-  // The build meshopt-compresses the glTFs (scripts/compress-models.mjs).
-  const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder)
+  // The build meshopt-compresses the glTFs (scripts/compress-models.mjs) and
+  // writes WebP textures beside the JPEGs, half size for phones
+  // (scripts/compress-textures.mjs). The dev server has only the JPEGs.
+  const manager = new THREE.LoadingManager()
+  const webp = import.meta.env.PROD && (await canWebp())
+  const small = Math.max(screen.width, screen.height) <= 1024
+  if (webp) manager.setURLModifier((url) => (/\/models\/.*\.jpg$/.test(url) ? url.replace(/\.jpg$/, small ? '-sm.webp' : '.webp') : url))
+  const loader = new GLTFLoader(manager).setMeshoptDecoder(MeshoptDecoder)
   const glassMats = []
   const glassDay = new THREE.Color('#cfd8d6')
   const glassNight = new THREE.Color('#ffb466')

@@ -63,3 +63,15 @@ the meshopt decoder. Compressed and raw renders compared side by side: no visibl
   SwiftShader, noisy): bytes are nearly free locally. The win is on a real network:
   ~10 MB less, e.g. ~16 s less on a 5 Mbit/s phone link.
 - Textures (JPEG atlases + HDR) are now the largest part: ~5.7 MB of what remains.
+
+## compress-textures (5 Oct 2026)
+`scripts/compress-textures.mjs` (in `npm run build`) writes, next to each JPEG in
+`dist/models`, a WebP (q80, same size) and a `-sm.webp` at half size. The loader's
+URL modifier picks WebP when the browser decodes it (else the JPEG) and the
+`-sm` tier when the screen's long side is ≤ 1024 px. Production only.
+- Textures: 7.4 MB JPEG → 2.6 MB WebP → 1.1 MB phone tier (atlases 2048 → 1024 on phones).
+- Whole first load (to the ground floor): desktop 10.6 → 7.7 MB, phone 10.6 → 6.7 MB.
+- Before the first frame: desktop 6.2 MB, phone 5.6 MB.
+- KTX2/Basis not done: it would cut GPU memory too, but needs a transcoder
+  (~0.5 MB wasm) and a toktx/basisu step; worth it if phones show memory trouble.
+- Left: `world/env/sunrise_1k.hdr` 1.3 MB, used only for prop lighting.
