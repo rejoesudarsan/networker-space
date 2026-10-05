@@ -42,13 +42,11 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   width: min(64rem, 120vw); height: 40rem; pointer-events: none;
   background: radial-gradient(ellipse at 22% 72%, var(--sky, #ecebe4) 22%, color-mix(in srgb, var(--sky, #ecebe4) 55%, transparent) 46%, transparent 72%);
 }
-/* A whisper of grain over the render, like film. */
+/* Keep the paper texture still: stepped movement makes the whole page flicker. */
 .grain {
   position: fixed; inset: -50%; pointer-events: none; opacity: 0.06; mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  animation: grain 1.2s steps(6) infinite;
 }
-@keyframes grain { to { transform: translate(-8%, 5%) } }
 
 /* ---------- header ---------- */
 .bar {

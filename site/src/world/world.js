@@ -615,7 +615,13 @@ export async function createWorld(canvas) {
   }
 
   // ---------- post ----------
-  const composer = new EffectComposer(renderer)
+  // Canvas antialiasing does not apply to the composer's offscreen buffers.
+  // Multisample the scene before bloom so fine edges stay stable as it moves.
+  const renderTarget = new THREE.WebGLRenderTarget(1, 1, {
+    type: THREE.HalfFloatType,
+    samples: Math.min(4, renderer.capabilities.maxSamples),
+  })
+  const composer = new EffectComposer(renderer, renderTarget)
   composer.addPass(new RenderPass(scene, camera))
   const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0, 0.6, 0.82)
   composer.addPass(bloom)
