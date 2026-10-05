@@ -58,7 +58,8 @@ Rules for every item:
   - note: runs from the plan (west run with sink and hob, south return) and p13 (north-east L with wall cabinets, concrete hood), black tile floor. p13's window over the hob and the far-wall door are not in the model's walls; not added.
 - [x] caretaker-red-oxide: red-oxide floor in the caretaker room (p15).
   - note: floor fitted to the model's walls (x 1.56..2.58, z -4.9..-4.06), red-oxide skirting and the small brown fan from p15.
-- [ ] stair-to-basement: the inside stair under the DOUBLE HEIGHT box down to basement Court 1, wooden balustrade, blue glass lantern (p20).
+- [x] stair-to-basement: the inside stair under the DOUBLE HEIGHT box down to basement Court 1, wooden balustrade, blue glass lantern (p20).
+  - note: geometry from site details.js PLAN.stair (20 risers, west up to the void's west edge, treads only over the rooms below). Turned-baluster teak balustrade round the void, open where the stair arrives; blue lantern in the foyer.
 
 ## Basement (p2, p10, p31)
 - [ ] court1-big-tree: the big tree in basement Court 1 rising through the ground-floor double-height void; trunk + canopy reaching above the ground slab.
