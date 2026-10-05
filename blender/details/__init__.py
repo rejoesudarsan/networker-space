@@ -31,6 +31,7 @@ MODULES = [
     "outside_stair_to_first",
     "first_floor_porch",
     "front_lawn_and_steps",
+    "side_garden_passage",
 ]
 
 

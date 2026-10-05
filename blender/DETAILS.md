@@ -31,7 +31,7 @@ Rules for every item:
 - [x] ramp-railing: charcoal steel railing along the side drive ramp down to the basement garage (p03, p02); follow the ramp opening in the ground slab.
   - note: also built the ramp slope itself (none existed) and cut the basement footprint out of the street disc via a new finish(ctx) hook; the disc used to run through the basement at street level. Rails follow site details.js: 3 bars, 0.36 high.
 - [x] front-compound-wall-and-fern-planter: check `frontWall`/`streetGate` exist; add the fern planter beside gate no. 1172 (p05) and the house number plate.
-  - note: gate, piers and front wall already existed. Number and letter slot are on the plinth face right of the gate steps; p05's tall wall and concrete canopy over the gate are not modelled (the existing gate sits at the top of the steps).
+  - note: gate, piers and front wall already existed. Number and letter slot are on the plinth face right of the gate steps; p05's concrete canopy over the gate is not modelled. The gate was moved to street level in side-garden-passage.
 - [x] office-outside-stair: outside stair from the open-to-sky court up to the basement office entrance with a steel rail (plan basement, p03).
   - note: also floored the open-to-sky court in flagstones (site does the same). Stair positions from details.js PLAN; landing meets the existing Site.OfficeGate.
 - [x] neighbour-massing: plain neighbour blocks and compound walls on both sides and across the street, positions from `site/src/world/world.js` `neighbours`.
@@ -46,7 +46,8 @@ Rules for every item:
   - note: porch = the first-floor ENTRANCE space (first frame x -1.16..-0.30, z 0.18..1.64). Also opened the first-floor slab over the entrance court (finish() boolean cut), which the plan draws open and p24/p6 show open, and reversed the outside stair to rise east to the porch (the site had it rising west).
 - [x] front-lawn-and-steps: raised lawn outside Living 1 with the garden steps up to it (p21, p36).
   - note: lawn only (p21): patchy grass, east wall with a hydrangea bed, corten planter on the west edge. The p36 steps became the [?] item garden-steps-p36 at the end.
-- [ ] side-garden-passage: west garden strip with potted plants and steps (p9).
+- [x] side-garden-passage: west garden strip with potted plants and steps (p9).
+  - note: the gate is at street level (p5) and the passage climbs to the ground floor in the plan's two flights, 4 risers each (p9, p36). Removed the old outside gate steps, brought the gate and piers down to street level, opened the slab over the passage, added the retaining wall, a tall west boundary wall with handrails, p36's ochre planter and pots.
 
 ## Ground floor interiors (p25, p27, p28, p13, p15, p20)
 - [ ] living1-teak-floor: teak floor in Living 1, brass lanterns hanging, glazed doors to the lawn (p25, p27).
@@ -78,4 +79,4 @@ Rules for every item:
 - [ ] detail-cameras: add cameras `Camera.Court2`, `Camera.Court1`, `Camera.Entrance`, `Camera.Terrace` framed like p1, p20, p24, p30, so each detail can be checked from a photo-matched view; render them in `--quick` mode.
 
 ## Needs your input
-- [?] garden-steps-p36: the steps in p36 (stone treads on brick risers, a plastered wall with a steel handrail on one side, an ochre planter of terracotta pots on the other, a flagstone path and lawn at the foot). Where are they on the plans? The ground plan's stepped areas are the gate steps, the ramp, the office stair and two short flights in the west garden strip.
+- [x] garden-steps-p36: answered by p9 and the plan: they are the side passage's flights; built in side-garden-passage.
