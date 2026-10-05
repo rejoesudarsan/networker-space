@@ -88,7 +88,8 @@ Rules for every item:
 ## Second floor and terrace (p29, p30, p32, p33, p34)
 - [x] terrace-terracotta: terracotta tile floor on the long terrace.
   - note: the tile floor already existed (build_house, 30 cm tiles); added p33's weathered timber bench along the house wall and the roof's deep eave over the terrace edge. p33 contradicts the board's steel rail on the parapet; question added under Needs your input.
-- [ ] bedroom5-bathtub: bathtub in the second-floor bath (p29).
+- [x] bedroom5-bathtub: bathtub in the second-floor bath (p29).
+  - note: the bath is the room between the Dress and the stair (x 1.0..2.0, z -2.36..-1.535, measured). Inset tub in a slate deck on a turquoise glass-block plinth, white grid tiles, glass shower in the north-west corner, WC on the west wall, slate floor (p29).
 - [ ] passage-over-void: the passage railing over the courtyard void and the study nook (p30).
 
 ## Cameras and renders

@@ -48,6 +48,7 @@ MODULES = [
     "family2_sliding_teak_door",
     "kitchen2",
     "terrace_terracotta",
+    "bedroom5_bathtub",
 ]
 
 

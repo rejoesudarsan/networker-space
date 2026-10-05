@@ -28,3 +28,4 @@
 - 2026-10-05 08:32 family2_sliding_teak_door: build ~95 s; three eye-level renders. Panel first sat inside the wall (face is z -1.375, not the wall centreline); moved.
 - 2026-10-05 08:35 kitchen2: build ~95 s; one top-down, one eye-level render; matched first try.
 - 2026-10-05 08:39 terrace_terracotta: build ~95 s; eye-level render matched p33's framing. Raised the parapet style (rail vs piers) as a [?] item.
+- 2026-10-05 08:43 bedroom5_bathtub: build ~95 s; four eye-level renders: solid tub slab, tiles behind the wall face, WC clash, plinth filling the basin; each fixed.
