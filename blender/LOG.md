@@ -24,3 +24,4 @@
 - 2026-10-05 08:18 court2_nest_pendants: build ~90 s; eye-level render matched p11's framing; spikes shortened.
 - 2026-10-05 08:21 court2_skylight: build 96 s; roof cut and skylight in finish(); looking-up render matched p1.
 - 2026-10-05 08:24 court2_louvred_doors: build ~95 s; p14 placed them on the east wall; two eye-level renders matched p11/p14.
+- 2026-10-05 08:28 steel_stair_to_second: build ~95 s; position from CAD tread lines; first camera was inside a wall, top-down located the well; p8 match on the next render.

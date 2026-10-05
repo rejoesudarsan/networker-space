@@ -78,7 +78,8 @@ Rules for every item:
   - note: roof slab cut over the second-floor void in finish() (build_house.ROOF_VOIDS left as is); plaster kerb, glass pitched 0.06 toward the street, steel glazing bars on a ~0.28 grid.
 - [x] court2-louvred-doors: teak louvred doors between the court and Living 2 (p1, p11, p14).
   - note: p14 shows these are on the court's east wall, not between the court and Living 2 (Living 2 opens straight off the court's south side). Three bays of louvred shutter pairs over red-oxide dados, mounted on the face because the CAD draws the wall solid. Also Living 2's woven roman blinds (p14's teak blinds).
-- [ ] steel-stair-to-second: steel stair with timber treads beside the court up to the second floor (p8, p35).
+- [x] steel-stair-to-second: steel stair with timber treads beside the court up to the second floor (p8, p35).
+  - note: dog-leg read from the CAD tread lines on both plans (first frame x 1.56..2.32, flights at z -0.32..0.09 and -0.8..-0.38, landing to the east wall), 2 x 8 risers of 22 cm; second-floor slab opened over the well. Eye-level render from the west hall matches p8, louvres visible through the court doorway.
 - [ ] family2-sliding-teak-door: the sliding teak door and cove light in Family 2 (p16).
 - [ ] kitchen2: light-wood cabinets and double sink (p26).
 
