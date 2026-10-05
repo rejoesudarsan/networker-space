@@ -59,6 +59,7 @@ MODULES = [
     "basement_work_games",
     "gulmohar_refine",
     "room_lights",
+    "street_wet",
     "detail_cameras",
     "entourage",
 ]

@@ -74,6 +74,7 @@ else:
     scene.render.engine = "BLENDER_EEVEE"
     try:
         scene.eevee.taa_render_samples = int(opt("--samples", 32))
+        scene.eevee.use_raytracing = True      # screen-space reflections on the wet street
     except Exception:
         pass
 
