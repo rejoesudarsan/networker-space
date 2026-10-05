@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
@@ -57,7 +58,7 @@ const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 // ---------- the light through the day ----------
 // [hour, sky/fog, sun colour, sun intensity, hemi sky, hemi ground, hemi intensity, night]
 const SKY = [
-  [6, '#e6d6c8', '#ffc394', 2.2, '#e9e0dc', '#c4a78a', 1.15, 0.15],
+  [6, '#e9c9c0', '#ffc394', 1.6, '#e9d4d4', '#c4a78a', 0.7, 0.15],
   [8, '#efeae2', '#ffe6c8', 3.2, '#f3f1ec', '#d2bf9f', 1.45, 0],
   [12, '#f1efe9', '#fff7ea', 3.6, '#f6f6f2', '#d8c9ae', 1.55, 0],
   [16, '#efe5d6', '#ffd6a0', 3.2, '#f4eee4', '#d0b68f', 1.35, 0],
@@ -223,6 +224,18 @@ export async function createWorld(canvas) {
   sun.shadow.normalBias = 0.02
   sun.shadow.radius = 4
   scene.add(hemi, sun, sun.target)
+  // Image-based light: the same sunrise HDRI the Blender renders use, so
+  // plaster, teak and glass pick up a real sky instead of a flat ambient.
+  try {
+    const hdr = await new RGBELoader().loadAsync('/world/env/sunrise_1k.hdr')
+    const pmrem = new THREE.PMREMGenerator(renderer)
+    scene.environment = pmrem.fromEquirectangular(hdr).texture
+    scene.environmentRotation.y = Math.PI * 0.6
+    hdr.dispose()
+    pmrem.dispose()
+  } catch (e) {
+    console.warn('no HDRI', e)
+  }
 
   const loader = new GLTFLoader()
   const [house, ...gltfs] = await Promise.all([
@@ -231,15 +244,29 @@ export async function createWorld(canvas) {
   ])
   // The Blender model's details, one GLB per floor (blender/tools/export_site.py).
   // When all four are present they replace the hand-built floor detail below.
-  const blenderFloors = await Promise.all(
-    Object.keys(LEVEL).map((id) => loader.loadAsync(`/models/blender/${id}.glb`).catch(() => null)),
-  )
+  const maxAniso = renderer.capabilities.getMaxAnisotropy()
+  const loadBlender = async (name) => {
+    const g = await loader.loadAsync(`/models/blender/${name}.gltf`).catch(() => loader.loadAsync(`/models/blender/${name}.glb`)).catch(() => null)
+    if (!g) return null
+    // Textured export: the material's tint and roughness scale ride in its extras.
+    g.scene.traverse((o) => {
+      if (!o.isMesh) return
+      const m = o.material
+      const x = m.userData || {}
+      if (x.tint) m.color.setRGB(x.tint[0], x.tint[1], x.tint[2])
+      if (x.rough != null) m.roughness = x.rough
+      for (const k of ['map', 'roughnessMap', 'metalnessMap', 'normalMap']) if (m[k]) m[k].anisotropy = maxAniso
+      if (m.map && !m.map.wrapS) m.map.wrapS = m.map.wrapT = THREE.RepeatWrapping
+    })
+    return g
+  }
+  const blenderFloors = await Promise.all(Object.keys(LEVEL).map(loadBlender))
   const useBlender = blenderFloors.every(Boolean)
   // The roof (slab, parapets, terrace eave, skylight), in the second floor's frame.
-  const blenderRoof = useBlender ? await loader.loadAsync('/models/blender/roof.glb').catch(() => null) : null
+  const blenderRoof = useBlender ? await loadBlender('roof') : null
   const roofParts = []
   // Outside the house: gulmohars, neighbour houses, office gate (street frame).
-  const blenderSite = useBlender ? await loader.loadAsync('/models/blender/site.glb').catch(() => null) : null
+  const blenderSite = useBlender ? await loadBlender('site') : null
   // Parts hung above the floor (lanterns, fans, wall cabinets): hidden while the walls are cut away.
   const highParts = []
 
@@ -340,14 +367,20 @@ export async function createWorld(canvas) {
     g.add(gltfs[i].scene)
     walls.push(addWindows(g, gltfs[i].scene))
     if (useBlender) {
+      let ownWalls = false
       blenderFloors[i].scene.traverse((o) => {
         if (!o.isMesh) return
         o.castShadow = true
         o.receiveShadow = true
-        if (o.name.endsWith('_high')) highParts.push(o)
-        if (o.name.endsWith('_wall')) walls.push({ o, full: 1, low: 0.42 / WALL })
+        if (/_high(\.\d+)?$/.test(o.name)) highParts.push(o)
+        if (/_wall(\.\d+)?$/.test(o.name)) {
+          walls.push({ o, full: 1, low: 0.42 / WALL })
+          if (o.name.startsWith('Lime White')) ownWalls = true
+        }
       })
       g.add(blenderFloors[i].scene)
+      // The export carries the plastered walls and columns; the flat CAD ones step aside.
+      if (ownWalls) gltfs[i].scene.traverse((o) => { if (o.isMesh && (o.name === 'walls' || o.name === 'columns')) o.visible = false })
     }
     floors[id] = g
     scene.add(g)
@@ -595,11 +628,11 @@ export async function createWorld(canvas) {
   const SHOTS = [
     [0, 30, 13, 25, -1.7, 1.2, 0.6, 3.5],
     [0.1, 28, 22, 26, -1.2, 1.6, 0.6, 3.5],
-    [0.22, 24, 42, 18.5, -0.4, 0.2, 0.6, 1],
-    [0.38, -28, 46, 15.5, 0.4, 0.2, 1.4, 0],
-    [0.54, -34, 46, 17, 0.2, 0.2, 0.4, 2],
-    [0.7, -58, 46, 17.5, -0.8, 0.2, 0.0, 3],
-    [0.84, 32, 40, 21, -0.3, 0.2, 0.4, 1.9],
+    [0.22, 24, 38, 13.5, -0.4, 0.2, 0.6, 1],
+    [0.38, -28, 42, 11.5, 0.4, 0.2, 1.4, 0],
+    [0.54, -34, 42, 12.5, 0.2, 0.2, 0.4, 2],
+    [0.7, -58, 42, 13, -0.8, 0.2, 0.0, 3],
+    [0.84, 32, 38, 15.5, -0.3, 0.2, 0.4, 1.9],
     [1, 44, 14, 27, -1.2, 1.4, 0.4, 3.5],
   ]
   const key = (table, p) => {
@@ -669,14 +702,17 @@ export async function createWorld(canvas) {
     scene.background.copy(env.cur.horizon)
     scene.fog.color.copy(env.cur.horizon)
     const reach = camera.aspect < 0.8 ? 2.05 : camera.aspect < 1.2 ? 1.25 : 1
-    scene.fog.near = lerp(lerp(24, 20, inside), 4, cloud) * reach
-    scene.fog.far = lerp(lerp(58, 46, inside), 17, cloud) * reach
+    // Settled scenes stay sharp to just past the house; only the cloud brings the fog in.
+    scene.fog.near = lerp(lerp(24, 15, inside), 4, cloud) * reach
+    scene.fog.far = lerp(lerp(58, 34, inside), 17, cloud) * reach
     hemi.color.copy(sky.hemiSky)
     hemi.groundColor.copy(sky.hemiGround)
-    hemi.intensity = sky.hemiI * env.cur.hemi
+    hemi.intensity = sky.hemiI * env.cur.hemi * (scene.environment ? 0.45 : 1)
     sun.color.copy(sky.sun)
     sun.intensity = sky.sunI * env.cur.sun
     renderer.toneMappingExposure = env.cur.expo
+    // The sky's light on the materials: full by day, a trace at night.
+    scene.environmentIntensity = lerp(0.9, 0.08, state.night) * lerp(1, 0.55, env.cur.inside)
     const day = Math.min(1, Math.max(0, (h - 5.6) / 13.4))
     const ang = day * Math.PI
     const sunPos = new THREE.Vector3(Math.cos(ang) * 22, Math.max(4, Math.sin(ang) * 24), -9)

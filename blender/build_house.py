@@ -1760,7 +1760,10 @@ def build():
             box_uv(o.data, o.matrix_world.to_scale()[0])
     if BEVEL:
         for o in BEVEL_OBJECTS:
-            add_bevel(o, o.matrix_world.to_scale()[0])
+            try:
+                add_bevel(o, o.matrix_world.to_scale()[0])
+            except ReferenceError:  # replaced or removed by a detail module
+                continue
     info("bevel on %d objects" % (len(BEVEL_OBJECTS) if BEVEL else 0))
 
     house_bbox = compute_house_bbox()
