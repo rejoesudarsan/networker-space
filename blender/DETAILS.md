@@ -19,7 +19,8 @@ Rules for every item:
 - Parent floor-bound items to their `Floor.<name>` empty so they move with the cutaway.
 
 ## Facade and site (from README "Not built yet", board, p03, p05, p19)
-- [ ] grey-cladding-strip: full-height charcoal textured-plaster band on the street facade, ground frame x 0.3..1.4, from ground slab to roof parapet, on first and second floors.
+- [x] grey-cladding-strip: full-height charcoal textured-plaster band on the street facade, ground frame x 0.3..1.4, from ground slab to roof parapet, on first and second floors.
+  - note: one box per floor on the slab-edge plane, 0.02 proud; at ground level it sits on the first-floor plane, which is set back from the ground-floor front, as in p03.
 - [ ] window-boxes: projecting plaster frames (0.12 deep, 0.06 thick) around the street-facing windows of first and second floors; first-floor one extends as a balcony ledge x -2.0..-0.3.
 - [ ] terrace-railing: three-bar steel rail 0.35 above the second-floor terrace parapet; west edge x -2.29, north and south edges x -2.29..-0.95.
 - [ ] gulmohar-trees: four trees at ground units (-4.6, z 6.3) h 3.6 flowering, (5.8, z 6.3) h 3.3 flowering, (-9.5, z 9.4), (9.8, z 9.4) not flowering. Trunk + 3 to 5 canopy blobs, red-orange blossom material on the flowering ones.

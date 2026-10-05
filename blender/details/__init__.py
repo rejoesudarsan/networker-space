@@ -16,6 +16,7 @@ import importlib
 import traceback
 
 MODULES = [
+    "grey_cladding_strip",
 ]
 
 
