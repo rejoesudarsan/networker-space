@@ -76,7 +76,8 @@ Rules for every item:
   - note: three jittered twig spheres (r 0.10-0.125) in the court's north-west, two high and one low as in p11, on cords to the roof slab (2.75 above the first floor); the skylight item opens that slab.
 - [x] court2-skylight: skylight frame and glass over the court void above the second floor, roof void opened (`ROOF_VOIDS`) (p1).
   - note: roof slab cut over the second-floor void in finish() (build_house.ROOF_VOIDS left as is); plaster kerb, glass pitched 0.06 toward the street, steel glazing bars on a ~0.28 grid.
-- [ ] court2-louvred-doors: teak louvred doors between the court and Living 2 (p1, p11, p14).
+- [x] court2-louvred-doors: teak louvred doors between the court and Living 2 (p1, p11, p14).
+  - note: p14 shows these are on the court's east wall, not between the court and Living 2 (Living 2 opens straight off the court's south side). Three bays of louvred shutter pairs over red-oxide dados, mounted on the face because the CAD draws the wall solid. Also Living 2's woven roman blinds (p14's teak blinds).
 - [ ] steel-stair-to-second: steel stair with timber treads beside the court up to the second floor (p8, p35).
 - [ ] family2-sliding-teak-door: the sliding teak door and cove light in Family 2 (p16).
 - [ ] kitchen2: light-wood cabinets and double sink (p26).

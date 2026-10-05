@@ -23,3 +23,4 @@
 - 2026-10-05 08:16 court2_flagstones_olive: build ~90 s; two eye-level renders and a top-down. Olive crown first too heavy vs p11, made slimmer and greyer. Added tools/topdown_with.py.
 - 2026-10-05 08:18 court2_nest_pendants: build ~90 s; eye-level render matched p11's framing; spikes shortened.
 - 2026-10-05 08:21 court2_skylight: build 96 s; roof cut and skylight in finish(); looking-up render matched p1.
+- 2026-10-05 08:24 court2_louvred_doors: build ~95 s; p14 placed them on the east wall; two eye-level renders matched p11/p14.
