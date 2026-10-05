@@ -101,7 +101,12 @@ body.reading .hint { opacity: 0 }
 /* Night. */
 .night-copy { gap: 10px }
 .lead-title { font: 400 28px/34px var(--serif); font-variation-settings: 'opsz' 36 }
-.night-copy p:last-child { font: 400 17px/26px var(--sans) }
+.night-copy p:not(.kicker) { font: 400 17px/26px var(--sans) }
+.night-copy p.who { color: var(--fg-soft); font-size: 15px; line-height: 22px }
+.nights { display: grid; gap: 4px; border-top: 1px solid color-mix(in srgb, var(--fg) 22%, transparent); padding-top: 10px }
+.nights div { display: grid; grid-template-columns: 7.5rem 1fr; gap: 12px; align-items: baseline }
+.nights dt { font: 500 13px/20px var(--mono); letter-spacing: 0.08em; text-transform: uppercase }
+.nights dd { margin: 0; font: 400 16px/22px var(--sans) }
 
 /* Floor captions: what the floor is and what is on it. */
 .caption { left: var(--inset); top: 50%; transform: translateY(-50%); width: min(26rem, 36vw); display: grid; gap: 8px }
@@ -198,7 +203,11 @@ body.still { overflow: hidden }
   .rhythm div { grid-template-columns: 6.6rem 1fr; gap: 10px }
   .rhythm dt { font-size: 12px; letter-spacing: 0.04em }
   .caption .title, .lead-title { font-size: 24px; line-height: 30px }
-  .caption .line, .night-copy p:last-child { font-size: 16px; line-height: 24px }
+  .caption .line, .night-copy p:not(.kicker) { font-size: 15px; line-height: 21px }
+  .nights div { grid-template-columns: 6.6rem 1fr; gap: 10px }
+  .nights dt { font-size: 12px; letter-spacing: 0.04em }
+  .nights dd { font-size: 15px; line-height: 20px }
+  .night-copy p.who { font-size: 14px; line-height: 20px }
   .members { gap: 12px }
   .members-title { font-size: 24px; line-height: 30px }
   .tier-nav { display: flex; gap: 20px }

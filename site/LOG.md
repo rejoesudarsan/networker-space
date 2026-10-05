@@ -14,3 +14,4 @@
 - 2026-10-05 20:48 meta: og.jpg inherits the soft headless still ([?] still image re-capture covers it). Old red 'N' favicon replaced.
 - 2026-10-05 20:56 copy-audit: copy rewritten to the user's 5 Oct plan (big tree is in the basement court per blender/details/court1_big_tree.py). Library and game room dropped from the first floor per the plan. Tier contents drafted, [?] added; no prices, dates or frequencies stated.
 - 2026-10-05 20:58 floor-copy: times added; when private rooms and the founders' lounge open is inferred from the plan's day/evening split (lounge 'open into the evening' from 'lounge access' after 18:00).
+- 2026-10-05 21:02 night-copy: kinds from the plan, one-line glosses written plainly; frequency left as 'The calendar is being set' + [?]; access line follows the drafted tiers ([?]).

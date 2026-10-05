@@ -70,7 +70,7 @@ The user's latest plan (5 Oct 2026), newer than PRODUCT.md where they differ:
   11. The call says only "Book a call"; a walk-in doesn't need one. Say they can just come in.
   12. Missing and not to be invented: prices, address beyond HSR Layout, dates, how often evenings run.
 - [x] floor-copy: each floor caption says what you do there and when (morning work, the café, the court and library, the evening on the terrace), using the zone plan in `PRODUCT.md` and `DESIGN.md`. Done: each caption now opens with when (lower 08:00–18:00 work and workshops; ground café 08:00–18:00; first 18:00–23:00 evenings; second quiet rooms by day, terrace grills and parties after 18:00), same in Explore and the reader. Zones from the user's 5 Oct plan (newer than PRODUCT.md's library/dining).
-- [ ] night-copy: what an evening is: the kinds of nights (talks, demo nights, dinners, film nights, rooftop), how often, who comes, how a member gets in. No made-up dates or names.
+- [x] night-copy: what an evening is: the kinds of nights (talks, demo nights, dinners, film nights, rooftop), how often, who comes, how a member gets in. No made-up dates or names. Done: the night beat lists the five kinds of evening from the plan (meetups, learning, film nights, PlayStation, rooftop) with one line each, who comes, and how members get in (per the drafted tiers); frequency not stated ("The calendar is being set"), see [?].
 
 ## The way to a membership
 - [ ] tiers-detail: each membership shows what it includes, what it needs (eligibility), who it is for, and its hours/access, side by side and comparable at a glance. Prices: a placeholder only, plus a `[?]` item for the user.
@@ -81,6 +81,7 @@ The user's latest plan (5 Oct 2026), newer than PRODUCT.md where they differ:
 - [ ] end-to-end: walk the whole path on desktop and phone, from first frame to the thank-you state; fix anything that breaks the flow. Then output the promise.
 
 ## Needs your input
+- [?] evenings: how often each kind of night runs (PRODUCT.md has "a three-day thing", read as three evenings a week, unconfirmed), and whether walk-ins can come to any. The site says "The calendar is being set" until then.
 - [?] the three ways in (drafted in `TIERS`, src/space/beats.js): confirm what each unlocks. Drafted: Walk-in = café + open work area 08:00–18:00, pay as you go; Member = every day 08:00–23:00, the maker's table and workshops, the evening programme, private rooms to book; Lifetime = all of that + the founders' lounge + team and guests, 20 places. Open: which tier gets the founders' lounge and the two quiet founder rooms; can walk-ins come to any evenings; prices.
 - [?] bake: the first-floor court tree's inner canopy is unlit (black) when the floor cut opens it; the bake could light or fill those faces (site leaves it as baked).
 - [?] still image: `public/still/house-dawn.*` is the site's own hero, captured headless (software GL, soft). Re-capture on a real GPU (`?debug`, hide the corners) or have the bake render one; same frame serves the OG image.
