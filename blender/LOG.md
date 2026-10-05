@@ -19,3 +19,4 @@
 - 2026-10-05 08:02 stair_to_basement: build 93 s, two eye-level renders (p20's view across the void, and up at the lantern); matched on the first try.
 - 2026-10-05 08:04 court1_big_tree: build ~90 s, one eye-level render from the foyer; matched first try.
 - 2026-10-05 08:08 garage_fitout: build ~90 s, one top-down cutaway preview; matched first try.
+- 2026-10-05 08:13 office_den: build ~90 s; first bounds guessed and the desk floated mid-room, measured the walls from an orthographic top-down render (new /tmp/topo.py approach) and refit.

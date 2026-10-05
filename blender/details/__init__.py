@@ -39,6 +39,7 @@ MODULES = [
     "stair_to_basement",
     "court1_big_tree",
     "garage_fitout",
+    "office_den",
 ]
 
 

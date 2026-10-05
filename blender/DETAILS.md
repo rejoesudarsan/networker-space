@@ -66,7 +66,8 @@ Rules for every item:
   - note: height 2.4 (site 2.9) so the crown stays under the first-floor slab; also Court 1's flagstone floor and the kota-kerbed bed from the site.
 - [x] garage-fitout: block-wall texture on the parking walls, a ladder, one simple car (p2).
   - note: positions from site details.js (parking rects, block wall on the west face, car at -1.55,-2.45 nose to the ramp); car is plain massing; p2's motorbike, buckets and sacks not modelled.
-- [ ] office-den: pinboard, desk, chair, whiteboard in the Office/Den (p10, p31).
+- [x] office-den: pinboard, desk, chair, whiteboard in the Office/Den (p10, p31).
+  - note: in the basement OFFICE (walls measured from a straight-down render: x -0.57..2.0, z -0.47..1.88). Desk ledge, chair and whiteboard on the west wall (p31), cubby shelf and AC at the south window (p31), green pinboard on the east wall (p10).
 
 ## First floor (p1, p11, p14, p8, p35, p16, p26)
 - [ ] court2-flagstones-olive: sandstone flagstones in the Double HT Court and the olive tree in a planter (p11, p14).
