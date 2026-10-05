@@ -437,47 +437,10 @@ export async function createScene(canvas) {
     geos.forEach((g) => g.dispose())
   }
 
-  // ---------- the loose props (blender/tools/build_props.py) ----------
-  // Only the memberships and the call use them, so they load after the first
-  // frame; until then each prop is an empty slot, filled when they arrive.
-  const slots = []
-  const clone = (name) => {
-    const g = new THREE.Group()
-    slots.push([name, g])
-    return g
-  }
-  async function loadProps() {
-    const propsG = await loader.loadAsync('/models/props/props.gltf').catch(() => null)
-    if (!propsG) return
-    propsG.scene.traverse((o) => {
-      if (o.isMesh) {
-        o.castShadow = o.receiveShadow = false
-        const m = o.material
-        if (m.map) m.map.anisotropy = 8
-        // The CC0 teak photo is pale; pull it to the palette's teak.
-        if (m.name === 'Teak') m.color.set('#d4a283')
-        if (m.name === 'Sandstone') m.color.set('#d8cbb0')
-        fogify(m)
-      }
-    })
-    const proto = {}
-    for (const child of [...propsG.scene.children]) {
-      child.position.set(0, 0, 0)
-      proto[child.name] = child
-    }
-    for (const [name, g] of slots) {
-      if (!proto[name]) continue
-      const o = proto[name].clone()
-      // A slot given its own scale replaces the prop's.
-      if (g.scale.x !== 1) o.scale.set(1, 1, 1)
-      g.add(o)
-    }
-  }
-
   let firstFrameDone
   const firstFrame = new Promise((r) => (firstFrameDone = r))
-  // What waits for the first frame: the basement, then the props.
-  const pending = new Set(['basement', 'props'])
+  // What waits for the first frame: the basement, below the road.
+  const pending = new Set(['basement'])
   let started = false
   function later() {
     if (started) return
@@ -487,68 +450,10 @@ export async function createScene(canvas) {
       pending.delete('basement')
       dirty = true
     })
-    loadProps().finally(() => {
-      pending.delete('props')
-      dirty = true
-    })
   }
 
   const clouds = createClouds(scene, fogUniforms.uFog.value)
   const people = createPeople(floors, house, fogify)
-
-  // Memberships: three compositions on sandstone fragments; the call: one chair.
-  const stage = new THREE.Group()
-  stage.position.set(0, 0, -60)
-  scene.add(stage)
-  const tierAnchors = []
-  const tier = (x, build) => {
-    const g = new THREE.Group()
-    g.position.set(x, 0, 0)
-    const slab = clone('slab')
-    g.add(slab)
-    build(g)
-    stage.add(g)
-    const a = new THREE.Object3D()
-    a.position.set(0, -0.2, 0.25)
-    g.add(a)
-    tierAnchors.push(a)
-    return g
-  }
-  const put = (g, name, x, z, ry = 0) => {
-    const o = clone(name)
-    o.position.set(x, 0, z)
-    o.rotation.y = ry
-    g.add(o)
-    return o
-  }
-  const members = new THREE.Group()
-  stage.add(members)
-  const tiers = [
-    tier(-1.05, (g) => put(g, 'chair', 0, 0, 0.5)),
-    tier(0, (g) => {
-      put(g, 'armchair', 0, 0, -0.35)
-      const b = put(g, 'book', 0.02, 0.03, 0.4)
-      b.position.y = 0.2
-      const p = put(g, 'petal', 0.15, 0.12, 1)
-      p.scale.setScalar(2.2)
-    }),
-    tier(1.05, (g) => {
-      put(g, 'table', 0, 0)
-      put(g, 'chair', -0.17, 0.02, Math.PI / 2 + 0.3)
-      put(g, 'chair', 0.17, 0.02, -Math.PI / 2 - 0.3)
-    }),
-  ]
-  for (const t of tiers) members.add(t)
-  const callG = new THREE.Group()
-  stage.add(callG)
-  const callSlab = clone('slab_wide')
-  callG.add(callSlab)
-  put(callG, 'chair', -0.05, 0, 0.45)
-  const petal = put(callG, 'petal', 0.18, 0.12, 2)
-  petal.scale.setScalar(2.4)
-  const callAnchor = new THREE.Object3D()
-  callAnchor.position.set(0.3, 0.2, 0)
-  callG.add(callAnchor)
 
   // ---------- cameras ----------
   // Shots orbit a target: azimuth from the street side (degrees, + from the
@@ -566,7 +471,6 @@ export async function createScene(canvas) {
     out.pos.set(out.look.x + Math.sin(az) * Math.cos(el) * dist, out.look.y + Math.sin(el) * dist, out.look.z + Math.cos(az) * Math.cos(el) * dist)
     out.fovY = fovY
   }
-  const fovYFor = (fovX) => THREE.MathUtils.radToDeg(2 * Math.atan(Math.tan(deg(fovX) / 2) / camera.aspect))
   // The house on its street, square on from across the road at eye level,
   // alone in the fog (board 01).
   const HERO = new THREE.Vector3(0, 2.05, 0.9)
@@ -577,7 +481,7 @@ export async function createScene(canvas) {
   // ---------- state ----------
   const state = {
     scene: 'exterior', focus: 0, local: 0, open: 0, night: 0, veil: 0, fog: '#d1bfc2', glow: 0.5,
-    mx: 0, my: 0, still: false, tierFocus: -1, brief: 0,
+    mx: 0, my: 0, still: false,
   }
   let width = 1
   let height = 1
@@ -593,7 +497,6 @@ export async function createScene(canvas) {
   addEventListener('resize', resize)
 
   const clock = new THREE.Clock()
-  const tmp = new THREE.Vector3()
   orbit(shot, HERO, 0, 2, 27, 26, 0, -0.55)
   const cur = { pos: shot.pos.clone(), look: shot.look.clone(), fovY: shot.fovY }
   let lastScene = null
@@ -652,12 +555,7 @@ export async function createScene(canvas) {
     const s = state.scene
     const changed = s !== lastScene
     const inFloors = s === 'floors'
-    const outside = s === 'exterior' || inFloors
     const phone = camera.aspect < 0.8
-    house.visible = outside
-    stage.visible = s === 'members' || s === 'call'
-    members.visible = s === 'members'
-    callG.visible = s === 'call'
     winMat.emissiveIntensity = 1.4 * state.night
     lampMat.emissiveIntensity = 2.2 * state.night
 
@@ -688,38 +586,28 @@ export async function createScene(canvas) {
     street.visible = site.visible = env.visible = !below
     // Fog per scene.
     const camDist = cur.pos.distanceTo(cur.look)
-    if (outside) {
-      fogUniforms.uNear.value = camDist * 0.95
-      fogUniforms.uFar.value = camDist * 2.3
-      // The low fog lies on the street, or under the floor in view.
-      fogUniforms.uBedY.value = inFloors ? Math.min(0.05, lerp(FLOORS.basement.y, 0.05, Math.min(1, state.focus)) - 0.25) : 0.6
-      fogUniforms.uBedDepth.value = inFloors ? 0.6 : 0.8
-      fogUniforms.uSide.value = inFloors ? 0 : 1
-    } else {
-      fogUniforms.uSide.value = 0
-      fogUniforms.uNear.value = 3.5
-      fogUniforms.uFar.value = 9
-      fogUniforms.uBedY.value = 0.0
-      fogUniforms.uBedDepth.value = 0.4
-    }
-    // Night outside: the lit plaster (neighbours, walls, walkers) goes dark
-    // with the house; the memberships keep their light.
-    const dusk = outside ? state.night : 0
+    fogUniforms.uNear.value = camDist * 0.95
+    fogUniforms.uFar.value = camDist * 2.3
+    // The low fog lies on the street, or under the floor in view.
+    fogUniforms.uBedY.value = inFloors ? Math.min(0.05, lerp(FLOORS.basement.y, 0.05, Math.min(1, state.focus)) - 0.25) : 0.6
+    fogUniforms.uBedDepth.value = inFloors ? 0.6 : 0.8
+    fogUniforms.uSide.value = inFloors ? 0 : 1
+    // Night: the lit plaster (neighbours, walls, walkers) goes dark with the house.
+    const dusk = state.night
     hemi.intensity = lerp(0.6, 0.1, dusk)
     key.intensity = lerp(2.2, 0.2, dusk)
     scene.environmentIntensity = lerp(1, 0.15, dusk)
 
-    // Cloud: a low bed along the street; round the stones for the memberships.
-    if (outside) clouds.gather('street', 0, -0.2, 2.5, 9, 7, { size: 0.6, ring: 0.7, bed: 0.4 })
-    else clouds.gather('stage', 0, -0.32, -60, 2.2, 1.1, { size: 0.7, ring: 0.6 })
-    clouds.update(t, (outside ? 0.35 : 0.5) * (1 - state.veil * 0.5), 1 - state.night * 0.7)
-    people.update(dt, t, weights, outside && !below, state.still)
+    // Cloud: a low bed along the street.
+    clouds.gather('street', 0, -0.2, 2.5, 9, 7, { size: 0.6, ring: 0.7, bed: 0.4 })
+    clouds.update(t, 0.35 * (1 - state.veil * 0.5), 1 - state.night * 0.7)
+    people.update(dt, t, weights, !below, state.still)
 
     // Camera target for the scene.
     if (s === 'exterior') {
-      // On a phone the brief takes the lower half; the house rises above it.
-      if (phone) orbit(shot, HERO, 0, 4, 34, 40, 0, 2.2 + 4.2 * state.brief - 2.6 * state.open)
-      else orbit(shot, HERO, 0, 2, 27, 26, 3.6 * state.brief, -0.55)
+      // On a phone the copy takes the lower half; the house sits above it.
+      if (phone) orbit(shot, HERO, 0, 4, 34, 40, 0, 5.7)
+      else orbit(shot, HERO, 0, 2, 27, 26, 0, -0.55)
     } else if (inFloors) {
       const i0 = Math.min(3, Math.floor(state.focus))
       const i1 = Math.min(3, i0 + 1)
@@ -728,19 +616,9 @@ export async function createScene(canvas) {
       const b = FLOORS[ORDER[i1]]
       fTarget.set(lerp(a.x, b.x, u), lerp(a.y, b.y, u) + 0.15, lerp(a.z, b.z, u) + 0.3)
       const dist = lerp(FLOOR_DIST[ORDER[i0]], FLOOR_DIST[ORDER[i1]], u)
-      const drift = (state.local - 0.5) * 4
-      if (phone) orbit(shot, fTarget, 28 + drift, 52, dist * 1.95, 36, 0, 2.9)
-      else orbit(shot, fTarget, 30 + drift, 44, dist, 30, 2.6)
-    } else if (s === 'members') {
-      // A phone shows one membership at a time.
-      const fx = phone ? tiers[Math.max(0, state.tierFocus)].position.x : 0
-      shot.look.set(fx, phone ? -0.05 : 0.1, -60)
-      shot.pos.set(fx, 0.85, -60 + 4.4)
-      shot.fovY = fovYFor(phone ? 26 : 38)
-    } else {
-      shot.look.set(phone ? 0 : 0.25, phone ? -0.05 : 0.15, -60)
-      shot.pos.set(phone ? 0 : 0.1, 0.75, -60 + 3.2)
-      shot.fovY = fovYFor(phone ? 30 : 36)
+      // One angle for every floor: the camera only rises with the floor.
+      if (phone) orbit(shot, fTarget, 28, 52, dist * 1.95, 36, 0, 2.9)
+      else orbit(shot, fTarget, 30, 44, dist, 30, 2.6)
     }
     // Inside a full veil the camera jumps; otherwise it eases.
     const k = state.veil > 0.97 || (changed && state.veil > 0.5) || state.still ? 1 : 1 - Math.pow(0.004, dt)
@@ -763,13 +641,8 @@ export async function createScene(canvas) {
     camera.clearViewOffset()
     camera.updateProjectionMatrix()
 
-    // The membership in focus lifts a touch.
-    tiers.forEach((g, i) => {
-      g.position.y = lerp(g.position.y, state.tierFocus === i ? 0.03 : 0, state.still ? 1 : 1 - Math.pow(0.001, dt))
-    })
-
     if (state.still) {
-      const key = [...camera.position.toArray(), ...cur.look.toArray(), camera.fov, width, height, state.fog, state.veil, state.night, state.open, state.focus, state.tierFocus, state.glow]
+      const key = [...camera.position.toArray(), ...cur.look.toArray(), camera.fov, width, height, state.fog, state.veil, state.night, state.open, state.focus, state.glow]
         .map((v) => (typeof v === 'number' ? v.toFixed(4) : v)).join()
       if (key === shown && !dirty) return
       shown = key
@@ -784,33 +657,15 @@ export async function createScene(canvas) {
   }
   renderer.setAnimationLoop(frame)
 
-  // Screen position of an anchor, for the copy that sits beside objects.
-  const toScreen = (obj) => {
-    obj.getWorldPosition(tmp)
-    tmp.project(camera)
-    return { x: (tmp.x * 0.5 + 0.5) * width, y: (-tmp.y * 0.5 + 0.5) * height, behind: tmp.z > 1 }
-  }
-
-  // Where each floor's level sits on screen, for the 01 / 02 / 03 markers.
-  const markerAnchors = ['ground', 'first', 'second'].map((id) => {
-    const o = new THREE.Object3D()
-    o.position.set(-3.4, 0.55, 5.2)
-    floors[id].add(o)
-    return o
-  })
-
   return {
     state,
     people,
-    // Still loading: 'basement' or 'props'. A scene that needs one stays veiled.
+    // Still loading: 'basement'. A scene that needs it stays veiled.
     pending: (what) => pending.has(what),
     // Resolves once a frame is on the canvas (shaders compiled), not before.
     firstFrame,
     quality: () => ({ gpu, weak, small, ...quality }),
     // Draw calls and triangles of the last frame, for site/PERF.md.
     info: () => ({ ...renderer.info.render, geometries: renderer.info.memory.geometries, textures: renderer.info.memory.textures }),
-    markerScreens: () => markerAnchors.map(toScreen),
-    tierScreens: () => tierAnchors.map(toScreen),
-    callScreen: () => toScreen(callAnchor),
   }
 }

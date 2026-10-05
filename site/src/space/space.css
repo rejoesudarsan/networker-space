@@ -75,15 +75,16 @@ body.reading .hint { opacity: 0 }
 
 .center-low { left: 50%; bottom: 13vh; transform: translateX(-50%); font: 400 16px/24px var(--mono); white-space: nowrap; padding: 12px 18px }
 
-/* The brief. */
-.brief { left: var(--inset); top: 50%; transform: translateY(-50%); width: min(25rem, 29vw); display: grid; gap: 14px }
-body.pristine .brief { opacity: 0; filter: blur(6px); pointer-events: none }
-/* Not a panel: the fog thickens at the left edge behind the brief. */
-.brief::before {
-  content: ''; position: absolute; z-index: -1; top: calc(50% - 50vh); height: 100vh; left: calc(-1 * var(--inset)); width: calc(100% + var(--inset) * 3);
+/* On the street the copy sits in the fog margin left of the house: no
+   panel, the fog thickens at the left edge behind it. */
+.margin { left: var(--left); top: 50%; transform: translateY(-50%); width: min(25rem, 29vw); display: grid; gap: 14px }
+.margin::before {
+  content: ''; position: absolute; z-index: -1; top: calc(50% - 50vh); height: 100vh; left: calc(-1 * var(--left)); width: calc(100% + var(--inset) * 1.6);
   background: linear-gradient(90deg, color-mix(in srgb, var(--fog) 88%, transparent) 55%, transparent);
   pointer-events: none;
 }
+
+/* The brief. */
 .brief h1 { font: 400 clamp(34px, 3.2vw, 46px)/1.05 var(--serif); font-variation-settings: 'opsz' 60; letter-spacing: -0.015em }
 .brief .intro { font: 400 18px/27px var(--sans) }
 .rhythm { display: grid; gap: 8px; margin: 4px 0 0; border-top: 1px solid color-mix(in srgb, var(--fg) 22%, transparent); padding-top: 14px }
@@ -92,12 +93,10 @@ body.pristine .brief { opacity: 0; filter: blur(6px); pointer-events: none }
 .rhythm dd { margin: 0; font: 400 17px/24px var(--sans) }
 .link.strong { font-size: 16px; font-weight: 600 }
 
-/* Opening and night. */
-.lead, .night-copy { left: var(--inset); top: 50%; transform: translateY(-50%); width: min(26rem, 36vw); display: grid; gap: 10px }
-/* The opening sits low, clear of the 01 / 02 / 03 floor lines. */
-.lead { top: auto; bottom: calc(var(--inset) + 48px); transform: none }
+/* Night. */
+.night-copy { gap: 10px }
 .lead-title { font: 400 28px/34px var(--serif); font-variation-settings: 'opsz' 36 }
-.lead p:last-child, .night-copy p:last-child { font: 400 17px/26px var(--sans) }
+.night-copy p:last-child { font: 400 17px/26px var(--sans) }
 
 /* Floor captions: what the floor is and what is on it. */
 .caption { left: var(--inset); top: 50%; transform: translateY(-50%); width: min(26rem, 36vw); display: grid; gap: 8px }
@@ -106,108 +105,49 @@ body.pristine .brief { opacity: 0; filter: blur(6px); pointer-events: none }
 .caption .line { font: 400 17px/26px var(--sans); color: var(--fg-soft) }
 .caption .explore { font-size: 15px; font-weight: 600; justify-self: start }
 
-/* Floor numbers while the house parts (frame 05). */
-.markers { inset: 0 }
-.marker { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 12px; font: 500 14px/18px var(--mono); transition: transform 0.1s linear }
-.marker i { display: block; height: 1px; background: currentColor; opacity: 0.45; width: var(--len, 120px) }
-
-/* Memberships: each tier's copy hangs under its object. */
-.members { inset: 0 }
-.members-head { position: absolute; left: var(--inset); top: 15vh; display: grid; gap: 6px }
+/* Memberships: three, side by side in one column, comparable at a glance. */
+.members { gap: 18px }
+.members-head { display: grid; gap: 6px }
 .members-title { font: 400 30px/36px var(--serif); font-variation-settings: 'opsz' 36 }
-.tiers { position: absolute; inset: 0 }
-.tier {
-  position: absolute; left: 0; top: 0; width: 15rem; padding-left: 1.5rem;
-  font: 400 17px/26px var(--sans);
-  transition: opacity 0.3s;
-}
-.tier h3 { font: 500 15px/22px var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: #f0d3b2; position: relative; margin-bottom: 4px }
+.tiers { display: grid; gap: 14px }
+.tier { padding-left: 14px; font: 400 16px/24px var(--sans); transition: opacity 0.3s }
+.tier h3 { font: 500 14px/20px var(--mono); letter-spacing: 0.12em; text-transform: uppercase; position: relative }
+body.dark .tier h3 { color: #f0d3b2 }
 .tier.focus h3::before { content: ''; position: absolute; left: -14px; top: 7px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent) }
-.tier.focus h3 { text-decoration: underline; text-underline-offset: 5px }
-.tier ul { list-style: none; padding: 0 }
-.tier-help { position: absolute; left: 50%; bottom: 7vh; transform: translateX(-50%); font: 400 15px/22px var(--sans); color: var(--fg-soft); white-space: nowrap }
+.tier ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; column-gap: 0.5em }
+.tier li + li::before { content: '· '; opacity: 0.6 }
+.tier .link { font-size: 14px }
+.tier-help { font: 400 15px/22px var(--sans); color: var(--fg-soft) }
 
 /* The last invitation. */
-.call-copy { left: 0; top: 0; padding-left: 2rem; display: grid; justify-items: start; gap: 6px }
+.call-copy { gap: 6px; justify-items: start }
 .call-copy h2 { font: 400 40px/46px var(--serif); font-variation-settings: 'opsz' 48; letter-spacing: -0.01em }
 .call-copy p { font: 400 18px/26px var(--sans); color: var(--fg-soft) }
 .call-copy .link { font-size: 16px; font-weight: 600 }
-
-/* ---------- explore / booking sheet ---------- */
-.sheet {
-  border: 0; padding: 0; margin: 0; max-width: none; max-height: none; width: 100%; height: 100%;
-  background: transparent; color: var(--fg);
-}
-.sheet::backdrop { background: color-mix(in srgb, var(--fog) 72%, transparent); backdrop-filter: blur(6px) }
-.sheet-close { position: fixed; top: calc(var(--top) - 12px); right: var(--right) }
-.sheet-body {
-  position: absolute; left: calc(var(--inset) + 8vw); top: 50%; transform: translateY(-50%);
-  width: min(52ch, calc(100vw - 2 * var(--inset))); max-height: 80vh; overflow: auto;
-  display: grid; gap: 14px; animation: decode 0.45s var(--ease) both;
-}
-.sheet-body h2 { font: 400 22px/30px var(--sans) }
-.sheet-body p { font: 400 16px/24px var(--sans) }
-.sheet-body .kicker { font: 400 12px/18px var(--mono) }
-@keyframes decode { from { clip-path: inset(0 100% 0 0); opacity: 0.4 } to { clip-path: inset(0 0 0 0); opacity: 1 } }
-
-/* ---------- states ---------- */
-.loading, .failure {
-  position: fixed; inset: 0; z-index: 6; display: grid; place-content: center; gap: 12px; text-align: center;
-  font: 400 14px/20px var(--mono); transition: opacity 0.8s var(--ease);
-}
-body.ready .loading { opacity: 0; pointer-events: none }
-/* Progress: a hairline that fills with the bytes, no spinner. */
-.loading-bytes { opacity: 0.7; margin-left: 0.6em; font-variant-numeric: tabular-nums }
-.loading-track { justify-self: center; width: 160px; height: 1px; background: color-mix(in srgb, var(--fg) 18%, transparent); overflow: hidden }
-.loading-bar { display: block; height: 100%; background: var(--fg); transform: scaleX(0); transform-origin: 0 50%; transition: transform 0.4s var(--ease) }
-.loading, .failure { pointer-events: none }
-.loading button, .failure button { pointer-events: auto }
-.failure { display: none }
-body.failed .failure { display: grid }
-body.failed .loading { display: none }
-
-/* Without motion: the house as a still, then a plain reader over the fog. */
-.reader {
-  display: none; position: fixed; inset: 0; z-index: 4; overflow-y: auto; overscroll-behavior: contain;
-  padding: 0 var(--inset) calc(var(--inset) + 72px) calc(var(--inset) + 8vw);
-}
-body.still .reader { display: block }
-.reader-still { display: block; margin: 0 calc(-1 * var(--inset)) 48px calc(-1 * (var(--inset) + 8vw)) }
-.reader-still img { display: block; width: 100%; height: min(72vh, 62.5vw); object-fit: cover; object-position: 50% 30%; mask-image: linear-gradient(180deg, #000 75%, transparent) }
-.reader section { max-width: 52ch; margin-bottom: 56px; display: grid; gap: 8px }
-.reader h2 { font: 400 22px/30px var(--sans) }
-.reader .serif { font: 400 clamp(30px, 3.2vw, 44px)/1.08 var(--serif); letter-spacing: -0.015em }
-.reader .rhythm { margin-top: 10px }
-.reader-tiers { list-style: none; padding: 0; display: grid; gap: 6px; font: 400 14px/22px var(--mono) }
-.reader-tiers b { font-weight: 600; margin-right: 10px; letter-spacing: 0.08em; text-transform: uppercase }
-body.still .stage, body.still .copy, body.still .loading, body.still .failure, body.still .hint, body.still .clock { display: none }
-body.still { overflow: hidden }
 
 .tier-nav { display: none }
 .tier-nav button { min-width: 44px; justify-content: center }
 .tier-nav button[aria-pressed='true'] { text-decoration: underline; text-underline-offset: 5px }
 @media (max-width: 720px) {
-  .markers { display: none }
-  .tier-nav { display: flex; gap: 20px; position: absolute; left: 20px; top: calc(11vh + 68px) }
-  .tier { display: none; transform: none !important; left: 20px; top: auto; bottom: calc(var(--bottom) + 70px); width: auto; padding-left: 0 }
-  .tier.focus { display: block }
-  .tier-help { left: 20px; transform: none; bottom: calc(var(--bottom) + 34px); white-space: normal }
-  .call-copy { transform: none !important; left: 20px; right: 20px; top: auto; bottom: calc(var(--bottom) + 56px); padding-left: 0 }
   .corner, .link { font-size: 14px; line-height: 20px }
-  .caption, .lead, .night-copy, .brief { left: 12px; right: 12px; width: auto; top: auto; bottom: calc(var(--bottom) + 34px); transform: none; padding: 18px 20px }
-  .brief h1 { font-size: 32px }
-  .brief::before {
+  /* On a phone the house sits in the upper half; the copy below it. */
+  .caption, .margin { left: 12px; right: 12px; width: auto; top: auto; bottom: calc(var(--bottom) + 34px); transform: none; padding: 18px 20px }
+  .margin::before {
     left: -12px; width: 100vw; top: auto; bottom: calc(-1 * (var(--bottom) + 34px)); height: 72vh;
     background: linear-gradient(0deg, color-mix(in srgb, var(--fog) 88%, transparent) 62%, transparent);
   }
+  .brief h1 { font-size: 32px }
   .brief .intro, .rhythm dd { font-size: 16px; line-height: 23px }
   .rhythm div { grid-template-columns: 5.5rem 1fr }
   .caption .title, .lead-title { font-size: 24px; line-height: 30px }
-  .caption .line, .lead p:last-child, .night-copy p:last-child { font-size: 16px; line-height: 24px }
-  .members-head { left: 20px; top: 11vh }
+  .caption .line, .night-copy p:last-child { font-size: 16px; line-height: 24px }
+  .members { gap: 12px }
   .members-title { font-size: 24px; line-height: 30px }
+  .tier-nav { display: flex; gap: 20px }
+  .tier { display: none; padding-left: 0 }
+  .tier.focus { display: block }
+  .tier.focus h3::before { display: none }
   .call-copy h2 { font-size: 30px; line-height: 36px }
-  .tier { font-size: 16px; line-height: 24px }
 }
 @media (prefers-reduced-motion: reduce) {
   .beat, .caption, .sheet-body { transition: none; animation: none; filter: none }

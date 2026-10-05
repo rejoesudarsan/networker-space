@@ -119,7 +119,6 @@ TIERS.forEach((t, i) => {
   nav.append(b)
 })
 function setFocus(i) {
-  if (world) world.state.tierFocus = i
   $$('.tier').forEach((el, j) => el.classList.toggle('focus', j === i))
   $('.tier-help').textContent = TIERS[i].focus
   $$('.tier-nav button').forEach((b, j) => b.setAttribute('aria-pressed', j === i))
@@ -276,29 +275,25 @@ function loop(now = performance.now()) {
   current = locate(p)
   const { beat, local } = current
   // A part of the house still on its way stays behind the veil.
-  const waiting = (beat.scene === 'floors' && p < 0.33 && world.pending('basement')) || ((beat.scene === 'members' || beat.scene === 'call') && world.pending('props'))
+  const waiting = beat.scene === 'floors' && p < 0.24 && world.pending('basement')
   held = waiting ? 1 : Math.max(0, held - dt * 1.5)
   const veil = Math.max(current.veil, held)
   const h = keyed(HOURS, p)
   const fog = fogAt(h)
   const s = world.state
   s.scene = beat.scene
-  s.focus = keyed(FOCUS, Math.min(0.66, Math.max(0.22, p)))
+  s.focus = keyed(FOCUS, Math.min(0.62, Math.max(0.11, p)))
   s.local = local
   s.veil = veil
   s.fog = fog
   s.glow = lerp(0.55, 0, smooth(8, 11, h)) + 0.25 * smooth(17, 18.5, h) * (1 - smooth(19, 20.5, h))
   s.open = beat.open ? smooth(0, 0.8, local) : 0
-  s.night = beat.night || beat.scene === 'members' || beat.scene === 'call' ? 1 : smooth(18, 20, h) * 0.8
+  s.night = beat.night ? 1 : smooth(18, 20, h) * 0.8
 
   // Light text once the fog is dark (by its luminance, not the hour).
   const fl = [1, 3, 5].map((i) => parseInt(fog.slice(i, i + 2), 16) / 255).map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4))
   const dark = 0.2126 * fl[0] + 0.7152 * fl[1] + 0.0722 * fl[2] < 0.22
   document.body.classList.toggle('dark', dark)
-  // The first frame is the house alone (board 07); the brief comes with the first scroll.
-  document.body.classList.toggle('pristine', beat.id === 'hero' && local < 0.08)
-  // With copy up, the house steps right (on a phone, up) to leave it the fog.
-  s.brief = beat.id === 'hero' ? smooth(0.04, 0.12, local) : beat.id === 'opening' ? 1 : 0
   document.documentElement.style.setProperty('--fog', fog)
   $('.clock').textContent = clockText(h)
   $('.hint').textContent = beat.id === 'call' ? 'Stay a while' : 'Scroll'
@@ -316,27 +311,6 @@ function loop(now = performance.now()) {
       $('.caption .title', cap).textContent = r.title
       $('.caption .line', cap).textContent = r.line
     }
-  }
-  // Copy that sits beside objects follows them on screen.
-  const phone = innerWidth <= 720
-  if (beat.scene === 'members' && !phone) {
-    const pts = world.tierScreens()
-    $$('.tier').forEach((el, i) => {
-      el.style.transform = `translate(${Math.round(pts[i].x)}px, ${Math.round(pts[i].y)}px) translateX(-50%)`
-    })
-  }
-  if (beat.id === 'opening' && !phone) {
-    const pts = world.markerScreens()
-    $$('.marker').forEach((el, i) => {
-      // Number at the left inset, line running in to the house's edge.
-      const x0 = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--inset')) || 32
-      el.style.transform = `translate(${x0 + 60}px, ${Math.round(pts[i].y)}px)`
-      el.style.setProperty('--len', Math.max(20, pts[i].x - x0 - 100) + 'px')
-    })
-  }
-  if (beat.scene === 'call' && !phone) {
-    const c = world.callScreen()
-    $('.call-copy').style.transform = `translate(${Math.round(c.x)}px, ${Math.round(c.y)}px) translateY(-50%)`
   }
   if (!stopped) requestAnimationFrame(loop)
 }

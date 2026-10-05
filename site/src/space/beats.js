@@ -1,37 +1,35 @@
 // The homepage as one scroll through a day. Progress 0 → 1.
-// The house stays on its street the whole way: it opens, and the camera
-// visits each floor whole, with every room on it, the floors above lifted
-// clear. Fog veils hide the few cuts (into the house, out to night, to the
-// memberships).
+// Two camera angles only: the street (board 01), and one cutaway angle for the
+// open house, rising floor to floor. It opens on the house with the brief; the
+// first scroll goes in. Night returns to the street, where the evening, the
+// memberships and the call sit in the fog beside the lit house. Fog veils hide
+// the two cuts (into the house, out to night).
 
-// Scenes: exterior (the house on its street), floors (the open house; FOCUS 0 basement … 3 second), members,
-// call. A beat with `floor` shows that floor's caption.
+// Scenes: exterior (the house on its street), floors (the open house; FOCUS 0
+// basement … 3 second). A beat with `floor` shows that floor's caption.
 export const BEATS = [
-  { id: 'hero', from: 0, to: 0.14, scene: 'exterior' },
-  { id: 'opening', from: 0.14, to: 0.19, scene: 'exterior', open: true },
-  { veil: true, from: 0.19, to: 0.22 },
-  { id: 'lower', from: 0.22, to: 0.3, scene: 'floors', floor: 'lower' },
-  { id: 'move', from: 0.3, to: 0.33, scene: 'floors' },
-  { id: 'ground', from: 0.33, to: 0.42, scene: 'floors', floor: 'ground' },
-  { id: 'move', from: 0.42, to: 0.45, scene: 'floors' },
-  { id: 'first', from: 0.45, to: 0.55, scene: 'floors', floor: 'first' },
-  { id: 'move', from: 0.55, to: 0.58, scene: 'floors' },
-  { id: 'second', from: 0.58, to: 0.66, scene: 'floors', floor: 'second' },
-  { veil: true, from: 0.66, to: 0.69 },
-  { id: 'night', from: 0.69, to: 0.79, scene: 'exterior', night: true },
-  { veil: true, from: 0.79, to: 0.82 },
-  { id: 'members', from: 0.82, to: 0.92, scene: 'members' },
-  { veil: true, from: 0.92, to: 0.95 },
-  { id: 'call', from: 0.95, to: 1.0001, scene: 'call' },
+  { id: 'hero', from: 0, to: 0.08, scene: 'exterior' },
+  { veil: true, from: 0.08, to: 0.11 },
+  { id: 'lower', from: 0.11, to: 0.21, scene: 'floors', floor: 'lower' },
+  { id: 'move', from: 0.21, to: 0.24, scene: 'floors' },
+  { id: 'ground', from: 0.24, to: 0.35, scene: 'floors', floor: 'ground' },
+  { id: 'move', from: 0.35, to: 0.38, scene: 'floors' },
+  { id: 'first', from: 0.38, to: 0.49, scene: 'floors', floor: 'first' },
+  { id: 'move', from: 0.49, to: 0.52, scene: 'floors' },
+  { id: 'second', from: 0.52, to: 0.62, scene: 'floors', floor: 'second' },
+  { veil: true, from: 0.62, to: 0.65 },
+  { id: 'night', from: 0.65, to: 0.75, scene: 'exterior', night: true },
+  { id: 'members', from: 0.75, to: 0.89, scene: 'exterior', night: true },
+  { id: 'call', from: 0.89, to: 1.0001, scene: 'exterior', night: true },
 ]
 
 // Which floor the open house is showing, through the floors beats.
-export const FOCUS = [[0.22, 0], [0.3, 0], [0.33, 1], [0.42, 1], [0.45, 2], [0.55, 2], [0.58, 3], [0.66, 3]]
+export const FOCUS = [[0.11, 0], [0.21, 0], [0.24, 1], [0.35, 1], [0.38, 2], [0.49, 2], [0.52, 3], [0.62, 3]]
 
 // Hour of the illustrative day at each progress point.
 export const HOURS = [
-  [0, 6], [0.14, 6.5], [0.19, 7.5], [0.22, 9], [0.3, 9.5], [0.33, 10.5], [0.42, 12], [0.45, 15],
-  [0.55, 16], [0.58, 18.4], [0.66, 19], [0.69, 21], [0.75, 22], [1, 22],
+  [0, 6], [0.08, 7], [0.11, 9], [0.21, 9.5], [0.24, 10.5], [0.35, 12], [0.38, 15],
+  [0.49, 16], [0.52, 18.4], [0.62, 19], [0.65, 21], [0.75, 22], [1, 22],
 ]
 
 // Fog by hour (board 08). The evening tone is kept dark enough that light
