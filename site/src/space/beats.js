@@ -40,11 +40,13 @@ export const FOG = [
 ]
 
 // One caption per floor: what you do there and when, from the user's zone
-// plan (site/POLISH.md, 5 Oct), plus the Explore copy.
+// plan (site/POLISH.md, 5 Oct), the Explore copy, and the next step toward a
+// membership (`next`: the link text and the way in it picks in the form).
 export const FLOOR_COPY = {
   lower: {
     label: 'Lower level',
     title: 'Make things, round the big tree.',
+    next: { text: "Use the maker's table: become a member →", tier: 'member' },
     line: "08:00–18:00 · Open work area · The maker's table and workshops · The founders' lounge",
     explore: {
       head: 'The working floor, below the street.',
@@ -58,6 +60,7 @@ export const FLOOR_COPY = {
   ground: {
     label: 'Ground floor',
     title: 'The café. Walk in from 08:00.',
+    next: { text: 'Here most days? Become a member →', tier: 'member' },
     line: 'Walk-in café, 08:00–18:00 · Breakfast · The garden',
     explore: {
       head: 'The café.',
@@ -70,6 +73,7 @@ export const FLOOR_COPY = {
   first: {
     label: 'First floor',
     title: 'Where the evenings happen.',
+    next: { text: 'Evenings come with membership →', tier: 'member' },
     line: '18:00–23:00 · The event room · Seats round the courtyard · Private rooms',
     explore: {
       head: 'Meetups, talks and film nights.',
@@ -82,6 +86,7 @@ export const FLOOR_COPY = {
   second: {
     label: 'Second floor',
     title: 'Two quiet rooms, and the roof.',
+    next: { text: 'Book a call →', tier: 'unsure' },
     line: 'Quiet founder rooms by day · The terrace: work by day, grills and parties after 18:00',
     explore: {
       head: 'Up to the terrace.',

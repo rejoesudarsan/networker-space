@@ -155,7 +155,7 @@ $('.caption .explore').addEventListener('click', () => {
   if (!r) return
   openSheet(
     `<p class="kicker">${r.label}</p><h2>${r.explore.head}</h2>${r.explore.body.map((b) => `<p>${b}</p>`).join('')}
-     <p class="actions"><a class="link" href="#book" data-book>Book a call →</a></p>`,
+     <p class="actions"><a class="link" href="#book" data-book data-tier="${r.next.tier}">${r.next.text}</a></p>`,
     r.label,
   )
 })
@@ -373,6 +373,9 @@ function loop(now = performance.now()) {
       $('.caption .label', cap).textContent = r.label
       $('.caption .title', cap).textContent = r.title
       $('.caption .line', cap).textContent = r.line
+      const next = $('.caption .next', cap)
+      next.textContent = r.next.text
+      next.dataset.tier = r.next.tier
     }
   }
   if (!stopped) requestAnimationFrame(loop)

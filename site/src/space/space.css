@@ -113,7 +113,8 @@ body.reading .hint { opacity: 0 }
 .caption .label { font: 500 13px/18px var(--mono); letter-spacing: 0.12em; text-transform: uppercase }
 .caption .title { font: 400 28px/34px var(--serif); font-variation-settings: 'opsz' 36 }
 .caption .line { font: 400 17px/26px var(--sans); color: var(--fg-soft) }
-.caption .explore { font-size: 15px; font-weight: 600; justify-self: start }
+.caption .next { font-size: 15px }
+.caption .explore { font-size: 15px; color: var(--fg-soft) }
 
 /* Memberships: one table, a column per way in, comparable at a glance. */
 .members { gap: 14px; width: min(26rem, 31vw) }
