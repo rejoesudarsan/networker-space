@@ -23,7 +23,7 @@ Rules for every item:
   - note: one box per floor on the slab-edge plane, 0.02 proud; at ground level it sits on the first-floor plane, which is set back from the ground-floor front, as in p03.
 - [x] window-boxes: projecting plaster frames (0.12 deep, 0.06 thick) around the street-facing windows of first and second floors; first-floor one extends as a balcony ledge x -2.0..-0.3.
   - note: boxes found from GLB sill islands within 0.4 of the street edge (2 on first, 1 on second); they run from the inset wall out past the slab edge; the second-floor one uses Charcoal Plaster because it sits in the band.
-- [ ] terrace-railing: three-bar steel rail 0.35 above the second-floor terrace parapet; west edge x -2.29, north and south edges x -2.29..-0.95.
+- [x] terrace-railing: three-bar steel rail 0.35 above the second-floor terrace parapet; west edge x -2.29, north and south edges x -2.29..-0.95.
 - [ ] gulmohar-trees: four trees at ground units (-4.6, z 6.3) h 3.6 flowering, (5.8, z 6.3) h 3.3 flowering, (-9.5, z 9.4), (9.8, z 9.4) not flowering. Trunk + 3 to 5 canopy blobs, red-orange blossom material on the flowering ones.
 - [ ] ramp-railing: charcoal steel railing along the side drive ramp down to the basement garage (p03, p02); follow the ramp opening in the ground slab.
 - [ ] front-compound-wall-and-fern-planter: check `frontWall`/`streetGate` exist; add the fern planter beside gate no. 1172 (p05) and the house number plate.
