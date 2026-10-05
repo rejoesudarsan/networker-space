@@ -19,6 +19,7 @@ MODULES = [
     "grey_cladding_strip",
     "window_boxes",
     "terrace_railing",
+    "gulmohar_trees",
 ]
 
 
