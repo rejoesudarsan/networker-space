@@ -6,9 +6,10 @@
 	"scene":0,
 	"scenes":[
 		{
-			"name":"export.003",
+			"name":"export.001",
 			"nodes":[
-				0
+				0,
+				1
 			]
 		}
 	],
@@ -16,6 +17,10 @@
 		{
 			"mesh":0,
 			"name":"room-cafe.baked.glass.001"
+		},
+		{
+			"mesh":1,
+			"name":"room-cafe.baked.glow.001"
 		}
 	],
 	"materials":[
@@ -25,7 +30,7 @@
 			"extras":{
 				"glass":1
 			},
-			"name":"fix.Glass.002",
+			"name":"fix.Glass",
 			"pbrMetallicRoughness":{
 				"baseColorFactor":[
 					0.8879231214523315,
@@ -54,11 +59,33 @@
 				"metallicFactor":0,
 				"roughnessFactor":0.10000000149011612
 			}
+		},
+		{
+			"doubleSided":true,
+			"emissiveFactor":[
+				1,
+				0.6938717365264893,
+				0.3915724754333496
+			],
+			"extras":{
+				"glow":1
+			},
+			"name":"fix.Lamp Glow.001",
+			"pbrMetallicRoughness":{
+				"baseColorFactor":[
+					1,
+					0.6938717365264893,
+					0.3915724754333496,
+					1
+				],
+				"metallicFactor":0,
+				"roughnessFactor":0.5
+			}
 		}
 	],
 	"meshes":[
 		{
-			"name":"room-cafe.baked.003",
+			"name":"room-cafe.baked.004",
 			"primitives":[
 				{
 					"attributes":{
@@ -75,6 +102,19 @@
 					},
 					"indices":5,
 					"material":1
+				}
+			]
+		},
+		{
+			"name":"room-cafe.baked.005",
+			"primitives":[
+				{
+					"attributes":{
+						"POSITION":6,
+						"NORMAL":7
+					},
+					"indices":8,
+					"material":2
 				}
 			]
 		}
@@ -135,6 +175,34 @@
 			"componentType":5123,
 			"count":120,
 			"type":"SCALAR"
+		},
+		{
+			"bufferView":6,
+			"componentType":5126,
+			"count":288,
+			"max":[
+				2.381593704223633,
+				0.869720458984375,
+				3.0254268646240234
+			],
+			"min":[
+				0.6390700936317444,
+				0.7220827341079712,
+				1.5245734453201294
+			],
+			"type":"VEC3"
+		},
+		{
+			"bufferView":7,
+			"componentType":5126,
+			"count":288,
+			"type":"VEC3"
+		},
+		{
+			"bufferView":8,
+			"componentType":5123,
+			"count":528,
+			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
@@ -173,11 +241,29 @@
 			"byteLength":240,
 			"byteOffset":2376,
 			"target":34963
+		},
+		{
+			"buffer":0,
+			"byteLength":3456,
+			"byteOffset":2616,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":3456,
+			"byteOffset":6072,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":1056,
+			"byteOffset":9528,
+			"target":34963
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":2616,
+			"byteLength":10584,
 			"uri":"room-cafe-fixtures.bin"
 		}
 	]
