@@ -53,3 +53,4 @@ Every space is baked alone, cut to the same kind of box, with identical light, s
 - [ ] web-size: keep each floor's `.jpg` under 4 MB and `.bin` under 8 MB. Re-encode or decimate if they are bigger.
 
 ## Re-bake (append: `- [ ] <part>-<set>: <module> changed <date>`)
+- [ ] room-lower-day: basement_work_games changed 2026-10-05 (office -> lounge with RC football)
