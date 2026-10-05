@@ -36,3 +36,4 @@
 - 2026-10-05 21:22 room-cafe-day: bake 725 s (2048, 256 spp, CPU). Checked the exported glTF rendered unlit against the Cycles reference: match. Slab underside + buried base floor plane waste ~12% of the atlas.
 - 2026-10-05 21:53 room-court-day: bake 1188 s (2048, 256 spp, CPU). Unlit glTF view matches the Cycles reference; void over the floor below shows as a hole (room baked alone).
 - 2026-10-05 22:59 basement-lounge-rc-football + family2-ps5 (user request, built in the bake thread): build ok, eevee renders checked (PS5 laid flat under the TV, sofa cushions dropped). room-lower-day queued for re-bake.
+- 2026-10-05 23:15 room-event-day: bake 874 s (2048, 256 spp, CPU). Unlit glTF view matches the Cycles reference; black atlas islands are the slab underside and buried layers only.
