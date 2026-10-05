@@ -229,6 +229,14 @@ export async function createWorld(canvas) {
     fetch('/models/house.json').then((r) => r.json()),
     ...Object.keys(LEVEL).map((id) => loader.loadAsync(`/models/${id}.glb`)),
   ])
+  // The Blender model's details, one GLB per floor (blender/tools/export_site.py).
+  // When all four are present they replace the hand-built floor detail below.
+  const blenderFloors = await Promise.all(
+    Object.keys(LEVEL).map((id) => loader.loadAsync(`/models/blender/${id}.glb`).catch(() => null)),
+  )
+  const useBlender = blenderFloors.every(Boolean)
+  // Parts hung above the floor (lanterns, fans, wall cabinets): hidden while the walls are cut away.
+  const highParts = []
 
   // ---------- the ground: a plot of the street, with a pit where the house sits ----------
   const street = new THREE.Group()
@@ -320,6 +328,15 @@ export async function createWorld(canvas) {
     })
     g.add(gltfs[i].scene)
     walls.push(addWindows(g, gltfs[i].scene))
+    if (useBlender) {
+      blenderFloors[i].scene.traverse((o) => {
+        if (!o.isMesh) return
+        o.castShadow = true
+        o.receiveShadow = true
+        if (o.name.endsWith('_high')) highParts.push(o)
+      })
+      g.add(blenderFloors[i].scene)
+    }
     floors[id] = g
     scene.add(g)
   })
@@ -333,6 +350,12 @@ export async function createWorld(canvas) {
     second: [[0.18, -0.49, 1.88, 1.06]],
   }
   for (const [id, holes] of Object.entries(slabs)) {
+    if (useBlender) {
+      const marker = new THREE.Object3D()
+      marker.userData.voids = holes
+      floors[id].add(marker)
+      continue
+    }
     const { width, depth } = house.floors[id]
     const m = new THREE.Mesh(slabGeo(width, depth, SLAB, holes), mat(C.terrazzo))
     m.userData.voids = holes
@@ -340,34 +363,36 @@ export async function createWorld(canvas) {
     floors[id].add(m)
   }
 
-  // Surfaces from the photos.
   const G = floors.ground
-  G.add(patch(-0.2, 3.3, 1.2, 4.95, '#6f8a45'))       // front lawn
-  G.add(patch(-2.95, -2.6, -1.85, -0.75, '#6f8a45'))   // side garden
-  G.add(patch(-2.95, 0.8, -2.3, 4.95, C.kota))         // side passage
-  G.add(patch(-2.3, -0.3, -1.55, 1.3, '#a99a86'))      // entrance court stone
-  G.add(patch(0.56, 0.2, 2.4, 3.2, '#8a5232'))         // Living 1: the teak floor
-  // A skirt from the street up to the raised ground floor, and steps at the gate.
-  const skirt = (w, d, x, z) => G.add(box(w, 0.6, d, C.plasterShade, x, -0.73, z))
-  skirt(1.275, 0.06, -2.4875, 4.97)
-  skirt(1.45, 0.06, 0.525, 4.97)
-  skirt(6.25, 0.06, 0, -4.97)
-  skirt(0.06, 10, -3.1, 0)
-  skirt(0.06, 9.45, 3.1, -0.275)
-  for (let s = 0; s < 4; s++) G.add(box(0.8, 0.73 - s * 0.18, 0.22, C.kota, -2.75, -0.73, 5.05 + s * 0.2))
-  // The outside stair to the first floor (#6), charcoal rail.
-  for (let s = 0; s < 9; s++) G.add(box(0.12, 0.16 * (s + 1), 0.5, C.kota, -1.95 - s * 0.11, 0, -0.45))
-  G.add(box(1.05, 0.04, 0.03, C.steel, -2.4, 1.2, -0.7))
-
   const F = floors.first
-  F.add(patch(0.75, 0.3, 2.45, 1.95, '#bfae92'))       // courtyard flagstones
   const S = floors.second
-  S.add(patch(-2.2, -3.4, -0.85, 3.35, C.terracotta))  // the terrace
-  // Skylight over the courtyard void.
-  const glass = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.02, 1.55), new THREE.MeshPhysicalMaterial({ color: '#dfe8ea', transparent: true, opacity: 0.22, roughness: 0.05 }))
-  glass.position.set(1.03, WALL + 0.02, 0.28)
-  S.add(glass)
-  S.add(box(1.76, 0.05, 0.05, C.steel, 1.03, WALL, -0.5), box(1.76, 0.05, 0.05, C.steel, 1.03, WALL, 1.06))
+  if (!useBlender) {
+    // Surfaces from the photos.
+    G.add(patch(-0.2, 3.3, 1.2, 4.95, '#6f8a45'))       // front lawn
+    G.add(patch(-2.95, -2.6, -1.85, -0.75, '#6f8a45'))   // side garden
+    G.add(patch(-2.95, 0.8, -2.3, 4.95, C.kota))         // side passage
+    G.add(patch(-2.3, -0.3, -1.55, 1.3, '#a99a86'))      // entrance court stone
+    G.add(patch(0.56, 0.2, 2.4, 3.2, '#8a5232'))         // Living 1: the teak floor
+    // A skirt from the street up to the raised ground floor, and steps at the gate.
+    const skirt = (w, d, x, z) => G.add(box(w, 0.6, d, C.plasterShade, x, -0.73, z))
+    skirt(1.275, 0.06, -2.4875, 4.97)
+    skirt(1.45, 0.06, 0.525, 4.97)
+    skirt(6.25, 0.06, 0, -4.97)
+    skirt(0.06, 10, -3.1, 0)
+    skirt(0.06, 9.45, 3.1, -0.275)
+    for (let s = 0; s < 4; s++) G.add(box(0.8, 0.73 - s * 0.18, 0.22, C.kota, -2.75, -0.73, 5.05 + s * 0.2))
+    // The outside stair to the first floor (#6), charcoal rail.
+    for (let s = 0; s < 9; s++) G.add(box(0.12, 0.16 * (s + 1), 0.5, C.kota, -1.95 - s * 0.11, 0, -0.45))
+    G.add(box(1.05, 0.04, 0.03, C.steel, -2.4, 1.2, -0.7))
+
+    F.add(patch(0.75, 0.3, 2.45, 1.95, '#bfae92'))       // courtyard flagstones
+    S.add(patch(-2.2, -3.4, -0.85, 3.35, C.terracotta))  // the terrace
+    // Skylight over the courtyard void.
+    const glass = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.02, 1.55), new THREE.MeshPhysicalMaterial({ color: '#dfe8ea', transparent: true, opacity: 0.22, roughness: 0.05 }))
+    glass.position.set(1.03, WALL + 0.02, 0.28)
+    S.add(glass)
+    S.add(box(1.76, 0.05, 0.05, C.steel, 1.03, WALL, -0.5), box(1.76, 0.05, 0.05, C.steel, 1.03, WALL, 1.06))
+  }
 
   // Trees: gulmohar on the street, frangipani at the entrance, the olive in
   // the first-floor courtyard, the big tree rising out of basement Court 1.
@@ -381,9 +406,11 @@ export async function createWorld(canvas) {
   plant(ground, tree({ height: 3.3, spread: 1.35, flowers: 55 }), 5.8, 0, 6.3)
   plant(ground, tree({ height: 3.4, spread: 1.4, flowers: 40 }), -9.5, 0, 9.4)
   plant(ground, tree({ height: 3.1, spread: 1.3, flowers: 0 }), 9.8, 0, 9.4)
-  plant(G, tree({ height: 1.7, spread: 0.75 }), -2.55, 0, 1.6)
-  plant(F, tree({ height: 1.25, spread: 0.45, tone: '#57703f' }), 1.95, 0, 1.55)
-  plant(floors.basement, tree({ height: 2.9, spread: 0.85 }), 0.85, 0, -1.55)
+  if (!useBlender) {
+    plant(G, tree({ height: 1.7, spread: 0.75 }), -2.55, 0, 1.6)
+    plant(F, tree({ height: 1.25, spread: 0.45, tone: '#57703f' }), 1.95, 0, 1.55)
+    plant(floors.basement, tree({ height: 2.9, spread: 0.85 }), 0.85, 0, -1.55)
+  }
 
   // Nest pendants in the courtyard, terrace string lights, street lamps.
   const glow = []
@@ -393,11 +420,13 @@ export async function createWorld(canvas) {
     parent.add(m)
     glow.push({ m, k: 2.2 })
   }
-  nest(F, 1.4, 1.9, 0.9)
-  nest(F, 1.75, 1.6, 1.15, 0.1)
-  nest(F, 1.55, 1.35, 0.7, 0.13)
-  for (const [x, y, z] of [[1.4, 1.9, 0.9], [1.75, 1.6, 1.15], [1.55, 1.35, 0.7]]) {
-    F.add(box(0.009, 2.6 - y, 0.009, '#514b3e', x, y, z, { cast: false }))
+  if (!useBlender) {
+    nest(F, 1.4, 1.9, 0.9)
+    nest(F, 1.75, 1.6, 1.15, 0.1)
+    nest(F, 1.55, 1.35, 0.7, 0.13)
+    for (const [x, y, z] of [[1.4, 1.9, 0.9], [1.75, 1.6, 1.15], [1.55, 1.35, 0.7]]) {
+      F.add(box(0.009, 2.6 - y, 0.009, '#514b3e', x, y, z, { cast: false }))
+    }
   }
   const festoonPoints = []
   for (let i = 0; i < 16; i++) {
@@ -430,7 +459,7 @@ export async function createWorld(canvas) {
     return l
   })
 
-  addWorldDetails({ ground, floors, house })
+  addWorldDetails({ ground, floors, house, streetOnly: useBlender })
 
   // ---------- people inside: the programme ----------
   // A gathering is furniture plus people, built for a room and a use. When the
@@ -651,6 +680,7 @@ export async function createWorld(canvas) {
     // Walls drop to a cutaway as the floors part, so the rooms show.
     const cut = smooth(0.15, 0.8, state.open)
     for (const w of walls) w.o.scale.y = lerp(w.full, w.low, cut)
+    for (const o of highParts) o.visible = cut < 0.35
 
     const pk = state.persona + '|' + partAt(h)
     if (pk !== programKey) {

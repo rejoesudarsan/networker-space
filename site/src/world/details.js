@@ -856,7 +856,7 @@ function neighbours(b, s, rand) {
 // ---------- entry ----------
 // Call once, with the house closed, after the floors, slabs, surfaces, trees
 // and lights are built.
-export function addWorldDetails({ ground, floors, house }) {
+export function addWorldDetails({ ground, floors, house, streetOnly = false }) {
   const rand = seeded(1172)
   const meshes = []
   const done = (b) => meshes.push(...b.flush())
@@ -864,7 +864,7 @@ export function addWorldDetails({ ground, floors, house }) {
   for (const [id, floor] of Object.entries(floors)) voids[id] = voidsOf(id, floor)
 
   const build = { ground: groundFloor, first: firstFloor, second: secondFloor }
-  for (const [id, fn] of Object.entries(build)) {
+  for (const [id, fn] of Object.entries(streetOnly ? {} : build)) {
     const floor = floors[id]
     const info = house.floors[id]
     if (!floor || !info) continue
@@ -877,7 +877,7 @@ export function addWorldDetails({ ground, floors, house }) {
   }
 
   const B = floors.basement
-  if (B && floors.ground && house.floors.basement) {
+  if (!streetOnly && B && floors.ground && house.floors.basement) {
     // What rises with the drawn walls follows their height as they drop.
     let drawn = null
     B.traverse((o) => {
@@ -907,7 +907,7 @@ export function addWorldDetails({ ground, floors, house }) {
     done(walls)
   }
   // The ground floor's skirt gets a granite plinth band at the street.
-  if (floors.ground) {
+  if (!streetOnly && floors.ground) {
     const b = batch(floors.ground, 'plinth')
     for (const o of floors.ground.children) {
       const p = o.isMesh && o.geometry.type === 'BoxGeometry' && o.geometry.parameters
