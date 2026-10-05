@@ -9,6 +9,11 @@
   --sans: 'Schibsted Grotesk Variable', system-ui, sans-serif;
   --serif: 'Newsreader Variable', Georgia, serif;
   --inset: clamp(20px, calc(32px + (100vw - 1024px) * 0.0179), 48px);
+  /* The insets clear notches and home bars (viewport-fit=cover). */
+  --top: calc(var(--inset) + env(safe-area-inset-top, 0px));
+  --bottom: calc(var(--inset) + env(safe-area-inset-bottom, 0px));
+  --left: calc(var(--inset) + env(safe-area-inset-left, 0px));
+  --right: calc(var(--inset) + env(safe-area-inset-right, 0px));
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 body.dark {
@@ -42,10 +47,10 @@ body.ready .stage { opacity: 1 }
 
 /* ---------- corners ---------- */
 .corner { position: fixed; z-index: 5; font: 400 14px/20px var(--mono); letter-spacing: 0.02em }
-.tl { top: calc(var(--inset) - 12px); left: var(--inset); min-height: 44px; display: inline-flex; align-items: center }
-.tr { top: calc(var(--inset) - 12px); right: var(--inset) }
-.bl { bottom: var(--inset); left: var(--inset) }
-.br { bottom: var(--inset); right: var(--inset); font-variant-numeric: tabular-nums }
+.tl { top: calc(var(--top) - 12px); left: var(--left); min-height: 44px; display: inline-flex; align-items: center }
+.tr { top: calc(var(--top) - 12px); right: var(--right) }
+.bl { bottom: var(--bottom); left: var(--left) }
+.br { bottom: var(--bottom); right: var(--right); font-variant-numeric: tabular-nums }
 .wordmark { letter-spacing: 0.08em }
 body.reading .hint { opacity: 0 }
 
@@ -134,7 +139,7 @@ body.pristine .brief { opacity: 0; filter: blur(6px); pointer-events: none }
   background: transparent; color: var(--fg);
 }
 .sheet::backdrop { background: color-mix(in srgb, var(--fog) 72%, transparent); backdrop-filter: blur(6px) }
-.sheet-close { position: fixed; top: calc(var(--inset) - 12px); right: var(--inset) }
+.sheet-close { position: fixed; top: calc(var(--top) - 12px); right: var(--right) }
 .sheet-body {
   position: absolute; left: calc(var(--inset) + 8vw); top: 50%; transform: translateY(-50%);
   width: min(52ch, calc(100vw - 2 * var(--inset))); max-height: 80vh; overflow: auto;
@@ -179,19 +184,20 @@ body.still .stage, body.still .copy, body.still .loading, body.still .failure, b
 body.still { overflow: hidden }
 
 .tier-nav { display: none }
+.tier-nav button { min-width: 44px; justify-content: center }
 .tier-nav button[aria-pressed='true'] { text-decoration: underline; text-underline-offset: 5px }
 @media (max-width: 720px) {
   .markers { display: none }
   .tier-nav { display: flex; gap: 20px; position: absolute; left: 20px; top: calc(11vh + 68px) }
-  .tier { display: none; transform: none !important; left: 20px; top: auto; bottom: calc(var(--inset) + 70px); width: auto; padding-left: 0 }
+  .tier { display: none; transform: none !important; left: 20px; top: auto; bottom: calc(var(--bottom) + 70px); width: auto; padding-left: 0 }
   .tier.focus { display: block }
-  .tier-help { left: 20px; transform: none; bottom: calc(var(--inset) + 34px); white-space: normal }
-  .call-copy { transform: none !important; left: 20px; right: 20px; top: auto; bottom: calc(var(--inset) + 56px); padding-left: 0 }
+  .tier-help { left: 20px; transform: none; bottom: calc(var(--bottom) + 34px); white-space: normal }
+  .call-copy { transform: none !important; left: 20px; right: 20px; top: auto; bottom: calc(var(--bottom) + 56px); padding-left: 0 }
   .corner, .link { font-size: 14px; line-height: 20px }
-  .caption, .lead, .night-copy, .brief { left: 12px; right: 12px; width: auto; top: auto; bottom: calc(var(--inset) + 34px); transform: none; padding: 18px 20px }
+  .caption, .lead, .night-copy, .brief { left: 12px; right: 12px; width: auto; top: auto; bottom: calc(var(--bottom) + 34px); transform: none; padding: 18px 20px }
   .brief h1 { font-size: 32px }
   .brief::before {
-    left: -12px; width: 100vw; top: auto; bottom: calc(-1 * (var(--inset) + 34px)); height: 72vh;
+    left: -12px; width: 100vw; top: auto; bottom: calc(-1 * (var(--bottom) + 34px)); height: 72vh;
     background: linear-gradient(0deg, color-mix(in srgb, var(--fog) 88%, transparent) 62%, transparent);
   }
   .brief .intro, .rhythm dd { font-size: 16px; line-height: 23px }

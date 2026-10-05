@@ -729,7 +729,7 @@ export async function createScene(canvas) {
       fTarget.set(lerp(a.x, b.x, u), lerp(a.y, b.y, u) + 0.15, lerp(a.z, b.z, u) + 0.3)
       const dist = lerp(FLOOR_DIST[ORDER[i0]], FLOOR_DIST[ORDER[i1]], u)
       const drift = (state.local - 0.5) * 4
-      if (phone) orbit(shot, fTarget, 28 + drift, 52, dist * 1.75, 36, 0, 1.6)
+      if (phone) orbit(shot, fTarget, 28 + drift, 52, dist * 1.95, 36, 0, 2.9)
       else orbit(shot, fTarget, 30 + drift, 44, dist, 30, 2.6)
     } else if (s === 'members') {
       // A phone shows one membership at a time.
