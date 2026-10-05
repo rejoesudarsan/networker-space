@@ -62,7 +62,8 @@ Rules for every item:
   - note: geometry from site details.js PLAN.stair (20 risers, west up to the void's west edge, treads only over the rooms below). Turned-baluster teak balustrade round the void, open where the stair arrives; blue lantern in the foyer.
 
 ## Basement (p2, p10, p31)
-- [ ] court1-big-tree: the big tree in basement Court 1 rising through the ground-floor double-height void; trunk + canopy reaching above the ground slab.
+- [x] court1-big-tree: the big tree in basement Court 1 rising through the ground-floor double-height void; trunk + canopy reaching above the ground slab.
+  - note: height 2.4 (site 2.9) so the crown stays under the first-floor slab; also Court 1's flagstone floor and the kota-kerbed bed from the site.
 - [ ] garage-fitout: block-wall texture on the parking walls, a ladder, one simple car (p2).
 - [ ] office-den: pinboard, desk, chair, whiteboard in the Office/Den (p10, p31).
 

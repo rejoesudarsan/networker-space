@@ -17,3 +17,4 @@
 - 2026-10-05 07:56 kitchen1_galley: build 86 s, one eye-level render from p13's viewpoint; matched on the first try.
 - 2026-10-05 07:59 caretaker_red_oxide: build ~85 s; first bounds from the plan left gaps at the east and north walls (eye camera hit a window), fitted in a top-down cutaway.
 - 2026-10-05 08:02 stair_to_basement: build 93 s, two eye-level renders (p20's view across the void, and up at the lantern); matched on the first try.
+- 2026-10-05 08:04 court1_big_tree: build ~90 s, one eye-level render from the foyer; matched first try.

@@ -37,6 +37,7 @@ MODULES = [
     "kitchen1_galley",
     "caretaker_red_oxide",
     "stair_to_basement",
+    "court1_big_tree",
 ]
 
 
