@@ -153,6 +153,24 @@ body.dark .steps li::before { color: #f0d3b2 }
 .faq details p { padding: 0 0 12px calc(1ch + 10px); font: 400 15px/22px var(--sans); color: var(--fg-soft) }
 .actions { display: flex; flex-wrap: wrap; column-gap: 24px }
 
+/* The apply form: underlined fields on the sheet, nothing boxed. */
+.apply { display: grid; gap: 8px; margin-top: 2px }
+.apply label { display: grid; gap: 4px; font: 500 13px/18px var(--mono); letter-spacing: 0.04em }
+.apply input:not([type='radio']), .apply textarea {
+  font: 400 16px/22px var(--sans); color: inherit; background: transparent; border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--fg) 45%, transparent); padding: 6px 0; min-height: 40px; border-radius: 0; resize: vertical;
+}
+.apply input:focus-visible, .apply textarea:focus-visible { outline: none; border-bottom: 2px solid currentColor }
+.apply [aria-invalid='true'] { border-bottom-color: var(--accent) }
+.apply fieldset { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; column-gap: 20px }
+.apply legend { font: 500 13px/18px var(--mono); letter-spacing: 0.04em; padding: 0; margin-bottom: 2px }
+.apply .choice { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font: 400 16px/22px var(--sans); letter-spacing: 0 }
+.apply .choice input { accent-color: var(--accent); width: 18px; height: 18px; margin: 0 }
+.apply .optional { color: var(--fg-soft); letter-spacing: 0 }
+.form-note:empty { display: none }
+.form-note { font: 400 15px/22px var(--sans); color: var(--fg-soft) }
+.apply button { justify-self: start }
+
 /* The last invitation. */
 .call-copy { gap: 6px; justify-items: start }
 .call-copy h2 { font: 400 40px/46px var(--serif); font-variation-settings: 'opsz' 48; letter-spacing: -0.01em }
@@ -167,7 +185,8 @@ body.dark .steps li::before { color: #f0d3b2 }
 .sheet-close { position: fixed; top: calc(var(--top) - 12px); right: var(--right) }
 .sheet-body {
   position: absolute; left: calc(var(--inset) + 8vw); top: 50%; transform: translateY(-50%);
-  width: min(52ch, calc(100vw - 2 * var(--inset))); max-height: 80vh; overflow: auto;
+  width: min(52ch, calc(100vw - 2 * var(--inset))); max-height: 86vh; overflow: auto;
+  scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--fg) 35%, transparent) transparent;
   display: grid; gap: 14px; animation: decode 0.45s var(--ease) both;
 }
 .sheet-body h2 { font: 400 22px/30px var(--sans) }

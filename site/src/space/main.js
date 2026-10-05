@@ -4,9 +4,11 @@ import '@fontsource-variable/jetbrains-mono'
 import './space.css'
 import { BEATS, HOURS, FOG, FOCUS, FLOOR_COPY, TIERS, FEATURES } from './beats.js'
 
-// The booking link (Cal.com or Calendly) for every "Book a call". Until it is
-// set, Book a call opens an honest "not available yet" note.
-const BOOKING_URL = ''
+// Where the apply form posts (JSON): a Formspree-style form URL or a
+// Cloudflare Worker route, set at build time as VITE_APPLY_URL (.env.local or
+// the build environment). Until it is set, the form says it can't send yet.
+// Which service and which inbox: site/POLISH.md, Needs your input.
+const APPLY_URL = import.meta.env.VITE_APPLY_URL || ''
 
 const $ = (s, el = document) => el.querySelector(s)
 const $$ = (s, el = document) => [...el.querySelectorAll(s)]
@@ -55,36 +57,89 @@ function locate(p) {
   return { beat, local, veil }
 }
 
-// ---------- booking ----------
+// ---------- the sheet ----------
 const dialog = $('.sheet')
 let restoreFocus = null
-function openSheet(html, label) {
-  restoreFocus = document.activeElement
+function openSheet(html, label, focus = '.sheet-close') {
+  // Opened from inside the sheet (a link in an answer): swap the content only.
+  if (!dialog.open) restoreFocus = document.activeElement
   $('.sheet-body', dialog).innerHTML = html
   dialog.setAttribute('aria-label', label)
-  dialog.showModal()
+  if (!dialog.open) dialog.showModal()
   document.body.classList.add('reading')
-  $('.sheet-close', dialog).focus()
+  $(focus, dialog).focus()
 }
 dialog.addEventListener('close', () => {
   document.body.classList.remove('reading')
   restoreFocus?.focus()
 })
 $('.sheet-close').addEventListener('click', () => dialog.close())
-function book(e) {
-  if (BOOKING_URL) return
-  e.preventDefault()
+
+// ---------- apply ----------
+// Every "Book a call" opens a short form; a link from a membership picks it.
+const esc = (t) => t.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c])
+function apply(tier) {
+  const ways = [['member', 'Member'], ['lifetime', 'Lifetime'], ['unsure', 'Not sure yet']]
   openSheet(
-    `<h2>Book a call</h2><p>Call booking is not available yet.</p><p>Please check back soon.</p><button class="link" type="button" data-close>Back to Space →</button>`,
+    `<p class="kicker">Book a call</p><h2>Tell us about you.</h2>
+     <p>We read every one, and write back to set up a call.</p>
+     <form class="apply" novalidate>
+       <label>Name<input name="name" autocomplete="name" required /></label>
+       <label>Email<input name="email" type="email" autocomplete="email" required /></label>
+       <label>What are you building?<textarea name="building" rows="2"></textarea></label>
+       <fieldset><legend>Which way in?</legend>
+         ${ways.map(([v, l]) => `<label class="choice"><input type="radio" name="way" value="${v}"${v === (tier || 'unsure') ? ' checked' : ''} /> ${l}</label>`).join('')}
+       </fieldset>
+       <label>How did you hear about Space? <span class="optional">(optional)</span><input name="heard" /></label>
+       <p class="form-note" role="status" aria-live="polite"></p>
+       <button class="link strong" type="submit">Send →</button>
+     </form>`,
     'Book a call',
+    'input[name="name"]',
   )
-  $('[data-close]', dialog).addEventListener('click', () => dialog.close())
+  const form = $('.apply', dialog)
+  const note = $('.form-note', form)
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    const bad = [...form.querySelectorAll('[required]')].find((el) => !el.checkValidity())
+    if (bad) {
+      note.textContent = bad.name === 'email' && bad.value ? 'That email doesn’t look right.' : `Please add your ${bad.name}.`
+      bad.setAttribute('aria-invalid', 'true')
+      bad.focus()
+      return
+    }
+    if (!APPLY_URL) {
+      note.textContent = 'We can’t take this online yet: the form isn’t connected. Please check back soon.'
+      return
+    }
+    const data = Object.fromEntries(new FormData(form))
+    const button = $('button[type="submit"]', form)
+    button.disabled = true
+    note.textContent = 'Sending…'
+    try {
+      const res = await fetch(APPLY_URL, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(data) })
+      if (!res.ok) throw new Error(res.status)
+      openSheet(
+        `<p class="kicker">Sent</p><h2>Thank you, ${esc(data.name.split(' ')[0])}.</h2>
+         <p>We’ll write within two days to set up a call.</p>
+         <p>Until then, the café opens at 08:00.</p>
+         <button class="link" type="button" data-close>Back to Space →</button>`,
+        'Sent',
+        '[data-close]',
+      )
+      $('[data-close]', dialog).addEventListener('click', () => dialog.close())
+    } catch {
+      button.disabled = false
+      note.textContent = 'That didn’t send. Please try again in a moment.'
+    }
+  })
 }
 document.addEventListener('click', (e) => {
   const a = e.target.closest('[data-book]')
-  if (a) book(e)
+  if (!a) return
+  e.preventDefault()
+  apply(a.dataset.tier)
 })
-if (BOOKING_URL) for (const a of $$('[data-book]')) a.href = BOOKING_URL
 
 // ---------- questions ----------
 // One list of answers, kept in the reader; the sheet shows a copy.
