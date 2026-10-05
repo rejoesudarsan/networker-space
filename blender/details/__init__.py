@@ -24,6 +24,7 @@ MODULES = [
     "terrace_railing",
     "gulmohar_trees",
     "ramp_railing",
+    "front_compound_wall_and_fern_planter",
 ]
 
 
