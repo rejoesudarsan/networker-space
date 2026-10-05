@@ -14,7 +14,7 @@ from . import _entourage as E
 PARK_Z = 6.92        # parked cars, on the asphalt by the near verge
 NEAR_Z = 7.65        # eastbound lane
 FAR_Z = 8.55         # westbound lane
-WALK_Z = 5.6         # pavement
+WALK_Z = 6.04        # pavement: outside the fence (z 5.79..5.91), inside the street trees (z 6.17..6.42)
 
 STREET = [
     # name, x, z, rot
@@ -31,7 +31,7 @@ STREET = [
     ("Bike.Motorbike.Black.Ridden",  0.9, FAR_Z, 180),
     ("Bike.Scooter.Grey.Ridden",    -8.4, FAR_Z - 0.1, 180),
     # People on the pavement and at the gate
-    ("Person.WomanBags.Kurta",      -2.1, WALK_Z - 0.15, 180),   # heading for the gate
+    ("Person.WomanBags.Kurta",      -2.1, WALK_Z, 180),          # heading for the gate
     ("Person.ManWalk.Kurta",        -2.72, 5.15, -90),         # in the gateway, facing the street
     ("Person.ManPhone",              2.3, WALK_Z, 0),
     ("Person.WomanWalk.Kurta",      -5.4, WALK_Z + 0.2, 0),

@@ -58,10 +58,16 @@ const FLOOR_PEOPLE = {
   ],
 }
 
-// Walks in street coordinates (ground frame, y = 0 is the street).
-const STREET_Z = 5.65
-const FAR_Z = 9.85
-const GATE = [[-2.75, 0, STREET_Z], [-2.75, 0, 4.9]]
+// Walks in street coordinates (ground frame, y = 0 is the street), on the
+// footpaths scene.js lays: the near one runs from the compound walls
+// (z 5.91) to the kerb (6.75) round tree trunks at z 6.17..6.42, so it has a
+// lane each side of them; the far one (9.15..9.97) has trunks at 9.27..9.51.
+const PAVE = 0.025
+const LANES = [6.04, 6.56, 9.68, 9.86]
+// The pedestrian gate (site mesh: x -3.10..-2.35, its leaf at z 5.85): visitors
+// walk up to it and go in.
+const GATE_X = -2.72
+const GATE_Z = 5.98
 
 export function createPeople(floors, street, fogify) {
   const all = []
@@ -85,10 +91,13 @@ export function createPeople(floors, street, fogify) {
     groups[id] = g
   }
 
-  // Walkers: a handful on the near and far pavements, a few turning in at
-  // the gate. Each loops along its path with its own pace.
+  // Walkers: a few on each footpath, two turning in at the gate. Everyone on
+  // a lane keeps its pace and loops in the same time (a visitor is inside
+  // for the rest of it), so the spacing holds and no one walks through
+  // anyone. Lanes alternate east and west.
   const walkers = []
-  const walk = (pts, speed, offset) => {
+  const LOOP = 48
+  const walk = (pts, speed, at) => {
     const p = createPerson()
     street.add(p)
     all.push(p)
@@ -99,24 +108,29 @@ export function createPeople(floors, street, fogify) {
       total += s.len
       return s
     })
-    walkers.push({ p, segs, total, speed, d: offset * total, phase: Math.random() * 10 })
+    walkers.push({ p, segs, total, speed, d: at * LOOP, phase: Math.random() * 10 })
   }
-  for (let i = 0; i < 6; i++) {
-    const dir = i % 2 ? 1 : -1
-    const z = (i < 4 ? STREET_Z : FAR_Z) + (Math.random() - 0.5) * 0.3
-    walk([[-24 * dir, 0, z], [24 * dir, 0, z]], 0.55 + Math.random() * 0.25, Math.random())
-  }
-  for (let i = 0; i < 3; i++) {
-    const from = i % 2 ? -18 : 18
-    walk([[from, 0, STREET_Z + 0.1], ...GATE], 0.6 + Math.random() * 0.15, Math.random())
-  }
+  LANES.forEach((z, i) => {
+    const dir = i % 2 ? -1 : 1
+    const pace = 0.55 + i * 0.04
+    const n = i < 2 ? 3 : 2
+    for (let k = 0; k < n; k++) {
+      // A lane's visitor takes the slot between its first two walkers.
+      if (i < 2 && k === 1) {
+        const side = i ? LANES[1] : LANES[0]
+        walk([[-18 * dir, PAVE, side], [GATE_X - 0.4 * dir, PAVE, side], [GATE_X, PAVE, GATE_Z]], pace, (k + 0.1) / n)
+        continue
+      }
+      walk([[-24 * dir, PAVE, z], [24 * dir, PAVE, z]], pace, (k + Math.random() * 0.3) / n)
+    }
+  })
 
   for (const p of all) p.traverse((o) => o.isMesh && fogify(o.material))
 
   const tmp = new THREE.Vector3()
   function update(dt, t, floorWeights, outside, still) {
     for (const [id, g] of Object.entries(groups)) g.visible = (floorWeights[id] || 0) > 0.5
-    for (const w of walkers) w.p.visible = outside
+    for (const w of walkers) w.p.visible = outside && w.d < w.total
     if (still) return
     for (const g of Object.values(groups)) {
       if (!g.visible) continue
@@ -124,7 +138,8 @@ export function createPeople(floors, street, fogify) {
     }
     if (!outside) return
     for (const w of walkers) {
-      w.d = (w.d + w.speed * dt) % w.total
+      w.d = (w.d + w.speed * dt) % LOOP
+      if (w.d >= w.total) continue
       let seg = w.segs[0]
       for (const s of w.segs) if (w.d >= s.at) seg = s
       const u = (w.d - seg.at) / seg.len
@@ -134,7 +149,7 @@ export function createPeople(floors, street, fogify) {
       posePerson(w.p, 'walk', t * w.speed, w.phase)
       // Fade in and out at the ends of a walk, and at the gate.
       const edge = Math.min(w.d, w.total - w.d)
-      w.p.scale.setScalar(Math.min(1, edge / 0.5) || 0.001)
+      w.p.scale.setScalar(Math.min(1, edge / 0.3) || 0.001)
     }
   }
   return { update }

@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
 import { Reflector } from 'three/examples/jsm/objects/Reflector.js'
+import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
 import { createClouds } from './clouds.js'
 import { createPeople } from './people.js'
 
@@ -318,10 +319,81 @@ export async function createScene(canvas) {
     const parapet = new THREE.Mesh(new THREE.BoxGeometry(w + 0.08, 0.14, d + 0.08), nMat[(i + 1) % 2])
     parapet.position.set(x, h + 0.07, z)
     neighbours.add(parapet)
-    const wall = new THREE.Mesh(new THREE.BoxGeometry(w, 0.5, 0.12), nMat[(i + 1) % 2])
-    wall.position.set(x, 0.25, z > 10 ? z - d / 2 - 0.5 : z + d / 2 + 0.4)
-    neighbours.add(wall)
   })
+
+  // The street (street frame, y = 0 the asphalt), on the line the house's
+  // fence keeps (site mesh: gates and piers at z 5.79..5.91, x -3.3..3.25):
+  // a kerbed footpath along the compound walls, the neighbours' yards dry
+  // behind them, the road, and a footpath across it (nothing built there: it
+  // would stand between the camera and the house, as the board keeps the
+  // foreground open). Street lamps on the near kerb.
+  const env = new THREE.Group()
+  house.add(env)
+  const PAVE = 0.025                       // footpath top (6 cm)
+  const NEAR = [5.91, 6.75]                // footpath, fence to kerb
+  const FAR = [9.15, 9.97]
+  const ROW = 40                           // half the street's length shown
+  // Square pavers with grey joints, a stain here and there.
+  const paveMat = fogify(new THREE.MeshStandardMaterial({ color: '#756e66', roughness: 0.9 }), {
+    map: `{
+      vec2 g = abs(fract(vWorldP.xz / 0.25) - 0.5);
+      float joint = smoothstep(0.47, 0.49, max(g.x, g.y));
+      diffuseColor.rgb *= (1.0 - 0.28 * joint) * mix(0.88, 1.04, fbm(vWorldP.xz * 2.3));
+    }`,
+  })
+  // Bengaluru kerbs: painted in bands, gone soft with the weather.
+  const kerbMat = fogify(new THREE.MeshStandardMaterial({ color: '#d3c39b', roughness: 0.85 }), {
+    map: `diffuseColor.rgb *= mix(0.3, 1.0, step(0.5, fract(vWorldP.x / 0.5))) * mix(0.85, 1.0, fbm(vWorldP.xz * 9.0));`,
+  })
+  const gateMat = fogify(new THREE.MeshStandardMaterial({ color: '#3b3836', roughness: 0.6, metalness: 0.3 }))
+  // Built as loose boxes, merged into one mesh per material.
+  const parts = new Map()
+  const add = (mat, geo, x, y, z) => {
+    if (!parts.has(mat)) parts.set(mat, [])
+    parts.get(mat).push(geo.translate(x, y, z))
+  }
+  const box = (mat, w, h, d, x, y, z) => add(mat, new THREE.BoxGeometry(w, h, d), x, y, z)
+  for (const [z0, z1] of [NEAR, FAR]) {
+    box(paveMat, ROW * 2, PAVE, z1 - z0, 0, PAVE / 2, (z0 + z1) / 2)
+    const kz = z0 === NEAR[0] ? z1 - 0.03 : z0 + 0.03
+    box(kerbMat, ROW * 2, PAVE + 0.012, 0.06, 0, (PAVE + 0.012) / 2, kz)
+  }
+  const yardMat = fogify(new THREE.MeshStandardMaterial({ color: '#7d766f', roughness: 0.95 }))
+  for (const [x0, x1] of [[-ROW, -3.32], [3.3, ROW]]) box(yardMat, x1 - x0, 0.01, 16, (x0 + x1) / 2, 0.005, NEAR[0] - 8.13)
+  // Compound walls, plot by plot, each with a pier-hung gate; the house's
+  // own plot (x -3.3..3.3) is in the site mesh.
+  const plots = (z, h, x0, x1) => {
+    for (let a = x0; a < x1 - 0.1; ) {
+      const b = Math.min(x1, a + 5.2 + ((a * 7.31) % 1.6 + 1.6) % 1.6)
+      const mat = nMat[Math.abs(Math.round(a)) % 2]
+      const gw = b - a > 2.4 ? 0.75 : 0
+      const gx = a + 0.9 + ((a * 3.7) % 1 + 1) % 1 * (b - a - 2.4)
+      for (const [s0, s1] of gw ? [[a + 0.02, gx - gw / 2], [gx + gw / 2, b - 0.02]] : [[a + 0.02, b - 0.02]]) {
+        box(mat, s1 - s0, h, 0.12, (s0 + s1) / 2, h / 2, z)
+        box(mat, s1 - s0 + 0.02, 0.04, 0.15, (s0 + s1) / 2, h + 0.02, z)
+      }
+      if (gw) {
+        for (const px of [gx - gw / 2 - 0.05, gx + gw / 2 + 0.05]) box(mat, 0.1, h + 0.12, 0.14, px, (h + 0.12) / 2, z)
+        for (let y = 0.06; y < h; y += 0.07) box(gateMat, gw, 0.025, 0.02, gx, y, z)
+      }
+      a = b
+    }
+  }
+  plots(NEAR[0] - 0.07, 0.55, -ROW, -3.32)
+  plots(NEAR[0] - 0.07, 0.55, 3.3, ROW)
+  // Lamps: a pole, an arm out over the road, a warm head at night.
+  const poleMat = fogify(new THREE.MeshStandardMaterial({ color: '#57534f', roughness: 0.7, metalness: 0.4 }))
+  const lampMat = fogify(new THREE.MeshStandardMaterial({ color: '#d8d2c6', roughness: 0.5, emissive: new THREE.Color('#ffc27a'), emissiveIntensity: 0 }))
+  for (const x of [-19, -7.4, 7.6, 19.5]) {
+    const z = NEAR[1] - 0.04
+    add(poleMat, new THREE.CylinderGeometry(0.025, 0.035, 3.1, 8), x, 1.55, z)
+    box(poleMat, 0.03, 0.03, 0.55, x, 3.05, z + 0.26)
+    box(lampMat, 0.09, 0.035, 0.2, x, 3.02, z + 0.5)
+  }
+  for (const [mat, geos] of parts) {
+    env.add(new THREE.Mesh(mergeGeometries(geos), mat))
+    geos.forEach((g) => g.dispose())
+  }
 
   // ---------- the loose props (blender/tools/build_props.py) ----------
   const propsG = await loader.loadAsync('/models/props/props.gltf').catch(() => null)
@@ -481,6 +553,7 @@ export async function createScene(canvas) {
     members.visible = s === 'members'
     callG.visible = s === 'call'
     winMat.emissiveIntensity = 1.4 * state.night
+    lampMat.emissiveIntensity = 2.2 * state.night
 
     // Floors: on the street they part a little (the opening); inside, the
     // floors above the one in view rise clear and its walls are cut down.
@@ -506,7 +579,7 @@ export async function createScene(canvas) {
     // The lower level sits below the street: while it is in view the street,
     // the compound wall and the trees step aside so it can be seen.
     const below = inFloors && state.focus < 0.6
-    street.visible = site.visible = !below
+    street.visible = site.visible = env.visible = !below
     // Fog per scene.
     const camDist = cur.pos.distanceTo(cur.look)
     if (outside) {
@@ -526,7 +599,7 @@ export async function createScene(canvas) {
     if (outside) clouds.gather('street', 0, -0.2, 2.5, 9, 7, { size: 0.6, ring: 0.7, bed: 0.4 })
     else clouds.gather('stage', 0, -0.32, -60, 2.2, 1.1, { size: 0.7, ring: 0.6 })
     clouds.update(t, (outside ? 0.35 : 0.5) * (1 - state.veil * 0.5), 1 - state.night * 0.7)
-    people.update(dt, t, weights, outside, state.still)
+    people.update(dt, t, weights, outside && !below, state.still)
 
     // Camera target for the scene.
     if (s === 'exterior') {
