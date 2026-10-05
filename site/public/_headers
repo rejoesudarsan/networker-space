@@ -27,3 +27,9 @@
   Cache-Control: public, max-age=3600, stale-while-revalidate=86400
 /favicon.svg
   Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+/favicon-32.png
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+/apple-touch-icon.png
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+/og.jpg
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
