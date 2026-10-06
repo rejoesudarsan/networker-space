@@ -526,7 +526,8 @@ export async function createScene(canvas) {
 
   // ---------- room pins ----------
   // The rooms the copy names, pinned on the floor in view: [name, x, z] in
-  // the floor's frame, from the fit-out modules (blender/details/*.py).
+  // the floor's frame, from the fit-out modules (blender/details/*.py),
+  // most important first: a pin that would overlap an earlier one waits.
   const PINS = {
     basement: [['Founders’ lounge', 0.7, 0.7], ['The tree court', 1.1, -1.54], ['Work area', 0.97, -2.84]],
     ground: [['Café', 1.5, 2.27], ['Coffee bar', -0.63, -1.45], ['Garden', 0.4, 4.1]],
@@ -545,16 +546,27 @@ export async function createScene(canvas) {
     return { floor, el, at: new THREE.Vector3(x, 0.35, z), shown: -1 }
   }))
   const pv = new THREE.Vector3()
+  const placed = []
   function placePins(weights, inside, veil) {
     const show = smooth(0.85, 1, inside) * (1 - smooth(0.1, 0.4, veil))
+    placed.length = 0
     for (const p of pins) {
       const g = floors[p.floor]
       let o = show * smooth(0.6, 0.95, weights[p.floor] / Math.max(inside, 1e-3))
       if (o > 0.01) {
         pv.copy(p.at)
         g.localToWorld(pv).project(camera)
-        if (pv.z > 1 || Math.abs(pv.x) > 0.96 || Math.abs(pv.y) > 0.92) o = 0
-        else p.el.style.transform = `translate(${((pv.x + 1) / 2) * width}px, ${((1 - pv.y) / 2) * height}px)`
+        const x = ((pv.x + 1) / 2) * width
+        const y = ((1 - pv.y) / 2) * height
+        // Measured once it has been shown; the chip is one line high.
+        p.w ||= p.el.offsetWidth
+        const h = p.el.offsetHeight || 24
+        const hit = placed.some((q) => x < q.x + q.w + 6 && q.x < x + p.w + 6 && Math.abs(y - q.y) < h + 4)
+        if (pv.z > 1 || Math.abs(pv.x) > 0.96 || Math.abs(pv.y) > 0.92 || hit) o = 0
+        else {
+          p.el.style.transform = `translate(${x}px, ${y}px)`
+          placed.push({ x, y, w: p.w })
+        }
       }
       o = Math.round(o * 50) / 50
       if (o !== p.shown) {
@@ -708,7 +720,7 @@ export async function createScene(canvas) {
       const fAz = lerp(lerp(va.az, vb.az, u), NIGHT_VIEW.az, night) + Math.sin(state.p * 42) * 5
       const fEl = lerp(lerp(va.el, vb.el, u), NIGHT_VIEW.el, night)
       const fDist = lerp(va.dist, vb.dist, u) * (1 - 0.04 * Math.sin(state.p * 29))
-      const into = phone ? [fAz, fEl + 8, fDist * 1.95, 36, 0, 2.9] : [fAz, fEl, fDist, 30, 3.0, 0]
+      const into = phone ? [fAz, fEl + 8, fDist * 1.65, 36, 0, 2.9] : [fAz, fEl, fDist, 30, 3.0, 0]
       const k = smooth(0, 1, inside)
       fTarget.set(lerp(a.x, b.x, u), lerp(a.y, b.y, u) + 0.15, lerp(a.z, b.z, u) + 0.3).lerpVectors(HERO, fTarget, k)
       const [oAz, oEl, oDist, oFov, oSide, oDrop] = out.map((v, j) => lerp(v, into[j], k))
