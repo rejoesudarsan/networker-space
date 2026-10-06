@@ -62,7 +62,7 @@ Every space is baked alone, cut to the same kind of box, with identical light, s
 - [ ] basement-day: short walls, buried faces dropped 2026-10-06
 - [ ] ground-day: short walls, club_rooms, café counter 2026-10-06
 - [ ] first-day: short walls, club_rooms 2026-10-06
-- [ ] second-day: short walls, club_rooms 2026-10-06
+- [x] second-day: short walls, club_rooms 2026-10-06 (one grey street-face panel still stands full height)
 - [ ] roof-day: buried faces dropped 2026-10-06
 - [ ] site-day: busy street (entourage) 2026-10-06
 - [ ] basement-night: short walls, buried faces dropped 2026-10-06
