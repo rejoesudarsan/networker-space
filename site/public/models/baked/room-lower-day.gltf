@@ -35,7 +35,7 @@
 	],
 	"meshes":[
 		{
-			"name":"room-lower.baked.003",
+			"name":"room-lower.baked.004",
 			"primitives":[
 				{
 					"attributes":{
@@ -66,10 +66,10 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":14465,
+			"count":11873,
 			"max":[
 				2.0500001907348633,
-				1.1000001430511475,
+				1.100000023841858,
 				1.8400002717971802
 			],
 			"min":[
@@ -82,45 +82,45 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":14465,
+			"count":11873,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":14465,
+			"count":11873,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5123,
-			"count":24342,
+			"count":19701,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":173580,
+			"byteLength":142476,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":173580,
-			"byteOffset":173580,
+			"byteLength":142476,
+			"byteOffset":142476,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":115720,
-			"byteOffset":347160,
+			"byteLength":94984,
+			"byteOffset":284952,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":48684,
-			"byteOffset":462880,
+			"byteLength":39402,
+			"byteOffset":379936,
 			"target":34963
 		}
 	],
@@ -132,7 +132,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":511564,
+			"byteLength":419340,
 			"uri":"room-lower-day.bin"
 		}
 	]

@@ -53,3 +53,4 @@
 - 2026-10-06 11:43 re-bake room-terrace-day: 1081 s; short walls, person in flat colour, study reads.
 - 2026-10-06 12:01 re-bake room-court-day: 1031 s; short walls, flat-colour people, no black floor patch, no stale glows.
 - 2026-10-06 12:20 re-bake room-event-day: 1112 s; short walls (the wall-hung screen goes with them).
+- 2026-10-06 12:41 re-bake room-lower-day: 1208 s; the lounge with RC football, players in flat colour, short walls.
