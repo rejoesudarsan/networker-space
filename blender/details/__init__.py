@@ -57,6 +57,7 @@ MODULES = [
     "game_room_first",
     "quiet_rooms_second",
     "basement_work_games",
+    "family2_ps5",
     "gulmohar_refine",
     "room_lights",
     "street_wet",

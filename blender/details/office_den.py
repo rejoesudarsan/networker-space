@@ -1,7 +1,8 @@
 """The basement office (photos p31, p10; basement plan OFFICE, label at
 x 0.79, z 0.61, with the curved west wall and the glazing onto the
-open-to-sky court on its south side). From p31: the black task chair at a
-desk ledge on the west wall with a whiteboard above, a low cubby shelf under
+open-to-sky court on its south side). From p31: a desk ledge on the west wall
+with a whiteboard above (the task chair went when the office became the
+lounge, 5 Oct 2026), a low cubby shelf under
 the south window, a split AC over it. From p10: a green pinboard in a teak
 frame on the east wall, teak skirting. Basement frame, Three.js units."""
 import bmesh
@@ -53,15 +54,6 @@ def build(ctx):
     _box(wood, x0, x0 + 0.24, -0.95, -0.92, 0.0, 0.29)
     _box(light, x0, x0 + 0.008, -0.85, -0.3, 0.5, 0.78)
     _box(dark, x0, x0 + 0.01, -0.86, -0.29, 0.49, 0.5)
-    # Task chair
-    cx, cy = x0 + 0.38, -0.6
-    _box(dark, cx - 0.08, cx + 0.08, cy - 0.08, cy + 0.08, 0.18, 0.21)
-    _box(dark, cx - 0.1, cx - 0.085, cy - 0.07, cy + 0.07, 0.21, 0.42)
-    _rod(dark, Vector((cx, cy, 0.04)), Vector((cx, cy, 0.18)), 0.012)
-    for k in range(5):
-        import math
-        a = k * 2 * math.pi / 5
-        _rod(dark, Vector((cx, cy, 0.04)), Vector((cx + 0.11 * math.cos(a), cy + 0.11 * math.sin(a), 0.02)), 0.008)
     # Cubby shelf under the south window
     sy = -(z1 - 0.12)
     _box(wood, 1.1, 1.95, sy, -z1 + 0.0, 0.0, 0.2)

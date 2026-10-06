@@ -24,24 +24,25 @@ Rules:
 
 ## Room dioramas (the homepage's room scenes; `--rooms`, from site/src/space/rooms.json)
 Every space is baked alone, cut to the same kind of box, with identical light, so they read as one set (user request, 5 Oct 2026). Production: `--rooms <id> --res 2048 --samples 256`.
-- [ ] room-lower-day
-- [ ] room-cafe-day
-- [ ] room-court-day
-- [ ] room-event-day
-- [ ] room-terrace-day
+- [x] room-lower-day (slab underside takes ~9% of the atlas, never seen from above; left for texel-density)
+- [x] room-cafe-day (hidden base floor plane 1.3 mm under the planks bakes black, ~4% of the atlas; never visible)
+- [x] room-court-day (the double-height void at the north-west reads as an open hole, since rooms bake alone; the wicker pendant hangs in it)
+- [x] room-event-day
+- [x] room-terrace-day (small wall fixtures read as soft dark smudges at this texel density; see texel-density)
 
 ## Day set (whole floors: the street views)
-- [ ] basement-day
-- [ ] ground-day
-- [ ] first-day
-- [ ] second-day
-- [ ] roof-day
-- [ ] site-day
+- [x] basement-day
+- [x] ground-day (.bin 7.6 MB, close to the 8 MB budget)
+- [x] first-day (bake took 100 min at 4096/256, over the 90 min line; kept, but bake first-night at --samples 192)
+- [x] second-day (103 min at 4096/256, over the 90 min line; kept, but bake second-night at --samples 192)
+- [x] roof-day (no main room: checked the unlit view and atlas)
+- [x] site-day (gulmohar leaves + blossom moved to site-fixtures in flat colour; site-day.bin 9.1 MB and site-fixtures.bin 9.6 MB, over budget: see web-size)
 
 ## Night set (sun off, sky at 4%, lamps and glow materials at 6x)
-- [ ] night-light-check: render ground and first at night with `room_shot.py --engine cycles`. Pick emission strength and exposure so lamps and lanterns read as warm pools and the rooms are not black. Write the chosen numbers into `set_light("night")`.
-- [ ] basement-night
-- [ ] ground-night
+- [x] night-light-check: render ground and first at night with `room_shot.py --engine cycles`. Pick emission strength and exposure so lamps and lanterns read as warm pools and the rooms are not black. Write the chosen numbers into `set_light("night")`.
+  - chosen: sky 4%, glow materials 6x, club lamps at full power (as before), saved at exposure 0 instead of the day's -0.4; checked on Cycles shots of the café and the court and a test bake of the café.
+- [x] basement-night
+- [x] ground-night
 - [ ] first-night
 - [ ] second-night
 - [ ] roof-night
@@ -53,3 +54,6 @@ Every space is baked alone, cut to the same kind of box, with identical light, s
 - [ ] web-size: keep each floor's `.jpg` under 4 MB and `.bin` under 8 MB. Re-encode or decimate if they are bigger.
 
 ## Re-bake (append: `- [ ] <part>-<set>: <module> changed <date>`)
+- [ ] room-lower-day: basement_work_games changed 2026-10-05 (office -> lounge with RC football)
+- [ ] room-court-day: bake_site.py now bakes the entourage in (two people in the court) 2026-10-06
+- [ ] room-terrace-day: bake_site.py now bakes the entourage in (woman on the bench) 2026-10-06

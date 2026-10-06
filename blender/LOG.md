@@ -32,3 +32,18 @@
 - 2026-10-05 08:46 passage_over_void: build ~95 s; void and nook measured top-down; eye-level render matched p30 first try.
 - 2026-10-05 08:54 detail_cameras: build 5 min 35 s with the four new views. Court 2 and Terrace read like p11/p33; Court 1 and Entrance are dark under dawn light. Haze hiding is a no-op (haze is built after finish).
 - 2026-10-05 11:34 entourage: full --quick build 6 min 16 s (baseline 7 min 44 s, run under load; no measurable cost). 22 linked instances + the garage SUV; --no-entourage falls back to the massing car. Bench man sits outside Camera.Entrance's frame.
+- 2026-10-05 20:28 room-lower-day: bake 1368 s (2048, 256 spp, CPU); first run lost to a session restart and re-run. Atlas clean, matches the Cycles reference; slab underside wastes ~9% of the atlas.
+- 2026-10-05 21:22 room-cafe-day: bake 725 s (2048, 256 spp, CPU). Checked the exported glTF rendered unlit against the Cycles reference: match. Slab underside + buried base floor plane waste ~12% of the atlas.
+- 2026-10-05 21:53 room-court-day: bake 1188 s (2048, 256 spp, CPU). Unlit glTF view matches the Cycles reference; void over the floor below shows as a hole (room baked alone).
+- 2026-10-05 22:59 basement-lounge-rc-football + family2-ps5 (user request, built in the bake thread): build ok, eevee renders checked (PS5 laid flat under the TV, sofa cushions dropped). room-lower-day queued for re-bake.
+- 2026-10-05 23:15 room-event-day: bake 874 s (2048, 256 spp, CPU). Unlit glTF view matches the Cycles reference; black atlas islands are the slab underside and buried layers only.
+- 2026-10-05 23:34 room-terrace-day: bake 1017 s (2048, 256 spp, CPU). Unlit glTF view matches the Cycles reference; small fixtures blur at 2k.
+- 2026-10-06 01:49 basement-day: bake 3832 s (4096, 256 spp, CPU). First bake showed the garage car's shadow without the car: bake_site.py now realizes the linked entourage (slot materials kept, UVs scaled 3x for texels) and bakes it in; re-baked, matches the reference. room-court/terrace queued for re-bake.
+- 2026-10-06 03:00 ground-day: bake 4148 s (4096, 256 spp, CPU). Unlit glTF matches the café reference; jpg 2.6 MB, bin 7.6 MB.
+- 2026-10-06 04:42 first-day: bake 6015 s (4096, 256 spp, CPU), over 90 min; kept rather than re-bake lower. Includes the new PS5 room; court people baked in. jpg 2.6 MB, bin 4.4 MB.
+- 2026-10-06 06:26 second-day: bake 6175 s (4096, 256 spp, CPU), over 90 min; kept. Matches the terrace reference. jpg 2.2 MB, bin 2.6 MB.
+- 2026-10-06 06:45 roof-day: bake 1061 s (2048, 192 spp, CPU). Clean; skylight frame and copings read; no room reference (none listed for the roof).
+- 2026-10-06 06:52 site-day: first bake came out all black in 7 s: gulmohar_refine's ~100k leaf faces shrank the atlas to nothing. bake_site.py now sends Gulmohar leaf/blossom to the fixtures file in flat colour; re-bake 133 s (2048, 192 spp). Street, gate, cars and people read. bins over 8 MB.
+- 2026-10-06 07:01 night-light-check: Cycles night shots of café and court read as warm pools with the current levels; night now saves at exposure 0 (day -0.4). Test bake of the café at night matched.
+- 2026-10-06 07:56 basement-night: bake 3229 s (4096, 256 spp, CPU). Matches the lounge night reference.
+- 2026-10-06 09:09 ground-night: bake 4264 s (4096, 256 spp, CPU). Café glows, rest dim; matches the café night reference.
