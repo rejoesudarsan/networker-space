@@ -45,3 +45,4 @@
 - 2026-10-06 06:45 roof-day: bake 1061 s (2048, 192 spp, CPU). Clean; skylight frame and copings read; no room reference (none listed for the roof).
 - 2026-10-06 06:52 site-day: first bake came out all black in 7 s: gulmohar_refine's ~100k leaf faces shrank the atlas to nothing. bake_site.py now sends Gulmohar leaf/blossom to the fixtures file in flat colour; re-bake 133 s (2048, 192 spp). Street, gate, cars and people read. bins over 8 MB.
 - 2026-10-06 07:01 night-light-check: Cycles night shots of café and court read as warm pools with the current levels; night now saves at exposure 0 (day -0.4). Test bake of the café at night matched.
+- 2026-10-06 07:56 basement-night: bake 3229 s (4096, 256 spp, CPU). Matches the lounge night reference.

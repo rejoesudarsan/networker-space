@@ -41,7 +41,7 @@ Every space is baked alone, cut to the same kind of box, with identical light, s
 ## Night set (sun off, sky at 4%, lamps and glow materials at 6x)
 - [x] night-light-check: render ground and first at night with `room_shot.py --engine cycles`. Pick emission strength and exposure so lamps and lanterns read as warm pools and the rooms are not black. Write the chosen numbers into `set_light("night")`.
   - chosen: sky 4%, glow materials 6x, club lamps at full power (as before), saved at exposure 0 instead of the day's -0.4; checked on Cycles shots of the café and the court and a test bake of the café.
-- [ ] basement-night
+- [x] basement-night
 - [ ] ground-night
 - [ ] first-night
 - [ ] second-night
