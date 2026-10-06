@@ -213,6 +213,9 @@ body.night .steps li::before { color: #f0d3b2 }
   display: grid; gap: 14px; animation: decode 0.45s var(--ease) both;
 }
 .sheet-body h2 { font: 400 22px/30px var(--sans) }
+/* Explore: the floor, cut open, at the top of its sheet. */
+.sheet-figure { margin: 0 0 4px; border-radius: 10px; overflow: hidden; background: color-mix(in srgb, var(--fg) 6%, transparent) }
+.sheet-figure img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover }
 .sheet-body p { font: 400 16px/24px var(--sans) }
 .sheet-body .kicker { font: 400 12px/18px var(--mono) }
 @keyframes decode { from { clip-path: inset(0 100% 0 0); opacity: 0.4 } to { clip-path: inset(0 0 0 0); opacity: 1 } }

@@ -155,7 +155,8 @@ document.addEventListener('click', (e) => {
   if (!b) return
   const r = FLOOR_COPY[b.dataset.explore]
   openSheet(
-    `<p class="kicker">${r.label}</p><h2>${r.explore.head}</h2>${r.explore.body.map((x) => `<p>${x}</p>`).join('')}
+    `<figure class="sheet-figure"><img src="/still/floor-${b.dataset.explore}.webp" width="960" height="720" alt="${r.label}, cut open from above, its rooms named." onerror="this.parentNode.remove()" /></figure>
+     <p class="kicker">${r.label}</p><h2>${r.explore.head}</h2>${r.explore.body.map((x) => `<p>${x}</p>`).join('')}
      <p class="actions"><a class="link" href="#book" data-book data-tier="${r.next.tier}">${r.next.text}</a></p>`,
     r.label,
   )
