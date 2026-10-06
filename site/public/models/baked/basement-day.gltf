@@ -66,7 +66,7 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":45918,
+			"count":83545,
 			"max":[
 				2.2920000553131104,
 				2.003086566925049,
@@ -82,45 +82,45 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":45918,
+			"count":83545,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":45918,
+			"count":83545,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
-			"componentType":5123,
-			"count":72174,
+			"componentType":5125,
+			"count":112848,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":551016,
+			"byteLength":1002540,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":551016,
-			"byteOffset":551016,
+			"byteLength":1002540,
+			"byteOffset":1002540,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":367344,
-			"byteOffset":1102032,
+			"byteLength":668360,
+			"byteOffset":2005080,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":144348,
-			"byteOffset":1469376,
+			"byteLength":451392,
+			"byteOffset":2673440,
 			"target":34963
 		}
 	],
@@ -132,7 +132,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":1613724,
+			"byteLength":3124832,
 			"uri":"basement-day.bin"
 		}
 	]

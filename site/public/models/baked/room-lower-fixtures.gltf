@@ -125,29 +125,29 @@
 		{
 			"bufferView":3,
 			"componentType":5126,
-			"count":240,
+			"count":384,
 			"max":[
-				1.175742268562317,
+				1.9909616708755493,
 				0.9353734850883484,
-				1.4769574403762817
+				1.8345986604690552
 			],
 			"min":[
-				-0.4843023419380188,
+				-0.484302282333374,
 				0.316078782081604,
-				-0.06460630893707275
+				-0.4595983028411865
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":4,
 			"componentType":5126,
-			"count":240,
+			"count":384,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":5,
 			"componentType":5123,
-			"count":432,
+			"count":648,
 			"type":"SCALAR"
 		}
 	],
@@ -172,26 +172,26 @@
 		},
 		{
 			"buffer":0,
-			"byteLength":2880,
+			"byteLength":4608,
 			"byteOffset":1944,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":2880,
-			"byteOffset":4824,
+			"byteLength":4608,
+			"byteOffset":6552,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":864,
-			"byteOffset":7704,
+			"byteLength":1296,
+			"byteOffset":11160,
 			"target":34963
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":8568,
+			"byteLength":12456,
 			"uri":"room-lower-fixtures.bin"
 		}
 	]

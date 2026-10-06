@@ -66,7 +66,7 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":14397,
+			"count":14465,
 			"max":[
 				2.0500001907348633,
 				1.1000001430511475,
@@ -82,45 +82,45 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":14397,
+			"count":14465,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":14397,
+			"count":14465,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5123,
-			"count":24240,
+			"count":24342,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":172764,
+			"byteLength":173580,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":172764,
-			"byteOffset":172764,
+			"byteLength":173580,
+			"byteOffset":173580,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":115176,
-			"byteOffset":345528,
+			"byteLength":115720,
+			"byteOffset":347160,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":48480,
-			"byteOffset":460704,
+			"byteLength":48684,
+			"byteOffset":462880,
 			"target":34963
 		}
 	],
@@ -132,7 +132,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":509184,
+			"byteLength":511564,
 			"uri":"room-lower-day.bin"
 		}
 	]

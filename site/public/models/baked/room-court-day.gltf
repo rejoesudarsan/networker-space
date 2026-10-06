@@ -6,7 +6,7 @@
 	"scene":0,
 	"scenes":[
 		{
-			"name":"export.002",
+			"name":"export",
 			"nodes":[
 				0
 			]
@@ -35,7 +35,7 @@
 	],
 	"meshes":[
 		{
-			"name":"room-court.baked.001",
+			"name":"room-court.baked.002",
 			"primitives":[
 				{
 					"attributes":{
@@ -66,7 +66,7 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":8126,
+			"count":8506,
 			"max":[
 				2.6599998474121094,
 				1.0999999046325684,
@@ -82,45 +82,45 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":8126,
+			"count":8506,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":8126,
+			"count":8506,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5123,
-			"count":12483,
+			"count":13125,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":97512,
+			"byteLength":102072,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":97512,
-			"byteOffset":97512,
+			"byteLength":102072,
+			"byteOffset":102072,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":65008,
-			"byteOffset":195024,
+			"byteLength":68048,
+			"byteOffset":204144,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":24966,
-			"byteOffset":260032,
+			"byteLength":26250,
+			"byteOffset":272192,
 			"target":34963
 		}
 	],
@@ -132,7 +132,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":285000,
+			"byteLength":298444,
 			"uri":"room-court-day.bin"
 		}
 	]

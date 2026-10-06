@@ -63,6 +63,28 @@
 				"metallicFactor":0,
 				"roughnessFactor":0.5
 			}
+		},
+		{
+			"doubleSided":true,
+			"emissiveFactor":[
+				0.8879231214523315,
+				0.7912979125976562,
+				0.5520114302635193
+			],
+			"extras":{
+				"glow":1
+			},
+			"name":"fix.Ent #F2E6C4 r0.30 m0.0 e0.001",
+			"pbrMetallicRoughness":{
+				"baseColorFactor":[
+					0.8879231214523315,
+					0.7912979125976562,
+					0.5520114302635193,
+					1
+				],
+				"metallicFactor":0,
+				"roughnessFactor":0.5
+			}
 		}
 	],
 	"meshes":[
@@ -89,6 +111,14 @@
 					},
 					"indices":5,
 					"material":1
+				},
+				{
+					"attributes":{
+						"POSITION":6,
+						"NORMAL":7
+					},
+					"indices":8,
+					"material":2
 				}
 			]
 		}
@@ -125,14 +155,14 @@
 		{
 			"bufferView":3,
 			"componentType":5126,
-			"count":360,
+			"count":564,
 			"max":[
-				1.3980823755264282,
+				1.9909616708755493,
 				0.9353734850883484,
-				1.4769574403762817
+				1.8345986604690552
 			],
 			"min":[
-				-0.4843023419380188,
+				-0.484302282333374,
 				0.316078782081604,
 				-2.8295278549194336
 			],
@@ -141,13 +171,41 @@
 		{
 			"bufferView":4,
 			"componentType":5126,
-			"count":360,
+			"count":564,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":5,
 			"componentType":5123,
-			"count":648,
+			"count":972,
+			"type":"SCALAR"
+		},
+		{
+			"bufferView":6,
+			"componentType":5126,
+			"count":22,
+			"max":[
+				-1.202153205871582,
+				0.3140657842159271,
+				-1.5947223901748657
+			],
+			"min":[
+				-1.897847056388855,
+				0.2362184226512909,
+				-1.6764775514602661
+			],
+			"type":"VEC3"
+		},
+		{
+			"bufferView":7,
+			"componentType":5126,
+			"count":22,
+			"type":"VEC3"
+		},
+		{
+			"bufferView":8,
+			"componentType":5123,
+			"count":30,
 			"type":"SCALAR"
 		}
 	],
@@ -172,26 +230,44 @@
 		},
 		{
 			"buffer":0,
-			"byteLength":4320,
+			"byteLength":6768,
 			"byteOffset":3240,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":4320,
-			"byteOffset":7560,
+			"byteLength":6768,
+			"byteOffset":10008,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1296,
-			"byteOffset":11880,
+			"byteLength":1944,
+			"byteOffset":16776,
+			"target":34963
+		},
+		{
+			"buffer":0,
+			"byteLength":264,
+			"byteOffset":18720,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":264,
+			"byteOffset":18984,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":60,
+			"byteOffset":19248,
 			"target":34963
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":13176,
+			"byteLength":19308,
 			"uri":"basement-fixtures.bin"
 		}
 	]
