@@ -35,7 +35,7 @@ Every space is baked alone, cut to the same kind of box, with identical light, s
 - [x] ground-day (.bin 7.6 MB, close to the 8 MB budget)
 - [x] first-day (bake took 100 min at 4096/256, over the 90 min line; kept, but bake first-night at --samples 192)
 - [x] second-day (103 min at 4096/256, over the 90 min line; kept, but bake second-night at --samples 192)
-- [ ] roof-day
+- [x] roof-day (no main room: checked the unlit view and atlas)
 - [ ] site-day
 
 ## Night set (sun off, sky at 4%, lamps and glow materials at 6x)
