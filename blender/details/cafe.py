@@ -9,7 +9,8 @@ east corner the gulmohar light cone with one empty teak chair (pins 2, 17,
 
 Family 1 (x -1.80..0.54, z -2.17..-0.74) is the bar: a teak-slatted lime
 counter with a brass espresso machine along the west wall (it used to stand
-across the room and hid it from the street view), open shelves behind it, a communal teak table for six in the east half, and the AM / PM
+across the room and hid it from the street view), open shelves behind it and stools at it, two café tables, a communal teak table for six in
+the east half, and the AM / PM
 sandstone panel (pin 12) on the east wall. Ground frame, Three.js units.
 Measured from top-down renders of the built model (5 Oct 2026)."""
 import math
@@ -55,6 +56,13 @@ def build(ctx):
     F.back_shelf(k, family_w + 0.055, -1.45, E, length=2.4)
     F.coffee_counter(k, family_w + 0.62, -1.45, E, length=2.2, ret=True)
     F.plant(k, -0.35, family_n + 0.1, h=1.3, seed=5)
+    # Stools at the counter and two café tables between it and the long table.
+    for dz in (-0.27, -0.09, 0.09, 0.27):
+        F.stool(k, family_w + 0.83, -1.45 + dz, h=0.72)
+    for z in (-1.82, -1.1):
+        F.bistro(k, -0.6, z, r=0.3, seed=int(-z * 10) + 20)
+        F.chair(k, -0.79, z, E)
+        F.chair(k, -0.41, z, W)
     F.long_table(k, 0.12, -1.33, E, length=2.1, width=0.85)
     for z in (-1.72, -1.33, -0.94):
         F.chair(k, -0.08, z, E)

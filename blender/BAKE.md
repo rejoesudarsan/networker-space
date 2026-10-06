@@ -61,9 +61,10 @@ Every space is baked alone, cut to the same kind of box, with identical light, s
 - [x] room-event-day: short walls, buried faces dropped 2026-10-06
 - [ ] basement-day: short walls, buried faces dropped 2026-10-06
 - [ ] ground-day: short walls, club_rooms, café counter 2026-10-06
-- [ ] first-day: short walls, club_rooms 2026-10-06
+- [x] first-day: short walls, club_rooms 2026-10-06 (baked before the cladding fix: the street cladding strip still stands full height; re-bake)
 - [x] second-day: short walls, club_rooms 2026-10-06 (one grey street-face panel still stands full height)
 - [ ] roof-day: buried faces dropped 2026-10-06
 - [ ] site-day: busy street (entourage) 2026-10-06
 - [ ] basement-night: short walls, buried faces dropped 2026-10-06
 - [ ] ground-night: short walls, club_rooms, café counter 2026-10-06
+- [ ] first-day: street cladding cut with the walls 2026-10-06

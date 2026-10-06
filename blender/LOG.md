@@ -56,3 +56,4 @@
 - 2026-10-06 12:41 re-bake room-lower-day: 1208 s; the lounge with RC football, players in flat colour, short walls.
 - 2026-10-06 14:05 basement-day and ground-day re-bakes were killed (out of memory: comparison renders ran beside them on this 7 GB host). Re-queued after first/second/roof/site. Rule: no other Blender while a floor bakes.
 - 2026-10-06 16:57 re-bake second-day: 4687 s (4096, 192 spp). Short walls, nap room + booth, terrace. A grey panel on the street face still stands full height. Bake loop stopped here at the user's request; still to re-bake: basement, ground, first (cladding), roof, site, and the night set.
+- 2026-10-06 17:53 ground: reading room in the west room (the last empty one) and stools + two café tables in the bar (user: still empty rooms). first-day bake from 15:14 committed (new rooms, short walls; cladding strip still tall).

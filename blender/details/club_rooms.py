@@ -33,6 +33,7 @@ ROOMS = {
         ("workroom", 0.0, 0.3, "cowork", (-0.47, -0.68, 0.52, 1.28)),
         ("maker", -1.0, 2.2, "maker"),
         ("tools", 0.16, 2.4, "tools"),
+        ("reading", -2.45, -1.6, "library", (-2.98, -2.42, -1.90, -0.80)),
     ],
     "first": [
         ("member1", -2.25, -3.5, "member"),
@@ -326,8 +327,36 @@ def nap(ctx, k, r, wall_h):
     F.plant(k, x0 + 0.1, z1 - 0.1, h=1.0, seed=79)
 
 
+def library(ctx, k, r, wall_h):
+    """The reading room: low shelves round the walls, a reading table for
+    four, two armchair pairs on a rug, floor lamps."""
+    x0, z0, x1, z1 = r
+    cx, cz, L, Sh, rot = axes(r)
+    low_shelf(k, x0 + 0.18 * M + 0.004, (z0 + z1) / 2, E, length=min(2.4, (z1 - z0) / M - 0.6), seed=81)
+    low_shelf(k, x1 - 0.18 * M - 0.004, (z0 + z1) / 2 - 0.3, W, length=1.4, seed=82)
+    low_shelf(k, (x0 + x1) / 2, z0 + 0.18 * M + 0.004, S, length=min(1.8, (x1 - x0) / M - 0.8), seed=83)
+    # reading table in the north half
+    tx, tz = cx + 0.04, z0 + (z1 - z0) * 0.32
+    F.long_table(k, tx, tz, rot, length=1.5, width=0.85)
+    fa, fb = side_faces(rot)
+    for d in (-0.15, 0.15):
+        F.chair(k, *((tx + d, tz - 0.25) if rot == 0.0 else (tx - 0.25, tz + d)), fb if rot == 0.0 else fa)
+        F.chair(k, *((tx + d, tz + 0.25) if rot == 0.0 else (tx + 0.25, tz + d)), fa if rot == 0.0 else fb)
+    F.pendant(k, tx, tz, wall_h, drop=1.0, r=0.22)
+    # armchairs on a rug in the south half
+    ax, az = cx + 0.04, z0 + (z1 - z0) * 0.74
+    F.rug(k, ax - 0.33, az - 0.3, ax + 0.33, az + 0.3, mat="Rug Rust")
+    F.armchair(k, ax - 0.2, az - 0.12, E + 0.3)
+    F.armchair(k, ax + 0.2, az - 0.12, W - 0.3)
+    F.armchair(k, ax - 0.2, az + 0.18, E - 0.3)
+    F.side_table(k, ax, az + 0.02, h=0.5, r=0.18)
+    floor_lamp(k, x0 + 0.12, z1 - 0.12)
+    floor_lamp(k, x1 - 0.12, z0 + 0.12)
+    F.plant(k, x1 - 0.1, z1 - 0.1, h=1.2, seed=84)
+
+
 LAYOUT = dict(meeting=meeting, kitchen=kitchen, washroom=washroom, hall=hall, cowork=cowork, maker=maker,
-              tools=tools, member=member, private_meeting=private_meeting, booth=booth, nap=nap)
+              tools=tools, library=library, member=member, private_meeting=private_meeting, booth=booth, nap=nap)
 
 
 def build(ctx):
