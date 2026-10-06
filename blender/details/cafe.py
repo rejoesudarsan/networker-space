@@ -8,8 +8,8 @@ east corner the gulmohar light cone with one empty teak chair (pins 2, 17,
 23): the chair the site ends on.
 
 Family 1 (x -1.80..0.54, z -2.17..-0.74) is the bar: a teak-slatted lime
-counter with a brass espresso machine across the west half, open shelves
-behind it, a communal teak table for six in the east half, and the AM / PM
+counter with a brass espresso machine along the west wall (it used to stand
+across the room and hid it from the street view), open shelves behind it, a communal teak table for six in the east half, and the AM / PM
 sandstone panel (pin 12) on the east wall. Ground frame, Three.js units.
 Measured from top-down renders of the built model (5 Oct 2026)."""
 import math
@@ -49,9 +49,12 @@ def build(ctx):
     F.plant(k, 0.72, 1.45, h=0.9, pot_r=0.16, seed=4)
 
     # ---- Family 1: the coffee bar and the communal table
-    F.coffee_counter(k, -1.15, -1.72, S, length=2.2, ret=True)
-    F.back_shelf(k, -1.15, family_n + 0.055, S, length=2.4)
-    F.plant(k, -1.7, -0.86, h=1.3, seed=5)
+    # The counter runs along the west wall, customers on its east side, so
+    # it no longer stands across the room in the view (user, 6 Oct 2026).
+    family_w = -1.78                       # the room is open to the west here: no wall for a ray
+    F.back_shelf(k, family_w + 0.055, -1.45, E, length=2.4)
+    F.coffee_counter(k, family_w + 0.62, -1.45, E, length=2.2, ret=True)
+    F.plant(k, -0.35, family_n + 0.1, h=1.3, seed=5)
     F.long_table(k, 0.12, -1.33, E, length=2.1, width=0.85)
     for z in (-1.72, -1.33, -0.94):
         F.chair(k, -0.08, z, E)
@@ -61,6 +64,6 @@ def build(ctx):
     F.pendant(k, 0.12, -1.0, wall_h_m, drop=1.15, r=0.2)
 
     objs = k.done()
-    ctx["helpers"]["info"]("cafe: %d objects; walls living e %.3f w %.3f n %.3f, family n %.3f e %.3f"
-                           % (len(objs), living_e, living_w, living_n, family_n, family_e))
+    ctx["helpers"]["info"]("cafe: %d objects; walls living e %.3f w %.3f n %.3f, family n %.3f e %.3f w %.3f"
+                           % (len(objs), living_e, living_w, living_n, family_n, family_e, family_w))
     return []

@@ -1,7 +1,7 @@
 """Entourage from blender/entourage.blend (see ENTOURAGE.md): people at the
 gate, in the entrance court, in the first-floor Double HT Court and on the
-terrace; parked and passing cars, scooters, a motorbike and an auto on the
-street. Linked collection instances, nothing appended. The garage car is
+terrace; a busy street: traffic both ways, cars and two-wheelers parked on
+both verges, people on both pavements and crossing. Linked collection instances, nothing appended. The garage car is
 placed by garage_fitout. Off with `-- --no-entourage` or SPACE_ENTOURAGE=0.
 
 Positions are Three.js units in each frame (street = the ground frame at
@@ -15,6 +15,8 @@ PARK_Z = 6.92        # parked cars, on the asphalt by the near verge
 NEAR_Z = 7.65        # eastbound lane
 FAR_Z = 8.55         # westbound lane
 WALK_Z = 6.04        # pavement: outside the fence (z 5.79..5.91), inside the street trees (z 6.17..6.42)
+FAR_PARK_Z = 9.3     # the far verge, across the street
+FAR_WALK_Z = 9.45    # the far pavement
 
 STREET = [
     # name, x, z, rot
@@ -35,6 +37,36 @@ STREET = [
     ("Person.ManWalk.Kurta",        -2.72, 5.15, -90),         # in the gateway, facing the street
     ("Person.ManPhone",              2.3, WALK_Z, 0),
     ("Person.WomanWalk.Kurta",      -5.4, WALK_Z + 0.2, 0),
+    # A busy street (user request, 6 Oct 2026): traffic both ways, both verges
+    # parked up, people on both pavements and crossing.
+    ("Car.Sedan.Grey",              -4.6, NEAR_Z, 0),
+    ("Bike.Motorbike.Black.Ridden",  4.4, NEAR_Z + 0.15, 0),
+    ("Bike.Scooter.Grey.Ridden",    -9.8, NEAR_Z + 0.1, 0),
+    ("Bike.Auto.Driven",            11.5, FAR_Z, 180),
+    ("Car.Hatch.White",             -3.4, FAR_Z, 180),
+    ("Bike.Scooter.Blue.Ridden",     5.3, FAR_Z - 0.1, 180),
+    ("Car.SUV.Silver",             -11.8, FAR_Z, 180),
+    ("Car.Hatch.Silver",             7.2, PARK_Z, 0),
+    ("Car.Sedan.Grey",             -10.0, PARK_Z, 180),
+    ("Bike.Scooter.Grey",            1.45, 6.31, -100),
+    ("Bike.Motorbike.Black",         2.0, 6.30, -75),
+    ("Bike.Scooter.Blue",           -5.2, 6.30, -95),
+    ("Car.Hatch.Red",               -7.5, FAR_PARK_Z, 180),
+    ("Car.SUV.White",                2.5, FAR_PARK_Z, 180),
+    ("Bike.Scooter.White",           5.9, FAR_PARK_Z - 0.05, 110),
+    ("Bike.Vespa.Mint",             -1.0, FAR_PARK_Z - 0.05, 95),
+    ("Person.ManWalk.Shirt",        -6.2, WALK_Z, 0),
+    ("Person.WomanWalk.Green",       0.4, WALK_Z + 0.1, 180),
+    ("Person.ManIdle.Shirt",         3.3, WALK_Z, 0),                # two chatting
+    ("Person.WomanIdle.Churidar",    3.62, WALK_Z, 180),
+    ("Person.ManPhone.Blue",         8.4, WALK_Z, 180),
+    ("Person.WomanBags.Kurta",      -8.6, WALK_Z + 0.15, 0),
+    ("Person.ManWalk.Kurta",        -5.6, 8.1, -90),                 # crossing
+    ("Person.WomanWalk.Kurta",       6.0, 8.0, 90),
+    ("Person.ManWalk.Shirt",        -2.2, FAR_WALK_Z, 180),
+    ("Person.WomanWalk.Green",       3.8, FAR_WALK_Z - 0.05, 0),
+    ("Person.ManIdle.Tee",           9.2, FAR_WALK_Z, 90),
+    ("Person.WomanBags.Kurta",      -9.0, FAR_WALK_Z - 0.05, 180),
 ]
 
 FLOORS = [

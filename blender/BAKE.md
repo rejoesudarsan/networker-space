@@ -18,7 +18,7 @@ Rules:
   2. A `tools/room_shot.py` Cycles render of the floor and the baked atlas agree in brightness and colour.
   3. There are no light leaks, which show as bright seams where walls meet the slab.
   4. There are no blotches left by the denoiser.
-- Production settings are `--res 4096 --samples 256` for floors and `--res 2048 --samples 192` for roof and site. Lower them only if a bake takes more than 90 minutes, and note it.
+- Production settings are `--res 4096 --samples 256` for floors (first and second ran past 90 min at 256: use 192 for them) and `--res 2048 --samples 192` for roof and site. Lower them only if a bake takes more than 90 minutes, and note it.
 - Commit the outputs and push to `main`, so the Mac thread can pull them.
 - A part needs a re-bake whenever a fit-out module that builds on its floor changes after its atlas was baked. The **Re-bake** section lists these. Add a line there when `git log` shows such a change.
 
@@ -57,3 +57,13 @@ Every space is baked alone, cut to the same kind of box, with identical light, s
 - [ ] room-lower-day: basement_work_games changed 2026-10-05 (office -> lounge with RC football)
 - [ ] room-court-day: bake_site.py now bakes the entourage in (two people in the court) 2026-10-06
 - [ ] room-terrace-day: bake_site.py now bakes the entourage in (woman on the bench) 2026-10-06
+- [ ] room-cafe-day: short walls, buried faces dropped, coffee counter moved 2026-10-06
+- [ ] room-event-day: short walls, buried faces dropped 2026-10-06
+- [ ] basement-day: short walls, buried faces dropped 2026-10-06
+- [ ] ground-day: short walls, club_rooms, café counter 2026-10-06
+- [ ] first-day: short walls, club_rooms 2026-10-06
+- [ ] second-day: short walls, club_rooms 2026-10-06
+- [ ] roof-day: buried faces dropped 2026-10-06
+- [ ] site-day: busy street (entourage) 2026-10-06
+- [ ] basement-night: short walls, buried faces dropped 2026-10-06
+- [ ] ground-night: short walls, club_rooms, café counter 2026-10-06

@@ -113,6 +113,10 @@ room with `tools/room_shot.py` (open-topped, EEVEE, ~10 s).
   - note: in basement_work_games.py; office_den.py lost its task chair; the desk ledge is a snack ledge with two stools.
 - [x] family2-ps5: (user request, 5 Oct 2026) first-floor Family 2, empty until now, becomes the PS5 room: 65" TV over the floating shelf, PS5 and soundbar, sofa with two players, bean bags, arcade cabinet, games shelf, PLAY sign.
   - note: family2_ps5.py, after family2_sliding_teak_door in the build.
+- [x] club-rooms: (user request, 6 Oct 2026) every empty room fitted from the club plan: ground meeting room, back kitchen, two washrooms, work hall + desk room, maker space with the maker's table + tool room; first-floor private member rooms, private meeting room, phone booth; second-floor phone booth and nap room.
+  - note: club_rooms.py; rooms found by rays from a seed (rects given where they leak). The café's coffee counter now runs along Family 1's west wall.
+- [x] busy-street: (user request, 6 Oct 2026) 28 more street entourage: traffic both ways, both verges parked, people on both pavements and crossing.
+  - note: entourage.py STREET list.
 - [x] court-library: first-floor court and library: armchairs, bookshelves, reading lamps.
   - note: library = the alcove x 0.073..0.729, z -1.827..-1.30 plus the west end of Dining 2 (reading). Must run after court2_louvred_doors (raycasts its dado).
 - [x] terrace-evening: second-floor terrace: low tables, cushions and string lights, for evenings.

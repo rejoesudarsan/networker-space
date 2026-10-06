@@ -1,7 +1,7 @@
 """Bake the house's light into textures for the website, one atlas per floor.
 
   Blender -b blender/space-house.blend --python blender/tools/bake_site.py -- \
-      [--floors ground,first] [--rooms cafe,court] [--set day] [--res 2048] [--samples 128] [--exposure -0.4]
+      [--floors ground,first] [--rooms cafe,court] [--set day] [--res 2048] [--samples 128] [--exposure -0.4] [--wall-cut 1.0]
 
 --rooms bakes the homepage's room dioramas from site/src/space/rooms.json
 instead: each room alone (nothing else in the scene), cut to its rectangle
@@ -16,6 +16,9 @@ indirect + colour), which holds the materials' colour and texture times the
 light that falls on them, independent of the viewing angle. Glass and
 emissive lamps are left out of the bake and exported with flat materials.
 The linked entourage (people, the garage car) is made real and baked in.
+Walls are cut short (--wall-cut, metres, default 1.0; user request) so the
+rooms read from above, and faces buried under other surfaces are dropped
+(they bake black and flicker on the site).
 
 The bake is lit the way the site shows a floor: the floors above and the
 roof are hidden (the site sees every room open-topped), the floors below and
@@ -58,6 +61,7 @@ RES = int(opt("--res", 2048))
 SAMPLES = int(opt("--samples", 128))
 # Day saves a touch under (-0.4); night at 0, as checked against Cycles
 # shots of the café and the court (night-light-check, 6 Oct 2026).
+WALL_CUT = float(opt("--wall-cut", 1.0))   # metres; walls stop here, 0 keeps them whole
 EXPOSURE = float(opt("--exposure", -0.4 if light_set == "day" else 0.0))
 
 
@@ -227,7 +231,74 @@ def realized(pick):
     return out, empties
 
 
-def joined(objs, name):
+SHELL_PARTS = {"walls", "columns", "doorHeads", "gapHeads", "windowHeads", "windowFrames", "windowGlass",
+               "windowBoxes", "WindowBox", "sills", "sliverFill", "blockWall", "louvres", "louvreBars",
+               "louvreFrames", "blind", "blinds", "bulkhead", "coveGlow", "slidingDoor", "doorSeams",
+               "trackAndPanel", "doorFrames", "doorGlass", "wallAbove", "windowGrille", "glassBlock", "showerGlass",
+               "fan"}       # ceiling fans: with no ceiling they would float
+
+
+def is_shell(name):
+    """Walls and what is built into them (openings, frames, glass, blinds,
+    bulkheads, sliding panels), by the build's object names."""
+    parts = re.sub(r"\.\d+$", "", name).split(".")
+    return bool(SHELL_PARTS.intersection(parts[2:] if parts[0] == "tmp" else parts[1:])) or "Passage.glass" in name
+
+
+def shorten(objs, z, near=0.3):
+    """Short, indicative walls (user request, 6 Oct 2026): cut the shell at
+    world height z. Fit-out pieces that hang flat on a wall (every vertex
+    within `near` metres of it: screens, boards, sconces, letters, the TV)
+    are cut at z too, so nothing floats above the short walls; free-standing
+    furniture, people and plants stay whole."""
+    import bmesh
+    from mathutils.bvhtree import BVHTree
+    shell = [o for o in objs if is_shell(o.name)]
+    if not shell:
+        return
+    verts, polys = [], []
+    for o in shell:
+        b = len(verts)
+        verts += [v.co.copy() for v in o.data.vertices]
+        polys += [[b + i for i in p.vertices] for p in o.data.polygons]
+    bvh = BVHTree.FromPolygons(verts, polys)
+    plane = dict(plane_co=(0, 0, z), plane_no=(0, 0, 1), clear_outer=True)
+    hung = 0
+    for o in objs:
+        bm = bmesh.new()
+        bm.from_mesh(o.data)
+        if o in shell:
+            bmesh.ops.bisect_plane(bm, geom=bm.verts[:] + bm.edges[:] + bm.faces[:], **plane)
+        elif o.data.vertices and max(v.co.z for v in o.data.vertices) > z:
+            islands, seen = [], set()
+            for f in bm.faces:
+                if f in seen:
+                    continue
+                isl, stack = [], [f]
+                seen.add(f)
+                while stack:
+                    g = stack.pop()
+                    isl.append(g)
+                    for e in g.edges:
+                        for h in e.link_faces:
+                            if h not in seen:
+                                seen.add(h)
+                                stack.append(h)
+                islands.append(isl)
+            cut = []
+            for isl in islands:
+                vs = {v for g in isl for v in g.verts}
+                if max(v.co.z for v in vs) > z and all(bvh.find_nearest(v.co, near)[0] is not None for v in vs):
+                    cut.append((vs, {e for g in isl for e in g.edges}, isl))
+            for vs, es, isl in cut:
+                bmesh.ops.bisect_plane(bm, geom=list(vs) + list(es) + isl, **plane)
+            hung += len(cut)
+        bm.to_mesh(o.data)
+        bm.free()
+    log("short walls at %.2f m: %d shell objects cut, %d wall-hung pieces trimmed" % (z, len(shell), hung))
+
+
+def joined(objs, name, wall_z=None):
     """World-space copies of the evaluated meshes, joined into one object."""
     dg = bpy.context.evaluated_depsgraph_get()
     import __main__
@@ -254,6 +325,8 @@ def joined(objs, name):
         tmp.append(t)
     if not tmp:
         return None
+    if wall_z is not None:
+        shorten(tmp, wall_z)
     bpy.ops.object.select_all(action="DESELECT")
     for t in tmp:
         t.select_set(True)
@@ -557,6 +630,47 @@ def cut_to(ob, root, rect, top):
     log("cut %s to %s, top %.2f: %d faces" % (ob.name, rect, top, len(ob.data.polygons)))
 
 
+def drop_buried(ob, reach=0.015, push=0.01):
+    """Remove the faces nothing can see: a face whose front is covered within
+    `reach` (metres) by other geometry at every sample point (a slab
+    top under its floor finish, a base plane under planks) bakes black and
+    z-fights on the site, where it shows as flicker. A large face covered
+    only in part is split off and pushed `push` (metres) back, so the depth buffer
+    keeps the layers apart."""
+    import bmesh
+    from mathutils.bvhtree import BVHTree
+    me = ob.data
+    bm = bmesh.new()
+    bm.from_mesh(me)
+    bm.faces.ensure_lookup_table()
+    bvh = BVHTree.FromBMesh(bm)
+    dead, part = [], []
+    for f in bm.faces:
+        n = f.normal
+        if n.length < 0.5 or f.calc_area() < 1e-8:
+            continue
+        c = f.calc_center_median()
+        pts = [c] + [v.co.lerp(c, 0.12) for v in f.verts]
+        hits = 0
+        for pt in pts:
+            loc, _, idx, _ = bvh.ray_cast(pt + n * 1e-5, n, reach)
+            if loc is not None and idx != f.index:
+                hits += 1
+        if hits == len(pts):
+            dead.append(f)
+        elif hits and f.calc_area() > 0.02:
+            part.append(f)
+    bmesh.ops.split_edges(bm, edges=list({e for f in part for e in f.edges}))
+    for f in part:
+        for v in f.verts:
+            v.co -= f.normal * push
+    bmesh.ops.delete(bm, geom=dead, context="FACES")
+    bm.to_mesh(me)
+    bm.free()
+    me.update()
+    log("buried faces: %d removed, %d pushed back" % (len(dead), len(part)))
+
+
 def bake_part(name, root, pick, hide, cut=None):
     sc = bpy.context.scene
     t0 = time.time()
@@ -568,13 +682,17 @@ def bake_part(name, root, pick, hide, cut=None):
     srcs = [o for o in bpy.data.objects if o.type in {"MESH", "CURVE", "FONT"} and pick(o)
             and not o.hide_render and re.sub(r"\.\d+$", "", o.name).split(".")[-1] not in SKIP]
     inst, empties = realized(pick)
-    ob = joined(srcs + inst, "%s.baked" % name)
+    wall_z = None
+    if WALL_CUT > 0 and (name in FLOORS or name.startswith("room-")):
+        wall_z = (root.matrix_world @ Vector((0, 0, 0))).z + WALL_CUT
+    ob = joined(srcs + inst, "%s.baked" % name, wall_z)
     for o in inst:
         bpy.data.objects.remove(o)
     for o in srcs + empties:
         o.hide_render = True
     if cut:
         cut_to(ob, root, *cut)
+    drop_buried(ob)
     parts = split_by_kind(ob)
     lightmap_uv(ob)
     img = bpy.data.images.new("%s-%s" % (name, light_set), RES, RES, float_buffer=True)
