@@ -86,6 +86,7 @@ function fogify(material, extra = {}) {
         ${NOISE}`,
       )
       .replace('#include <map_fragment>', `#include <map_fragment>\n${extra.map || ''}`)
+      .replace('#include <clipping_planes_fragment>', extra.clip || '#include <clipping_planes_fragment>')
       .replace(
         '#include <fog_fragment>',
         `{
@@ -100,19 +101,33 @@ function fogify(material, extra = {}) {
         }`,
       )
   }
+  // Same function text for every fogged material: key the program on what
+  // it injects, or two kinds could share one.
+  const key = `fog|${extra.pars || ''}|${extra.map || ''}|${extra.clip || ''}`
+  material.customProgramCacheKey = () => key
   material.fog = true
   return material
 }
 
 // Baked surfaces: the atlas as is, back faces filled with lime plaster so a
-// clipped wall reads as a solid section, and a night grade.
+// clipped wall reads as a solid section, a cooler white balance (the
+// sunrise HDRI leaves the lime plaster pink), and a night grade.
 const bakedUniforms = { uNight: { value: 0 }, uCap: { value: srgb(LIME) } }
-function bakedMaterial(map) {
+// `lit`: how far the floor's lamps are on (the floor in view, at night).
+// Until each floor has its night bake, its rooms take a warm lamp grade
+// instead of the cold one.
+// `keep`: a world-space box (x0, z0, x1, z1) the cutaway leaves standing,
+// the basement court, so its big tree still rises through the house.
+function bakedMaterial(map, lit, keep) {
   map.colorSpace = THREE.SRGBColorSpace
   const m = new THREE.MeshBasicMaterial({ map, side: THREE.DoubleSide, toneMapped: false })
   return fogify(m, {
-    uniforms: bakedUniforms,
-    pars: 'uniform float uNight; uniform vec3 uCap;',
+    uniforms: { ...bakedUniforms, uLit: lit, uKeep: { value: keep || new THREE.Vector4() } },
+    pars: 'uniform float uNight; uniform vec3 uCap; uniform float uLit; uniform vec4 uKeep;',
+    clip: `bool kept = vWorldP.x > uKeep.x && vWorldP.x < uKeep.z && vWorldP.z > uKeep.y && vWorldP.z < uKeep.w;
+      if (!kept) {
+      #include <clipping_planes_fragment>
+      }`,
     map: `
       if (!gl_FrontFacing) diffuseColor.rgb = pow(uCap, vec3(2.2)) * 0.82;
       #if NUM_CLIPPING_PLANES > 0
@@ -122,7 +137,8 @@ function bakedMaterial(map) {
         float upness = abs(normalize(cross(dFdx(vWorldP), dFdy(vWorldP))).y);
         if (underCut < 0.14 && upness < 0.2 && dot(diffuseColor.rgb, vec3(0.333)) < 0.05) diffuseColor.rgb = pow(uCap, vec3(2.2)) * 0.82;
       #endif
-      vec3 nightCol = diffuseColor.rgb * vec3(0.16, 0.19, 0.3);
+      diffuseColor.rgb *= vec3(0.87, 1.0, 0.99);
+      vec3 nightCol = diffuseColor.rgb * mix(vec3(0.16, 0.19, 0.3), vec3(0.62, 0.47, 0.32), uLit);
       diffuseColor.rgb = mix(diffuseColor.rgb, nightCol, uNight);
     `,
   })
@@ -207,8 +223,8 @@ export async function createScene(canvas) {
   scene.add(veil)
 
   // Light for the loose props (the baked house needs none).
-  const hemi = new THREE.HemisphereLight('#fff4ea', '#6b5a4c', 0.6)
-  const key = new THREE.DirectionalLight('#ffe2c4', 2.2)
+  const hemi = new THREE.HemisphereLight('#f3f5f2', '#5f5a50', 0.6)
+  const key = new THREE.DirectionalLight('#fff0dc', 2.2)
   key.position.set(3, 6, 4)
   scene.add(hemi, key, key.target)
   try {
@@ -234,13 +250,18 @@ export async function createScene(canvas) {
   const glassNight = new THREE.Color('#ffb466')
   // One cutaway plane per floor (the walls cut down to a section).
   const cuts = Object.fromEntries([...ORDER, 'roof', 'site', 'none'].map((k) => [k, new THREE.Plane(new THREE.Vector3(0, -1, 0), 1e5)]))
+  const lit = {}
+  // The basement's Court 1 (x 0.2..2.0, z -2.08..-1.0 in its frame, a hair
+  // inside its walls), where the big tree stands (court1_big_tree.py).
+  const b = FLOORS.basement
+  const KEEP = { basement: new THREE.Vector4(b.x + 0.26, b.z - 2.02, b.x + 1.94, b.z - 1.06) }
   const load = async (name) => {
     const clip = [cuts[name] || cuts.none]
     const g = await loader.loadAsync(`/models/baked/${name}-day.gltf`).catch(() => null)
     if (!g) return null
     g.scene.traverse((o) => {
       if (!o.isMesh) return
-      o.material = bakedMaterial(o.material.map)
+      o.material = bakedMaterial(o.material.map, lit[name] || (lit[name] = { value: 0 }), KEEP[name])
       o.material.clippingPlanes = clip
     })
     const fx = await loader.loadAsync(`/models/baked/${name}-fixtures.gltf`).catch(() => null)
@@ -248,11 +269,15 @@ export async function createScene(canvas) {
       fx.scene.traverse((o) => {
         if (!o.isMesh) return
         const x = o.material.userData || {}
-        const glow = !x.glass
-        const m = glow
-          ? new THREE.MeshBasicMaterial({ color: o.material.emissive?.getHex() ? o.material.emissive : o.material.color, toneMapped: false })
-          : new THREE.MeshBasicMaterial({ color: '#cfd8d6', transparent: true, opacity: 0.22, depthWrite: false, toneMapped: false })
-        if (!glow) glassMats.push(m)
+        const glow = !!x.glow
+        // Glass, lamps, and anything untagged (the street gulmohars' leaves
+        // and blossom, in flat colour): lit, so it goes dark with the night.
+        const m = x.glass
+          ? new THREE.MeshBasicMaterial({ color: '#cfd8d6', transparent: true, opacity: 0.22, depthWrite: false, toneMapped: false })
+          : glow
+            ? new THREE.MeshBasicMaterial({ color: o.material.emissive?.getHex() ? o.material.emissive : o.material.color, toneMapped: false })
+            : new THREE.MeshLambertMaterial({ color: o.material.color, side: THREE.DoubleSide })
+        if (x.glass) glassMats.push(m)
         m.clippingPlanes = clip
         o.material = fogify(m)
         o.userData.glow = glow
@@ -479,16 +504,16 @@ export async function createScene(canvas) {
   // (src/world/world.js SHOTS): azimuth, elevation, and the distance that
   // frames the whole floor.
   const FLOOR_VIEW = {
-    basement: { az: -28, el: 42, dist: 14.5 },
-    ground: { az: 24, el: 38, dist: 17 },
-    first: { az: -34, el: 42, dist: 15.5 },
-    second: { az: -58, el: 42, dist: 16 },
+    basement: { az: -28, el: 42, dist: 17 },
+    ground: { az: 24, el: 38, dist: 20 },
+    first: { az: -34, el: 42, dist: 20.5 },
+    second: { az: -58, el: 42, dist: 19 },
   }
   // At night the open house is seen from the lit side.
   const NIGHT_VIEW = { az: 32, el: 38 }
   // The street shot through the day: [progress, azimuth, elevation, distance].
-  // Low at dawn, rising before it dives in; low again as the house closes.
-  const STREET = [[0, 30, 13, 31], [0.1, 28, 22, 32], [0.86, 34, 26, 30], [1, 44, 14, 33]]
+  // Low at dawn, rising before it dives in; lower again as the house closes.
+  const STREET = [[0, 30, 13, 34], [0.1, 28, 22, 34], [0.86, 34, 26, 32], [1, 38, 19, 31]]
   const street3 = (p) => {
     let i = 0
     while (i < STREET.length - 2 && p > STREET[i + 1][0]) i++
@@ -498,6 +523,47 @@ export async function createScene(canvas) {
     return a.map((v, j) => lerp(v, b[j], k))
   }
   const fTarget = new THREE.Vector3()
+
+  // ---------- room pins ----------
+  // The rooms the copy names, pinned on the floor in view: [name, x, z] in
+  // the floor's frame, from the fit-out modules (blender/details/*.py).
+  const PINS = {
+    basement: [['Founders’ lounge', 0.7, 0.7], ['The tree court', 1.1, -1.54], ['Work area', 0.97, -2.84]],
+    ground: [['Café', 1.5, 2.27], ['Coffee bar', -0.63, -1.45], ['Garden', 0.4, 4.1]],
+    first: [['Event room', 1.72, 2.9], ['Courtyard', 1.66, 0.94], ['PS5 room', 1.46, -2.13], ['Game room', -0.97, 3.24], ['Library', 0.2, -1.46]],
+    second: [['Quiet room', 1.1, 2.1], ['Quiet room', 0.18, -2.48], ['Terrace', -1.58, 0]],
+  }
+  const pinLayer = document.createElement('div')
+  pinLayer.className = 'pins'
+  pinLayer.setAttribute('aria-hidden', 'true')
+  document.body.appendChild(pinLayer)
+  const pins = Object.entries(PINS).flatMap(([floor, list]) => list.map(([name, x, z]) => {
+    const el = document.createElement('span')
+    el.className = 'pin'
+    el.textContent = name
+    pinLayer.appendChild(el)
+    return { floor, el, at: new THREE.Vector3(x, 0.35, z), shown: -1 }
+  }))
+  const pv = new THREE.Vector3()
+  function placePins(weights, inside, veil) {
+    const show = smooth(0.85, 1, inside) * (1 - smooth(0.1, 0.4, veil))
+    for (const p of pins) {
+      const g = floors[p.floor]
+      let o = show * smooth(0.6, 0.95, weights[p.floor] / Math.max(inside, 1e-3))
+      if (o > 0.01) {
+        pv.copy(p.at)
+        g.localToWorld(pv).project(camera)
+        if (pv.z > 1 || Math.abs(pv.x) > 0.96 || Math.abs(pv.y) > 0.92) o = 0
+        else p.el.style.transform = `translate(${((pv.x + 1) / 2) * width}px, ${((1 - pv.y) / 2) * height}px)`
+      }
+      o = Math.round(o * 50) / 50
+      if (o !== p.shown) {
+        p.shown = o
+        p.el.style.opacity = o
+        p.el.style.visibility = o ? 'visible' : 'hidden'
+      }
+    }
+  }
 
   // ---------- state ----------
   const state = {
@@ -602,8 +668,9 @@ export async function createScene(canvas) {
     street.visible = site.visible = env.visible = !below
     // Fog per scene.
     const camDist = cur.pos.distanceTo(cur.look)
-    fogUniforms.uNear.value = camDist * 0.95
-    fogUniforms.uFar.value = camDist * 2.3
+    // The house in view stays sharp; the fog takes only what lies beyond it.
+    fogUniforms.uNear.value = camDist * 1.2
+    fogUniforms.uFar.value = camDist * 2.6
     // The low fog lies on the street, or under the floor in view.
     fogUniforms.uBedY.value = lerp(0.05, Math.min(0.05, lerp(FLOORS.basement.y, 0.05, Math.min(1, state.focus)) - 0.25), smooth(0, 1, inside))
     fogUniforms.uBedDepth.value = 0.6
@@ -611,9 +678,9 @@ export async function createScene(canvas) {
     fogUniforms.uSide.value = 0
     // Night: the lit plaster (neighbours, walls, walkers) goes dark with the house.
     const dusk = state.night
-    hemi.intensity = lerp(0.6, 0.1, dusk)
-    key.intensity = lerp(2.2, 0.2, dusk)
-    scene.environmentIntensity = lerp(1, 0.15, dusk)
+    hemi.intensity = lerp(0.6, 0.05, dusk)
+    key.intensity = lerp(2.2, 0.08, dusk)
+    scene.environmentIntensity = lerp(1, 0.06, dusk)
 
     // Cloud: a low bed along the street.
     clouds.gather('street', 0, -0.2, 2.5, 9, 7, { size: 0.6, ring: 0.7, bed: 0.4 })
@@ -627,7 +694,7 @@ export async function createScene(canvas) {
     {
       // On a phone the copy takes the lower half; the house sits above it.
       const [, az, el, dist] = street3(state.p)
-      const out = phone ? [az, el + 2, dist * 1.22, 40, 0, 4.4] : [az, el, dist, 30, 2.6, 0]
+      const out = phone ? [az, el + 2, dist * 1.22, 40, 0, 4.4] : [az, el, dist, 30, 3.2, 0]
       const i0 = Math.min(3, Math.floor(state.focus))
       const i1 = Math.min(3, i0 + 1)
       const u = smooth(0, 1, state.focus - i0)
@@ -641,7 +708,7 @@ export async function createScene(canvas) {
       const fAz = lerp(lerp(va.az, vb.az, u), NIGHT_VIEW.az, night) + Math.sin(state.p * 42) * 5
       const fEl = lerp(lerp(va.el, vb.el, u), NIGHT_VIEW.el, night)
       const fDist = lerp(va.dist, vb.dist, u) * (1 - 0.04 * Math.sin(state.p * 29))
-      const into = phone ? [fAz, fEl + 8, fDist * 1.95, 36, 0, 2.9] : [fAz, fEl, fDist, 30, 2.6, 0]
+      const into = phone ? [fAz, fEl + 8, fDist * 1.95, 36, 0, 2.9] : [fAz, fEl, fDist, 30, 3.0, 0]
       const k = smooth(0, 1, inside)
       fTarget.set(lerp(a.x, b.x, u), lerp(a.y, b.y, u) + 0.15, lerp(a.z, b.z, u) + 0.3).lerpVectors(HERO, fTarget, k)
       const [oAz, oEl, oDist, oFov, oSide, oDrop] = out.map((v, j) => lerp(v, into[j], k))
@@ -664,6 +731,10 @@ export async function createScene(canvas) {
     camera.near = Math.min(1, Math.max(0.05, cur.pos.distanceTo(cur.look) * 0.04))
     camera.clearViewOffset()
     camera.updateProjectionMatrix()
+    camera.updateMatrixWorld()
+    placePins(weights, inside, state.veil)
+    // From the street at night the whole house keeps a low glow.
+    for (const id of ORDER) if (lit[id]) lit[id].value = state.night * Math.max(smooth(0.5, 1, weights[id]), 0.4 * (1 - inside))
 
     if (state.still) {
       const key = [...camera.position.toArray(), ...cur.look.toArray(), camera.fov, width, height, state.fog, state.veil, state.night, state.open, state.focus, state.glow]

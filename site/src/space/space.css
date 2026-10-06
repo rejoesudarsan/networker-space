@@ -95,7 +95,7 @@ body.night .call { color: var(--granite) }
 .story::before {
   content: ''; position: absolute; z-index: -1; left: calc(-1 * var(--left) - 10vw); bottom: calc(-1 * var(--bottom) - 6rem);
   width: min(64rem, 120vw); height: 44rem; pointer-events: none;
-  background: radial-gradient(ellipse at 22% 72%, var(--sky) 30%, color-mix(in srgb, var(--sky) 60%, transparent) 52%, transparent 74%);
+  background: radial-gradient(ellipse at 18% 74%, var(--sky) 24%, color-mix(in srgb, var(--sky) 55%, transparent) 44%, transparent 64%);
 }
 .chapter {
   position: absolute; left: 0; bottom: 0; width: 100%;
@@ -127,6 +127,8 @@ body.night .mark, body.night .clock, body.night .rail { text-shadow: 0 0 8px rgb
 /* ---------- the clock and the rail ---------- */
 .clock {
   position: fixed; right: var(--right); bottom: calc(var(--bottom) + 0.4rem); z-index: 4;
+  /* A halo in the sky's colour keeps it legible over the house. */
+  text-shadow: 0 0 10px var(--sky), 0 0 3px var(--sky);
   display: grid; justify-items: end; gap: 0.2rem; font-family: var(--mono); font-variant-numeric: tabular-nums;
 }
 .clock-time { font-size: clamp(2rem, 1.4rem + 1.8vw, 3rem); font-weight: 300; letter-spacing: -0.04em; line-height: 1 }
@@ -135,6 +137,7 @@ body.night .mark, body.night .clock, body.night .rail { text-shadow: 0 0 8px rgb
 .clock-now b { font-weight: 500; color: var(--fg) }
 .rail {
   position: fixed; right: var(--right); top: 50%; z-index: 4; transform: translateY(-50%);
+  text-shadow: 0 0 8px var(--sky), 0 0 2px var(--sky);
   display: grid; gap: 0.3rem; justify-items: end; padding-right: 0.9rem;
 }
 .rail::before { content: ''; position: absolute; right: 0; top: 0.4rem; bottom: 0.4rem; width: 1px; background: var(--line) }
@@ -247,7 +250,7 @@ body.still .reader { display: block }
 .reader .rhythm { margin-top: 10px }
 .reader-tiers { list-style: none; padding: 0; display: grid; gap: 6px; font: 400 14px/22px var(--mono) }
 .reader-tiers b { font-weight: 600; margin-right: 10px; letter-spacing: 0.08em; text-transform: uppercase }
-body.still .stage, body.still .story, body.still .loading, body.still .failure, body.still .clock, body.still .rail, body.still .grain, body.still .skip { display: none }
+body.still .stage, body.still .pins, body.still .story, body.still .loading, body.still .failure, body.still .clock, body.still .rail, body.still .grain, body.still .skip { display: none }
 .reader:focus { outline: none }
 body.still { overflow: hidden }
 
@@ -278,3 +281,18 @@ body.still { overflow: hidden }
   .chapter, .sheet-body { transition: none; animation: none; filter: none; transform: none }
   .grain, .chapter .hint::before, .loading-name { animation: none }
 }
+
+/* Room pins: the rooms the chapter names, on the floor in view. */
+.pins { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden }
+.pin {
+  position: absolute; left: 0; top: 0; visibility: hidden;
+  display: flex; align-items: center; gap: 0.4rem; margin: -0.85rem 0 0 -0.45rem;
+  padding: 0.32rem 0.6rem 0.32rem 0.45rem; border-radius: 999px;
+  background: color-mix(in srgb, var(--sky) 88%, transparent);
+  box-shadow: 0 1px 6px rgb(0 0 0 / 0.12);
+  font: 600 0.72rem/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap;
+  color: var(--fg); transition: opacity 0.4s var(--ease);
+}
+.pin::before { content: ''; width: 0.45rem; height: 0.45rem; border-radius: 50%; flex: none; background: var(--accent) }
+@media (max-width: 640px) { .pin { font-size: 0.62rem } }
+@media (prefers-reduced-motion: reduce) { .pin { transition: none } }
