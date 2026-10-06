@@ -35,7 +35,7 @@
 	],
 	"meshes":[
 		{
-			"name":"ground.baked.003",
+			"name":"ground.baked.004",
 			"primitives":[
 				{
 					"attributes":{
@@ -66,7 +66,7 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":202437,
+			"count":163213,
 			"max":[
 				3.130000352859497,
 				1.8279709815979004,
@@ -82,45 +82,45 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":202437,
+			"count":163213,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":202437,
+			"count":163213,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5125,
-			"count":280158,
+			"count":237240,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":2429244,
+			"byteLength":1958556,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":2429244,
-			"byteOffset":2429244,
+			"byteLength":1958556,
+			"byteOffset":1958556,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1619496,
-			"byteOffset":4858488,
+			"byteLength":1305704,
+			"byteOffset":3917112,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1120632,
-			"byteOffset":6477984,
+			"byteLength":948960,
+			"byteOffset":5222816,
 			"target":34963
 		}
 	],
@@ -132,7 +132,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":7598616,
+			"byteLength":6171776,
 			"uri":"ground-day.bin"
 		}
 	]
