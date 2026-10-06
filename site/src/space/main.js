@@ -364,14 +364,19 @@ function loop(now = performance.now()) {
   current = locate(p)
   const { beat, local } = current
   // A part of the house still on its way stays behind the veil.
-  const focus = keyed(FOCUS, Math.min(0.7, Math.max(0.13, p)))
+  const focus = keyed(FOCUS, Math.min(0.86, Math.max(0.13, p)))
   const waiting = beat.scene === 'floors' && focus < 0.99 && world.pending('basement')
   held = waiting ? 1 : Math.max(0, held - dt * 1.5)
-  const veil = Math.max(current.veil, held)
+  // The cloud between scenes is a pass, not a wall: the flight shows through.
+  const veil = Math.max(current.veil * 0.45, held)
   const h = keyed(HOURS, p)
   const fog = fogAt(h)
   const s = world.state
   s.scene = beat.scene
+  s.p = p
+  // Into the house as the hero ends; it stays open through the night, round
+  // to the lit event floor, and closes up for the end.
+  s.inside = smooth(0.07, 0.15, p) * (1 - smooth(0.85, 0.95, p))
   s.focus = focus
   s.local = local
   s.veil = veil
@@ -390,7 +395,7 @@ function loop(now = performance.now()) {
   $('.rail-fill').style.transform = `scaleY(${p})`
 
   // Which piece of copy is up.
-  const key = veil > 0.6 ? 'veil' : beat.id
+  const key = current.veil > 0.25 || held > 0.6 ? 'veil' : beat.id
   if (key !== shownKey) {
     shownKey = key
     // Copy not in view is out of the tab order and the reading order too.

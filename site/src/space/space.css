@@ -10,7 +10,7 @@
   --fg-soft: rgb(29 29 28 / 0.74);
   --line: rgb(29 29 28 / 0.28);
   --accent: var(--terracotta);
-  --fog: #e9c9c0;
+  --fog: #dfe3e3;
   --sky: var(--fog);
   --serif: 'Newsreader Variable', Georgia, serif;
   --sans: 'Schibsted Grotesk Variable', system-ui, sans-serif;

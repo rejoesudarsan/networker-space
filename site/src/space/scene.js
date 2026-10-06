@@ -6,6 +6,7 @@ import { Reflector } from 'three/examples/jsm/objects/Reflector.js'
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
 import { createClouds } from './clouds.js'
 import { createPeople } from './people.js'
+import { SKY } from './beats.js'
 
 // The house, baked in Blender (blender/tools/bake_site.py): each floor is one
 // unlit mesh whose atlas already holds its light, so what the site shows is
@@ -58,7 +59,7 @@ const NOISE = /* glsl */ `
 // in view, and the colour of the hour. Mixed after the colour-space
 // conversion, so the fog shows its hex exactly.
 const fogUniforms = {
-  uFog: { value: srgb('#d1bfc2') },
+  uFog: { value: srgb('#dfe3e3') },
   uNear: { value: 20 },
   uFar: { value: 60 },
   uBedY: { value: -100 },
@@ -152,7 +153,7 @@ export async function createScene(canvas) {
   renderer.toneMappingExposure = 1.0
   renderer.localClippingEnabled = true
   const scene = new THREE.Scene()
-  scene.fog = new THREE.Fog('#d1bfc2', 20, 60)   // enables the fog chunks; ours replace the maths
+  scene.fog = new THREE.Fog('#dfe3e3', 20, 60)   // enables the fog chunks; ours replace the maths
   const camera = new THREE.PerspectiveCamera(30, 1, 0.05, 400)
 
   // The sky: a full-screen gradient with slow cloud, in the fog's colour.
@@ -161,7 +162,7 @@ export async function createScene(canvas) {
     new THREE.ShaderMaterial({
       depthTest: false,
       depthWrite: false,
-      uniforms: { uFog: fogUniforms.uFog, uGlow: { value: srgb('#e8b9a8') }, uGlowK: { value: 0.5 }, uTime: fogUniforms.uTime, uAspect: { value: 1 } },
+      uniforms: { uFog: fogUniforms.uFog, uGlow: { value: srgb(SKY.glow) }, uGlowK: { value: 0.5 }, uTime: fogUniforms.uTime, uAspect: { value: 1 } },
       vertexShader: 'varying vec2 vUv; void main() { vUv = uv; gl_Position = vec4(position.xy, 0.9999, 1.0); }',
       fragmentShader: `
         varying vec2 vUv; uniform vec3 uFog, uGlow; uniform float uGlowK, uTime, uAspect;
@@ -474,13 +475,33 @@ export async function createScene(canvas) {
   // The house on its street, from above and three-quarters on, its
   // neighbours either side (the earlier "house world" view).
   const HERO = new THREE.Vector3(-0.3, 1.9, 0.9)
-  // Distance that frames each whole floor.
-  const FLOOR_DIST = { basement: 14, ground: 17.5, first: 15.5, second: 14.5 }
+  // Each floor from its own side, the earlier world's swing round the house
+  // (src/world/world.js SHOTS): azimuth, elevation, and the distance that
+  // frames the whole floor.
+  const FLOOR_VIEW = {
+    basement: { az: -28, el: 42, dist: 14.5 },
+    ground: { az: 24, el: 38, dist: 17 },
+    first: { az: -34, el: 42, dist: 15.5 },
+    second: { az: -58, el: 42, dist: 16 },
+  }
+  // At night the open house is seen from the lit side.
+  const NIGHT_VIEW = { az: 32, el: 38 }
+  // The street shot through the day: [progress, azimuth, elevation, distance].
+  // Low at dawn, rising before it dives in; low again as the house closes.
+  const STREET = [[0, 30, 13, 31], [0.1, 28, 22, 32], [0.86, 34, 26, 30], [1, 44, 14, 33]]
+  const street3 = (p) => {
+    let i = 0
+    while (i < STREET.length - 2 && p > STREET[i + 1][0]) i++
+    const a = STREET[i]
+    const b = STREET[i + 1]
+    const k = smooth(a[0], b[0], p)
+    return a.map((v, j) => lerp(v, b[j], k))
+  }
   const fTarget = new THREE.Vector3()
 
   // ---------- state ----------
   const state = {
-    scene: 'exterior', focus: 0, local: 0, open: 0, night: 0, veil: 0, fog: '#d1bfc2', glow: 0.5,
+    scene: 'exterior', p: 0, inside: 0, focus: 0, local: 0, open: 0, night: 0, veil: 0, fog: '#dfe3e3', glow: 0.5,
     mx: 0, my: 0, still: false,
   }
   let width = 1
@@ -497,9 +518,8 @@ export async function createScene(canvas) {
   addEventListener('resize', resize)
 
   const clock = new THREE.Clock()
-  orbit(shot, HERO, 34, 22, 31, 30, 2.6)
+  orbit(shot, HERO, 36, 21, 32, 30, 2.6)
   const cur = { pos: shot.pos.clone(), look: shot.look.clone(), fovY: shot.fovY }
-  let lastScene = null
 
   // Frame-rate watch: two-second windows, from three seconds after the first frame.
   const watch = { from: 0, frames: 0, slow: 0 }
@@ -552,9 +572,10 @@ export async function createScene(canvas) {
       m.opacity = lerp(0.22, 0.9, state.night)
     }
 
-    const s = state.scene
-    const changed = s !== lastScene
-    const inFloors = s === 'floors'
+    // How far into the open house: 0 on the street, 1 with a floor in view.
+    // It runs continuously, so the house opens as the camera flies in.
+    const inside = state.inside
+    const inFloors = inside > 0.5
     const phone = camera.aspect < 0.8
     winMat.emissiveIntensity = 1.4 * state.night
     lampMat.emissiveIntensity = 2.2 * state.night
@@ -565,21 +586,16 @@ export async function createScene(canvas) {
     ORDER.forEach((id, i) => {
       const g = floors[id]
       const f = FLOORS[id]
-      if (inFloors) {
-        const above = smooth(0, 1, i - state.focus)
-        const w = Math.max(0, 1 - Math.abs(i - state.focus))
-        weights[id] = w
-        g.position.y = f.y + CLEAR * above
-        g.visible = above < 0.98
-        cuts[id].set(new THREE.Vector3(0, -1, 0), g.position.y + lerp(WALL * 1.4, WALL * 0.48, smooth(0, 1, w)))
-      } else {
-        weights[id] = 0
-        g.visible = true
-        g.position.y = f.y + PART[id] * state.open
-        cuts[id].set(new THREE.Vector3(0, -1, 0), 1e5)
-      }
+      const above = smooth(0, 1, i - state.focus)
+      const w = Math.max(0, 1 - Math.abs(i - state.focus))
+      weights[id] = w * inside
+      g.position.y = f.y + lerp(PART[id] * state.open, CLEAR * above, smooth(0, 1, inside))
+      g.visible = above * inside < 0.98
+      // The walls drop to a section as the camera comes in.
+      const section = lerp(WALL * 1.4, WALL * 0.48, smooth(0, 1, w))
+      cuts[id].set(new THREE.Vector3(0, -1, 0), inside < 0.01 ? 1e5 : g.position.y + lerp(WALL * 6, section, smooth(0, 0.8, inside)))
     })
-    if (roof) roof.visible = !inFloors
+    if (roof) roof.visible = inside < 0.25
     // The lower level sits below the street: while it is in view the street,
     // the compound wall and the trees step aside so it can be seen.
     const below = inFloors && state.focus < 0.6
@@ -589,7 +605,7 @@ export async function createScene(canvas) {
     fogUniforms.uNear.value = camDist * 0.95
     fogUniforms.uFar.value = camDist * 2.3
     // The low fog lies on the street, or under the floor in view.
-    fogUniforms.uBedY.value = inFloors ? Math.min(0.05, lerp(FLOORS.basement.y, 0.05, Math.min(1, state.focus)) - 0.25) : 0.05
+    fogUniforms.uBedY.value = lerp(0.05, Math.min(0.05, lerp(FLOORS.basement.y, 0.05, Math.min(1, state.focus)) - 0.25), smooth(0, 1, inside))
     fogUniforms.uBedDepth.value = 0.6
     // No margin fog: the street and its neighbours stay in view.
     fogUniforms.uSide.value = 0
@@ -604,36 +620,43 @@ export async function createScene(canvas) {
     clouds.update(t, 0.35 * (1 - state.veil * 0.5), 1 - state.night * 0.7)
     people.update(dt, t, weights, !below, state.still)
 
-    // Camera target for the scene.
-    if (s === 'exterior') {
+    // Camera: the street shot and the floor shot, blended by how far in we
+    // are, so the move from one to the other is a flight, not a cut. The
+    // orbit is what blends (angle, height, distance), so the camera arcs
+    // round the house instead of passing through it.
+    {
       // On a phone the copy takes the lower half; the house sits above it.
-      if (phone) orbit(shot, HERO, 34, 24, 38, 40, 0, 4.4)
-      else orbit(shot, HERO, 34, 22, 31, 30, 2.6)
-    } else if (inFloors) {
+      const [, az, el, dist] = street3(state.p)
+      const out = phone ? [az, el + 2, dist * 1.22, 40, 0, 4.4] : [az, el, dist, 30, 2.6, 0]
       const i0 = Math.min(3, Math.floor(state.focus))
       const i1 = Math.min(3, i0 + 1)
-      const u = state.focus - i0
+      const u = smooth(0, 1, state.focus - i0)
       const a = FLOORS[ORDER[i0]]
       const b = FLOORS[ORDER[i1]]
-      fTarget.set(lerp(a.x, b.x, u), lerp(a.y, b.y, u) + 0.15, lerp(a.z, b.z, u) + 0.3)
-      const dist = lerp(FLOOR_DIST[ORDER[i0]], FLOOR_DIST[ORDER[i1]], u)
-      // One angle for every floor: the camera only rises with the floor.
-      if (phone) orbit(shot, fTarget, 28, 52, dist * 1.95, 36, 0, 2.9)
-      else orbit(shot, fTarget, 30, 44, dist, 30, 2.6)
+      const va = FLOOR_VIEW[ORDER[i0]]
+      const vb = FLOOR_VIEW[ORDER[i1]]
+      // Never parked: the camera drifts round and in through each chapter.
+      const night = smooth(0.72, 0.78, state.p)
+      // (A slow wave on the whole scroll, so it never jumps at a chapter's edge.)
+      const fAz = lerp(lerp(va.az, vb.az, u), NIGHT_VIEW.az, night) + Math.sin(state.p * 42) * 5
+      const fEl = lerp(lerp(va.el, vb.el, u), NIGHT_VIEW.el, night)
+      const fDist = lerp(va.dist, vb.dist, u) * (1 - 0.04 * Math.sin(state.p * 29))
+      const into = phone ? [fAz, fEl + 8, fDist * 1.95, 36, 0, 2.9] : [fAz, fEl, fDist, 30, 2.6, 0]
+      const k = smooth(0, 1, inside)
+      fTarget.set(lerp(a.x, b.x, u), lerp(a.y, b.y, u) + 0.15, lerp(a.z, b.z, u) + 0.3).lerpVectors(HERO, fTarget, k)
+      const [oAz, oEl, oDist, oFov, oSide, oDrop] = out.map((v, j) => lerp(v, into[j], k))
+      // The pointer turns the view round the house a little.
+      const look = state.still ? 0 : 1
+      orbit(shot, fTarget, oAz + state.mx * 5 * look, oEl - state.my * 3 * look, oDist, oFov, oSide, oDrop)
     }
-    // Inside a full veil the camera jumps; otherwise it eases.
-    const k = state.veil > 0.97 || (changed && state.veil > 0.5) || state.still ? 1 : 1 - Math.pow(0.004, dt)
+    // The camera eases after the shot; only a full veil (a floor still
+    // loading) lets it jump.
+    const k = state.veil > 0.97 || state.still ? 1 : 1 - Math.pow(0.0015, dt)
     cur.pos.lerp(shot.pos, k)
     cur.look.lerp(shot.look, k)
     cur.fovY = lerp(cur.fovY, shot.fovY, k)
-    lastScene = s
 
     camera.position.copy(cur.pos)
-    // A breath of parallax from the pointer.
-    if (!state.still) {
-      camera.position.x += state.mx * 0.12
-      camera.position.y -= state.my * 0.08
-    }
     camera.lookAt(cur.look)
     camera.fov = cur.fovY
     // Near plane with the distance: depth precision for the street's thin
