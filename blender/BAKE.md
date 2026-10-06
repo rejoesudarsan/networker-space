@@ -58,7 +58,7 @@ Every space is baked alone, cut to the same kind of box, with identical light, s
 - [x] room-court-day: bake_site.py now bakes the entourage in (two people in the court) 2026-10-06
 - [x] room-terrace-day: bake_site.py now bakes the entourage in (woman on the bench) 2026-10-06
 - [x] room-cafe-day: short walls, buried faces dropped, coffee counter moved 2026-10-06
-- [ ] room-event-day: short walls, buried faces dropped 2026-10-06
+- [x] room-event-day: short walls, buried faces dropped 2026-10-06
 - [ ] basement-day: short walls, buried faces dropped 2026-10-06
 - [ ] ground-day: short walls, club_rooms, café counter 2026-10-06
 - [ ] first-day: short walls, club_rooms 2026-10-06

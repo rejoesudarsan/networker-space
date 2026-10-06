@@ -66,7 +66,7 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":4171,
+			"count":3624,
 			"max":[
 				2.700000047683716,
 				1.0999999046325684,
@@ -82,45 +82,45 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":4171,
+			"count":3624,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":4171,
+			"count":3624,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5123,
-			"count":6705,
+			"count":5874,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":50052,
+			"byteLength":43488,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":50052,
-			"byteOffset":50052,
+			"byteLength":43488,
+			"byteOffset":43488,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":33368,
-			"byteOffset":100104,
+			"byteLength":28992,
+			"byteOffset":86976,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":13410,
-			"byteOffset":133472,
+			"byteLength":11748,
+			"byteOffset":115968,
 			"target":34963
 		}
 	],
@@ -132,7 +132,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":146884,
+			"byteLength":127716,
 			"uri":"room-event-day.bin"
 		}
 	]

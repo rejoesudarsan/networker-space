@@ -52,3 +52,4 @@
 - 2026-10-06 11:12 bake_site.py: people go to the fixtures in flat colour (mottled in the atlas); push-back only for mostly covered faces and never past what lies behind (a flagstone sank under a black base layer); a bake with no fixtures removes the stale file (old floating lamp glows).
 - 2026-10-06 11:43 re-bake room-terrace-day: 1081 s; short walls, person in flat colour, study reads.
 - 2026-10-06 12:01 re-bake room-court-day: 1031 s; short walls, flat-colour people, no black floor patch, no stale glows.
+- 2026-10-06 12:20 re-bake room-event-day: 1112 s; short walls (the wall-hung screen goes with them).
