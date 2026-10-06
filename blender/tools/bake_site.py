@@ -96,16 +96,19 @@ def bsdf_of(m):
 
 
 def kind_of(m):
-    """'glass', 'glow', 'foliage' or 'bake'. Foliage (the street gulmohars'
-    leaves and blossom: ~100k faces in thousands of tiny islands, which
-    shrink the whole atlas to nothing) goes to the fixtures file in flat
-    colour instead."""
+    """'glass', 'glow', 'flat' or 'bake'. Flat goes to the fixtures file in
+    plain colour instead of the atlas: the street gulmohars' foliage (~100k
+    faces in thousands of tiny islands, which shrink the whole atlas to
+    nothing) and the people (too small in the atlas: the denoiser mottles
+    their clothes)."""
     if m is None:
         return "bake"
     b = bsdf_of(m)
     name = m.name.lower()
     if name.startswith("gulmohar") and ("leaf" in name or "blossom" in name):
-        return "foliage"
+        return "flat"
+    if name.startswith("person "):
+        return "flat"
     if "glass" in name and "block" not in name:
         return "glass"
     if b is not None:
@@ -191,6 +194,16 @@ def set_cycles():
 
 # ---------------------------------------------------------------- joining
 
+def person_mat(m):
+    if m is None:
+        return None
+    c = bpy.data.materials.get("Person " + m.name)
+    if c is None:
+        c = m.copy()
+        c.name = "Person " + m.name
+    return c
+
+
 def realized(pick):
     """World-space mesh copies of the linked entourage (people, cars:
     collection-instance empties) that `pick` keeps, so they are baked into
@@ -210,8 +223,11 @@ def realized(pick):
             bpy.data.meshes.remove(me)
             continue
         me.transform(inst.matrix_world)
-        # The assets keep their materials on object slots: carry them over.
+        # The assets keep their materials on object slots: carry them over
+        # (people's as "Person ..." copies, which go out in flat colour).
         slots = [sl.material for sl in inst.object.material_slots]
+        if par.instance_collection.name.startswith("Person"):
+            slots = [person_mat(m) for m in slots]
         for i, m in enumerate(slots):           # assign in place: clear() would reset the face indices
             if i < len(me.materials):
                 me.materials[i] = m
@@ -341,11 +357,11 @@ def joined(objs, name, wall_z=None):
 
 
 def split_by_kind(ob):
-    """Separate glass, glow and foliage faces off into their own objects."""
+    """Separate glass, glow and flat faces off into their own objects."""
     me = ob.data
     kinds = [kind_of(m) for m in me.materials]
     out = {}
-    for k in ("glass", "glow", "foliage"):
+    for k in ("glass", "glow", "flat"):
         idx = {i for i, kk in enumerate(kinds) if kk == k}
         if not idx:
             continue
@@ -515,7 +531,7 @@ def baked_material(name, img_path):
 
 
 def flat_copy(m, kind):
-    """Plain glTF material for glass, lamps and foliage: colour, alpha, emission."""
+    """Plain glTF material for glass, lamps and flat parts: colour, alpha, emission."""
     b = bsdf_of(m)
     c = bpy.data.materials.new("fix.%s" % m.name)
     c.use_nodes = True
@@ -523,9 +539,9 @@ def flat_copy(m, kind):
     col = b.inputs["Base Color"].default_value if b is not None and not b.inputs["Base Color"].is_linked else m.diffuse_color
     cb.inputs["Base Color"].default_value = col
     cb.inputs["Roughness"].default_value = 0.1 if kind == "glass" else 0.5
-    if kind == "foliage":
+    if kind == "flat":
         # Shown unlit by the site: a little darker than the paint, as if in light shade.
-        cb.inputs["Base Color"].default_value = [v * 0.75 for v in col[:3]] + [1.0]
+        cb.inputs["Base Color"].default_value = [v * 0.8 for v in col[:3]] + [1.0]
         cb.inputs["Roughness"].default_value = 0.8
     elif kind == "glass":
         cb.inputs["Alpha"].default_value = 0.3
@@ -634,9 +650,10 @@ def drop_buried(ob, reach=0.015, push=0.01):
     """Remove the faces nothing can see: a face whose front is covered within
     `reach` (metres) by other geometry at every sample point (a slab
     top under its floor finish, a base plane under planks) bakes black and
-    z-fights on the site, where it shows as flicker. A large face covered
-    only in part is split off and pushed `push` (metres) back, so the depth buffer
-    keeps the layers apart."""
+    z-fights on the site, where it shows as flicker. A large face that is
+    mostly covered (60% of its samples: a layer under another) is split off
+    and pushed back up to `push` metres, never past what lies behind it, so
+    the depth buffer keeps the layers apart."""
     import bmesh
     from mathutils.bvhtree import BVHTree
     me = ob.data
@@ -650,7 +667,8 @@ def drop_buried(ob, reach=0.015, push=0.01):
         if n.length < 0.5 or f.calc_area() < 1e-8:
             continue
         c = f.calc_center_median()
-        pts = [c] + [v.co.lerp(c, 0.12) for v in f.verts]
+        vs = [v.co for v in f.verts]
+        pts = [c] + [v.lerp(c, 0.12) for v in vs] + [((a + b) / 2).lerp(c, 0.12) for a, b in zip(vs, vs[1:] + vs[:1])]
         hits = 0
         for pt in pts:
             loc, _, idx, _ = bvh.ray_cast(pt + n * 1e-5, n, reach)
@@ -658,12 +676,14 @@ def drop_buried(ob, reach=0.015, push=0.01):
                 hits += 1
         if hits == len(pts):
             dead.append(f)
-        elif hits and f.calc_area() > 0.02:
-            part.append(f)
-    bmesh.ops.split_edges(bm, edges=list({e for f in part for e in f.edges}))
-    for f in part:
+        elif hits >= 0.6 * len(pts) and f.calc_area() > 0.02:
+            # Mostly covered: a layer under another. Never push it past what lies behind it.
+            loc, _, idx, dist = bvh.ray_cast(c - n * 1e-5, -n, 0.1)
+            part.append((f, push if loc is None else min(push, 0.45 * dist)))
+    bmesh.ops.split_edges(bm, edges=list({e for f, _ in part for e in f.edges}))
+    for f, d in part:
         for v in f.verts:
-            v.co -= f.normal * push
+            v.co -= f.normal * d
     bmesh.ops.delete(bm, geom=dead, context="FACES")
     bm.to_mesh(me)
     bm.free()
@@ -727,8 +747,14 @@ def bake_part(name, root, pick, hide, cut=None):
         for uv in list(pm.uv_layers):
             pm.uv_layers.remove(uv)
         fixtures.append(part)
-    if fixtures and light_set == "day":
-        export(fixtures, os.path.join(OUT, "%s-fixtures.gltf" % name), root)
+    if light_set == "day":
+        fx = os.path.join(OUT, "%s-fixtures.gltf" % name)
+        if fixtures:
+            export(fixtures, fx, root)
+        else:                       # nothing left (short walls took the lamps): drop the old file
+            for f in (fx, fx[:-5] + ".bin"):
+                if os.path.exists(f):
+                    os.remove(f)
     # Put the scene back for the next part.
     for o in srcs + empties + hidden:
         o.hide_render = False
