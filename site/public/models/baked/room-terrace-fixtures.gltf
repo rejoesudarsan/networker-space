@@ -9,21 +9,96 @@
 			"name":"export.001",
 			"nodes":[
 				0,
-				1
+				1,
+				2
 			]
 		}
 	],
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"room-terrace.baked.glass.001"
+			"name":"room-terrace.baked.flat.001"
 		},
 		{
 			"mesh":1,
+			"name":"room-terrace.baked.glass.001"
+		},
+		{
+			"mesh":2,
 			"name":"room-terrace.baked.glow.001"
 		}
 	],
 	"materials":[
+		{
+			"doubleSided":true,
+			"name":"fix.Person Ent #8D5A3B.002",
+			"pbrMetallicRoughness":{
+				"baseColorFactor":[
+					0.21308448910713196,
+					0.08179338276386261,
+					0.03498802334070206,
+					1
+				],
+				"metallicFactor":0,
+				"roughnessFactor":0.800000011920929
+			}
+		},
+		{
+			"doubleSided":true,
+			"name":"fix.Person Ent #D8CFBD.002",
+			"pbrMetallicRoughness":{
+				"baseColorFactor":[
+					0.5493482351303101,
+					0.4991683065891266,
+					0.40710505843162537,
+					1
+				],
+				"metallicFactor":0,
+				"roughnessFactor":0.800000011920929
+			}
+		},
+		{
+			"doubleSided":true,
+			"name":"fix.Person Ent #16120F.002",
+			"pbrMetallicRoughness":{
+				"baseColorFactor":[
+					0.006418554577976465,
+					0.004839066416025162,
+					0.003821562509983778,
+					1
+				],
+				"metallicFactor":0,
+				"roughnessFactor":0.800000011920929
+			}
+		},
+		{
+			"doubleSided":true,
+			"name":"fix.Person Ent #3A2E26.002",
+			"pbrMetallicRoughness":{
+				"baseColorFactor":[
+					0.03384912759065628,
+					0.02185671404004097,
+					0.015505889430642128,
+					1
+				],
+				"metallicFactor":0,
+				"roughnessFactor":0.800000011920929
+			}
+		},
+		{
+			"doubleSided":true,
+			"name":"fix.Person Ent #3D4F6B.002",
+			"pbrMetallicRoughness":{
+				"baseColorFactor":[
+					0.037332069128751755,
+					0.06254993379116058,
+					0.11762181669473648,
+					1
+				],
+				"metallicFactor":0,
+				"roughnessFactor":0.800000011920929
+			}
+		},
 		{
 			"alphaMode":"BLEND",
 			"doubleSided":true,
@@ -67,7 +142,7 @@
 	],
 	"meshes":[
 		{
-			"name":"room-terrace.baked.004",
+			"name":"room-terrace.baked.007",
 			"primitives":[
 				{
 					"attributes":{
@@ -76,6 +151,38 @@
 					},
 					"indices":2,
 					"material":0
+				},
+				{
+					"attributes":{
+						"POSITION":3,
+						"NORMAL":4
+					},
+					"indices":5,
+					"material":1
+				},
+				{
+					"attributes":{
+						"POSITION":6,
+						"NORMAL":7
+					},
+					"indices":8,
+					"material":2
+				},
+				{
+					"attributes":{
+						"POSITION":9,
+						"NORMAL":10
+					},
+					"indices":11,
+					"material":3
+				},
+				{
+					"attributes":{
+						"POSITION":12,
+						"NORMAL":13
+					},
+					"indices":14,
+					"material":4
 				}
 			]
 		},
@@ -84,11 +191,24 @@
 			"primitives":[
 				{
 					"attributes":{
-						"POSITION":3,
-						"NORMAL":4
+						"POSITION":15,
+						"NORMAL":16
 					},
-					"indices":5,
-					"material":1
+					"indices":17,
+					"material":5
+				}
+			]
+		},
+		{
+			"name":"room-terrace.baked.006",
+			"primitives":[
+				{
+					"attributes":{
+						"POSITION":18,
+						"NORMAL":19
+					},
+					"indices":20,
+					"material":6
 				}
 			]
 		}
@@ -97,10 +217,150 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":48,
+			"count":1886,
+			"max":[
+				-1.007088303565979,
+				0.45587873458862305,
+				-2.333418369293213
+			],
+			"min":[
+				-1.136117935180664,
+				0.23294830322265625,
+				-2.4665820598602295
+			],
+			"type":"VEC3"
+		},
+		{
+			"bufferView":1,
+			"componentType":5126,
+			"count":1886,
+			"type":"VEC3"
+		},
+		{
+			"bufferView":2,
+			"componentType":5123,
+			"count":1896,
+			"type":"SCALAR"
+		},
+		{
+			"bufferView":3,
+			"componentType":5126,
+			"count":714,
+			"max":[
+				-1.1414830684661865,
+				0.20722150802612305,
+				-2.3566761016845703
+			],
+			"min":[
+				-1.2082310914993286,
+				0.032413482666015625,
+				-2.443324565887451
+			],
+			"type":"VEC3"
+		},
+		{
+			"bufferView":4,
+			"componentType":5126,
+			"count":714,
+			"type":"VEC3"
+		},
+		{
+			"bufferView":5,
+			"componentType":5123,
+			"count":714,
+			"type":"SCALAR"
+		},
+		{
+			"bufferView":6,
+			"componentType":5126,
+			"count":1326,
+			"max":[
+				-0.9953608512878418,
+				0.49819326400756836,
+				-2.3695268630981445
+			],
+			"min":[
+				-1.0661758184432983,
+				0.38027143478393555,
+				-2.4335029125213623
+			],
+			"type":"VEC3"
+		},
+		{
+			"bufferView":7,
+			"componentType":5126,
+			"count":1326,
+			"type":"VEC3"
+		},
+		{
+			"bufferView":8,
+			"componentType":5123,
+			"count":1329,
+			"type":"SCALAR"
+		},
+		{
+			"bufferView":9,
+			"componentType":5126,
+			"count":616,
+			"max":[
+				-1.1741938591003418,
+				0.03601264953613281,
+				-2.371858835220337
+			],
+			"min":[
+				-1.2246392965316772,
+				0.011999845504760742,
+				-2.4281415939331055
+			],
+			"type":"VEC3"
+		},
+		{
+			"bufferView":10,
+			"componentType":5126,
+			"count":616,
+			"type":"VEC3"
+		},
+		{
+			"bufferView":11,
+			"componentType":5123,
+			"count":618,
+			"type":"SCALAR"
+		},
+		{
+			"bufferView":12,
+			"componentType":5126,
+			"count":2579,
+			"max":[
+				-1.0041263103485107,
+				0.39548635482788086,
+				-2.332501173019409
+			],
+			"min":[
+				-1.1852667331695557,
+				0.16948509216308594,
+				-2.467499256134033
+			],
+			"type":"VEC3"
+		},
+		{
+			"bufferView":13,
+			"componentType":5126,
+			"count":2579,
+			"type":"VEC3"
+		},
+		{
+			"bufferView":14,
+			"componentType":5123,
+			"count":2580,
+			"type":"SCALAR"
+		},
+		{
+			"bufferView":15,
+			"componentType":5126,
+			"count":40,
 			"max":[
 				0.9165998697280884,
-				1.06416654586792,
+				0.41010475158691406,
 				-2.0260000228881836
 			],
 			"min":[
@@ -111,21 +371,21 @@
 			"type":"VEC3"
 		},
 		{
-			"bufferView":1,
+			"bufferView":16,
 			"componentType":5126,
-			"count":48,
+			"count":40,
 			"type":"VEC3"
 		},
 		{
-			"bufferView":2,
+			"bufferView":17,
 			"componentType":5123,
-			"count":72,
+			"count":60,
 			"type":"SCALAR"
 		},
 		{
-			"bufferView":3,
+			"bufferView":18,
 			"componentType":5126,
-			"count":540,
+			"count":530,
 			"max":[
 				0.810950517654419,
 				0.9763836860656738,
@@ -139,59 +399,149 @@
 			"type":"VEC3"
 		},
 		{
-			"bufferView":4,
+			"bufferView":19,
 			"componentType":5126,
-			"count":540,
+			"count":530,
 			"type":"VEC3"
 		},
 		{
-			"bufferView":5,
+			"bufferView":20,
 			"componentType":5123,
-			"count":636,
+			"count":612,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":576,
+			"byteLength":22632,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":576,
-			"byteOffset":576,
+			"byteLength":22632,
+			"byteOffset":22632,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":144,
-			"byteOffset":1152,
+			"byteLength":3792,
+			"byteOffset":45264,
 			"target":34963
 		},
 		{
 			"buffer":0,
-			"byteLength":6480,
-			"byteOffset":1296,
+			"byteLength":8568,
+			"byteOffset":49056,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":6480,
-			"byteOffset":7776,
+			"byteLength":8568,
+			"byteOffset":57624,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":1272,
-			"byteOffset":14256,
+			"byteLength":1428,
+			"byteOffset":66192,
+			"target":34963
+		},
+		{
+			"buffer":0,
+			"byteLength":15912,
+			"byteOffset":67620,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":15912,
+			"byteOffset":83532,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":2658,
+			"byteOffset":99444,
+			"target":34963
+		},
+		{
+			"buffer":0,
+			"byteLength":7392,
+			"byteOffset":102104,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":7392,
+			"byteOffset":109496,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":1236,
+			"byteOffset":116888,
+			"target":34963
+		},
+		{
+			"buffer":0,
+			"byteLength":30948,
+			"byteOffset":118124,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":30948,
+			"byteOffset":149072,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":5160,
+			"byteOffset":180020,
+			"target":34963
+		},
+		{
+			"buffer":0,
+			"byteLength":480,
+			"byteOffset":185180,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":480,
+			"byteOffset":185660,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":120,
+			"byteOffset":186140,
+			"target":34963
+		},
+		{
+			"buffer":0,
+			"byteLength":6360,
+			"byteOffset":186260,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":6360,
+			"byteOffset":192620,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":1224,
+			"byteOffset":198980,
 			"target":34963
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":15528,
+			"byteLength":200204,
 			"uri":"room-terrace-fixtures.bin"
 		}
 	]
