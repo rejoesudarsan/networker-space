@@ -41,3 +41,4 @@
 - 2026-10-06 01:49 basement-day: bake 3832 s (4096, 256 spp, CPU). First bake showed the garage car's shadow without the car: bake_site.py now realizes the linked entourage (slot materials kept, UVs scaled 3x for texels) and bakes it in; re-baked, matches the reference. room-court/terrace queued for re-bake.
 - 2026-10-06 03:00 ground-day: bake 4148 s (4096, 256 spp, CPU). Unlit glTF matches the café reference; jpg 2.6 MB, bin 7.6 MB.
 - 2026-10-06 04:42 first-day: bake 6015 s (4096, 256 spp, CPU), over 90 min; kept rather than re-bake lower. Includes the new PS5 room; court people baked in. jpg 2.6 MB, bin 4.4 MB.
+- 2026-10-06 06:26 second-day: bake 6175 s (4096, 256 spp, CPU), over 90 min; kept. Matches the terrace reference. jpg 2.2 MB, bin 2.6 MB.

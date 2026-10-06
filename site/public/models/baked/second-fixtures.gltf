@@ -6,7 +6,7 @@
 	"scene":0,
 	"scenes":[
 		{
-			"name":"export.005",
+			"name":"export.001",
 			"nodes":[
 				0,
 				1
@@ -30,7 +30,7 @@
 			"extras":{
 				"glass":1
 			},
-			"name":"fix.Glass.004",
+			"name":"fix.Glass",
 			"pbrMetallicRoughness":{
 				"baseColorFactor":[
 					0.8879231214523315,
@@ -52,7 +52,7 @@
 			"extras":{
 				"glow":1
 			},
-			"name":"fix.Lamp Glow.005",
+			"name":"fix.Lamp Glow.001",
 			"pbrMetallicRoughness":{
 				"baseColorFactor":[
 					1,
@@ -125,7 +125,7 @@
 		{
 			"bufferView":3,
 			"componentType":5126,
-			"count":1680,
+			"count":1752,
 			"max":[
 				1.8942837715148926,
 				0.9763836860656738,
@@ -141,13 +141,13 @@
 		{
 			"bufferView":4,
 			"componentType":5126,
-			"count":1680,
+			"count":1752,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":5,
 			"componentType":5123,
-			"count":1872,
+			"count":2004,
 			"type":"SCALAR"
 		}
 	],
@@ -172,26 +172,26 @@
 		},
 		{
 			"buffer":0,
-			"byteLength":20160,
+			"byteLength":21024,
 			"byteOffset":11664,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":20160,
-			"byteOffset":31824,
+			"byteLength":21024,
+			"byteOffset":32688,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":3744,
-			"byteOffset":51984,
+			"byteLength":4008,
+			"byteOffset":53712,
 			"target":34963
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":55728,
+			"byteLength":57720,
 			"uri":"second-fixtures.bin"
 		}
 	]
