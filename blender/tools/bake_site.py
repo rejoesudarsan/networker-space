@@ -56,7 +56,9 @@ floors = opt("--floors", "" if "--rooms" in args else ",".join(FLOORS + EXTRA)).
 light_set = opt("--set", "day")
 RES = int(opt("--res", 2048))
 SAMPLES = int(opt("--samples", 128))
-EXPOSURE = float(opt("--exposure", -0.4))
+# Day saves a touch under (-0.4); night at 0, as checked against Cycles
+# shots of the café and the court (night-light-check, 6 Oct 2026).
+EXPOSURE = float(opt("--exposure", -0.4 if light_set == "day" else 0.0))
 
 
 def log(msg):
@@ -135,6 +137,10 @@ def set_light(kind):
             if o.type == "LIGHT" and o.get("club_lamp"):
                 o.data.energy *= 0.25
     else:
+        # Night (night-light-check, 6 Oct 2026, against Cycles shots of the
+        # café and the court): sun off, sky at 4% (a blue night, the wall
+        # tops still read), glow materials at 6x, the club lamps at full
+        # power for warm pools, saved at exposure 0 (EXPOSURE above).
         if sun:
             sun.hide_render = True
         for n in bgs:
