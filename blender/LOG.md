@@ -54,3 +54,4 @@
 - 2026-10-06 12:01 re-bake room-court-day: 1031 s; short walls, flat-colour people, no black floor patch, no stale glows.
 - 2026-10-06 12:20 re-bake room-event-day: 1112 s; short walls (the wall-hung screen goes with them).
 - 2026-10-06 12:41 re-bake room-lower-day: 1208 s; the lounge with RC football, players in flat colour, short walls.
+- 2026-10-06 14:05 basement-day and ground-day re-bakes were killed (out of memory: comparison renders ran beside them on this 7 GB host). Re-queued after first/second/roof/site. Rule: no other Blender while a floor bakes.

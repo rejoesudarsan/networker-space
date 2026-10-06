@@ -251,6 +251,7 @@ SHELL_PARTS = {"walls", "columns", "doorHeads", "gapHeads", "windowHeads", "wind
                "windowBoxes", "WindowBox", "sills", "sliverFill", "blockWall", "louvres", "louvreBars",
                "louvreFrames", "blind", "blinds", "bulkhead", "coveGlow", "slidingDoor", "doorSeams",
                "trackAndPanel", "doorFrames", "doorGlass", "wallAbove", "windowGrille", "glassBlock", "showerGlass",
+               "claddingStrip", "claddingBox",
                "fan"}       # ceiling fans: with no ceiling they would float
 
 
