@@ -6,7 +6,7 @@
 	"scene":0,
 	"scenes":[
 		{
-			"name":"export.002",
+			"name":"export",
 			"nodes":[
 				0
 			]
@@ -35,7 +35,7 @@
 	],
 	"meshes":[
 		{
-			"name":"site.baked.001",
+			"name":"site.baked.003",
 			"primitives":[
 				{
 					"attributes":{
@@ -66,61 +66,61 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":40200,
+			"count":247010,
 			"max":[
-				11.400242805480957,
-				3.187901258468628,
-				11.406553268432617
+				11.220295906066895,
+				3.698270797729492,
+				10.968640327453613
 			],
 			"min":[
-				-11.623379707336426,
-				0,
-				4.229057312011719
+				-11.0969820022583,
+				-0.05419296398758888,
+				4.566067218780518
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":40200,
+			"count":247010,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":40200,
+			"count":247010,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
-			"componentType":5123,
-			"count":43944,
+			"componentType":5125,
+			"count":293034,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":482400,
+			"byteLength":2964120,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":482400,
-			"byteOffset":482400,
+			"byteLength":2964120,
+			"byteOffset":2964120,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":321600,
-			"byteOffset":964800,
+			"byteLength":1976080,
+			"byteOffset":5928240,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":87888,
-			"byteOffset":1286400,
+			"byteLength":1172136,
+			"byteOffset":7904320,
 			"target":34963
 		}
 	],
@@ -132,7 +132,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":1374288,
+			"byteLength":9076456,
 			"uri":"site-day.bin"
 		}
 	]

@@ -90,11 +90,16 @@ def bsdf_of(m):
 
 
 def kind_of(m):
-    """'glass', 'glow' or 'bake'."""
+    """'glass', 'glow', 'foliage' or 'bake'. Foliage (the street gulmohars'
+    leaves and blossom: ~100k faces in thousands of tiny islands, which
+    shrink the whole atlas to nothing) goes to the fixtures file in flat
+    colour instead."""
     if m is None:
         return "bake"
     b = bsdf_of(m)
     name = m.name.lower()
+    if name.startswith("gulmohar") and ("leaf" in name or "blossom" in name):
+        return "foliage"
     if "glass" in name and "block" not in name:
         return "glass"
     if b is not None:
@@ -257,11 +262,11 @@ def joined(objs, name):
 
 
 def split_by_kind(ob):
-    """Separate glass and glow faces off into their own objects."""
+    """Separate glass, glow and foliage faces off into their own objects."""
     me = ob.data
     kinds = [kind_of(m) for m in me.materials]
     out = {}
-    for k in ("glass", "glow"):
+    for k in ("glass", "glow", "foliage"):
         idx = {i for i, kk in enumerate(kinds) if kk == k}
         if not idx:
             continue
@@ -431,7 +436,7 @@ def baked_material(name, img_path):
 
 
 def flat_copy(m, kind):
-    """Plain glTF material for glass and lamps: colour, alpha, emission."""
+    """Plain glTF material for glass, lamps and foliage: colour, alpha, emission."""
     b = bsdf_of(m)
     c = bpy.data.materials.new("fix.%s" % m.name)
     c.use_nodes = True
@@ -439,7 +444,11 @@ def flat_copy(m, kind):
     col = b.inputs["Base Color"].default_value if b is not None and not b.inputs["Base Color"].is_linked else m.diffuse_color
     cb.inputs["Base Color"].default_value = col
     cb.inputs["Roughness"].default_value = 0.1 if kind == "glass" else 0.5
-    if kind == "glass":
+    if kind == "foliage":
+        # Shown unlit by the site: a little darker than the paint, as if in light shade.
+        cb.inputs["Base Color"].default_value = [v * 0.75 for v in col[:3]] + [1.0]
+        cb.inputs["Roughness"].default_value = 0.8
+    elif kind == "glass":
         cb.inputs["Alpha"].default_value = 0.3
         c["glass"] = 1
         try:

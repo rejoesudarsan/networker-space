@@ -36,7 +36,7 @@ Every space is baked alone, cut to the same kind of box, with identical light, s
 - [x] first-day (bake took 100 min at 4096/256, over the 90 min line; kept, but bake first-night at --samples 192)
 - [x] second-day (103 min at 4096/256, over the 90 min line; kept, but bake second-night at --samples 192)
 - [x] roof-day (no main room: checked the unlit view and atlas)
-- [ ] site-day
+- [x] site-day (gulmohar leaves + blossom moved to site-fixtures in flat colour; site-day.bin 9.1 MB and site-fixtures.bin 9.6 MB, over budget: see web-size)
 
 ## Night set (sun off, sky at 4%, lamps and glow materials at 6x)
 - [ ] night-light-check: render ground and first at night with `room_shot.py --engine cycles`. Pick emission strength and exposure so lamps and lanterns read as warm pools and the rooms are not black. Write the chosen numbers into `set_light("night")`.
