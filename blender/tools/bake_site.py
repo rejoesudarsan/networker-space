@@ -384,7 +384,7 @@ def lightmap_uv(ob):
     bpy.ops.uv.smart_project(angle_limit=math.radians(60), island_margin=0.0, area_weight=0.0,
                              correct_aspect=True, scale_to_bounds=False)
     # People and cars (materials "Ent ...") are small and curved: scaled up
-    # 3x before packing they get ~9x the texels, enough to keep their colours.
+    # 5x before packing they get ~25x the texels; at 3x their clothes mottled.
     bpy.ops.object.mode_set(mode="OBJECT")
     ent = {i for i, m in enumerate(me.materials) if m is not None and m.name.startswith("Ent ")}
     if ent:
@@ -392,7 +392,7 @@ def lightmap_uv(ob):
         for p in me.polygons:
             if p.material_index in ent:
                 for li in p.loop_indices:
-                    uvd[li].uv *= 3.0
+                    uvd[li].uv *= 5.0
     bpy.ops.object.mode_set(mode="EDIT")
     bpy.ops.mesh.select_all(action="SELECT")
     # Pack with a real margin in texels so the bake margin can't bleed across islands.

@@ -8,8 +8,7 @@
 		{
 			"name":"export.001",
 			"nodes":[
-				0,
-				1
+				0
 			]
 		}
 	],
@@ -17,10 +16,6 @@
 		{
 			"mesh":0,
 			"name":"room-cafe.baked.glass.001"
-		},
-		{
-			"mesh":1,
-			"name":"room-cafe.baked.glow.001"
 		}
 	],
 	"materials":[
@@ -59,33 +54,11 @@
 				"metallicFactor":0,
 				"roughnessFactor":0.10000000149011612
 			}
-		},
-		{
-			"doubleSided":true,
-			"emissiveFactor":[
-				1,
-				0.6938717365264893,
-				0.3915724754333496
-			],
-			"extras":{
-				"glow":1
-			},
-			"name":"fix.Lamp Glow.001",
-			"pbrMetallicRoughness":{
-				"baseColorFactor":[
-					1,
-					0.6938717365264893,
-					0.3915724754333496,
-					1
-				],
-				"metallicFactor":0,
-				"roughnessFactor":0.5
-			}
 		}
 	],
 	"meshes":[
 		{
-			"name":"room-cafe.baked.004",
+			"name":"room-cafe.baked.003",
 			"primitives":[
 				{
 					"attributes":{
@@ -104,29 +77,16 @@
 					"material":1
 				}
 			]
-		},
-		{
-			"name":"room-cafe.baked.005",
-			"primitives":[
-				{
-					"attributes":{
-						"POSITION":6,
-						"NORMAL":7
-					},
-					"indices":8,
-					"material":2
-				}
-			]
 		}
 	],
 	"accessors":[
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":24,
+			"count":20,
 			"max":[
 				2.4443843364715576,
-				1.0641666650772095,
+				0.41010499000549316,
 				1.7460999488830566
 			],
 			"min":[
@@ -139,13 +99,13 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":24,
+			"count":20,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5123,
-			"count":36,
+			"count":30,
 			"type":"SCALAR"
 		},
 		{
@@ -175,95 +135,49 @@
 			"componentType":5123,
 			"count":120,
 			"type":"SCALAR"
-		},
-		{
-			"bufferView":6,
-			"componentType":5126,
-			"count":288,
-			"max":[
-				2.381593704223633,
-				0.869720458984375,
-				3.0254268646240234
-			],
-			"min":[
-				0.6390700936317444,
-				0.7220827341079712,
-				1.5245734453201294
-			],
-			"type":"VEC3"
-		},
-		{
-			"bufferView":7,
-			"componentType":5126,
-			"count":288,
-			"type":"VEC3"
-		},
-		{
-			"bufferView":8,
-			"componentType":5123,
-			"count":528,
-			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":288,
+			"byteLength":240,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":288,
-			"byteOffset":288,
+			"byteLength":240,
+			"byteOffset":240,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":72,
-			"byteOffset":576,
+			"byteLength":60,
+			"byteOffset":480,
 			"target":34963
 		},
 		{
 			"buffer":0,
 			"byteLength":864,
-			"byteOffset":648,
+			"byteOffset":540,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":864,
-			"byteOffset":1512,
+			"byteOffset":1404,
 			"target":34962
 		},
 		{
 			"buffer":0,
 			"byteLength":240,
-			"byteOffset":2376,
-			"target":34963
-		},
-		{
-			"buffer":0,
-			"byteLength":3456,
-			"byteOffset":2616,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":3456,
-			"byteOffset":6072,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":1056,
-			"byteOffset":9528,
+			"byteOffset":2268,
 			"target":34963
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":10584,
+			"byteLength":2508,
 			"uri":"room-cafe-fixtures.bin"
 		}
 	]

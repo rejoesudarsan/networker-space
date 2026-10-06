@@ -48,3 +48,4 @@
 - 2026-10-06 07:56 basement-night: bake 3229 s (4096, 256 spp, CPU). Matches the lounge night reference.
 - 2026-10-06 09:09 ground-night: bake 4264 s (4096, 256 spp, CPU). Café glows, rest dim; matches the café night reference.
 - 2026-10-06 10:18 user feedback (flicker, empty rooms, counter, messy walls, busy street): bake_site.py drops buried faces (they z-fought: ~1000 coplanar pairs on ground-day) and cuts walls at 1.0 m (wall-hung pieces trimmed, fans dropped); club_rooms.py fits 14 empty rooms; café counter along the west wall; 28 more street entourage. Every part queued for re-bake; first-night bake stopped half-way.
+- 2026-10-06 10:50 re-bake room-cafe-day: 775 s; short walls, no floating wall art, buried layers gone.

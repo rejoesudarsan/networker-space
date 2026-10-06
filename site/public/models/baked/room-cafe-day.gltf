@@ -35,7 +35,7 @@
 	],
 	"meshes":[
 		{
-			"name":"room-cafe.baked.003",
+			"name":"room-cafe.baked.002",
 			"primitives":[
 				{
 					"attributes":{
@@ -66,7 +66,7 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":36098,
+			"count":16447,
 			"max":[
 				2.4600000381469727,
 				1.100000023841858,
@@ -82,45 +82,45 @@
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":36098,
+			"count":16447,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":36098,
+			"count":16447,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5123,
-			"count":56769,
+			"count":26808,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":433176,
+			"byteLength":197364,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":433176,
-			"byteOffset":433176,
+			"byteLength":197364,
+			"byteOffset":197364,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":288784,
-			"byteOffset":866352,
+			"byteLength":131576,
+			"byteOffset":394728,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":113538,
-			"byteOffset":1155136,
+			"byteLength":53616,
+			"byteOffset":526304,
 			"target":34963
 		}
 	],
@@ -132,7 +132,7 @@
 	],
 	"buffers":[
 		{
-			"byteLength":1268676,
+			"byteLength":579920,
 			"uri":"room-cafe-day.bin"
 		}
 	]
