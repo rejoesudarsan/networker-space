@@ -1,0 +1,48 @@
+{
+  "concept_assets": [
+    {
+      "file": "cup-concept.png",
+      "method": "Original procedural vector-style illustration; no image model or third-party brand asset"
+    },
+    {
+      "file": "shelf-concept.png",
+      "method": "Original procedural illustration using generic product examples"
+    },
+    {
+      "file": "opportunity-menu.png",
+      "method": "Original illustrative co-build menu composed with generated cup mockups; Corgi Cafe public menu used as layout reference; no current partnership or endorsement"
+    },
+    {
+      "file": "partner-menu-cover.png",
+      "method": "Original illustrative co-build menu cover composed with generated cup mockups; Corgi Cafe public menu used as layout reference; no current partnership implied"
+    },
+    {
+      "file": "mild-atta-breakfast-menu.png",
+      "method": "Original illustrative breakfast concept for Mild Atta; no brand identity or product claims supplied; recipes, allergens, claims and prices require approval"
+    }
+  ],
+  "cup_mockups": {
+    "generator": "build_cup_mockups.py / Blender Cycles",
+    "files": [
+      "cups/openai-cup.png",
+      "cups/razorpay-cup.png",
+      "cups/notion-cup.png",
+      "cups/postman-cup.png",
+      "cups/your-brand-cup.png",
+      "cups/partner-cup-lineup.png"
+    ],
+    "status": "Illustrative packaging concepts using company names without logos; no current partnership or endorsement; final packaging requires approval"
+  },
+  "photographs": [
+    "docs/house-understanding/img/p11.jpg",
+    "docs/house-understanding/img/p20.jpg",
+    "docs/house-understanding/img/p25.jpg",
+    "docs/house-understanding/img/p28.jpg",
+    "docs/house-understanding/img/p33.jpg"
+  ],
+  "font_sources": [
+    "System Georgia / Georgia Bold",
+    "Bundled Poppler Ubuntu-R / Ubuntu-B"
+  ],
+  "status": "Sponsorship decks use labelled sales concepts and describe the HSR house as under construction; membership deck uses existing house photographs; Mild Atta proposal is an unconfirmed concept"
+}

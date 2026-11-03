@@ -1,0 +1,30 @@
+{
+  "method": "OpenAI built-in image_gen",
+  "date": "2026-11-03",
+  "assets": [
+    {
+      "file": "signature-drink.png",
+      "prompt": "Create a premium editorial beverage photograph for Fourthspace, a founder community cafe in Bengaluru. Landscape 3:2 composition. One beautifully crafted iced coffee in a short clear fluted glass with a deep amber coffee layer, cream swirling into it, realistic condensation, resting on a warm dark teak cafe table. Next to it one small uncoated ivory tent menu card with only the elegant dark green words 'Your signature drink' and below it 'Co-built with your brand'. No QR code, no other text, no logos. A small ceramic saucer with a single orange peel. Soft afternoon side light, deep forest green tiled background softly out of focus, quiet warm plaster, subtle local modernist hospitality feeling, photographed with an 80mm lens. Art direction: restrained luxury independent magazine, realistic tactile materials, appealing drink, natural shadows, cream / burnt orange / forest green palette. Close cropped compelling hero, glass dominant right of centre with some negative space on left, no people, no collage, no graphic frame. This is an illustrative sponsorship concept, not an existing venue photograph."
+    },
+    {
+      "file": "merchandise.png",
+      "prompt": "Create one refined editorial photograph, landscape 3:2, for a brand sponsorship concept in a Bengaluru community cafe. A single modest teak wall shelf bay, not a shop: three unbranded sage-green fabric-covered notebooks, two ivory reusable metal water bottles with dark forest-green caps, and one neatly folded natural cotton tote with only a tiny plain terracotta fabric square. Objects offered as useful complimentary sponsor gifts, beautifully arranged with breathing room, a small cream card reads exactly 'Take something useful.' Warm lime plaster wall, dark teak detailing, soft natural side lighting with delicate leaf shadows, muted burnt orange, forest green and ivory palette. Architectural Digest still life, tactile understated hospitality, natural realistic materials. Medium close view straight-on with subtle perspective, shelf at lower middle, generous wall above. No people, no actual company logos, no invented brand names, no prices, no QR, no other text. One restrained bay, not a wall of merchandise; photograph should feel inviting and believable. Illustrative proposed scene, not documentation of an existing venue."
+    },
+    {
+      "file": "branded-cup.png",
+      "method": "OpenAI built-in image_gen",
+      "prompt_file": "branded-cup-prompt.txt"
+    }
+  ],
+  "blender": {
+    "sources": "site/public/models/baked/room-{cafe,court,event}-day.gltf plus matching fixtures",
+    "method": "CPU Cycles, emission materials for baked textures",
+    "script": "render_baked_rooms.py",
+    "status": "Proposed fit-out concept, not as-built photography"
+  },
+  "reference": {
+    "url": "https://www.corgicafe.com/partnerships",
+    "reviewed": "2026-11-03",
+    "use": "Named signature drink, visible brand attribution and voluntary product discovery; no imported claims or pricing"
+  }
+}

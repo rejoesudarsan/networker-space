@@ -1,0 +1,41 @@
+{
+  "brand": "Fourthspace",
+  "status": "Exploratory directions; not a selected identity",
+  "reference": "User-supplied OMIRA example, used for mood only",
+  "directions": [
+    {
+      "name": "Open House",
+      "palette": {
+        "oxblood": "#542D36",
+        "limestone": "#F4EDE2",
+        "brass": "#A8844D",
+        "charcoal": "#29282A"
+      },
+      "symbol": "Open threshold with subtle numeral 4",
+      "recommendation": "Closest to the supplied architectural reference, with stronger distinction from generic gold cafe branding."
+    },
+    {
+      "name": "Courtyard",
+      "palette": {
+        "olive": "#454D36",
+        "oat": "#EFE8DA",
+        "clay": "#BE7758",
+        "earth": "#2D3027"
+      },
+      "symbol": "Four corners around a central gathering space",
+      "recommendation": "Warm, informal community-house character."
+    },
+    {
+      "name": "After Hours",
+      "palette": {
+        "midnight": "#26334A",
+        "parchment": "#F2EBDF",
+        "copper": "#AD7756",
+        "dustyBlue": "#9CAAB8"
+      },
+      "symbol": "Compact 4 and doorway monogram",
+      "recommendation": "More contemporary, evening-club character."
+    }
+  ],
+  "usage": "Use dark primary for logo and body text against light neutral. Metallic accents are flat colours in digital use; optional foil is a separate print treatment. Generated board swatches are illustrative; these hex values are canonical."
+}

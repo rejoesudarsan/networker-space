@@ -1,0 +1,38 @@
+{
+  "katte_pin": {
+    "lat": 12.909688,
+    "lng": 77.639503,
+    "source": "https://maps.app.goo.gl/5VcSYFTCMnqyX1n5A",
+    "provided_by": "user via parent agent; resolved Google Maps search URL"
+  },
+  "source_url": "https://www.akshatgoel.com/hsr-startups",
+  "dataset_url": "https://www.akshatgoel.com/hsr-startups.json",
+  "source_date": "2026-09-11",
+  "retrieved_date": "2026-10-22",
+  "license": "CC BY 4.0",
+  "input_records": 118,
+  "excluded_former": 2,
+  "retained_records": 116,
+  "unique_coordinates": 66,
+  "precision": {
+    "approx": 105,
+    "address": 11
+  },
+  "confidence": {
+    "high": 46,
+    "medium": 57,
+    "low": 13
+  },
+  "road_geometries": 0,
+  "roads_source": "https://overpass-api.de/api/interpreter",
+  "heatmap_records": 103,
+  "heatmap_precision": {
+    "approx": 93,
+    "address": 10
+  },
+  "bandwidth_metres": 250,
+  "coordinate_field": "at.lat / at.lng; no jitter",
+  "projection": "Web Mercator for rendering; local cosine correction for metre bandwidth",
+  "density": "Excludes 13 low-confidence entries; 103 equal-weight records; isotropic Gaussian sum normalized by maximum; no boundary correction; not population density",
+  "caveat": "Source methodology claims physical offices; individual notes admit unconfirmed shared registered addresses. No independent office verification; incomplete directory, not census."
+}

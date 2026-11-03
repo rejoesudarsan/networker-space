@@ -1,0 +1,20 @@
+{
+  "pages": 11,
+  "commercial_phrase_checks": {
+    "15,00,000": true,
+    "12 months": true,
+    "20%": true,
+    "weekly": true,
+    "quarterly": true,
+    "30 November 2026": true,
+    "contact lists": true,
+    "opening-delay": true,
+    "Unused quarterly uses expire": true,
+    "Proposed event-space fit-out": true
+  },
+  "text_bounds": {
+    "pages": 11,
+    "text_boxes": 162,
+    "out_of_bounds": []
+  }
+}
